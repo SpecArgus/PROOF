@@ -1,0 +1,91 @@
+name: Technical spike
+description: Time-box research needed to make a technical decision
+title: "[Spike]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A spike should reduce uncertainty and end with evidence and a recommendation, not production implementation.
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Question or hypothesis
+      description: State the uncertainty this spike will investigate.
+    validations:
+      required: true
+
+  - type: textarea
+    id: decision
+    attributes:
+      label: Decision this will unblock
+      description: Identify the concrete decision or follow-up work that depends on the result.
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: Define what is included and explicitly excluded.
+      placeholder: |
+        In scope:
+        - ...
+
+        Out of scope:
+        - ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: options
+    attributes:
+      label: Options to evaluate
+      description: List candidate approaches, tools, or architectures.
+    validations:
+      required: true
+
+  - type: textarea
+    id: criteria
+    attributes:
+      label: Evaluation criteria
+      description: Define measurable comparison criteria and any required test cases.
+      placeholder: Compatibility, correctness, performance, maintainability, license, security
+    validations:
+      required: true
+
+  - type: input
+    id: timebox
+    attributes:
+      label: Time box
+      description: Set the maximum investigation effort.
+      placeholder: 1 working day
+    validations:
+      required: true
+
+  - type: textarea
+    id: deliverables
+    attributes:
+      label: Deliverables and completion criteria
+      description: List the evidence, comparison, prototype, ADR, or recommendation required to complete the spike.
+      placeholder: |
+        - [ ] Reproducible benchmark or fixture
+        - [ ] Written comparison with evidence
+        - [ ] Recommendation and follow-up issues
+    validations:
+      required: true
+
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks and dependencies
+      description: Note blockers, external dependencies, security concerns, or assumptions.
+    validations:
+      required: false
+  - type: textarea
+    id: references
+    attributes:
+      label: Existing evidence and references
+      description: Link relevant documentation, issues, benchmarks, or prior decisions.
+    validations:
+      required: false

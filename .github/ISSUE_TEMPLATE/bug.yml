@@ -1,0 +1,98 @@
+name: Bug report
+description: Report a reproducible problem in PROOF
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping improve PROOF. Do not include secrets, credentials, or private specifications.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Problem description
+      description: Describe the problem and its impact.
+      placeholder: What happened, and who or what is affected?
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Provide the smallest reliable sequence that reproduces the problem.
+      placeholder: |
+        1. Run ...
+        2. Provide ...
+        3. Observe ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: fixture
+    attributes:
+      label: Minimal input and configuration
+      description: Share a minimal OpenAPI document, configuration, or public repository link when relevant.
+      render: shell
+    validations:
+      required: false
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: Describe the observable result you expected.
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Describe the result you observed, including exact error messages when available.
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: PROOF version or commit
+      placeholder: Commit SHA or published version, when available
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Include operating system, runtime version, installation method, and execution context.
+      placeholder: Windows 11, commit abc123, local execution
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs or output
+      description: Paste sanitized logs, stack traces, or command output.
+      render: shell
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Add screenshots, related issues, or other useful context.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmations
+      options:
+        - label: I searched existing issues and did not find a duplicate.
+          required: true
+        - label: I removed secrets and sensitive information from this report.
+          required: true
