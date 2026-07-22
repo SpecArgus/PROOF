@@ -35,8 +35,11 @@ Keep each branch focused on one reviewable outcome. Rebase or update it as requi
 1. Open the pull request against `develop` and link the governing issue.
 2. Explain the change, verification, risks, and any follow-up work.
 3. Pass required checks and resolve review conversations.
-4. Use **squash merge** so one topic pull request becomes one coherent commit.
-5. Delete the topic branch after merge.
+4. Receive at least one formal GitHub **Approve** review from a maintainer with
+   write access. Plain comments such as `LGTM` do not satisfy this rule.
+5. For normal topic branches, use **squash merge** so one topic pull request
+   becomes one coherent commit.
+6. Delete the topic branch after merge.
 
 Pull-request titles become squash commit subjects and must follow Conventional Commits, for example:
 
@@ -64,11 +67,16 @@ Using a merge commit preserves the relationship between the two long-lived branc
 1. Create `hotfix/<issue>-<slug>` from the affected commit on `main`.
 2. Add focused regression coverage and open a pull request to `main`.
 3. After review and required checks, squash-merge the hotfix and publish the required patch release.
-4. Immediately open a pull request from `main` back into `develop` and merge it with a merge commit.
+4. Immediately open a pull request from `main` back into `develop` and merge it
+   with a merge commit. This synchronization PR is the explicit exception to
+   the normal squash-merge rule for `develop`.
 5. Resolve any conflicts in the synchronization pull request; never reimplement the fix independently on `develop`.
 
 No planned release should proceed until all prior hotfixes are present in `develop`.
 
 ## Exceptions
 
-Repository administrators may bypass a rule only to restore the repository or release process during an incident. The bypass must be documented in an issue or retrospective, and the resulting branch state must be reconciled through pull requests.
+No role has a standing bypass for protected-branch rules. An emergency change
+to a ruleset must be explicit, limited to restoring the repository or release
+process, documented in an issue or retrospective, and reverted immediately
+after the branch state is reconciled through pull requests.

@@ -9,7 +9,8 @@ The format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0
 ### Added
 
 - Establish the repository governance, contribution workflow, issue templates,
-  release policy, and exit-criteria-based roadmap.
+  release policy, review ownership, and exit-criteria-based roadmap.
+- Add language-neutral repository metadata validation for pull requests.
 
 ### Changed
 

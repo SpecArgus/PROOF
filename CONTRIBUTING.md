@@ -30,6 +30,14 @@ Keep each pull request focused on one issue. In the description:
 - call out compatibility, security, or documentation effects; and
 - record any follow-up work explicitly.
 
-Use clear, imperative titles. Conventional Commit-style titles such as `feat(core): add finding schema` are encouraged. Update tests and documentation when behavior changes, and ensure all required checks pass before requesting review.
+Use clear, imperative titles. Pull-request titles must follow Conventional
+Commits, for example `feat(core): add finding schema`. Update tests and
+documentation when behavior changes, and ensure all required checks pass before
+requesting review.
+
+Protected branches require at least one formal GitHub **Approve** review from a
+maintainer with write access. A comment such as `LGTM` may communicate intent,
+but it does not satisfy GitHub's required-review rule. Pull request authors
+cannot approve their own changes.
 
 By contributing, you agree that your work is licensed under the repository's license.
