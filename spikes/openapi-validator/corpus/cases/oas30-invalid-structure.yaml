@@ -1,0 +1,8 @@
+openapi: 3.0.3
+info:
+  title: Invalid OAS 3.0 fixture
+  version: 1.0.0
+paths:
+  /pets:
+    get:
+      operationId: listPets

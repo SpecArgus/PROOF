@@ -41,7 +41,9 @@ A passing result means only that the configured static contract checks passed.
 Work is organized by exit criteria rather than target dates. The current phase
 focuses on validator evaluation, a normalized result schema, rule definitions,
 false-positive fixtures, fork pull request feasibility, and user discovery.
-See the [roadmap](ROADMAP.md) for the staged plan.
+See the [roadmap](ROADMAP.md) for the staged plan and the
+[engineering spike reports](docs/spikes/README.md) for completed technical
+evaluations.
 
 ## Development workflow
 

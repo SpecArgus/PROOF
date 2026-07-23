@@ -1,0 +1,4 @@
+components:
+  schemas:
+    PetList:
+      type: definitely-not-a-json-schema-type

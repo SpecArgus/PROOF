@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "limits": {
+    "timeoutMs": 5000,
+    "maxOutputBytes": 1048576,
+    "maxDiagnostics": 100,
+    "defaultRepeat": 5
+  },
+  "cases": [
+    {
+      "id": "oas30-valid-yaml",
+      "path": "cases/oas30-valid.yaml",
+      "expected": "valid"
+    },
+    {
+      "id": "oas31-valid-json",
+      "path": "cases/oas31-valid.json",
+      "expected": "valid"
+    },
+    {
+      "id": "oas30-invalid-structure",
+      "path": "cases/oas30-invalid-structure.yaml",
+      "expected": "invalid",
+      "evidenceAnyPointerStartsWith": ["/paths/~1pets/get"],
+      "requiresLocation": true
+    },
+    {
+      "id": "oas31-invalid-structure",
+      "path": "cases/oas31-invalid-structure.json",
+      "expected": "invalid",
+      "evidenceAnyPointerStartsWith": ["/info/version"],
+      "requiresLocation": true
+    },
+    {
+      "id": "malformed-yaml",
+      "path": "cases/malformed.yaml",
+      "expected": "invalid",
+      "evidenceAnyCodeIncludes": ["parse"],
+      "requiresLocation": true
+    },
+    {
+      "id": "local-ref-valid",
+      "path": "cases/local-ref/root.yaml",
+      "expected": "valid"
+    },
+    {
+      "id": "local-ref-invalid",
+      "path": "cases/local-ref-invalid/root.yaml",
+      "expected": "invalid",
+      "evidenceAnyMessageIncludes": ["type"],
+      "requiresLocation": true
+    },
+    {
+      "id": "local-ref-missing",
+      "path": "cases/missing-ref.yaml",
+      "expected": "invalid",
+      "evidenceAnyMessageIncludes": ["does not exist", "enoent"],
+      "requiresLocation": true
+    },
+    {
+      "id": "remote-ref-denied",
+      "template": "templates/remote-ref.yaml",
+      "expected": "remote-denied",
+      "evidenceAnyMessageIncludes": ["remote"],
+      "repeat": 1
+    },
+    {
+      "id": "size-decimal-limit",
+      "generatedBytes": 10000000,
+      "expected": "valid",
+      "repeat": 1
+    },
+    {
+      "id": "size-decimal-over",
+      "generatedBytes": 10000001,
+      "preflightLimitBytes": 10000000,
+      "expected": "input-too-large",
+      "repeat": 1
+    },
+    {
+      "id": "size-binary-limit",
+      "generatedBytes": 10485760,
+      "expected": "valid",
+      "repeat": 1
+    },
+    {
+      "id": "size-binary-over",
+      "generatedBytes": 10485761,
+      "preflightLimitBytes": 10485760,
+      "expected": "input-too-large",
+      "repeat": 1
+    }
+  ]
+}

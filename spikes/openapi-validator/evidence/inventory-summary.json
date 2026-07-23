@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "environment": {
+    "platform": "win32",
+    "architecture": "x64",
+    "node": "v24.13.0"
+  },
+  "candidates": {
+    "vacuum": "0.29.10",
+    "spectral": "6.16.2",
+    "redocly": "2.40.0"
+  },
+  "npm": {
+    "sbomFormat": "CycloneDX",
+    "specVersion": "1.5",
+    "componentCount": 241,
+    "licenseCounts": {
+      "0BSD": 3,
+      "Apache-2.0": 27,
+      "BSD-2-Clause": 1,
+      "BSD-3-Clause": 2,
+      "ISC": 16,
+      "MIT": 189,
+      "Unlicense": 3
+    },
+    "unknownLicenseComponents": [],
+    "candidateClosures": {
+      "spectral": {
+        "componentCount": 240,
+        "licenseCounts": {
+          "0BSD": 3,
+          "Apache-2.0": 27,
+          "BSD-2-Clause": 1,
+          "BSD-3-Clause": 2,
+          "ISC": 16,
+          "MIT": 188,
+          "Unlicense": 3
+        },
+        "unknownLicenseComponents": []
+      },
+      "redocly": {
+        "componentCount": 1,
+        "licenseCounts": {
+          "MIT": 1
+        },
+        "unknownLicenseComponents": [],
+        "bundledNoticePackageCount": 108,
+        "sbomCoverage": "npm reports the bundled CLI as one component; THIRD_PARTY_NOTICES discloses the embedded packages."
+      }
+    }
+  },
+  "vacuum": {
+    "sha256": "4efefee41f2cb96d2c3fb5c25f43318922f258bd4c5b57fc6ff2e826125bf2a9",
+    "bytes": 90458624,
+    "goVersion": "go1.25.12",
+    "moduleCount": 95,
+    "licenseCounts": {
+      "Apache-2.0": 19,
+      "BSD-2-Clause": 3,
+      "BSD-3-Clause": 18,
+      "MIT": 55
+    },
+    "unknownLicenseModules": []
+  },
+  "limitations": [
+    "npm sbom records the installed Node graph but does not prove package contents match declared licenses.",
+    "Go license detection is a local source-cache heuristic, not a legal conclusion.",
+    "go version -m inventories modules linked into the binary but is not a complete SPDX or CycloneDX SBOM.",
+    "The bundled Redocly CLI is one npm SBOM component; its THIRD_PARTY_NOTICES package list must be reconciled separately."
+  ]
+}

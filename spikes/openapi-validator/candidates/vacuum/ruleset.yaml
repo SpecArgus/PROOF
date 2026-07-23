@@ -1,0 +1,4 @@
+extends: [[vacuum:oas, off]]
+rules:
+  oas3-schema: true
+  resolving-references: true

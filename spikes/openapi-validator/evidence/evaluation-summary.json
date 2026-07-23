@@ -1,0 +1,1586 @@
+{
+  "schemaVersion": 1,
+  "environment": {
+    "platform": "win32",
+    "architecture": "x64",
+    "node": "v24.13.0"
+  },
+  "sourceSchemaVersion": 2,
+  "profile": {
+    "timeoutMs": 5000,
+    "maxOutputBytes": 1048576,
+    "maxDiagnostics": 100,
+    "defaultRepeat": 5
+  },
+  "runStatus": "complete",
+  "integrityErrors": [],
+  "dispositions": {
+    "vacuum": "has-gaps",
+    "spectral": "has-gaps",
+    "redocly": "has-gaps"
+  },
+  "totals": {
+    "cases": 39,
+    "passed": 32,
+    "failed": 7,
+    "candidateQualified": 24,
+    "qualifiedWithAdapter": 8,
+    "gaps": 7
+  },
+  "supervisorControls": {
+    "timeout": {
+      "status": "passed"
+    },
+    "outputBytes": {
+      "status": "passed"
+    },
+    "diagnosticVolume": {
+      "status": "passed",
+      "counts": {
+        "raw": 150,
+        "deduplicated": 150,
+        "emitted": 100,
+        "truncated": true
+      }
+    },
+    "memory": {
+      "status": "unsupported",
+      "detail": "Candidate CLIs expose no portable hard memory limit; enforce it in the worker/container."
+    },
+    "referenceDepth": {
+      "status": "unsupported",
+      "detail": "Candidate CLIs expose no common reference-depth limit; enforce it in a root-confined resolver."
+    }
+  },
+  "results": [
+    {
+      "candidate": "vacuum",
+      "caseId": "oas30-valid-yaml",
+      "expected": "valid",
+      "determinism": "stable",
+      "uniqueHashes": [
+        "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152"
+      ],
+      "qualification": "candidate-qualified",
+      "passed": true,
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkAttempts": 0,
+        "canonicalSha256": "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152",
+        "diagnostics": [],
+        "diagnosticCounts": {
+          "raw": 0,
+          "deduplicated": 0,
+          "emitted": 0,
+          "truncated": false
+        },
+        "inputBytes": 186,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": null
+      }
+    },
+    {
+      "candidate": "vacuum",
+      "caseId": "oas31-valid-json",
+      "expected": "valid",
+      "determinism": "stable",
+      "uniqueHashes": [
+        "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152"
+      ],
+      "qualification": "candidate-qualified",
+      "passed": true,
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkAttempts": 0,
+        "canonicalSha256": "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152",
+        "diagnostics": [],
+        "diagnosticCounts": {
+          "raw": 0,
+          "deduplicated": 0,
+          "emitted": 0,
+          "truncated": false
+        },
+        "inputBytes": 702,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": null
+      }
+    },
+    {
+      "candidate": "vacuum",
+      "caseId": "oas30-invalid-structure",
+      "expected": "invalid",
+      "determinism": "stable",
+      "uniqueHashes": [
+        "410f4e8a769cdc3c62e0d429d6c2b2b060f8f090e9e6a1087529aed69e44724e"
+      ],
+      "qualification": "candidate-qualified",
+      "passed": true,
+      "failures": [],
+      "observation": {
+        "outcome": "invalid",
+        "networkAttempts": 0,
+        "canonicalSha256": "410f4e8a769cdc3c62e0d429d6c2b2b060f8f090e9e6a1087529aed69e44724e",
+        "diagnostics": [
+          {
+            "source": "cases/oas30-invalid-structure.yaml",
+            "line": 7,
+            "column": 7,
+            "pointer": "/paths/~1pets/get",
+            "code": "oas3-schema",
+            "severity": "error",
+            "kind": "finding",
+            "message": "schema invalid: `/paths//pets/get` missing properties: `[responses]`"
+          }
+        ],
+        "diagnosticCounts": {
+          "raw": 1,
+          "deduplicated": 1,
+          "emitted": 1,
+          "truncated": false
+        },
+        "inputBytes": 124,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": null
+      }
+    },
+    {
+      "candidate": "vacuum",
+      "caseId": "oas31-invalid-structure",
+      "expected": "invalid",
+      "determinism": "stable",
+      "uniqueHashes": [
+        "f2956ab086cc0f53f9a4a033628284f333a2679454ed1e73fce09e73e1743f1d"
+      ],
+      "qualification": "gap",
+      "passed": false,
+      "failures": [
+        "No controlled error matched evidence anchor: /info/version.",
+        "No diagnostic included both line and column."
+      ],
+      "observation": {
+        "outcome": "invalid",
+        "networkAttempts": 0,
+        "canonicalSha256": "f2956ab086cc0f53f9a4a033628284f333a2679454ed1e73fce09e73e1743f1d",
+        "diagnostics": [
+          {
+            "source": "cases/oas31-invalid-structure.json",
+            "line": 5,
+            "column": 16,
+            "pointer": "/properties/info['$ref']/properties/version/type",
+            "code": "oas3-schema",
+            "severity": "error",
+            "kind": "finding",
+            "message": "schema invalid: `/info/version` expected type `[string]`, got `number`"
+          }
+        ],
+        "diagnosticCounts": {
+          "raw": 1,
+          "deduplicated": 1,
+          "emitted": 1,
+          "truncated": false
+        },
+        "inputBytes": 114,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": null
+      }
+    },
+    {
+      "candidate": "vacuum",
+      "caseId": "malformed-yaml",
+      "expected": "invalid",
+      "determinism": "stable",
+      "uniqueHashes": [
+        "ddba3c850b858561b3927710f88f35b9e0dab12eb1155364a3e3b2e9bfa37621"
+      ],
+      "qualification": "gap",
+      "passed": false,
+      "failures": [
+        "No diagnostic included both line and column."
+      ],
+      "observation": {
+        "outcome": "invalid",
+        "networkAttempts": 0,
+        "canonicalSha256": "ddba3c850b858561b3927710f88f35b9e0dab12eb1155364a3e3b2e9bfa37621",
+        "diagnostics": [
+          {
+            "source": "cases/malformed.yaml",
+            "line": null,
+            "column": null,
+            "pointer": "",
+            "code": "vacuum-parse-error",
+            "severity": "error",
+            "kind": "parse-error",
+            "message": "Unexpected token '✗', \"✗ Failed t\"... is not valid JSON: ✗ Failed to parse specification '<workspace>\\cases\\malformed.yaml'\nError: failed to parse specification '<workspace>\\cases\\malformed.yaml'"
+          }
+        ],
+        "diagnosticCounts": {
+          "raw": 1,
+          "deduplicated": 1,
+          "emitted": 1,
+          "truncated": false
+        },
+        "inputBytes": 74,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": null
+      }
+    },
+    {
+      "candidate": "vacuum",
+      "caseId": "local-ref-valid",
+      "expected": "valid",
+      "determinism": "stable",
+      "uniqueHashes": [
+        "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152"
+      ],
+      "qualification": "candidate-qualified",
+      "passed": true,
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkAttempts": 0,
+        "canonicalSha256": "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152",
+        "diagnostics": [],
+        "diagnosticCounts": {
+          "raw": 0,
+          "deduplicated": 0,
+          "emitted": 0,
+          "truncated": false
+        },
+        "inputBytes": 334,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": null
+      }
+    },
+    {
+      "candidate": "vacuum",
+      "caseId": "local-ref-invalid",
+      "expected": "invalid",
+      "determinism": "stable",
+      "uniqueHashes": [
+        "31d56b8d675638aaaf8731ef521552964bc835558977233f6fcae2f7ba9b502f"
+      ],
+      "qualification": "candidate-qualified",
+      "passed": true,
+      "failures": [],
+      "observation": {
+        "outcome": "invalid",
+        "networkAttempts": 0,
+        "canonicalSha256": "31d56b8d675638aaaf8731ef521552964bc835558977233f6fcae2f7ba9b502f",
+        "diagnostics": [
+          {
+            "source": "cases/local-ref-invalid/root.yaml",
+            "line": 10,
+            "column": 11,
+            "pointer": "/paths/~1pets/get/responses/200",
+            "code": "oas3-schema",
+            "severity": "error",
+            "kind": "finding",
+            "message": "schema invalid: `/paths//pets/get/responses/200/content/application/json/schema/type` value must be one of: `[array boolean integer number object string]`"
+          }
+        ],
+        "diagnosticCounts": {
+          "raw": 1,
+          "deduplicated": 1,
+          "emitted": 1,
+          "truncated": false
+        },
+        "inputBytes": 336,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": null
+      }
+    },
+    {
+      "candidate": "vacuum",
+      "caseId": "local-ref-missing",
+      "expected": "invalid",
+      "determinism": "stable",
+      "uniqueHashes": [
+        "8878582f9feb21f43f46d8b73824b4a050b659c34699c6207da37f59463ddf80"
+      ],
+      "qualification": "candidate-qualified",
+      "passed": true,
+      "failures": [],
+      "observation": {
+        "outcome": "invalid",
+        "networkAttempts": 0,
+        "canonicalSha256": "8878582f9feb21f43f46d8b73824b4a050b659c34699c6207da37f59463ddf80",
+        "diagnostics": [
+          {
+            "source": "cases/missing-ref.yaml",
+            "line": 15,
+            "column": 17,
+            "pointer": "/components/schemas/PetList",
+            "code": "resolving-references",
+            "severity": "error",
+            "kind": "finding",
+            "message": "component `#/components/schemas/PetList` does not exist in the specification"
+          }
+        ],
+        "diagnosticCounts": {
+          "raw": 1,
+          "deduplicated": 1,
+          "emitted": 1,
+          "truncated": false
+        },
+        "inputBytes": 340,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": null
+      }
+    },
+    {
+      "candidate": "vacuum",
+      "caseId": "remote-ref-denied",
+      "expected": "remote-denied",
+      "determinism": "not-assessed",
+      "uniqueHashes": [
+        "cc4405f74745dfc8b16e2074fc8161aa63bc5735c74702a5672066c816e503b2"
+      ],
+      "qualification": "candidate-qualified",
+      "passed": true,
+      "failures": [],
+      "observation": {
+        "outcome": "invalid",
+        "networkAttempts": 0,
+        "canonicalSha256": "cc4405f74745dfc8b16e2074fc8161aa63bc5735c74702a5672066c816e503b2",
+        "diagnostics": [
+          {
+            "source": "generated/remote-ref-denied.yaml",
+            "line": 15,
+            "column": 24,
+            "pointer": "",
+            "code": "proof-remote-reference-denied",
+            "severity": "error",
+            "kind": "policy",
+            "message": "Remote references are disabled: http://127.0.0.1:59695/components.yaml#/components/schemas/PetList"
+          }
+        ],
+        "diagnosticCounts": {
+          "raw": 1,
+          "deduplicated": 1,
+          "emitted": 1,
+          "truncated": false
+        },
+        "inputBytes": 357,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": {
+          "outcome": "invalid",
+          "networkAttempts": 0,
+          "meetsRequirement": true,
+          "failures": [],
+          "diagnostics": [
+            {
+              "source": "generated/remote-ref-denied.yaml",
+              "line": 15,
+              "column": 17,
+              "pointer": "/components/schemas/PetList",
+              "code": "resolving-references",
+              "severity": "error",
+              "kind": "finding",
+              "message": "component `#/components/schemas/PetList` does not exist in the specification"
+            }
+          ],
+          "diagnosticCounts": {
+            "raw": 1,
+            "deduplicated": 1,
+            "emitted": 1,
+            "truncated": false
+          }
+        }
+      }
+    },
+    {
+      "candidate": "vacuum",
+      "caseId": "size-decimal-limit",
+      "expected": "valid",
+      "determinism": "not-assessed",
+      "uniqueHashes": [
+        "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152"
+      ],
+      "qualification": "candidate-qualified",
+      "passed": true,
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkAttempts": 0,
+        "canonicalSha256": "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152",
+        "diagnostics": [],
+        "diagnosticCounts": {
+          "raw": 0,
+          "deduplicated": 0,
+          "emitted": 0,
+          "truncated": false
+        },
+        "inputBytes": 10000000,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": null
+      }
+    },
+    {
+      "candidate": "vacuum",
+      "caseId": "size-decimal-over",
+      "expected": "input-too-large",
+      "determinism": "not-assessed",
+      "uniqueHashes": [
+        "585a16b7f0c058a20a96221e3d13755f27a2a9b34ba3e1b1701a26edc868f425"
+      ],
+      "qualification": "qualified-with-adapter",
+      "passed": true,
+      "failures": [],
+      "observation": {
+        "outcome": "invalid",
+        "networkAttempts": 0,
+        "canonicalSha256": "585a16b7f0c058a20a96221e3d13755f27a2a9b34ba3e1b1701a26edc868f425",
+        "diagnostics": [
+          {
+            "source": "generated/size-decimal-over.json",
+            "line": null,
+            "column": null,
+            "pointer": "",
+            "code": "proof-input-too-large",
+            "severity": "error",
+            "kind": "policy",
+            "message": "Input is 10000001 bytes; limit is 10000000 bytes."
+          }
+        ],
+        "diagnosticCounts": {
+          "raw": 1,
+          "deduplicated": 1,
+          "emitted": 1,
+          "truncated": false
+        },
+        "inputBytes": 10000001,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": {
+          "outcome": "valid",
+          "networkAttempts": 0,
+          "meetsRequirement": false,
+          "failures": [
+            "Candidate has no native input-size rejection."
+          ],
+          "diagnostics": [],
+          "diagnosticCounts": {
+            "raw": 0,
+            "deduplicated": 0,
+            "emitted": 0,
+            "truncated": false
+          }
+        }
+      }
+    },
+    {
+      "candidate": "vacuum",
+      "caseId": "size-binary-limit",
+      "expected": "valid",
+      "determinism": "not-assessed",
+      "uniqueHashes": [
+        "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152"
+      ],
+      "qualification": "candidate-qualified",
+      "passed": true,
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkAttempts": 0,
+        "canonicalSha256": "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152",
+        "diagnostics": [],
+        "diagnosticCounts": {
+          "raw": 0,
+          "deduplicated": 0,
+          "emitted": 0,
+          "truncated": false
+        },
+        "inputBytes": 10485760,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": null
+      }
+    },
+    {
+      "candidate": "vacuum",
+      "caseId": "size-binary-over",
+      "expected": "input-too-large",
+      "determinism": "not-assessed",
+      "uniqueHashes": [
+        "c2e65a58c5e3ab044b4a77ac78afcb577f819f9f39aad92b092d3a8a0ed72bc7"
+      ],
+      "qualification": "qualified-with-adapter",
+      "passed": true,
+      "failures": [],
+      "observation": {
+        "outcome": "invalid",
+        "networkAttempts": 0,
+        "canonicalSha256": "c2e65a58c5e3ab044b4a77ac78afcb577f819f9f39aad92b092d3a8a0ed72bc7",
+        "diagnostics": [
+          {
+            "source": "generated/size-binary-over.json",
+            "line": null,
+            "column": null,
+            "pointer": "",
+            "code": "proof-input-too-large",
+            "severity": "error",
+            "kind": "policy",
+            "message": "Input is 10485761 bytes; limit is 10485760 bytes."
+          }
+        ],
+        "diagnosticCounts": {
+          "raw": 1,
+          "deduplicated": 1,
+          "emitted": 1,
+          "truncated": false
+        },
+        "inputBytes": 10485761,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": {
+          "outcome": "valid",
+          "networkAttempts": 0,
+          "meetsRequirement": false,
+          "failures": [
+            "Candidate has no native input-size rejection."
+          ],
+          "diagnostics": [],
+          "diagnosticCounts": {
+            "raw": 0,
+            "deduplicated": 0,
+            "emitted": 0,
+            "truncated": false
+          }
+        }
+      }
+    },
+    {
+      "candidate": "spectral",
+      "caseId": "oas30-valid-yaml",
+      "expected": "valid",
+      "determinism": "stable",
+      "uniqueHashes": [
+        "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152"
+      ],
+      "qualification": "candidate-qualified",
+      "passed": true,
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkAttempts": 0,
+        "canonicalSha256": "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152",
+        "diagnostics": [],
+        "diagnosticCounts": {
+          "raw": 0,
+          "deduplicated": 0,
+          "emitted": 0,
+          "truncated": false
+        },
+        "inputBytes": 186,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": null
+      }
+    },
+    {
+      "candidate": "spectral",
+      "caseId": "oas31-valid-json",
+      "expected": "valid",
+      "determinism": "stable",
+      "uniqueHashes": [
+        "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152"
+      ],
+      "qualification": "candidate-qualified",
+      "passed": true,
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkAttempts": 0,
+        "canonicalSha256": "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152",
+        "diagnostics": [],
+        "diagnosticCounts": {
+          "raw": 0,
+          "deduplicated": 0,
+          "emitted": 0,
+          "truncated": false
+        },
+        "inputBytes": 702,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": null
+      }
+    },
+    {
+      "candidate": "spectral",
+      "caseId": "oas30-invalid-structure",
+      "expected": "invalid",
+      "determinism": "stable",
+      "uniqueHashes": [
+        "0185221f5a97d242c43eab0378091f3a04a63c33a22c81c8560d096343505093"
+      ],
+      "qualification": "candidate-qualified",
+      "passed": true,
+      "failures": [],
+      "observation": {
+        "outcome": "invalid",
+        "networkAttempts": 0,
+        "canonicalSha256": "0185221f5a97d242c43eab0378091f3a04a63c33a22c81c8560d096343505093",
+        "diagnostics": [
+          {
+            "source": "cases/oas30-invalid-structure.yaml",
+            "line": 7,
+            "column": 9,
+            "pointer": "/paths/~1pets/get",
+            "code": "oas3-schema",
+            "severity": "error",
+            "kind": "finding",
+            "message": "\"get\" property must have required property \"responses\"."
+          }
+        ],
+        "diagnosticCounts": {
+          "raw": 1,
+          "deduplicated": 1,
+          "emitted": 1,
+          "truncated": false
+        },
+        "inputBytes": 124,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": null
+      }
+    },
+    {
+      "candidate": "spectral",
+      "caseId": "oas31-invalid-structure",
+      "expected": "invalid",
+      "determinism": "stable",
+      "uniqueHashes": [
+        "4d5eb760314fa5c87fa86c4c363c633fc52204a5298dbb4fb406e7b771f664cc"
+      ],
+      "qualification": "candidate-qualified",
+      "passed": true,
+      "failures": [],
+      "observation": {
+        "outcome": "invalid",
+        "networkAttempts": 0,
+        "canonicalSha256": "4d5eb760314fa5c87fa86c4c363c633fc52204a5298dbb4fb406e7b771f664cc",
+        "diagnostics": [
+          {
+            "source": "cases/oas31-invalid-structure.json",
+            "line": 5,
+            "column": 16,
+            "pointer": "/info/version",
+            "code": "oas3-schema",
+            "severity": "error",
+            "kind": "finding",
+            "message": "\"version\" property must be string."
+          }
+        ],
+        "diagnosticCounts": {
+          "raw": 1,
+          "deduplicated": 1,
+          "emitted": 1,
+          "truncated": false
+        },
+        "inputBytes": 114,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": null
+      }
+    },
+    {
+      "candidate": "spectral",
+      "caseId": "malformed-yaml",
+      "expected": "invalid",
+      "determinism": "stable",
+      "uniqueHashes": [
+        "47b574b42ce776c23d8d2a354cc3b42e18fa6c95413a7bb6a6701f8bb562d75f"
+      ],
+      "qualification": "candidate-qualified",
+      "passed": true,
+      "failures": [],
+      "observation": {
+        "outcome": "invalid",
+        "networkAttempts": 0,
+        "canonicalSha256": "47b574b42ce776c23d8d2a354cc3b42e18fa6c95413a7bb6a6701f8bb562d75f",
+        "diagnostics": [
+          {
+            "source": "cases/malformed.yaml",
+            "line": 1,
+            "column": 1,
+            "pointer": "",
+            "code": "oas3-schema",
+            "severity": "error",
+            "kind": "finding",
+            "message": "must have required property \"paths\"."
+          },
+          {
+            "source": "cases/malformed.yaml",
+            "line": 2,
+            "column": 6,
+            "pointer": "/info",
+            "code": "oas3-schema",
+            "severity": "error",
+            "kind": "finding",
+            "message": "\"info\" property must have required property \"version\"."
+          },
+          {
+            "source": "cases/malformed.yaml",
+            "line": 6,
+            "column": 1,
+            "pointer": "",
+            "code": "parser",
+            "severity": "error",
+            "kind": "finding",
+            "message": "Unexpected end of the stream within a double quoted scalar"
+          },
+          {
+            "source": "cases/malformed.yaml",
+            "line": 6,
+            "column": 1,
+            "pointer": "/info/title",
+            "code": "oas3-schema",
+            "severity": "error",
+            "kind": "finding",
+            "message": "\"title\" property must be string."
+          }
+        ],
+        "diagnosticCounts": {
+          "raw": 4,
+          "deduplicated": 4,
+          "emitted": 4,
+          "truncated": false
+        },
+        "inputBytes": 74,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": null
+      }
+    },
+    {
+      "candidate": "spectral",
+      "caseId": "local-ref-valid",
+      "expected": "valid",
+      "determinism": "stable",
+      "uniqueHashes": [
+        "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152"
+      ],
+      "qualification": "candidate-qualified",
+      "passed": true,
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkAttempts": 0,
+        "canonicalSha256": "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152",
+        "diagnostics": [],
+        "diagnosticCounts": {
+          "raw": 0,
+          "deduplicated": 0,
+          "emitted": 0,
+          "truncated": false
+        },
+        "inputBytes": 334,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": null
+      }
+    },
+    {
+      "candidate": "spectral",
+      "caseId": "local-ref-invalid",
+      "expected": "invalid",
+      "determinism": "stable",
+      "uniqueHashes": [
+        "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152"
+      ],
+      "qualification": "gap",
+      "passed": false,
+      "failures": [
+        "Expected invalid, observed valid.",
+        "No controlled error matched evidence anchor: type.",
+        "No diagnostic included both line and column."
+      ],
+      "observation": {
+        "outcome": "valid",
+        "networkAttempts": 0,
+        "canonicalSha256": "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152",
+        "diagnostics": [],
+        "diagnosticCounts": {
+          "raw": 0,
+          "deduplicated": 0,
+          "emitted": 0,
+          "truncated": false
+        },
+        "inputBytes": 336,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": null
+      }
+    },
+    {
+      "candidate": "spectral",
+      "caseId": "local-ref-missing",
+      "expected": "invalid",
+      "determinism": "stable",
+      "uniqueHashes": [
+        "c1d1ed995c2ca01de0c008b78190a748866437220efcea28738ddcfe4a0d3d56"
+      ],
+      "qualification": "candidate-qualified",
+      "passed": true,
+      "failures": [],
+      "observation": {
+        "outcome": "invalid",
+        "networkAttempts": 0,
+        "canonicalSha256": "c1d1ed995c2ca01de0c008b78190a748866437220efcea28738ddcfe4a0d3d56",
+        "diagnostics": [
+          {
+            "source": "cases/missing-ref.yaml",
+            "line": 15,
+            "column": 23,
+            "pointer": "/paths/~1pets/get/responses/200/content/application~1json/schema/$ref",
+            "code": "invalid-ref",
+            "severity": "error",
+            "kind": "finding",
+            "message": "ENOENT: no such file or directory, open '<workspace>\\cases\\does-not-exist.yaml'"
+          }
+        ],
+        "diagnosticCounts": {
+          "raw": 1,
+          "deduplicated": 1,
+          "emitted": 1,
+          "truncated": false
+        },
+        "inputBytes": 340,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": null
+      }
+    },
+    {
+      "candidate": "spectral",
+      "caseId": "remote-ref-denied",
+      "expected": "remote-denied",
+      "determinism": "not-assessed",
+      "uniqueHashes": [
+        "cc4405f74745dfc8b16e2074fc8161aa63bc5735c74702a5672066c816e503b2"
+      ],
+      "qualification": "qualified-with-adapter",
+      "passed": true,
+      "failures": [],
+      "observation": {
+        "outcome": "invalid",
+        "networkAttempts": 0,
+        "canonicalSha256": "cc4405f74745dfc8b16e2074fc8161aa63bc5735c74702a5672066c816e503b2",
+        "diagnostics": [
+          {
+            "source": "generated/remote-ref-denied.yaml",
+            "line": 15,
+            "column": 24,
+            "pointer": "",
+            "code": "proof-remote-reference-denied",
+            "severity": "error",
+            "kind": "policy",
+            "message": "Remote references are disabled: http://127.0.0.1:59695/components.yaml#/components/schemas/PetList"
+          }
+        ],
+        "diagnosticCounts": {
+          "raw": 1,
+          "deduplicated": 1,
+          "emitted": 1,
+          "truncated": false
+        },
+        "inputBytes": 357,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": {
+          "outcome": "valid",
+          "networkAttempts": 1,
+          "meetsRequirement": false,
+          "failures": [
+            "Observed 1 network request(s).",
+            "Expected controlled invalid result, observed valid."
+          ],
+          "diagnostics": [],
+          "diagnosticCounts": {
+            "raw": 0,
+            "deduplicated": 0,
+            "emitted": 0,
+            "truncated": false
+          }
+        }
+      }
+    },
+    {
+      "candidate": "spectral",
+      "caseId": "size-decimal-limit",
+      "expected": "valid",
+      "determinism": "not-assessed",
+      "uniqueHashes": [
+        "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152"
+      ],
+      "qualification": "candidate-qualified",
+      "passed": true,
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkAttempts": 0,
+        "canonicalSha256": "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152",
+        "diagnostics": [],
+        "diagnosticCounts": {
+          "raw": 0,
+          "deduplicated": 0,
+          "emitted": 0,
+          "truncated": false
+        },
+        "inputBytes": 10000000,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": null
+      }
+    },
+    {
+      "candidate": "spectral",
+      "caseId": "size-decimal-over",
+      "expected": "input-too-large",
+      "determinism": "not-assessed",
+      "uniqueHashes": [
+        "585a16b7f0c058a20a96221e3d13755f27a2a9b34ba3e1b1701a26edc868f425"
+      ],
+      "qualification": "qualified-with-adapter",
+      "passed": true,
+      "failures": [],
+      "observation": {
+        "outcome": "invalid",
+        "networkAttempts": 0,
+        "canonicalSha256": "585a16b7f0c058a20a96221e3d13755f27a2a9b34ba3e1b1701a26edc868f425",
+        "diagnostics": [
+          {
+            "source": "generated/size-decimal-over.json",
+            "line": null,
+            "column": null,
+            "pointer": "",
+            "code": "proof-input-too-large",
+            "severity": "error",
+            "kind": "policy",
+            "message": "Input is 10000001 bytes; limit is 10000000 bytes."
+          }
+        ],
+        "diagnosticCounts": {
+          "raw": 1,
+          "deduplicated": 1,
+          "emitted": 1,
+          "truncated": false
+        },
+        "inputBytes": 10000001,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": {
+          "outcome": "valid",
+          "networkAttempts": 0,
+          "meetsRequirement": false,
+          "failures": [
+            "Candidate has no native input-size rejection."
+          ],
+          "diagnostics": [],
+          "diagnosticCounts": {
+            "raw": 0,
+            "deduplicated": 0,
+            "emitted": 0,
+            "truncated": false
+          }
+        }
+      }
+    },
+    {
+      "candidate": "spectral",
+      "caseId": "size-binary-limit",
+      "expected": "valid",
+      "determinism": "not-assessed",
+      "uniqueHashes": [
+        "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152"
+      ],
+      "qualification": "candidate-qualified",
+      "passed": true,
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkAttempts": 0,
+        "canonicalSha256": "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152",
+        "diagnostics": [],
+        "diagnosticCounts": {
+          "raw": 0,
+          "deduplicated": 0,
+          "emitted": 0,
+          "truncated": false
+        },
+        "inputBytes": 10485760,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": null
+      }
+    },
+    {
+      "candidate": "spectral",
+      "caseId": "size-binary-over",
+      "expected": "input-too-large",
+      "determinism": "not-assessed",
+      "uniqueHashes": [
+        "c2e65a58c5e3ab044b4a77ac78afcb577f819f9f39aad92b092d3a8a0ed72bc7"
+      ],
+      "qualification": "qualified-with-adapter",
+      "passed": true,
+      "failures": [],
+      "observation": {
+        "outcome": "invalid",
+        "networkAttempts": 0,
+        "canonicalSha256": "c2e65a58c5e3ab044b4a77ac78afcb577f819f9f39aad92b092d3a8a0ed72bc7",
+        "diagnostics": [
+          {
+            "source": "generated/size-binary-over.json",
+            "line": null,
+            "column": null,
+            "pointer": "",
+            "code": "proof-input-too-large",
+            "severity": "error",
+            "kind": "policy",
+            "message": "Input is 10485761 bytes; limit is 10485760 bytes."
+          }
+        ],
+        "diagnosticCounts": {
+          "raw": 1,
+          "deduplicated": 1,
+          "emitted": 1,
+          "truncated": false
+        },
+        "inputBytes": 10485761,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": {
+          "outcome": "valid",
+          "networkAttempts": 0,
+          "meetsRequirement": false,
+          "failures": [
+            "Candidate has no native input-size rejection."
+          ],
+          "diagnostics": [],
+          "diagnosticCounts": {
+            "raw": 0,
+            "deduplicated": 0,
+            "emitted": 0,
+            "truncated": false
+          }
+        }
+      }
+    },
+    {
+      "candidate": "redocly",
+      "caseId": "oas30-valid-yaml",
+      "expected": "valid",
+      "determinism": "stable",
+      "uniqueHashes": [
+        "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152"
+      ],
+      "qualification": "candidate-qualified",
+      "passed": true,
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkAttempts": 0,
+        "canonicalSha256": "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152",
+        "diagnostics": [],
+        "diagnosticCounts": {
+          "raw": 0,
+          "deduplicated": 0,
+          "emitted": 0,
+          "truncated": false
+        },
+        "inputBytes": 186,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": null
+      }
+    },
+    {
+      "candidate": "redocly",
+      "caseId": "oas31-valid-json",
+      "expected": "valid",
+      "determinism": "stable",
+      "uniqueHashes": [
+        "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152"
+      ],
+      "qualification": "candidate-qualified",
+      "passed": true,
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkAttempts": 0,
+        "canonicalSha256": "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152",
+        "diagnostics": [],
+        "diagnosticCounts": {
+          "raw": 0,
+          "deduplicated": 0,
+          "emitted": 0,
+          "truncated": false
+        },
+        "inputBytes": 702,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": null
+      }
+    },
+    {
+      "candidate": "redocly",
+      "caseId": "oas30-invalid-structure",
+      "expected": "invalid",
+      "determinism": "stable",
+      "uniqueHashes": [
+        "d0865e18508a3d0d1b253e80f30845478923d55fced8989474116620aff1cf7d"
+      ],
+      "qualification": "gap",
+      "passed": false,
+      "failures": [
+        "No diagnostic included both line and column."
+      ],
+      "observation": {
+        "outcome": "invalid",
+        "networkAttempts": 0,
+        "canonicalSha256": "d0865e18508a3d0d1b253e80f30845478923d55fced8989474116620aff1cf7d",
+        "diagnostics": [
+          {
+            "source": "cases/oas30-invalid-structure.yaml",
+            "line": null,
+            "column": null,
+            "pointer": "/paths/~1pets/get",
+            "code": "struct",
+            "severity": "error",
+            "kind": "finding",
+            "message": "The field `responses` must be present on this level."
+          }
+        ],
+        "diagnosticCounts": {
+          "raw": 1,
+          "deduplicated": 1,
+          "emitted": 1,
+          "truncated": false
+        },
+        "inputBytes": 124,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": null
+      }
+    },
+    {
+      "candidate": "redocly",
+      "caseId": "oas31-invalid-structure",
+      "expected": "invalid",
+      "determinism": "stable",
+      "uniqueHashes": [
+        "074a5ece7d9d52c2ac39b90f735628467df8f1b75e1d9edc8beb06cc0bd8ddcf"
+      ],
+      "qualification": "gap",
+      "passed": false,
+      "failures": [
+        "No diagnostic included both line and column."
+      ],
+      "observation": {
+        "outcome": "invalid",
+        "networkAttempts": 0,
+        "canonicalSha256": "074a5ece7d9d52c2ac39b90f735628467df8f1b75e1d9edc8beb06cc0bd8ddcf",
+        "diagnostics": [
+          {
+            "source": "cases/oas31-invalid-structure.json",
+            "line": null,
+            "column": null,
+            "pointer": "/info/version",
+            "code": "struct",
+            "severity": "error",
+            "kind": "finding",
+            "message": "Expected type `string` but got `integer`."
+          }
+        ],
+        "diagnosticCounts": {
+          "raw": 1,
+          "deduplicated": 1,
+          "emitted": 1,
+          "truncated": false
+        },
+        "inputBytes": 114,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": null
+      }
+    },
+    {
+      "candidate": "redocly",
+      "caseId": "malformed-yaml",
+      "expected": "invalid",
+      "determinism": "stable",
+      "uniqueHashes": [
+        "d30d95b987581cfca0cbab2819c42a3c96a8853b1791cf2a5d7e6890f8ae0b11"
+      ],
+      "qualification": "candidate-qualified",
+      "passed": true,
+      "failures": [],
+      "observation": {
+        "outcome": "invalid",
+        "networkAttempts": 0,
+        "canonicalSha256": "d30d95b987581cfca0cbab2819c42a3c96a8853b1791cf2a5d7e6890f8ae0b11",
+        "diagnostics": [
+          {
+            "source": "cases/malformed.yaml",
+            "line": 4,
+            "column": 3,
+            "pointer": "",
+            "code": "redocly-parse-error",
+            "severity": "error",
+            "kind": "parse-error",
+            "message": "validating malformed.yaml...\nFailed to parse API description at <workspace>\\cases\\malformed.yaml:\n\n  - deficient indentation in \"<workspace>\\cases\\malformed.yaml\" (4:3)"
+          }
+        ],
+        "diagnosticCounts": {
+          "raw": 1,
+          "deduplicated": 1,
+          "emitted": 1,
+          "truncated": false
+        },
+        "inputBytes": 74,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": null
+      }
+    },
+    {
+      "candidate": "redocly",
+      "caseId": "local-ref-valid",
+      "expected": "valid",
+      "determinism": "stable",
+      "uniqueHashes": [
+        "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152"
+      ],
+      "qualification": "candidate-qualified",
+      "passed": true,
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkAttempts": 0,
+        "canonicalSha256": "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152",
+        "diagnostics": [],
+        "diagnosticCounts": {
+          "raw": 0,
+          "deduplicated": 0,
+          "emitted": 0,
+          "truncated": false
+        },
+        "inputBytes": 334,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": null
+      }
+    },
+    {
+      "candidate": "redocly",
+      "caseId": "local-ref-invalid",
+      "expected": "invalid",
+      "determinism": "stable",
+      "uniqueHashes": [
+        "08ade35ae8b87c1df2094a7a8e918b79cd7c3befc43a37f888e9b5a34cd2fdf2"
+      ],
+      "qualification": "gap",
+      "passed": false,
+      "failures": [
+        "No diagnostic included both line and column."
+      ],
+      "observation": {
+        "outcome": "invalid",
+        "networkAttempts": 0,
+        "canonicalSha256": "08ade35ae8b87c1df2094a7a8e918b79cd7c3befc43a37f888e9b5a34cd2fdf2",
+        "diagnostics": [
+          {
+            "source": "cases/local-ref-invalid/components.yaml",
+            "line": null,
+            "column": null,
+            "pointer": "/components/schemas/PetList/type",
+            "code": "struct",
+            "severity": "error",
+            "kind": "finding",
+            "message": "`type` can be one of the following only: \"object\", \"array\", \"string\", \"number\", \"integer\", \"boolean\"."
+          }
+        ],
+        "diagnosticCounts": {
+          "raw": 1,
+          "deduplicated": 1,
+          "emitted": 1,
+          "truncated": false
+        },
+        "inputBytes": 336,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": null
+      }
+    },
+    {
+      "candidate": "redocly",
+      "caseId": "local-ref-missing",
+      "expected": "invalid",
+      "determinism": "stable",
+      "uniqueHashes": [
+        "f971f10c4138c087e8650f76895fe99a1ec8fd125422cb1ddce47b2b626c6557"
+      ],
+      "qualification": "gap",
+      "passed": false,
+      "failures": [
+        "No diagnostic included both line and column."
+      ],
+      "observation": {
+        "outcome": "invalid",
+        "networkAttempts": 0,
+        "canonicalSha256": "f971f10c4138c087e8650f76895fe99a1ec8fd125422cb1ddce47b2b626c6557",
+        "diagnostics": [
+          {
+            "source": "cases/missing-ref.yaml",
+            "line": null,
+            "column": null,
+            "pointer": "/paths/~1pets/get/responses/200/content/application~1json/schema",
+            "code": "no-unresolved-refs",
+            "severity": "error",
+            "kind": "finding",
+            "message": "Can't resolve $ref: ENOENT: no such file or directory '<workspace>\\cases\\does-not-exist.yaml'"
+          }
+        ],
+        "diagnosticCounts": {
+          "raw": 1,
+          "deduplicated": 1,
+          "emitted": 1,
+          "truncated": false
+        },
+        "inputBytes": 340,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": null
+      }
+    },
+    {
+      "candidate": "redocly",
+      "caseId": "remote-ref-denied",
+      "expected": "remote-denied",
+      "determinism": "not-assessed",
+      "uniqueHashes": [
+        "cc4405f74745dfc8b16e2074fc8161aa63bc5735c74702a5672066c816e503b2"
+      ],
+      "qualification": "qualified-with-adapter",
+      "passed": true,
+      "failures": [],
+      "observation": {
+        "outcome": "invalid",
+        "networkAttempts": 0,
+        "canonicalSha256": "cc4405f74745dfc8b16e2074fc8161aa63bc5735c74702a5672066c816e503b2",
+        "diagnostics": [
+          {
+            "source": "generated/remote-ref-denied.yaml",
+            "line": 15,
+            "column": 24,
+            "pointer": "",
+            "code": "proof-remote-reference-denied",
+            "severity": "error",
+            "kind": "policy",
+            "message": "Remote references are disabled: http://127.0.0.1:59695/components.yaml#/components/schemas/PetList"
+          }
+        ],
+        "diagnosticCounts": {
+          "raw": 1,
+          "deduplicated": 1,
+          "emitted": 1,
+          "truncated": false
+        },
+        "inputBytes": 357,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": {
+          "outcome": "valid",
+          "networkAttempts": 1,
+          "meetsRequirement": false,
+          "failures": [
+            "Observed 1 network request(s).",
+            "Expected controlled invalid result, observed valid."
+          ],
+          "diagnostics": [],
+          "diagnosticCounts": {
+            "raw": 0,
+            "deduplicated": 0,
+            "emitted": 0,
+            "truncated": false
+          }
+        }
+      }
+    },
+    {
+      "candidate": "redocly",
+      "caseId": "size-decimal-limit",
+      "expected": "valid",
+      "determinism": "not-assessed",
+      "uniqueHashes": [
+        "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152"
+      ],
+      "qualification": "candidate-qualified",
+      "passed": true,
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkAttempts": 0,
+        "canonicalSha256": "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152",
+        "diagnostics": [],
+        "diagnosticCounts": {
+          "raw": 0,
+          "deduplicated": 0,
+          "emitted": 0,
+          "truncated": false
+        },
+        "inputBytes": 10000000,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": null
+      }
+    },
+    {
+      "candidate": "redocly",
+      "caseId": "size-decimal-over",
+      "expected": "input-too-large",
+      "determinism": "not-assessed",
+      "uniqueHashes": [
+        "585a16b7f0c058a20a96221e3d13755f27a2a9b34ba3e1b1701a26edc868f425"
+      ],
+      "qualification": "qualified-with-adapter",
+      "passed": true,
+      "failures": [],
+      "observation": {
+        "outcome": "invalid",
+        "networkAttempts": 0,
+        "canonicalSha256": "585a16b7f0c058a20a96221e3d13755f27a2a9b34ba3e1b1701a26edc868f425",
+        "diagnostics": [
+          {
+            "source": "generated/size-decimal-over.json",
+            "line": null,
+            "column": null,
+            "pointer": "",
+            "code": "proof-input-too-large",
+            "severity": "error",
+            "kind": "policy",
+            "message": "Input is 10000001 bytes; limit is 10000000 bytes."
+          }
+        ],
+        "diagnosticCounts": {
+          "raw": 1,
+          "deduplicated": 1,
+          "emitted": 1,
+          "truncated": false
+        },
+        "inputBytes": 10000001,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": {
+          "outcome": "valid",
+          "networkAttempts": 0,
+          "meetsRequirement": false,
+          "failures": [
+            "Candidate has no native input-size rejection."
+          ],
+          "diagnostics": [],
+          "diagnosticCounts": {
+            "raw": 0,
+            "deduplicated": 0,
+            "emitted": 0,
+            "truncated": false
+          }
+        }
+      }
+    },
+    {
+      "candidate": "redocly",
+      "caseId": "size-binary-limit",
+      "expected": "valid",
+      "determinism": "not-assessed",
+      "uniqueHashes": [
+        "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152"
+      ],
+      "qualification": "candidate-qualified",
+      "passed": true,
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkAttempts": 0,
+        "canonicalSha256": "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152",
+        "diagnostics": [],
+        "diagnosticCounts": {
+          "raw": 0,
+          "deduplicated": 0,
+          "emitted": 0,
+          "truncated": false
+        },
+        "inputBytes": 10485760,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": null
+      }
+    },
+    {
+      "candidate": "redocly",
+      "caseId": "size-binary-over",
+      "expected": "input-too-large",
+      "determinism": "not-assessed",
+      "uniqueHashes": [
+        "c2e65a58c5e3ab044b4a77ac78afcb577f819f9f39aad92b092d3a8a0ed72bc7"
+      ],
+      "qualification": "qualified-with-adapter",
+      "passed": true,
+      "failures": [],
+      "observation": {
+        "outcome": "invalid",
+        "networkAttempts": 0,
+        "canonicalSha256": "c2e65a58c5e3ab044b4a77ac78afcb577f819f9f39aad92b092d3a8a0ed72bc7",
+        "diagnostics": [
+          {
+            "source": "generated/size-binary-over.json",
+            "line": null,
+            "column": null,
+            "pointer": "",
+            "code": "proof-input-too-large",
+            "severity": "error",
+            "kind": "policy",
+            "message": "Input is 10485761 bytes; limit is 10485760 bytes."
+          }
+        ],
+        "diagnosticCounts": {
+          "raw": 1,
+          "deduplicated": 1,
+          "emitted": 1,
+          "truncated": false
+        },
+        "inputBytes": 10485761,
+        "timedOut": false,
+        "outputLimited": false,
+        "nativeProbe": {
+          "outcome": "valid",
+          "networkAttempts": 0,
+          "meetsRequirement": false,
+          "failures": [
+            "Candidate has no native input-size rejection."
+          ],
+          "diagnostics": [],
+          "diagnosticCounts": {
+            "raw": 0,
+            "deduplicated": 0,
+            "emitted": 0,
+            "truncated": false
+          }
+        }
+      }
+    }
+  ]
+}

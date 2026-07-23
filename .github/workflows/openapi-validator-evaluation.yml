@@ -1,0 +1,93 @@
+name: OpenAPI Validator Evaluation
+
+on:
+  pull_request:
+    branches:
+      - develop
+    paths:
+      - '.github/workflows/openapi-validator-evaluation.yml'
+      - 'spikes/openapi-validator/**'
+  push:
+    branches:
+      - develop
+      - main
+    paths:
+      - '.github/workflows/openapi-validator-evaluation.yml'
+      - 'spikes/openapi-validator/**'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: openapi-validator-evaluation-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  openapi-validator-evaluation:
+    name: openapi-validator-evaluation
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: spikes/openapi-validator
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version: 24.13.0
+          package-manager-cache: false
+
+      - name: Set up Go
+        uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6.4.0
+        with:
+          go-version: 1.25.12
+          cache: false
+
+      - name: Install locked dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Build pinned candidates
+        run: npm run bootstrap
+
+      - name: Run candidate evaluation
+        run: npm test
+
+      - name: Generate dependency evidence
+        run: npm run inventory
+
+      - name: Audit locked Node dependencies
+        run: npm audit --audit-level=low
+
+      - name: Summarize evaluation
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const summary = JSON.parse(
+            fs.readFileSync('.cache/evidence/summary.json', 'utf8'),
+          );
+          const lines = [
+            '## OpenAPI validator evaluation',
+            '',
+            `- Run status: **${summary.runStatus}**`,
+            `- Candidate cases: **${summary.totals.passed}/${summary.totals.cases}** met the fixture contract`,
+            `- Candidate gaps: **${summary.totals.gaps}**`,
+            `- Qualified with explicit adapter controls: **${summary.totals.qualifiedWithAdapter}**`,
+            '',
+            '| Candidate | Disposition |',
+            '| --- | --- |',
+            ...Object.entries(summary.dispositions).map(
+              ([candidate, disposition]) => `| ${candidate} | ${disposition} |`,
+            ),
+            '',
+          ];
+          fs.appendFileSync(
+            process.env.GITHUB_STEP_SUMMARY,
+            `${lines.join('\n')}\n`,
+          );
+          NODE

@@ -1,0 +1,11 @@
+components:
+  schemas:
+    PetList:
+      type: array
+      items:
+        type: object
+        required:
+          - id
+        properties:
+          id:
+            type: string

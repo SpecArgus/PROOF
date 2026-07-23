@@ -1,0 +1,15 @@
+openapi: 3.1.0
+info:
+  title: Remote reference denial fixture
+  version: 1.0.0
+paths:
+  /pets:
+    get:
+      operationId: getPets
+      responses:
+        "200":
+          description: Pet list
+          content:
+            application/json:
+              schema:
+                $ref: "http://127.0.0.1:{{PORT}}/components.yaml#/components/schemas/PetList"

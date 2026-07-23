@@ -1,0 +1,20 @@
+{
+  "name": "@specargus/openapi-validator-spike",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "npm@11.6.2",
+  "description": "Runtime-neutral black-box evaluation harness for PROOF issue #3.",
+  "scripts": {
+    "bootstrap": "node ./scripts/bootstrap.mjs",
+    "evaluate": "node ./scripts/evaluate.mjs",
+    "evaluate:strict": "node ./scripts/evaluate.mjs --strict",
+    "inventory": "node ./scripts/inventory.mjs",
+    "snapshot": "node ./scripts/snapshot.mjs",
+    "test": "npm run evaluate"
+  },
+  "devDependencies": {
+    "@redocly/cli": "2.40.0",
+    "@stoplight/spectral-cli": "6.16.2"
+  }
+}
