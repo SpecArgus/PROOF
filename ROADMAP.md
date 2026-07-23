@@ -12,6 +12,36 @@ PROOF helps maintainers review whether OpenAPI operations provide clear, actiona
 
 ## Phase 0: Discovery and architecture decisions
 
+### Entry criteria
+
+- The repository foundation is merged into `develop`, with contribution,
+  governance, security, and release policies present.
+- Protected-branch and repository-validation controls are active.
+- The public working identity, three equal co-maintainers, and both evidence
+  reviewers are recorded.
+- Phase 0 outcomes, evidence work, and exit criteria are tracked in public
+  issues and this roadmap.
+
+Foundation PR #2 satisfied the repository-policy and protection prerequisites.
+The merge of ADR 0001 into `develop` in Accepted status, after all three role
+members acknowledge their responsibilities, satisfies the remaining criteria
+and records Phase 0 entry. The merge date does not establish a fixed review
+date.
+
+### Governance
+
+- Public working identity: `SpecArgus PROOF`.
+- Accountable role for product decisions, success metrics, security response,
+  and releases: Phase 0 co-maintainers.
+- Equal role members: `@back1ash`, `@Seo-yul`, and `@minsubyun1`.
+- Evidence reviewers: `@Seo-yul` and `@minsubyun1`.
+- Material-decision rule: recorded agreement from at least two co-maintainers.
+- Review timing: exit-criteria-driven, with no fixed calendar date.
+- Gate outcomes: proceed, revise and re-evaluate, or stop.
+
+See [ADR 0001](docs/adr/0001-product-identity-and-phase-0-governance.md) for the
+decision and evidence trigger.
+
 ### Outcomes
 
 - Confirm the public product name, repository scope, decision owners, and success-metric owners.

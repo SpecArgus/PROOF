@@ -37,9 +37,11 @@ requesting review.
 
 During the repository-foundation phase, protected branches do not require a
 minimum number of approving reviews. Required checks and resolved review
-conversations still apply, and a maintainer with write access remains
-responsible for the merge decision. A formal approval requirement will be
-enabled only after the repository owner explicitly announces that the
-foundation is ready.
+conversations still apply. Any co-maintainer may decide a routine merge after
+those controls pass. A pull request that contains a material product,
+architecture, security, governance, or release decision also needs the recorded
+agreement defined in [GOVERNANCE.md](GOVERNANCE.md). Enabling a formal approval
+requirement is itself a material governance decision and does not happen until
+that agreement is recorded.
 
 By contributing, you agree that your work is licensed under the repository's license.

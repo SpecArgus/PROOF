@@ -17,6 +17,9 @@ The format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0
 - Temporarily set the required approving-review count to zero while the
   repository foundation is being established; required CI and resolved review
   conversations remain enforced.
+- Adopt `SpecArgus PROOF` as the Phase 0 public identity and record three equal
+  co-maintainers, both evidence reviewers, and the exit-criteria-driven Phase 0
+  gate.
 
 ### Deprecated
 

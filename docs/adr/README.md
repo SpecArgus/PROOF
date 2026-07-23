@@ -24,3 +24,8 @@ governance, or the release process.
 
 Implementation should not depend on a proposed decision unless the related
 issue explicitly authorizes a reversible spike.
+
+## Records
+
+- [ADR 0001: Adopt the Phase 0 product identity and governance](0001-product-identity-and-phase-0-governance.md)
+  — Proposed on 2026-07-23.

@@ -1,6 +1,11 @@
-# PROOF
+# SpecArgus PROOF
 
 **Policy Review of OpenAPI Operations for Function-calling**
+
+SpecArgus PROOF is the public working identity for Phase 0. The permanent
+launch name will be reconsidered at the Phase 0 gate; bare `proof` will not be
+used as a package, executable, or GitHub App identifier. See
+[ADR 0001](docs/adr/0001-product-identity-and-phase-0-governance.md).
 
 PROOF is an early-stage open source project exploring a deterministic quality
 gate for OpenAPI operations that will be exposed as AI agent or MCP tools.
