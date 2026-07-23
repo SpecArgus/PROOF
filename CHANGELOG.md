@@ -14,7 +14,9 @@ The format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0
 
 ### Changed
 
-<!-- Changes to existing behavior or interfaces. -->
+- Temporarily set the required approving-review count to zero while the
+  repository foundation is being established; required CI and resolved review
+  conversations remain enforced.
 
 ### Deprecated
 
@@ -30,4 +32,5 @@ The format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0
 
 ### Security
 
-<!-- Security fixes or material hardening changes. Do not disclose unresolved vulnerabilities here. -->
+- Enable GitHub Private vulnerability reporting for confidential security
+  reports.

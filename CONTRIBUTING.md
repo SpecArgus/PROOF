@@ -35,9 +35,11 @@ Commits, for example `feat(core): add finding schema`. Update tests and
 documentation when behavior changes, and ensure all required checks pass before
 requesting review.
 
-Protected branches require at least one formal GitHub **Approve** review from a
-maintainer with write access. A comment such as `LGTM` may communicate intent,
-but it does not satisfy GitHub's required-review rule. Pull request authors
-cannot approve their own changes.
+During the repository-foundation phase, protected branches do not require a
+minimum number of approving reviews. Required checks and resolved review
+conversations still apply, and a maintainer with write access remains
+responsible for the merge decision. A formal approval requirement will be
+enabled only after the repository owner explicitly announces that the
+foundation is ready.
 
 By contributing, you agree that your work is licensed under the repository's license.

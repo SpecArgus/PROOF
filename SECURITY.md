@@ -8,7 +8,11 @@ PROOF has not published a stable release yet. Until a version support policy is 
 
 Do not report suspected vulnerabilities in a public issue, discussion, pull request, or other public channel.
 
-Use the repository's **Private vulnerability reporting** option under the Security tab when available. This creates a private GitHub Security Advisory where maintainers can investigate and coordinate a fix. If that option is unavailable, contact the repository owner privately through GitHub before sharing vulnerability details.
+Use the repository's **Private vulnerability reporting** option under the
+Security tab. This creates a private GitHub Security Advisory where maintainers
+can investigate and coordinate a fix. If GitHub makes that option temporarily
+unavailable, contact the repository owner privately before sharing vulnerability
+details.
 
 Please include, when possible:
 

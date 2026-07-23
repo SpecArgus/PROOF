@@ -35,8 +35,10 @@ Keep each branch focused on one reviewable outcome. Rebase or update it as requi
 1. Open the pull request against `develop` and link the governing issue.
 2. Explain the change, verification, risks, and any follow-up work.
 3. Pass required checks and resolve review conversations.
-4. Receive at least one formal GitHub **Approve** review from a maintainer with
-   write access. Plain comments such as `LGTM` do not satisfy this rule.
+4. During the repository-foundation phase, no approving review is required by
+   the ruleset. A maintainer with write access still decides whether to merge.
+   Required approvals will be enabled only after an explicit repository-owner
+   decision.
 5. For normal topic branches, use **squash merge** so one topic pull request
    becomes one coherent commit.
 6. Delete the topic branch after merge.

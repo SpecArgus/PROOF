@@ -46,5 +46,5 @@ Closes #
 - [ ] Tests cover the change and pass locally.
 - [ ] Documentation is updated where needed.
 - [ ] Security, privacy, and compatibility impacts have been assessed.
-- [ ] At least one maintainer with write access has submitted a formal **Approve** review.
+- [ ] Required repository checks pass and all review conversations are resolved.
 - [ ] No unrelated changes are included.
