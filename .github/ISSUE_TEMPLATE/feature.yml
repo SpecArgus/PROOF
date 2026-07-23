@@ -1,0 +1,86 @@
+name: Feature request
+description: Propose a user-focused improvement to PROOF
+title: "[Feature]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Start with the problem and desired outcome. Implementation details are welcome but optional.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What problem exists today, and why is it worth solving?
+      placeholder: When ..., users cannot ..., which causes ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: users
+    attributes:
+      label: Users and use case
+      description: Who experiences this problem, and in what workflow?
+    validations:
+      required: true
+
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Desired outcome
+      description: Describe the observable behavior or result, without prescribing an implementation.
+    validations:
+      required: true
+
+  - type: textarea
+    id: criteria
+    attributes:
+      label: Acceptance criteria
+      description: List specific, testable conditions that would make this request complete.
+      placeholder: |
+        - [ ] Given ..., when ..., then ...
+        - [ ] Given ..., when ..., then ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed approach
+      description: Share an implementation idea, API shape, or workflow if you have one.
+    validations:
+      required: false
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Describe current workarounds or other approaches you evaluated.
+    validations:
+      required: false
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Scope and impact
+      description: Note compatibility, security, performance, documentation, or migration considerations.
+    validations:
+      required: false
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Add examples, related issues, mockups, or references.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmations
+      options:
+        - label: I searched existing issues and did not find a duplicate request.
+          required: true
+        - label: The acceptance criteria describe observable, testable behavior.
+          required: true

@@ -1,0 +1,23 @@
+# Operating systems
+.DS_Store
+Thumbs.db
+
+# Editors and local tooling
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Environment and local secrets
+.env
+.env.*
+!.env.example
+
+# Logs, caches, and generated output
+*.log
+.cache/
+coverage/
+dist/
+build/
+tmp/
+temp/
