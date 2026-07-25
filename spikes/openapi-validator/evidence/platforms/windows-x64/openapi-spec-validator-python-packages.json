@@ -1,0 +1,122 @@
+[
+  {
+    "name": "annotated-types",
+    "version": "0.8.0",
+    "requested": true,
+    "license": "MIT"
+  },
+  {
+    "name": "attrs",
+    "version": "26.1.0",
+    "requested": true,
+    "license": "MIT"
+  },
+  {
+    "name": "jsonschema",
+    "version": "4.26.0",
+    "requested": true,
+    "license": "MIT"
+  },
+  {
+    "name": "jsonschema-path",
+    "version": "0.5.0",
+    "requested": true,
+    "license": "Apache-2.0"
+  },
+  {
+    "name": "jsonschema-specifications",
+    "version": "2025.9.1",
+    "requested": true,
+    "license": "MIT"
+  },
+  {
+    "name": "lazy-object-proxy",
+    "version": "1.11.0",
+    "requested": true,
+    "license": "BSD-2-Clause"
+  },
+  {
+    "name": "openapi-schema-validator",
+    "version": "0.9.0",
+    "requested": true,
+    "license": "BSD-3-Clause"
+  },
+  {
+    "name": "openapi-spec-validator",
+    "version": "0.9.0",
+    "requested": true,
+    "license": "Apache-2.0"
+  },
+  {
+    "name": "pathable",
+    "version": "0.6.0",
+    "requested": true,
+    "license": "Apache-2.0"
+  },
+  {
+    "name": "pydantic",
+    "version": "2.13.4",
+    "requested": true,
+    "license": "MIT"
+  },
+  {
+    "name": "pydantic_core",
+    "version": "2.46.4",
+    "requested": true,
+    "license": "MIT"
+  },
+  {
+    "name": "pydantic-settings",
+    "version": "2.14.2",
+    "requested": true,
+    "license": "MIT"
+  },
+  {
+    "name": "python-dotenv",
+    "version": "1.2.2",
+    "requested": true,
+    "license": "BSD-3-Clause"
+  },
+  {
+    "name": "PyYAML",
+    "version": "6.0.3",
+    "requested": true,
+    "license": "MIT"
+  },
+  {
+    "name": "referencing",
+    "version": "0.37.0",
+    "requested": true,
+    "license": "MIT"
+  },
+  {
+    "name": "rfc3339-validator",
+    "version": "0.1.4",
+    "requested": true,
+    "license": "MIT license"
+  },
+  {
+    "name": "rpds-py",
+    "version": "2026.6.3",
+    "requested": true,
+    "license": "MIT"
+  },
+  {
+    "name": "six",
+    "version": "1.17.0",
+    "requested": true,
+    "license": "MIT"
+  },
+  {
+    "name": "typing_extensions",
+    "version": "4.16.0",
+    "requested": true,
+    "license": "PSF-2.0"
+  },
+  {
+    "name": "typing-inspection",
+    "version": "0.4.2",
+    "requested": true,
+    "license": "MIT"
+  }
+]

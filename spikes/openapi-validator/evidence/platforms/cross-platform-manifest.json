@@ -1,0 +1,201 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-07-25T04:20:21Z",
+  "source": {
+    "repository": "SpecArgus/PROOF",
+    "commit": "97336e58ea5754d0b17e2aec802b42c7e7d4d618",
+    "workflowRunId": 30143349681,
+    "workflowRunAttempt": 1,
+    "workflowRunUrl": "https://github.com/SpecArgus/PROOF/actions/runs/30143349681"
+  },
+  "common": {
+    "evaluationInputSha256": "e62d2639bdc31b1585ee2a66649d497338897d3daed3332ed5565c63c75432ce",
+    "stageOneInputSha256": "f17fd6cc6c1d27dc6479a5ba8e51eedb07ad8055b182b888e46fdc3ff27c57dd",
+    "packageLockSha256": "672b08446d42acecce18d1bbd22d2555d545e217ad21e26a68bc2458901153c2",
+    "runtimes": {
+      "node": "24.13.0",
+      "npm": "11.6.2",
+      "go": "1.25.12",
+      "python": "3.14.2"
+    },
+    "stageOne": {
+      "passed": 32,
+      "cases": 39
+    },
+    "stageTwo": {
+      "passed": 73,
+      "applicable": 75,
+      "cases": 78,
+      "gaps": 2
+    },
+    "consistentGaps": [
+      {
+        "candidate": "libopenapi",
+        "gate": "deterministic-diagnostics",
+        "case": "multi-file-deterministic-invalid",
+        "reason": "The result is deterministic but incorrectly valid for invalid external bare schemas."
+      },
+      {
+        "candidate": "redocly-core",
+        "gate": "diagnostic-volume",
+        "case": "diagnostic-flood",
+        "reason": "The underlying structural rule exposes only one of twelve independent findings."
+      }
+    ],
+    "recommendation": {
+      "candidate": "openapi-spec-validator",
+      "version": "0.9.0",
+      "requiredGatesPassed": 9,
+      "requiredGates": 9,
+      "selectionStatus": "recommended-pending-maintainer-approval"
+    }
+  },
+  "inventoryVariations": [
+    "The macOS npm graph has one additional Spectral-only optional fsevents component; the Redocly Core closure remains 22 components on every platform.",
+    "Vacuum's linked Go module count varies with platform build tags. Vacuum is not the recommended product path.",
+    "The openapi-spec-validator package inventory is the same 20-package hash-locked set on every platform."
+  ],
+  "platforms": [
+    {
+      "id": "linux-x64",
+      "environment": {
+        "os": "linux",
+        "architecture": "x64"
+      },
+      "artifact": {
+        "id": 8615285821,
+        "name": "openapi-validator-reviewed-linux-x64-attempt-1",
+        "sha256": "b4f9e20ae9f1ab30f7c5cba422faab3234cca598e48dd750ce10850cf9deddeb",
+        "bytes": 35712,
+        "expiresAt": "2026-08-24T04:13:12Z"
+      },
+      "dispositions": {
+        "libopenapi": "has-gaps",
+        "redocly-core": "has-gaps",
+        "openapi-spec-validator": "selectable-on-linux"
+      },
+      "audits": {
+        "go": "pass",
+        "node": "pass-with-nonselected-findings",
+        "nodeSelectionRelevantFindingCount": 0,
+        "python": "pass"
+      },
+      "inventory": {
+        "npmComponents": 258,
+        "npmUnknownLicenses": 0,
+        "redoclyCoreComponents": 22,
+        "vacuumModules": 95,
+        "vacuumUnknownLicenses": 0,
+        "libopenapiModules": 16,
+        "libopenapiUnknownLicenses": 0,
+        "openapiSpecValidatorPackages": 20,
+        "openapiSpecValidatorUnknownLicenses": 0
+      },
+      "files": {
+        "adapter-evaluation-summary.json": "244485543390a2f782b89d2aab7dadde74624d1404c432b74061b9148bb6f65e",
+        "evaluation-summary.json": "0c56cda64d76fb0126c1cce5944083542d89805b0492919df02d3ad921a7b0d6",
+        "inventory-summary.json": "7871e6ac4ce9ca4b6ff76e8cec19bea4ad5627c33bd717ddfb81e64943103ad2",
+        "libopenapi-adapter-modules.json": "b6dd9d9b560cf25bbc6fcbae0bdde259e82f797dd452f4189bc5e0c6ef05172e",
+        "libopenapi-adapter-vulnerability-summary.json": "46753d84e36611975568d41a3589d44b598d86ed13f6ec6db4225fe082fcd6e8",
+        "node-vulnerability-summary.json": "51b6bdd9ec08487c69c92785df10fae884a6f6cb4dda4633aba2ee54e19da367",
+        "openapi-spec-validator-python-packages.json": "df21e4b106effbda29fbcd0d5256ddf90a3437e23cffce72a21ce94c13cae3a0",
+        "python-vulnerability-summary.json": "01a0335754bfcf23b555977b23da3ad3e32805bc3255b3a45f9a64388ac904fe",
+        "vacuum-modules.json": "977f98e2416c66f5ff50c020db65a64c5bea020626949478e450c28d95f2400e"
+      }
+    },
+    {
+      "id": "macos-arm64",
+      "environment": {
+        "os": "darwin",
+        "architecture": "arm64"
+      },
+      "artifact": {
+        "id": 8615282759,
+        "name": "openapi-validator-reviewed-macos-arm64-attempt-1",
+        "sha256": "76459ea7d955a9c39406dbc2519d3c57a0918c917789990aaca945ea35ad0942",
+        "bytes": 35777,
+        "expiresAt": "2026-08-24T04:12:51Z"
+      },
+      "dispositions": {
+        "libopenapi": "has-gaps",
+        "redocly-core": "has-gaps",
+        "openapi-spec-validator": "selectable-on-darwin"
+      },
+      "audits": {
+        "go": "pass",
+        "node": "pass-with-nonselected-findings",
+        "nodeSelectionRelevantFindingCount": 0,
+        "python": "pass"
+      },
+      "inventory": {
+        "npmComponents": 259,
+        "npmUnknownLicenses": 0,
+        "redoclyCoreComponents": 22,
+        "vacuumModules": 96,
+        "vacuumUnknownLicenses": 0,
+        "libopenapiModules": 16,
+        "libopenapiUnknownLicenses": 0,
+        "openapiSpecValidatorPackages": 20,
+        "openapiSpecValidatorUnknownLicenses": 0
+      },
+      "files": {
+        "adapter-evaluation-summary.json": "a26a6ba4ba47099713836a1998d060422d3ccaab89364a0b4947d2d173233cec",
+        "evaluation-summary.json": "7f896fd87bd081edbcc0f48f3228e18ab7694887435f2b75ed24a5f63ed98070",
+        "inventory-summary.json": "c3412d040d7e24256dcda2901844de8d4c1e57f2751cffab9a71aa2f835c8a58",
+        "libopenapi-adapter-modules.json": "b6dd9d9b560cf25bbc6fcbae0bdde259e82f797dd452f4189bc5e0c6ef05172e",
+        "libopenapi-adapter-vulnerability-summary.json": "ff54175cc0fa65f28494575ac9a81e1b4350f92526ee80d09d91b76fcb35c735",
+        "node-vulnerability-summary.json": "507d89754a7ae5616233ab3bdc36bfc35e81d629587d49a38e6bd0171704d537",
+        "openapi-spec-validator-python-packages.json": "df21e4b106effbda29fbcd0d5256ddf90a3437e23cffce72a21ce94c13cae3a0",
+        "python-vulnerability-summary.json": "f50bb3560bda39782d15db492aa1752c88f5804f5b97f8a35d41167219d43dff",
+        "vacuum-modules.json": "4689d4ac3fb2de04197953ed5d5d932044898a4b701d78c071988412d0463ca8"
+      }
+    },
+    {
+      "id": "windows-x64",
+      "environment": {
+        "os": "win32",
+        "architecture": "x64"
+      },
+      "artifact": {
+        "id": 8615314238,
+        "name": "openapi-validator-reviewed-windows-x64-attempt-1",
+        "sha256": "fcbc210e4c4c154d45b72e7ac00113b032f891b78335e05fe621d846b98ed3fb",
+        "bytes": 35747,
+        "expiresAt": "2026-08-24T04:16:19Z"
+      },
+      "dispositions": {
+        "libopenapi": "has-gaps",
+        "redocly-core": "has-gaps",
+        "openapi-spec-validator": "selectable-on-windows"
+      },
+      "audits": {
+        "go": "pass",
+        "node": "pass-with-nonselected-findings",
+        "nodeSelectionRelevantFindingCount": 0,
+        "python": "pass"
+      },
+      "inventory": {
+        "npmComponents": 258,
+        "npmUnknownLicenses": 0,
+        "redoclyCoreComponents": 22,
+        "vacuumModules": 95,
+        "vacuumUnknownLicenses": 0,
+        "libopenapiModules": 16,
+        "libopenapiUnknownLicenses": 0,
+        "openapiSpecValidatorPackages": 20,
+        "openapiSpecValidatorUnknownLicenses": 0
+      },
+      "files": {
+        "adapter-evaluation-summary.json": "77ea87abfa3b6517a32ac46d80b47e84223eab9b8149bbe06fe60d0d27fa871a",
+        "evaluation-summary.json": "a97617bfbb5741f9bff51aed3b7d84f700cf2970c2655d3a86eb8882b0e8b818",
+        "inventory-summary.json": "ef4d146a95dbd98a08c905bde7249ec9a03ef0a3214ecdb1447e27767ce40b7c",
+        "libopenapi-adapter-modules.json": "b6dd9d9b560cf25bbc6fcbae0bdde259e82f797dd452f4189bc5e0c6ef05172e",
+        "libopenapi-adapter-vulnerability-summary.json": "4c75cb8a9388106ccf38cf5db71c191f572d4b4a5cd0516c99244d198c48a6bf",
+        "node-vulnerability-summary.json": "bef7c53e6f000d56860885a229e55a04e7df7b16c3ce1c911598ac53c120d2ee",
+        "openapi-spec-validator-python-packages.json": "df21e4b106effbda29fbcd0d5256ddf90a3437e23cffce72a21ce94c13cae3a0",
+        "python-vulnerability-summary.json": "6b0e1df7b49f65ecf6881880ba177a4d6e258d573b4211b42716189156fe76b9",
+        "vacuum-modules.json": "6f9bedfb56e5ffaeb514b1b98b952451ffa5883c70dd71fc46358f1f290d5c26"
+      }
+    }
+  ]
+}

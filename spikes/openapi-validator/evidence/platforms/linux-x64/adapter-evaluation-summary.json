@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "environment": {
-    "platform": "win32",
+    "platform": "linux",
     "architecture": "x64",
     "node": "v24.13.0"
   },
@@ -10,20 +10,20 @@
     "manifestSha256": "02911ce99d1b3473282236f62b4efdfc90ee783795acb754c0b8868429055e71",
     "packageLockSha256": "672b08446d42acecce18d1bbd22d2555d545e217ad21e26a68bc2458901153c2",
     "candidateArtifactSha256": {
-      "libopenapi": "bfaa8272563a8b7e64ea59af2607cabccef01ca42bf0a8f75bb93f9130fe28dc",
+      "libopenapi": "46a77ab392291ae0d5e4ef9c87a5290a701cfe22b3f59bf550458e9fb3799f0b",
       "redocly-core": "da929e60b133e06e48a49ec4b0e2372c4f47cfb527919ab9c7186743816bcc15",
       "openapi-spec-validator": "d00235329b2e47bf3a29a6d7f3ed8e2c73e172e7a5eb8af45a9ad55269fbe71a"
     },
     "candidateRuntime": {
       "openapi-spec-validator": {
-        "executableSha256": "e725f520cfbb2e4844fe0a9fc8949236f20b0d67e470d1232618b99504a0691a",
+        "executableSha256": "e452d5202c5b2bc096de979ca37cc83a75e45d6e4e117067320f5c42fb862158",
         "requirementsLockSha256": "818bdb7510cd9d6579f302d4fe021fd4fe7d3722206a8f5106112daad2e0d43a",
-        "environmentSha256": "5fd62de431d07007f4b5499642d85cc3ae4063d8a1c8ff2bacb1557693c35c0b",
+        "environmentSha256": "ebe1d636b690811a0510ca1bd8b9b3695f285bf6ca43a62e0d3ae7bb83bab51f",
         "environment": {
           "implementation": "cpython",
           "pythonVersion": "3.14.2",
-          "platform": "Windows",
-          "architecture": "AMD64",
+          "platform": "Linux",
+          "architecture": "x86_64",
           "packages": [
             {
               "name": "annotated-types",
@@ -127,7 +127,7 @@
     "corpusCaseCount": 26
   },
   "integrityErrors": [],
-  "platform": "windows",
+  "platform": "linux",
   "profile": {
     "timeoutMs": 5000,
     "maxEntrypointBytes": 1048576,
@@ -140,7 +140,7 @@
   "dispositions": {
     "libopenapi": "has-gaps",
     "redocly-core": "has-gaps",
-    "openapi-spec-validator": "selectable-on-windows"
+    "openapi-spec-validator": "selectable-on-linux"
   },
   "totals": {
     "cases": 78,
@@ -185,7 +185,7 @@
           "parent-path-escape",
           "file-uri-denied",
           "percent-encoded-path-escape",
-          "directory-junction-escape"
+          "directory-symlink-escape"
         ],
         "failedCases": []
       },
@@ -286,7 +286,7 @@
           "parent-path-escape",
           "file-uri-denied",
           "percent-encoded-path-escape",
-          "directory-junction-escape"
+          "directory-symlink-escape"
         ],
         "failedCases": []
       },
@@ -387,7 +387,7 @@
           "parent-path-escape",
           "file-uri-denied",
           "percent-encoded-path-escape",
-          "directory-junction-escape"
+          "directory-symlink-escape"
         ],
         "failedCases": []
       },
@@ -458,15 +458,15 @@
   "supervisorControls": {
     "timeout": {
       "status": "passed",
-      "detail": "timedOut=true,forcedSettlement=false,termination=taskkill"
+      "detail": "timedOut=true,forcedSettlement=false,termination=process-group-kill"
     },
     "outputBytes": {
       "status": "passed",
-      "detail": "outputLimited=true,forcedSettlement=false,termination=direct-kill-after-taskkill-128,capturedBytes=1048576"
+      "detail": "outputLimited=true,forcedSettlement=false,termination=process-group-kill,capturedBytes=1048576"
     },
     "processTree": {
       "status": "passed",
-      "detail": "timedOut=true,descendantPid=5168,descendantAlive=false,forcedSettlement=false,termination=taskkill"
+      "detail": "timedOut=true,descendantPid=13810,descendantAlive=false,forcedSettlement=false,termination=process-group-kill"
     },
     "jsonContract": {
       "status": "passed",
@@ -498,7 +498,7 @@
     },
     {
       "id": "openapi-spec-validator",
-      "disposition": "selectable-on-windows",
+      "disposition": "selectable-on-linux",
       "applicableRequiredCases": 25,
       "passedRequiredCases": 25,
       "hardGateFailure": false,
@@ -1061,22 +1061,6 @@
       "candidate": "libopenapi",
       "caseId": "directory-symlink-escape",
       "required": true,
-      "status": "skipped-platform",
-      "passed": null,
-      "applicablePlatforms": [
-        "linux",
-        "darwin"
-      ],
-      "reason": "Case applies to linux, darwin; current platform is windows.",
-      "determinism": "not-assessed",
-      "uniqueHashes": [],
-      "failures": [],
-      "observation": null
-    },
-    {
-      "candidate": "libopenapi",
-      "caseId": "directory-junction-escape",
-      "required": true,
       "status": "passed",
       "passed": true,
       "applicablePlatforms": null,
@@ -1124,6 +1108,21 @@
           "spawnErrorCode": null
         }
       }
+    },
+    {
+      "candidate": "libopenapi",
+      "caseId": "directory-junction-escape",
+      "required": true,
+      "status": "skipped-platform",
+      "passed": null,
+      "applicablePlatforms": [
+        "windows"
+      ],
+      "reason": "Case applies to windows; current platform is linux.",
+      "determinism": "not-assessed",
+      "uniqueHashes": [],
+      "failures": [],
+      "observation": null
     },
     {
       "candidate": "libopenapi",
@@ -2359,22 +2358,6 @@
       "candidate": "redocly-core",
       "caseId": "directory-symlink-escape",
       "required": true,
-      "status": "skipped-platform",
-      "passed": null,
-      "applicablePlatforms": [
-        "linux",
-        "darwin"
-      ],
-      "reason": "Case applies to linux, darwin; current platform is windows.",
-      "determinism": "not-assessed",
-      "uniqueHashes": [],
-      "failures": [],
-      "observation": null
-    },
-    {
-      "candidate": "redocly-core",
-      "caseId": "directory-junction-escape",
-      "required": true,
       "status": "passed",
       "passed": true,
       "applicablePlatforms": null,
@@ -2422,6 +2405,21 @@
           "spawnErrorCode": null
         }
       }
+    },
+    {
+      "candidate": "redocly-core",
+      "caseId": "directory-junction-escape",
+      "required": true,
+      "status": "skipped-platform",
+      "passed": null,
+      "applicablePlatforms": [
+        "windows"
+      ],
+      "reason": "Case applies to windows; current platform is linux.",
+      "determinism": "not-assessed",
+      "uniqueHashes": [],
+      "failures": [],
+      "observation": null
     },
     {
       "candidate": "redocly-core",
@@ -3089,13 +3087,13 @@
       "reason": null,
       "determinism": "stable",
       "uniqueHashes": [
-        "3f56155fa93357ca1d3aea99385d0486c3c8ad08dd0d745dd538e5b795c50bfa"
+        "6af8ff84a7d558f9967bd3f17db59e79f76a7b9e926193dc7efccfcb6995bff5"
       ],
       "failures": [],
       "observation": {
         "outcome": "valid",
         "networkRequests": 0,
-        "canonicalSha256": "3f56155fa93357ca1d3aea99385d0486c3c8ad08dd0d745dd538e5b795c50bfa",
+        "canonicalSha256": "6af8ff84a7d558f9967bd3f17db59e79f76a7b9e926193dc7efccfcb6995bff5",
         "diagnostics": [],
         "stats": {
           "filesRead": 2,
@@ -3130,13 +3128,13 @@
       "reason": null,
       "determinism": "stable",
       "uniqueHashes": [
-        "b496922090d434d8ba9d26782c2f0cb2c96583c0a791f7bdf495c362c6e5783b"
+        "30237f6585f2c484a0684c446aa48f24d58f0f513fbef2ecf61b4c2197e67f87"
       ],
       "failures": [],
       "observation": {
         "outcome": "valid",
         "networkRequests": 0,
-        "canonicalSha256": "b496922090d434d8ba9d26782c2f0cb2c96583c0a791f7bdf495c362c6e5783b",
+        "canonicalSha256": "30237f6585f2c484a0684c446aa48f24d58f0f513fbef2ecf61b4c2197e67f87",
         "diagnostics": [],
         "stats": {
           "filesRead": 2,
@@ -3171,13 +3169,13 @@
       "reason": null,
       "determinism": "stable",
       "uniqueHashes": [
-        "6c7502f73e1f1f836e10ddecd35e423d9b4a2e194e3587201ad6801674e04c45"
+        "1425d73b9860e90e3d6aa48676fd30304522ae233d12ba975293ae68c8394a34"
       ],
       "failures": [],
       "observation": {
         "outcome": "parse-error",
         "networkRequests": 0,
-        "canonicalSha256": "6c7502f73e1f1f836e10ddecd35e423d9b4a2e194e3587201ad6801674e04c45",
+        "canonicalSha256": "1425d73b9860e90e3d6aa48676fd30304522ae233d12ba975293ae68c8394a34",
         "diagnostics": [
           {
             "source": "duplicate-key.yaml",
@@ -3223,13 +3221,13 @@
       "reason": null,
       "determinism": "stable",
       "uniqueHashes": [
-        "16627b3f49c1e6abe3b84ce292aa1e18700f5d43f7fb7100aa2bd24207d6ecf0"
+        "16fb66a5467c4a9900a75971f1a1965cee97aec9e5428ced4630bff1ada5dece"
       ],
       "failures": [],
       "observation": {
         "outcome": "parse-error",
         "networkRequests": 0,
-        "canonicalSha256": "16627b3f49c1e6abe3b84ce292aa1e18700f5d43f7fb7100aa2bd24207d6ecf0",
+        "canonicalSha256": "16fb66a5467c4a9900a75971f1a1965cee97aec9e5428ced4630bff1ada5dece",
         "diagnostics": [
           {
             "source": "malformed.json",
@@ -3275,13 +3273,13 @@
       "reason": null,
       "determinism": "stable",
       "uniqueHashes": [
-        "0eaa0efb3edd1d85dfda531b53277341aed6c93104bcb0879885c7a437d0836f"
+        "a98a191b1c57b709d1d36f38655ffc0264fd7e9f293beb3bc077f4bcd5bdab13"
       ],
       "failures": [],
       "observation": {
         "outcome": "parse-error",
         "networkRequests": 0,
-        "canonicalSha256": "0eaa0efb3edd1d85dfda531b53277341aed6c93104bcb0879885c7a437d0836f",
+        "canonicalSha256": "a98a191b1c57b709d1d36f38655ffc0264fd7e9f293beb3bc077f4bcd5bdab13",
         "diagnostics": [
           {
             "source": "root.json",
@@ -3327,13 +3325,13 @@
       "reason": null,
       "determinism": "stable",
       "uniqueHashes": [
-        "eb066cbe4df75e0d7aa80828a5f309588161a0ce4458dbb817e5a1aa86766cd8"
+        "a22f90fff24489ab136125431a36e8988854b589d9fb3e4483b6676ec38253e6"
       ],
       "failures": [],
       "observation": {
         "outcome": "parse-error",
         "networkRequests": 0,
-        "canonicalSha256": "eb066cbe4df75e0d7aa80828a5f309588161a0ce4458dbb817e5a1aa86766cd8",
+        "canonicalSha256": "a22f90fff24489ab136125431a36e8988854b589d9fb3e4483b6676ec38253e6",
         "diagnostics": [
           {
             "source": "root.yaml",
@@ -3379,13 +3377,13 @@
       "reason": null,
       "determinism": "stable",
       "uniqueHashes": [
-        "42347c7282ceeb5254e4a1a0a189ed5a3d9bf54c2ed42d6e926c9505b209a8df"
+        "502332566be7cfd6604cbf215782d4707fc1d935540d40473baa60d9e8a32b32"
       ],
       "failures": [],
       "observation": {
         "outcome": "parse-error",
         "networkRequests": 0,
-        "canonicalSha256": "42347c7282ceeb5254e4a1a0a189ed5a3d9bf54c2ed42d6e926c9505b209a8df",
+        "canonicalSha256": "502332566be7cfd6604cbf215782d4707fc1d935540d40473baa60d9e8a32b32",
         "diagnostics": [
           {
             "source": "root.yaml",
@@ -3431,13 +3429,13 @@
       "reason": null,
       "determinism": "stable",
       "uniqueHashes": [
-        "b4945d278dd235bbfce9be62bbac677873d9475acd3dec18a17b72b6619c3792"
+        "6ab3cc7cc2be9e5b48ad21c46c7610f9b70e47e0222c8132d7e38f7d5ad91595"
       ],
       "failures": [],
       "observation": {
         "outcome": "policy-denied",
         "networkRequests": 0,
-        "canonicalSha256": "b4945d278dd235bbfce9be62bbac677873d9475acd3dec18a17b72b6619c3792",
+        "canonicalSha256": "6ab3cc7cc2be9e5b48ad21c46c7610f9b70e47e0222c8132d7e38f7d5ad91595",
         "diagnostics": [
           {
             "source": "root.yaml",
@@ -3483,13 +3481,13 @@
       "reason": null,
       "determinism": "stable",
       "uniqueHashes": [
-        "a743df400acfb23d14a9a9117963099152fd38fdc8f8c80f2b3a0a0ab8698162"
+        "e2e4e8e9624b886475dfe5c20bd37a076fd5c8d02d472b7919d18779943070bb"
       ],
       "failures": [],
       "observation": {
         "outcome": "policy-denied",
         "networkRequests": 0,
-        "canonicalSha256": "a743df400acfb23d14a9a9117963099152fd38fdc8f8c80f2b3a0a0ab8698162",
+        "canonicalSha256": "e2e4e8e9624b886475dfe5c20bd37a076fd5c8d02d472b7919d18779943070bb",
         "diagnostics": [
           {
             "source": "root.yaml",
@@ -3535,13 +3533,13 @@
       "reason": null,
       "determinism": "stable",
       "uniqueHashes": [
-        "2a7b37ebd4214576f5c265bcc19dd451848663a9130252cb97cc01a106798c7b"
+        "43d26e79cca5cc630fb61a2dc1bf5f244f408fd30f585ec2156b7f501e8c22ca"
       ],
       "failures": [],
       "observation": {
         "outcome": "policy-denied",
         "networkRequests": 0,
-        "canonicalSha256": "2a7b37ebd4214576f5c265bcc19dd451848663a9130252cb97cc01a106798c7b",
+        "canonicalSha256": "43d26e79cca5cc630fb61a2dc1bf5f244f408fd30f585ec2156b7f501e8c22ca",
         "diagnostics": [
           {
             "source": "encoded.yaml",
@@ -3587,13 +3585,13 @@
       "reason": null,
       "determinism": "stable",
       "uniqueHashes": [
-        "ad00cf58c0833ed6582b2e169245e0d1ef0d3a952196522e3422946c0460a0e1"
+        "757661297c32d60d56fcdd6b74b8dbf0f65923a9ddfb18bbea573a7f404fcc3d"
       ],
       "failures": [],
       "observation": {
         "outcome": "policy-denied",
         "networkRequests": 0,
-        "canonicalSha256": "ad00cf58c0833ed6582b2e169245e0d1ef0d3a952196522e3422946c0460a0e1",
+        "canonicalSha256": "757661297c32d60d56fcdd6b74b8dbf0f65923a9ddfb18bbea573a7f404fcc3d",
         "diagnostics": [
           {
             "source": "components.yaml",
@@ -3633,35 +3631,19 @@
       "candidate": "openapi-spec-validator",
       "caseId": "directory-symlink-escape",
       "required": true,
-      "status": "skipped-platform",
-      "passed": null,
-      "applicablePlatforms": [
-        "linux",
-        "darwin"
-      ],
-      "reason": "Case applies to linux, darwin; current platform is windows.",
-      "determinism": "not-assessed",
-      "uniqueHashes": [],
-      "failures": [],
-      "observation": null
-    },
-    {
-      "candidate": "openapi-spec-validator",
-      "caseId": "directory-junction-escape",
-      "required": true,
       "status": "passed",
       "passed": true,
       "applicablePlatforms": null,
       "reason": null,
       "determinism": "stable",
       "uniqueHashes": [
-        "42b9034f17f0cf0ba0443b07d9f13743393f570e324e647ad55c818dbfbed7a0"
+        "35b53cebe46851164e1d5a5dc7a5081aff5cbbe3aec3c7b2f1d4559ac8c0bb13"
       ],
       "failures": [],
       "observation": {
         "outcome": "policy-denied",
         "networkRequests": 0,
-        "canonicalSha256": "42b9034f17f0cf0ba0443b07d9f13743393f570e324e647ad55c818dbfbed7a0",
+        "canonicalSha256": "35b53cebe46851164e1d5a5dc7a5081aff5cbbe3aec3c7b2f1d4559ac8c0bb13",
         "diagnostics": [
           {
             "source": "root.yaml",
@@ -3699,6 +3681,21 @@
     },
     {
       "candidate": "openapi-spec-validator",
+      "caseId": "directory-junction-escape",
+      "required": true,
+      "status": "skipped-platform",
+      "passed": null,
+      "applicablePlatforms": [
+        "windows"
+      ],
+      "reason": "Case applies to windows; current platform is linux.",
+      "determinism": "not-assessed",
+      "uniqueHashes": [],
+      "failures": [],
+      "observation": null
+    },
+    {
+      "candidate": "openapi-spec-validator",
       "caseId": "reference-depth-at-limit",
       "required": true,
       "status": "passed",
@@ -3707,13 +3704,13 @@
       "reason": null,
       "determinism": "stable",
       "uniqueHashes": [
-        "72fe96621b6c1a529f5e7bc72ba82b6ffa764e35b1f8f02d32d36b329bce989b"
+        "6ed4fc8f984807408180fb26f23ce38de5d3b21f9387427fbef82e572697da16"
       ],
       "failures": [],
       "observation": {
         "outcome": "valid",
         "networkRequests": 0,
-        "canonicalSha256": "72fe96621b6c1a529f5e7bc72ba82b6ffa764e35b1f8f02d32d36b329bce989b",
+        "canonicalSha256": "6ed4fc8f984807408180fb26f23ce38de5d3b21f9387427fbef82e572697da16",
         "diagnostics": [],
         "stats": {
           "filesRead": 4,
@@ -3748,13 +3745,13 @@
       "reason": null,
       "determinism": "stable",
       "uniqueHashes": [
-        "8fb2be07f40ba2c968283eb672ae88e25b07e723970c259ef921c3492bfc37d3"
+        "8d77005e0f1449db160b8abc6af202318ef46e2addfcf14bd840f63da2574d7f"
       ],
       "failures": [],
       "observation": {
         "outcome": "limit-exceeded",
         "networkRequests": 0,
-        "canonicalSha256": "8fb2be07f40ba2c968283eb672ae88e25b07e723970c259ef921c3492bfc37d3",
+        "canonicalSha256": "8d77005e0f1449db160b8abc6af202318ef46e2addfcf14bd840f63da2574d7f",
         "diagnostics": [
           {
             "source": "level-3.yaml",
@@ -3800,13 +3797,13 @@
       "reason": null,
       "determinism": "stable",
       "uniqueHashes": [
-        "85a95586a53aa0aedec3e2760067555637ad5960208670054ce426befec891a9"
+        "8dce6bffa7780f588daa2c4fceeadf1322e07ee7291f3713f40f26d4f864c89f"
       ],
       "failures": [],
       "observation": {
         "outcome": "valid",
         "networkRequests": 0,
-        "canonicalSha256": "85a95586a53aa0aedec3e2760067555637ad5960208670054ce426befec891a9",
+        "canonicalSha256": "8dce6bffa7780f588daa2c4fceeadf1322e07ee7291f3713f40f26d4f864c89f",
         "diagnostics": [],
         "stats": {
           "filesRead": 4,
@@ -3841,13 +3838,13 @@
       "reason": null,
       "determinism": "stable",
       "uniqueHashes": [
-        "9ab365ad74e54b39cf00418ceb213c6cbe2a0066cf3a3b76ad3fba46fed9afab"
+        "5b8b12f602fdaae52c58ccaa86a441934bec69cc7ab300d8129d10e0f2ccf305"
       ],
       "failures": [],
       "observation": {
         "outcome": "limit-exceeded",
         "networkRequests": 0,
-        "canonicalSha256": "9ab365ad74e54b39cf00418ceb213c6cbe2a0066cf3a3b76ad3fba46fed9afab",
+        "canonicalSha256": "5b8b12f602fdaae52c58ccaa86a441934bec69cc7ab300d8129d10e0f2ccf305",
         "diagnostics": [
           {
             "source": "two.yaml",
@@ -3893,13 +3890,13 @@
       "reason": null,
       "determinism": "stable",
       "uniqueHashes": [
-        "cd198ecef2011e3c0d7d6d5a4bd79737dbe1216ae22532521e5671694a475c60"
+        "d065d2f61a68e7c301d2c7a7a8b8d3c10b7a4cef5cce92832de77da6fdc2af28"
       ],
       "failures": [],
       "observation": {
         "outcome": "valid",
         "networkRequests": 0,
-        "canonicalSha256": "cd198ecef2011e3c0d7d6d5a4bd79737dbe1216ae22532521e5671694a475c60",
+        "canonicalSha256": "d065d2f61a68e7c301d2c7a7a8b8d3c10b7a4cef5cce92832de77da6fdc2af28",
         "diagnostics": [],
         "stats": {
           "filesRead": 4,
@@ -3934,13 +3931,13 @@
       "reason": null,
       "determinism": "stable",
       "uniqueHashes": [
-        "6f800e369731ca78593563b84b10d31905c11e160610b169e15b2af1e45ed2b1"
+        "e2e8c5787fcf3014df1d721e09878a29ceaa2b55b7e26bd0d7fac3ecf01671b2"
       ],
       "failures": [],
       "observation": {
         "outcome": "limit-exceeded",
         "networkRequests": 0,
-        "canonicalSha256": "6f800e369731ca78593563b84b10d31905c11e160610b169e15b2af1e45ed2b1",
+        "canonicalSha256": "e2e8c5787fcf3014df1d721e09878a29ceaa2b55b7e26bd0d7fac3ecf01671b2",
         "diagnostics": [
           {
             "source": "two.yaml",
@@ -3986,13 +3983,13 @@
       "reason": null,
       "determinism": "not-assessed",
       "uniqueHashes": [
-        "828161ebd68410a0ddb284fe9766935f9ced6d8993567e5cd46438e903ba00f4"
+        "8ab09220e79259dc47d0f5025d1e57e65ca4a834c93cf8532f42cf9da92b7f17"
       ],
       "failures": [],
       "observation": {
         "outcome": "valid",
         "networkRequests": 0,
-        "canonicalSha256": "828161ebd68410a0ddb284fe9766935f9ced6d8993567e5cd46438e903ba00f4",
+        "canonicalSha256": "8ab09220e79259dc47d0f5025d1e57e65ca4a834c93cf8532f42cf9da92b7f17",
         "diagnostics": [],
         "stats": {
           "filesRead": 1,
@@ -4027,13 +4024,13 @@
       "reason": null,
       "determinism": "not-assessed",
       "uniqueHashes": [
-        "9e154fa7b33a9ef1d390bc87c87d8be32bfea7a5db387eea2c7f1d0f6a9a960e"
+        "3bd6c1692c8882bcd7e0dce1c9bd62c9253c9cd249b8c9d431a49237d247d2b9"
       ],
       "failures": [],
       "observation": {
         "outcome": "limit-exceeded",
         "networkRequests": 0,
-        "canonicalSha256": "9e154fa7b33a9ef1d390bc87c87d8be32bfea7a5db387eea2c7f1d0f6a9a960e",
+        "canonicalSha256": "3bd6c1692c8882bcd7e0dce1c9bd62c9253c9cd249b8c9d431a49237d247d2b9",
         "diagnostics": [
           {
             "source": "root.json",
@@ -4079,13 +4076,13 @@
       "reason": null,
       "determinism": "not-assessed",
       "uniqueHashes": [
-        "485aae1817042affa98b160d3f93b7e556bfd4b5d0b13c08f08f293c1c2742c9"
+        "1510c59f3dcc23df30b9358da190476b14cc7e8d855c28695e4b6eac80933975"
       ],
       "failures": [],
       "observation": {
         "outcome": "valid",
         "networkRequests": 0,
-        "canonicalSha256": "485aae1817042affa98b160d3f93b7e556bfd4b5d0b13c08f08f293c1c2742c9",
+        "canonicalSha256": "1510c59f3dcc23df30b9358da190476b14cc7e8d855c28695e4b6eac80933975",
         "diagnostics": [],
         "stats": {
           "filesRead": 1,
@@ -4120,13 +4117,13 @@
       "reason": null,
       "determinism": "not-assessed",
       "uniqueHashes": [
-        "76f55eae2c6704c2074b28b4f6b065db5b21aa7c71050c0159e88818f6a51f2f"
+        "0c6a281d845bfc4fa8c86944582568c5b0abbcf1f957336d603a8e568037ed7b"
       ],
       "failures": [],
       "observation": {
         "outcome": "limit-exceeded",
         "networkRequests": 0,
-        "canonicalSha256": "76f55eae2c6704c2074b28b4f6b065db5b21aa7c71050c0159e88818f6a51f2f",
+        "canonicalSha256": "0c6a281d845bfc4fa8c86944582568c5b0abbcf1f957336d603a8e568037ed7b",
         "diagnostics": [
           {
             "source": "root.json",
@@ -4172,13 +4169,13 @@
       "reason": null,
       "determinism": "stable",
       "uniqueHashes": [
-        "b94ef42272938a5dd7ab492af0be31e9692d1defb41cf1b45b514567e1f05d1a"
+        "ad4df32ac21395946dcc9518b38ce153fa2c55e2fd8d658150750ecc579329ac"
       ],
       "failures": [],
       "observation": {
         "outcome": "valid",
         "networkRequests": 0,
-        "canonicalSha256": "b94ef42272938a5dd7ab492af0be31e9692d1defb41cf1b45b514567e1f05d1a",
+        "canonicalSha256": "ad4df32ac21395946dcc9518b38ce153fa2c55e2fd8d658150750ecc579329ac",
         "diagnostics": [],
         "stats": {
           "filesRead": 3,
@@ -4213,13 +4210,13 @@
       "reason": null,
       "determinism": "stable",
       "uniqueHashes": [
-        "6c2c44638be357bfa2ae8695ace65e0984973bfcf4eb22c2468e31f5b1427bf8"
+        "e75947d5dd3a63758333d51588a428e43858f607d16f0d5894b8b936e1e5538f"
       ],
       "failures": [],
       "observation": {
         "outcome": "invalid",
         "networkRequests": 0,
-        "canonicalSha256": "6c2c44638be357bfa2ae8695ace65e0984973bfcf4eb22c2468e31f5b1427bf8",
+        "canonicalSha256": "e75947d5dd3a63758333d51588a428e43858f607d16f0d5894b8b936e1e5538f",
         "diagnostics": [
           {
             "source": "a.yaml",
@@ -4275,13 +4272,13 @@
       "reason": null,
       "determinism": "stable",
       "uniqueHashes": [
-        "eeda2dff6d77e233a1fbc99f41f22999495b21dd487ac1811a56f2c4ebf9e499"
+        "a241dba8830efcbe4848105ba435ba9b60afdc7a78a2e98a6d2234b96a27a806"
       ],
       "failures": [],
       "observation": {
         "outcome": "limit-exceeded",
         "networkRequests": 0,
-        "canonicalSha256": "eeda2dff6d77e233a1fbc99f41f22999495b21dd487ac1811a56f2c4ebf9e499",
+        "canonicalSha256": "a241dba8830efcbe4848105ba435ba9b60afdc7a78a2e98a6d2234b96a27a806",
         "diagnostics": [
           {
             "source": "flood.yaml",

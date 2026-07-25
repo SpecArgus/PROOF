@@ -1,0 +1,114 @@
+[
+  {
+    "path": "github.com/SpecArgus/PROOF/spikes/openapi-validator/adapters/libopenapi",
+    "version": "(devel)",
+    "sum": null,
+    "license": "Apache-2.0",
+    "licenseSource": "repository LICENSE"
+  },
+  {
+    "path": "github.com/bahlo/generic-list-go",
+    "version": "v0.2.0",
+    "sum": "h1:5sz/EEAK+ls5wF+NeqDpk5+iNdMDXrh3z3nPnH1Wvgk=",
+    "license": "BSD-3-Clause",
+    "licenseSource": "local Go module cache heuristic"
+  },
+  {
+    "path": "github.com/basgys/goxml2json",
+    "version": "v1.1.1-0.20231018121955-e66ee54ceaad",
+    "sum": "h1:3swAvbzgfaI6nKuDDU7BiKfZRdF+h2ZwKgMHd8Ha4t8=",
+    "license": "MIT",
+    "licenseSource": "local Go module cache heuristic"
+  },
+  {
+    "path": "github.com/buger/jsonparser",
+    "version": "v1.1.2",
+    "sum": "h1:frqHqw7otoVbk5M8LlE/L7HTnIq2v9RX6EJ48i9AxJk=",
+    "license": "MIT",
+    "licenseSource": "local Go module cache heuristic"
+  },
+  {
+    "path": "github.com/go-openapi/jsonpointer",
+    "version": "v0.23.2",
+    "sum": "h1:DK7R/3zAt4xTytxNkw7jARGPFI7rkaSsii58n8X45x0=",
+    "license": "Apache-2.0",
+    "licenseSource": "local Go module cache heuristic"
+  },
+  {
+    "path": "github.com/go-openapi/swag/jsonname",
+    "version": "v0.26.1",
+    "sum": "h1:VReupaV6WxlAsCn0e4DUfgV6bPmINnPpyJDLqSfNPcE=",
+    "license": "Apache-2.0",
+    "licenseSource": "local Go module cache heuristic"
+  },
+  {
+    "path": "github.com/pb33f/jsonpath",
+    "version": "v0.8.2",
+    "sum": "h1:Ou4C7zjYClBm97dfZjDCjdZGusJoynv/vrtiEKNfj2Y=",
+    "license": "Apache-2.0",
+    "licenseSource": "local Go module cache heuristic"
+  },
+  {
+    "path": "github.com/pb33f/libopenapi",
+    "version": "v0.38.7",
+    "sum": "h1:Q2jfgRPdnU38WW8wQvrX2HEPGiqsxj01PX1BHmAEihc=",
+    "license": "MIT",
+    "licenseSource": "local Go module cache heuristic"
+  },
+  {
+    "path": "github.com/pb33f/libopenapi-validator",
+    "version": "v0.14.0",
+    "sum": "h1:K9cdv1kL6cZdQmSbzitkVcWCJKyRmmSZryZqgUqIv+Y=",
+    "license": "MIT",
+    "licenseSource": "local Go module cache heuristic"
+  },
+  {
+    "path": "github.com/pb33f/ordered-map/v2",
+    "version": "v2.3.1",
+    "sum": "h1:5319HDO0aw4DA4gzi+zv4FXU9UlSs3xGZ40wcP1nBjY=",
+    "license": "Apache-2.0",
+    "licenseSource": "local Go module cache heuristic"
+  },
+  {
+    "path": "github.com/santhosh-tekuri/jsonschema/v6",
+    "version": "v6.0.2",
+    "sum": "h1:KRzFb2m7YtdldCEkzs6KqmJw4nqEVZGK7IN2kJkjTuQ=",
+    "license": "Apache-2.0",
+    "licenseSource": "local Go module cache heuristic"
+  },
+  {
+    "path": "go.yaml.in/yaml/v4",
+    "version": "v4.0.0-rc.6",
+    "sum": "h1:1h7H1ohdUh93/FyE4YaDa1Zh64K6VVbjF4K6WUxMtH4=",
+    "license": "Apache-2.0",
+    "licenseSource": "local Go module cache heuristic"
+  },
+  {
+    "path": "golang.org/x/net",
+    "version": "v0.56.0",
+    "sum": "h1:Rw8j/hFzGvJUZwNBXnAtf5sVDVt+65SK2C7IxCxZt5o=",
+    "license": "BSD-3-Clause",
+    "licenseSource": "local Go module cache heuristic"
+  },
+  {
+    "path": "golang.org/x/sync",
+    "version": "v0.22.0",
+    "sum": "h1:SZjpbeLmrCk4xhRSZFNZW5gFUeCeFgjekvI/+gfScek=",
+    "license": "BSD-3-Clause",
+    "licenseSource": "local Go module cache heuristic"
+  },
+  {
+    "path": "golang.org/x/text",
+    "version": "v0.39.0",
+    "sum": "h1:UbZz4pLOvn600D6Oh6GGEI6VAmndrEBLv8/6BEXzyus=",
+    "license": "BSD-3-Clause",
+    "licenseSource": "local Go module cache heuristic"
+  },
+  {
+    "path": "gopkg.in/yaml.v3",
+    "version": "v3.0.1",
+    "sum": "h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=",
+    "license": "Apache-2.0",
+    "licenseSource": "local Go module cache heuristic"
+  }
+]

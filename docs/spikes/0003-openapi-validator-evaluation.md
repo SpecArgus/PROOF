@@ -3,23 +3,22 @@
 - Issue: [#3](https://github.com/SpecArgus/PROOF/issues/3)
 - Stock CLI screening date: 2026-07-23
 - Direct adapter evaluation dates: 2026-07-24 through 2026-07-25
-- Current evidence: complete Windows x64 run
-- Cross-platform status: Linux x64 and macOS arm64 pending
-- Decision status: preliminary recommendation; maintainer approval pending
+- Current evidence: complete Linux x64, macOS arm64, and Windows x64 run
+- Cross-platform status: complete with identical evaluation inputs
+- Decision status: final recommendation; maintainer approval pending
 - Reproduction harness: [`spikes/openapi-validator`](../../spikes/openapi-validator/README.md)
 
-## Preliminary recommendation
+## Recommendation
 
 Select `openapi-spec-validator 0.9.0` behind a small, versioned process adapter
-if the identical-input Linux and macOS jobs reproduce the Windows result.
 Do not merge the disposable evaluation adapters into `develop`.
 
 The Python candidate is the only direct adapter that passed every required
-gate applicable to the reviewed Windows run. It combined strict JSON/YAML
+gate on Linux x64, macOS arm64, and Windows x64. It combined strict JSON/YAML
 preflight parsing, a repository-confined local reference closure, a
 deny-by-default in-memory resolver, defining-file diagnostics, and explicit
-diagnostic truncation. Its exact CPython `3.14.2` runtime and 20 runtime
-packages are hash locked.
+diagnostic truncation. Its exact CPython `3.14.2` runtime and identical
+20-package runtime set are hash locked.
 
 This recommendation is intentionally narrower than a production architecture
 decision. PROOF's application, CLI, GitHub App, and report service do not have
@@ -173,10 +172,10 @@ CPython `3.14.2`.
 
 | Surface | Inventory | Known-vulnerability observation |
 | --- | --- | --- |
-| Vacuum CLI | 90,543,104-byte binary, 95 linked modules | Not the recommended product path |
-| Spectral CLI | 240-component Node closure | 12 high-severity package records in this rejected closure |
+| Vacuum CLI | 95-96 linked modules; Windows reference binary 90,470,400 bytes | Not the recommended product path |
+| Spectral CLI | 240-component Linux/Windows closure; 241 on macOS due to optional `fsevents` | 12 high-severity package records in this rejected closure |
 | Redocly Core adapter | 22-component Node closure | None of the 12 npm records occur in this closure |
-| libopenapi adapter | 20,269,056-byte binary, 16 linked modules | `govulncheck`: zero reachable or module findings |
+| libopenapi adapter | 16 linked modules; Windows reference binary 20,269,568 bytes | `govulncheck`: zero reachable or module findings |
 | openapi-spec-validator adapter | 20 exactly locked Python packages | PyPI release-specific inventory: zero active records |
 
 No inventory entry had an unrecognized declared license. This is a technical
@@ -221,18 +220,31 @@ arm64 from the PR head commit. Every matrix job performs the locked install,
 bootstrap, unit tests, both evaluation stages, audits, inventory, and reviewed
 snapshot.
 
-The Windows snapshot in this branch is complete. Linux and macOS remain
-pending until the spike branch is pushed. A final cross-platform manifest must
-record:
+Actions run
+[`30143349681`](https://github.com/SpecArgus/PROOF/actions/runs/30143349681)
+completed all three matrix jobs from commit
+`97336e58ea5754d0b17e2aec802b42c7e7d4d618`. The durable
+[cross-platform manifest](../../spikes/openapi-validator/evidence/platforms/cross-platform-manifest.json)
+records:
 
 - source commit and Actions run;
 - platform and runtime versions;
 - identical evaluation input fingerprints;
 - candidate dispositions and required-gate results; and
-- reviewed artifact content digests.
+- reviewed artifact and file content digests.
 
-The experiment must not claim cross-platform selection until all three
-platform snapshots pass those checks.
+All three snapshots have the same evaluation input SHA-256
+`e62d2639bdc31b1585ee2a66649d497338897d3daed3332ed5565c63c75432ce`.
+Each reports 32/39 stock CLI cases, 73/75 applicable direct-adapter cases, the
+same two isolated candidate gaps, and a 9/9 required-gate result for
+openapi-spec-validator. Go and Python audits passed on each platform; Node
+reported no selection-relevant finding.
+
+The npm graph contains one additional macOS-only `fsevents` component in the
+rejected Spectral closure. Vacuum's linked module count also varies with
+platform build tags. The Redocly Core closure remains 22 components and the
+recommended Python candidate remains the same 20-package set on all three
+platforms.
 
 After maintainer approval:
 

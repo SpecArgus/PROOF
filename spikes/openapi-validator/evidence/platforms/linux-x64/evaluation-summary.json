@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "environment": {
-    "platform": "win32",
+    "platform": "linux",
     "architecture": "x64",
     "node": "v24.13.0"
   },
@@ -10,7 +10,7 @@
     "manifestSha256": "043169255a7a56fb45bbe067c2e9a76187e6bbe575352c3339986ee2fa1c8b78",
     "packageLockSha256": "672b08446d42acecce18d1bbd22d2555d545e217ad21e26a68bc2458901153c2",
     "candidateArtifactSha256": {
-      "vacuum": "f5e2239239bb676cec4ce807db9eae0399ce6ab94864d3c5153c6259f0d886aa",
+      "vacuum": "95826cf2a1122cc3f32e2023ac4f923eb43e274677a1d2f040b7ed2251844535",
       "spectral": "8f7d9e76b187e9cd80f3d361606c2900dc0e4abc1d5c47d37ebae260e8ef5c5e",
       "redocly": "0bc1c889b89327e0a4e4130782b78b63c84132d54d065be16b3357db5d30c5c8"
     }
@@ -55,7 +55,7 @@
     },
     "processTree": {
       "status": "passed",
-      "detail": "timedOut=true, forcedSettlement=false, termination=taskkill, descendantPid=1688, descendantAlive=false"
+      "detail": "timedOut=true, forcedSettlement=false, termination=process-group-kill, descendantPid=10380, descendantAlive=false"
     },
     "memory": {
       "status": "unsupported",
@@ -234,7 +234,7 @@
       "expected": "invalid",
       "determinism": "stable",
       "uniqueHashes": [
-        "74c881e4e01fe1900ce824c93bcec760dbeee972a62f37955130686deace5683"
+        "3f14789fdf4927454adbdcd213a0b916fe97fa8cccaf2f1d85c072e09af32a57"
       ],
       "qualification": "gap",
       "passed": false,
@@ -244,7 +244,7 @@
       "observation": {
         "outcome": "invalid",
         "networkAttempts": 0,
-        "canonicalSha256": "74c881e4e01fe1900ce824c93bcec760dbeee972a62f37955130686deace5683",
+        "canonicalSha256": "3f14789fdf4927454adbdcd213a0b916fe97fa8cccaf2f1d85c072e09af32a57",
         "diagnostics": [
           {
             "source": "cases/malformed.yaml",
@@ -254,7 +254,7 @@
             "code": "vacuum-parse-error",
             "severity": "error",
             "kind": "parse-error",
-            "message": "Unexpected token '✗', \"✗ Failed t\"... is not valid JSON: ✗ Failed to parse specification '<workspace>\\cases\\malformed.yaml'\nError: failed to parse specification '<workspace>\\cases\\malformed.yaml'"
+            "message": "Unexpected token '✗', \"✗ Failed t\"... is not valid JSON: ✗ Failed to parse specification '<workspace>/cases/malformed.yaml'\nError: failed to parse specification '<workspace>/cases/malformed.yaml'"
           }
         ],
         "diagnosticCounts": {
@@ -270,8 +270,8 @@
         "outputLimited": false,
         "forcedSettlement": false,
         "terminationDetail": null,
-        "stdoutBytes": 142,
-        "stderrBytes": 144,
+        "stdoutBytes": 155,
+        "stderrBytes": 157,
         "nativeProbe": null
       }
     },
@@ -760,7 +760,7 @@
       "expected": "invalid",
       "determinism": "stable",
       "uniqueHashes": [
-        "aa15757bcdff44a4c2d31f040ffefbca5e9afbf17efabf803403f97197fb39c9"
+        "b611fd6abff603d783ee46958c266efda49d3c0ba1b4a476fa9cbe4f398610c6"
       ],
       "qualification": "candidate-qualified",
       "passed": true,
@@ -768,7 +768,7 @@
       "observation": {
         "outcome": "invalid",
         "networkAttempts": 0,
-        "canonicalSha256": "aa15757bcdff44a4c2d31f040ffefbca5e9afbf17efabf803403f97197fb39c9",
+        "canonicalSha256": "b611fd6abff603d783ee46958c266efda49d3c0ba1b4a476fa9cbe4f398610c6",
         "diagnostics": [
           {
             "source": "cases/oas30-invalid-structure.yaml",
@@ -794,7 +794,7 @@
         "outputLimited": false,
         "forcedSettlement": false,
         "terminationDetail": null,
-        "stdoutBytes": 445,
+        "stdoutBytes": 458,
         "stderrBytes": 0,
         "nativeProbe": null
       }
@@ -805,7 +805,7 @@
       "expected": "invalid",
       "determinism": "stable",
       "uniqueHashes": [
-        "973759e5c5f4c51779a68500582384f24ccc3bf5f7b8d633249ffbff772c5d82"
+        "70900fab9e75d4ab3c1d1b20cc8b6d3927f0a2eb5cedfc758559178653849b38"
       ],
       "qualification": "candidate-qualified",
       "passed": true,
@@ -813,7 +813,7 @@
       "observation": {
         "outcome": "invalid",
         "networkAttempts": 0,
-        "canonicalSha256": "973759e5c5f4c51779a68500582384f24ccc3bf5f7b8d633249ffbff772c5d82",
+        "canonicalSha256": "70900fab9e75d4ab3c1d1b20cc8b6d3927f0a2eb5cedfc758559178653849b38",
         "diagnostics": [
           {
             "source": "cases/oas31-invalid-structure.json",
@@ -839,7 +839,7 @@
         "outputLimited": false,
         "forcedSettlement": false,
         "terminationDetail": null,
-        "stdoutBytes": 414,
+        "stdoutBytes": 427,
         "stderrBytes": 0,
         "nativeProbe": null
       }
@@ -850,7 +850,7 @@
       "expected": "invalid",
       "determinism": "stable",
       "uniqueHashes": [
-        "70174f85a066443ba734111900646a4a1a85531ae3182ba34261817b68333a8c"
+        "8b87b010a74ba899a8afdc732d5c1887bb5f09770542a5a61ce80cabbf91c7dc"
       ],
       "qualification": "candidate-qualified",
       "passed": true,
@@ -858,7 +858,7 @@
       "observation": {
         "outcome": "invalid",
         "networkAttempts": 0,
-        "canonicalSha256": "70174f85a066443ba734111900646a4a1a85531ae3182ba34261817b68333a8c",
+        "canonicalSha256": "8b87b010a74ba899a8afdc732d5c1887bb5f09770542a5a61ce80cabbf91c7dc",
         "diagnostics": [
           {
             "source": "cases/malformed.yaml",
@@ -914,7 +914,7 @@
         "outputLimited": false,
         "forcedSettlement": false,
         "terminationDetail": null,
-        "stdoutBytes": 1519,
+        "stdoutBytes": 1571,
         "stderrBytes": 0,
         "nativeProbe": null
       }
@@ -997,7 +997,7 @@
       "expected": "invalid",
       "determinism": "stable",
       "uniqueHashes": [
-        "17e938abcd73e31dd23a6322406fc6ae51473e58c5663467f4b96c65e451c70b"
+        "59dec75f813dcde008039eb4f5a5ec88cc26754c411b57402af08dc3c039500f"
       ],
       "qualification": "candidate-qualified",
       "passed": true,
@@ -1005,7 +1005,7 @@
       "observation": {
         "outcome": "invalid",
         "networkAttempts": 0,
-        "canonicalSha256": "17e938abcd73e31dd23a6322406fc6ae51473e58c5663467f4b96c65e451c70b",
+        "canonicalSha256": "59dec75f813dcde008039eb4f5a5ec88cc26754c411b57402af08dc3c039500f",
         "diagnostics": [
           {
             "source": "cases/missing-ref.yaml",
@@ -1015,7 +1015,7 @@
             "code": "invalid-ref",
             "severity": "error",
             "kind": "finding",
-            "message": "ENOENT: no such file or directory, open '<workspace>\\cases\\does-not-exist.yaml'"
+            "message": "ENOENT: no such file or directory, open '<workspace>/cases/does-not-exist.yaml'"
           }
         ],
         "diagnosticCounts": {
@@ -1031,7 +1031,7 @@
         "outputLimited": false,
         "forcedSettlement": false,
         "terminationDetail": null,
-        "stdoutBytes": 626,
+        "stdoutBytes": 640,
         "stderrBytes": 0,
         "nativeProbe": null
       }
@@ -1483,7 +1483,7 @@
       "expected": "invalid",
       "determinism": "stable",
       "uniqueHashes": [
-        "1c30dcf544566e37746209b670ff0e056a2b025f6374436aedebb6deeef77c34"
+        "f2e8f96ef0207947892ca8b8293a610c8e5ba493a076dc2a4c7f0d542e2ccda7"
       ],
       "qualification": "candidate-qualified",
       "passed": true,
@@ -1491,7 +1491,7 @@
       "observation": {
         "outcome": "invalid",
         "networkAttempts": 0,
-        "canonicalSha256": "1c30dcf544566e37746209b670ff0e056a2b025f6374436aedebb6deeef77c34",
+        "canonicalSha256": "f2e8f96ef0207947892ca8b8293a610c8e5ba493a076dc2a4c7f0d542e2ccda7",
         "diagnostics": [
           {
             "source": "cases/malformed.yaml",
@@ -1501,7 +1501,7 @@
             "code": "redocly-parse-error",
             "severity": "error",
             "kind": "parse-error",
-            "message": "validating malformed.yaml...\nFailed to parse API description at <workspace>\\cases\\malformed.yaml:\n\n  - deficient indentation in \"<workspace>\\cases\\malformed.yaml\" (4:3)"
+            "message": "validating malformed.yaml...\nFailed to parse API description at <workspace>/cases/malformed.yaml:\n\n  - deficient indentation in \"<workspace>/cases/malformed.yaml\" (4:3)"
           }
         ],
         "diagnosticCounts": {
@@ -1518,7 +1518,7 @@
         "forcedSettlement": false,
         "terminationDetail": null,
         "stdoutBytes": 0,
-        "stderrBytes": 316,
+        "stderrBytes": 342,
         "nativeProbe": null
       }
     },
@@ -1609,7 +1609,7 @@
       "expected": "invalid",
       "determinism": "stable",
       "uniqueHashes": [
-        "d2e34f3493adb41ec1e56170c06685676d54b1fc1b1ae4ce6f00327d7992a198"
+        "b807c489ca9bf7dc1dc25da6f4e998cbe97d663baa42b955c0d0e60ace8fef0c"
       ],
       "qualification": "gap",
       "passed": false,
@@ -1619,7 +1619,7 @@
       "observation": {
         "outcome": "invalid",
         "networkAttempts": 0,
-        "canonicalSha256": "d2e34f3493adb41ec1e56170c06685676d54b1fc1b1ae4ce6f00327d7992a198",
+        "canonicalSha256": "b807c489ca9bf7dc1dc25da6f4e998cbe97d663baa42b955c0d0e60ace8fef0c",
         "diagnostics": [
           {
             "source": "cases/missing-ref.yaml",
@@ -1629,7 +1629,7 @@
             "code": "no-unresolved-refs",
             "severity": "error",
             "kind": "finding",
-            "message": "Can't resolve $ref: ENOENT: no such file or directory '<workspace>\\cases\\does-not-exist.yaml'"
+            "message": "Can't resolve $ref: ENOENT: no such file or directory '<workspace>/cases/does-not-exist.yaml'"
           }
         ],
         "diagnosticCounts": {
@@ -1645,7 +1645,7 @@
         "outputLimited": false,
         "forcedSettlement": false,
         "terminationDetail": null,
-        "stdoutBytes": 740,
+        "stdoutBytes": 741,
         "stderrBytes": 187,
         "nativeProbe": null
       }
@@ -1727,7 +1727,7 @@
       "expected": "valid",
       "determinism": "not-assessed",
       "uniqueHashes": [
-        "34c96af108e3ca05dc576c9d5ea0516c38d14008ce77022157d5903caa135ba7"
+        "25bcbf0f3a807136629d4dd79cffcef1662b4af588090b509d8a34a83470bf46"
       ],
       "qualification": "candidate-qualified",
       "passed": true,
@@ -1735,7 +1735,7 @@
       "observation": {
         "outcome": "valid",
         "networkAttempts": 0,
-        "canonicalSha256": "34c96af108e3ca05dc576c9d5ea0516c38d14008ce77022157d5903caa135ba7",
+        "canonicalSha256": "25bcbf0f3a807136629d4dd79cffcef1662b4af588090b509d8a34a83470bf46",
         "diagnostics": [],
         "diagnosticCounts": {
           "raw": 0,
@@ -1751,7 +1751,7 @@
         "forcedSettlement": false,
         "terminationDetail": null,
         "stdoutBytes": 115,
-        "stderrBytes": 127,
+        "stderrBytes": 128,
         "nativeProbe": null
       }
     },

@@ -6,11 +6,11 @@
     "packageLockSha256": "672b08446d42acecce18d1bbd22d2555d545e217ad21e26a68bc2458901153c2",
     "inventoryScriptSha256": "eef9952900f1a6f770737eb9cc396840acd0e69dd5deca912c6b5fb7304e21ec",
     "npmVersion": "11.6.2",
-    "npmEntrypointSha256": "3ce7cba6f5128dd5f54c98b6a5036b0f850496878cc2e21044b675fe3c594e3e"
+    "npmEntrypointSha256": "8e5f6f3429f8cdbe693cdc29904e9d5a7b127a494bd15c804bd54c7403bfcbe7"
   },
   "environment": {
-    "platform": "win32",
-    "architecture": "x64",
+    "platform": "darwin",
+    "architecture": "arm64",
     "node": "v24.13.0"
   },
   "candidates": {
@@ -25,10 +25,10 @@
   },
   "npm": {
     "toolVersion": "11.6.2",
-    "toolEntrypointSha256": "3ce7cba6f5128dd5f54c98b6a5036b0f850496878cc2e21044b675fe3c594e3e",
+    "toolEntrypointSha256": "8e5f6f3429f8cdbe693cdc29904e9d5a7b127a494bd15c804bd54c7403bfcbe7",
     "sbomFormat": "CycloneDX",
     "specVersion": "1.5",
-    "componentCount": 258,
+    "componentCount": 259,
     "candidateArtifactSha256": {
       "spectral": "8f7d9e76b187e9cd80f3d361606c2900dc0e4abc1d5c47d37ebae260e8ef5c5e",
       "redocly": "0bc1c889b89327e0a4e4130782b78b63c84132d54d065be16b3357db5d30c5c8",
@@ -40,14 +40,14 @@
       "BSD-2-Clause": 1,
       "BSD-3-Clause": 2,
       "ISC": 16,
-      "MIT": 204,
+      "MIT": 205,
       "Python-2.0": 1,
       "Unlicense": 3
     },
     "unknownLicenseComponents": [],
     "candidateClosures": {
       "spectral": {
-        "componentCount": 240,
+        "componentCount": 241,
         "components": [
           {
             "name": "@asyncapi/specs",
@@ -831,6 +831,14 @@
             "purl": "pkg:npm/fs.realpath@1.0.0",
             "licenses": [
               "ISC"
+            ]
+          },
+          {
+            "name": "fsevents",
+            "version": "2.3.3",
+            "purl": "pkg:npm/fsevents@2.3.3",
+            "licenses": [
+              "MIT"
             ]
           },
           {
@@ -1976,7 +1984,7 @@
           "BSD-2-Clause": 1,
           "BSD-3-Clause": 2,
           "ISC": 16,
-          "MIT": 188,
+          "MIT": 189,
           "Unlicense": 3
         },
         "unknownLicenseComponents": []
@@ -2191,21 +2199,21 @@
     }
   },
   "vacuum": {
-    "sha256": "f5e2239239bb676cec4ce807db9eae0399ce6ab94864d3c5153c6259f0d886aa",
-    "bytes": 90470400,
+    "sha256": "28d90bfa6355aeca13bf31e1e7d2a67a920db01023491221d6e32a7f8c657c35",
+    "bytes": 96566610,
     "goVersion": "go1.25.12",
-    "moduleCount": 95,
+    "moduleCount": 96,
     "licenseCounts": {
-      "Apache-2.0": 19,
+      "Apache-2.0": 18,
       "BSD-2-Clause": 3,
       "BSD-3-Clause": 18,
-      "MIT": 55
+      "MIT": 57
     },
     "unknownLicenseModules": []
   },
   "libopenapiAdapter": {
-    "sha256": "bfaa8272563a8b7e64ea59af2607cabccef01ca42bf0a8f75bb93f9130fe28dc",
-    "bytes": 20269568,
+    "sha256": "4af2533443960d6d17f424bac7bef5e8d745438f72b769b74877f7a67103abfb",
+    "bytes": 19656914,
     "goVersion": "go1.25.12",
     "moduleCount": 16,
     "selectedModules": {
@@ -2222,11 +2230,11 @@
   "openapiSpecValidatorAdapter": {
     "adapterSha256": "d00235329b2e47bf3a29a6d7f3ed8e2c73e172e7a5eb8af45a9ad55269fbe71a",
     "requirementsLockSha256": "818bdb7510cd9d6579f302d4fe021fd4fe7d3722206a8f5106112daad2e0d43a",
-    "pythonExecutableSha256": "e725f520cfbb2e4844fe0a9fc8949236f20b0d67e470d1232618b99504a0691a",
+    "pythonExecutableSha256": "4fce274f0e60574ada0b53f17bceb49bbd804125ddae972c7674b8eb13d9e49d",
     "pythonVersion": "3.14.2",
     "implementation": "cpython",
-    "platform": "Windows",
-    "environmentSha256": "5fd62de431d07007f4b5499642d85cc3ae4063d8a1c8ff2bacb1557693c35c0b",
+    "platform": "Darwin",
+    "environmentSha256": "d342899399d29b5cd19053385921332e4d35a0bdc213c1a3192d366aba0a3480",
     "componentCount": 20,
     "licenseCounts": {
       "Apache-2.0": 3,

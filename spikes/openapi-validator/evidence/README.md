@@ -2,6 +2,9 @@
 
 These files preserve the reviewed evidence behind the issue #3 report:
 
+- [`platforms`](platforms/README.md) contains the durable Linux x64, macOS
+  arm64, and Windows x64 reviewed snapshots from the final identical-input CI
+  run, plus a cross-platform manifest with source, artifact, and file hashes.
 - `evaluation-summary.json` contains normalized first observations, repeated
   result hashes, native probes, stock-CLI adapter qualifications, and
   supervisor-control status without raw candidate output or timing noise.
@@ -28,11 +31,13 @@ These files preserve the reviewed evidence behind the issue #3 report:
   release-specific PyPI vulnerability observations for that exact Python
   package set.
 
-The current snapshot was generated on Windows x64 with Node `24.13.0`, Go
-`1.25.12`, and the pinned candidate versions. Vacuum binary hashes and sizes
-are platform-specific. The libopenapi adapter binary hash and size are also
-platform-specific. Windows evaluates junction escape cases and skips the POSIX
-symlink cases; Ubuntu and macOS invert those platform-specific cases in CI.
+The top-level snapshot was generated on Windows x64 with Node `24.13.0`, Go
+`1.25.12`, and the pinned candidate versions. The `platforms` directory
+contains the final CI snapshots for Linux x64, macOS arm64, and Windows x64.
+Vacuum and libopenapi binary hashes, sizes, and some build-tagged linked
+modules are platform-specific. Windows evaluates junction escape cases and
+skips the POSIX symlink cases; Ubuntu and macOS invert those platform-specific
+cases.
 
 Refresh the snapshot only after reviewing a completed evaluation:
 

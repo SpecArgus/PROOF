@@ -7,9 +7,9 @@ adapters against a stricter common contract.
 
 Both stages are implemented. Three disposable direct adapters are now
 evaluated. `openapi-spec-validator` passes every required gate on the reviewed
-Windows run; identical-input Linux and macOS evidence and explicit maintainer
-approval are still required before selection. The full findings are recorded
-in the
+Linux x64, macOS arm64, and Windows x64 runs. The final recommendation still
+requires explicit maintainer approval before it becomes a product selection.
+The full findings are recorded in the
 [evaluation report](../../docs/spikes/0003-openapi-validator-evaluation.md).
 
 The JavaScript runners are disposable Phase 0 tooling. Their presence is not a
@@ -40,11 +40,11 @@ The Stage 1 corpus covers:
 
 ## Stage 2: direct adapter evaluation
 
-| Adapter | Pinned libraries | Reviewed Windows result |
+| Adapter | Pinned libraries | Reviewed cross-platform result |
 | --- | --- | --- |
-| libopenapi | `libopenapi v0.38.7`, `libopenapi-validator v0.14.0` | Gap: invalid bare-file schemas reached through external local references can be returned as valid |
-| Redocly Core | `@redocly/openapi-core 2.40.0`, `jsonc-parser 3.3.1` | Gap: the structural validator exposes only the first of twelve independent errors in the diagnostic-flood fixture |
-| openapi-spec-validator | `openapi-spec-validator 0.9.0`, CPython `3.14.2` | Passes all nine required gates applicable to Windows |
+| libopenapi | `libopenapi v0.38.7`, `libopenapi-validator v0.14.0` | Same gap on all three OSes: invalid bare-file schemas reached through external local references can be returned as valid |
+| Redocly Core | `@redocly/openapi-core 2.40.0`, `jsonc-parser 3.3.1` | Same gap on all three OSes: the structural validator exposes only the first of twelve independent errors in the diagnostic-flood fixture |
+| openapi-spec-validator | `openapi-spec-validator 0.9.0`, CPython `3.14.2` | Passes all nine required gates on Linux, macOS, and Windows |
 
 All three adapters implement the same process contract:
 
@@ -71,11 +71,11 @@ The common corpus has 26 cases grouped into nine required gates:
 8. deterministic defining-file diagnostics; and
 9. diagnostic volume and truncation accounting.
 
-The reviewed Windows run evaluated 78 candidate-case combinations. Seventy-five
-were applicable: 73 passed, two exposed the isolated gaps above, and three
-POSIX symlink combinations were skipped. All three Windows junction
-combinations passed. The cross-platform CI matrix is configured to assess the
-POSIX cases on Ubuntu and macOS.
+Each reviewed platform run evaluated 78 candidate-case combinations.
+Seventy-five were applicable: 73 passed, two exposed the isolated gaps above,
+and three cases for the other platform's link mechanism were skipped. The
+Windows junction combinations and the Ubuntu/macOS POSIX symlink combinations
+passed.
 
 The libopenapi case assigned to the deterministic-diagnostics gate is stable,
 but wrong: all repetitions returned `valid` with no diagnostic for two invalid
@@ -87,8 +87,8 @@ the required emitted and truncated counts cannot be demonstrated.
 The Python adapter rejected remote and escaping references before exposing the
 closed in-memory resource set to the validator, produced defining-file
 locations, and emitted deterministic capped diagnostics for the multi-file and
-diagnostic-flood cases. This is a platform-qualified experimental result, not
-a production selection.
+diagnostic-flood cases. This is a cross-platform-qualified experimental
+result, not a production selection.
 
 ## Result semantics
 
@@ -185,9 +185,10 @@ The path-filtered `openapi-validator-evaluation` workflow is configured to run
 the locked installation, bootstrap, unit tests, both evaluation stages, the
 reviewed gap assertion, vulnerability checks, inventory generation, and
 reviewed snapshots on Ubuntu 24.04, Windows Server 2022, and macOS 15. Reviewed
-and raw artifacts are uploaded separately. Actions retention is temporary, so
-the three reviewed platform snapshots must be imported into the archive branch
-before closing the experiment PR.
+and raw artifacts are uploaded separately. The successful three-platform
+reviewed snapshots have been imported into
+[`evidence/platforms`](evidence/platforms/README.md) with their Actions and
+file digests because Actions retention is temporary.
 
 ## Security boundary
 
