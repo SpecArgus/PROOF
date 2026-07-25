@@ -1,0 +1,78 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "AGT-POL-001 OAS 3.1 cases",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/sessions/{sessionId}": {
+      "delete": {
+        "operationId": "deleteExpiredSession",
+        "summary": "Delete an expired session",
+        "x-agent-policy": {
+          "confirmation": {
+            "mode": "not-required",
+            "reason": "Only an already expired session can be removed."
+          }
+        },
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "description": "Expired session identifier.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted"
+          },
+          "404": {
+            "description": "Session not found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/search": {
+      "post": {
+        "operationId": "searchCatalog",
+        "summary": "Search the catalog with a structured filter",
+        "responses": {
+          "200": {
+            "description": "Results"
+          },
+          "400": {
+            "description": "Invalid search filter",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

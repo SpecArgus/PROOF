@@ -1,0 +1,46 @@
+{
+  "rulesetName": "agent-contract",
+  "rulesetVersion": "0.1.0",
+  "resultSchemaVersion": "1.0.0",
+  "supportedOpenApi": [
+    "3.0.x",
+    "3.1.x"
+  ],
+  "rules": [
+    {
+      "id": "AGT-CTX-001",
+      "name": "Tool Selection Contract Incomplete",
+      "defaultSeverity": "medium",
+      "findingCardinality": "one-per-operation",
+      "documentation": "rules/AGT-CTX-001.md"
+    },
+    {
+      "id": "AGT-PARAM-001",
+      "name": "Parameter Lacks Domain-Specific Meaning",
+      "defaultSeverity": "medium",
+      "findingCardinality": "one-per-parameter",
+      "documentation": "rules/AGT-PARAM-001.md"
+    },
+    {
+      "id": "AGT-RESP-001",
+      "name": "Missing Structured Error Response",
+      "defaultSeverity": "medium",
+      "findingCardinality": "one-per-operation",
+      "documentation": "rules/AGT-RESP-001.md"
+    },
+    {
+      "id": "AGT-POL-001",
+      "name": "Dangerous API Without Confirmation Policy",
+      "defaultSeverity": "high",
+      "findingCardinality": "one-per-operation",
+      "documentation": "rules/AGT-POL-001.md"
+    },
+    {
+      "id": "AGT-POL-002",
+      "name": "Sensitive or Privileged API Without Security Metadata",
+      "defaultSeverity": "high",
+      "findingCardinality": "one-per-operation",
+      "documentation": "rules/AGT-POL-002.md"
+    }
+  ]
+}

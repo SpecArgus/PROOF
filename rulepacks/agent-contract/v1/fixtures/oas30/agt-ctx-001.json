@@ -1,0 +1,55 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "AGT-CTX-001 OAS 3.0 cases",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/process": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Processed"
+          },
+          "400": {
+            "description": "Invalid process request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders/{orderId}": {
+      "get": {
+        "operationId": "getOrder",
+        "description": "Returns one order by its stable identifier.",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "required": true,
+            "description": "Stable order identifier.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Order"
+          }
+        }
+      }
+    }
+  }
+}

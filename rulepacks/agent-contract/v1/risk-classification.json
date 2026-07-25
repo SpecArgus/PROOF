@@ -1,0 +1,105 @@
+{
+  "classifierVersion": 1,
+  "stateChangingMethods": [
+    "delete",
+    "patch",
+    "post",
+    "put"
+  ],
+  "methodCategories": {
+    "delete": [
+      "destructive"
+    ]
+  },
+  "stateChangingTokenCategories": {
+    "destructive": [
+      "cancel",
+      "cancels",
+      "delete",
+      "deletes",
+      "deletion",
+      "destroy",
+      "destroys",
+      "purge",
+      "purges",
+      "remove",
+      "removes",
+      "terminate",
+      "terminates"
+    ],
+    "external_side_effect": [
+      "dispatch",
+      "dispatches",
+      "email",
+      "emails",
+      "message",
+      "messages",
+      "notification",
+      "notifications",
+      "notify",
+      "publish",
+      "publishes",
+      "send",
+      "sends",
+      "sms",
+      "webhook",
+      "webhooks"
+    ],
+    "financial_action": [
+      "charge",
+      "charges",
+      "checkout",
+      "debit",
+      "debits",
+      "deposit",
+      "deposits",
+      "invoice",
+      "invoices",
+      "pay",
+      "payment",
+      "payments",
+      "payout",
+      "payouts",
+      "purchase",
+      "purchases",
+      "refund",
+      "refunds",
+      "transfer",
+      "transfers",
+      "withdraw",
+      "withdrawal",
+      "withdrawals"
+    ],
+    "permission_change": [
+      "access",
+      "grant",
+      "grants",
+      "invite",
+      "invites",
+      "permission",
+      "permissions",
+      "revoke",
+      "revokes",
+      "role",
+      "roles"
+    ]
+  },
+  "allMethodTokenCategories": {
+    "sensitive_data": [
+      "credential",
+      "credentials",
+      "health",
+      "medical",
+      "password",
+      "passwords",
+      "pii",
+      "profile",
+      "profiles",
+      "secret",
+      "secrets",
+      "ssn",
+      "token",
+      "tokens"
+    ]
+  }
+}

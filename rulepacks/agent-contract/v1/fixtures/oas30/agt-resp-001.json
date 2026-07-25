@@ -1,0 +1,69 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "AGT-RESP-001 OAS 3.0 cases",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/jobs": {
+      "post": {
+        "operationId": "createJob",
+        "summary": "Create a job",
+        "x-agent-policy": {
+          "risks": [
+            "external_side_effect"
+          ],
+          "confirmation": {
+            "mode": "required",
+            "reason": "A human must approve creation of an external job."
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/orders": {
+      "post": {
+        "operationId": "createOrder",
+        "summary": "Create an order",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Invalid order",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "required": [
+          "code",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

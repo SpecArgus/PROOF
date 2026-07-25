@@ -1,0 +1,68 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "AGT-POL-002 OAS 3.1 cases",
+    "version": "1.0.0"
+  },
+  "security": [
+    {
+      "oauth": [
+        "read:credentials"
+      ]
+    }
+  ],
+  "paths": {
+    "/credentials/{credentialId}": {
+      "get": {
+        "operationId": "getItem",
+        "summary": "Get a stored credential",
+        "security": [],
+        "x-agent-policy": {
+          "dataClassification": "restricted"
+        },
+        "parameters": [
+          {
+            "name": "credentialId",
+            "in": "path",
+            "required": true,
+            "description": "Stable credential identifier.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Credential"
+          }
+        }
+      }
+    },
+    "/roles": {
+      "get": {
+        "operationId": "listRoles",
+        "summary": "List available role names",
+        "responses": {
+          "200": {
+            "description": "Roles"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "oauth": {
+        "type": "oauth2",
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "https://example.invalid/oauth/token",
+            "scopes": {
+              "read:credentials": "Read stored credentials"
+            }
+          }
+        }
+      }
+    }
+  }
+}

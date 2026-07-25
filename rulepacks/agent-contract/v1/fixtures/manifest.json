@@ -1,0 +1,309 @@
+{
+  "manifestVersion": 1,
+  "rulesetName": "agent-contract",
+  "rulesetVersion": "0.1.0",
+  "cases": [
+    {
+      "caseId": "ctx-positive-oas30",
+      "ruleId": "AGT-CTX-001",
+      "caseType": "positive",
+      "dialect": "3.0.x",
+      "fixture": "oas30/agt-ctx-001.json",
+      "operationPointer": "/paths/~1process/post",
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-CTX-001",
+          "severity": "medium",
+          "locationPointer": "/paths/~1process/post",
+          "riskCategories": [],
+          "evidence": [
+            {
+              "kind": "schema",
+              "pointer": "/paths/~1process/post",
+              "value": "operationId"
+            },
+            {
+              "kind": "schema",
+              "pointer": "/paths/~1process/post",
+              "value": "summary-or-description"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "ctx-negative-oas30",
+      "ruleId": "AGT-CTX-001",
+      "caseType": "negative",
+      "dialect": "3.0.x",
+      "fixture": "oas30/agt-ctx-001.json",
+      "operationPointer": "/paths/~1orders~1{orderId}/get",
+      "expectedFindings": []
+    },
+    {
+      "caseId": "ctx-boundary-oas31",
+      "ruleId": "AGT-CTX-001",
+      "caseType": "boundary",
+      "dialect": "3.1.x",
+      "fixture": "oas31/agt-ctx-001.json",
+      "operationPointer": "/paths/~1catalog~1search/get",
+      "expectedFindings": []
+    },
+    {
+      "caseId": "ctx-false-positive-oas31",
+      "ruleId": "AGT-CTX-001",
+      "caseType": "false-positive",
+      "dialect": "3.1.x",
+      "fixture": "oas31/agt-ctx-001.json",
+      "operationPointer": "/paths/~1legacy~1{id}/get",
+      "expectedFindings": []
+    },
+    {
+      "caseId": "param-positive-oas30",
+      "ruleId": "AGT-PARAM-001",
+      "caseType": "positive",
+      "dialect": "3.0.x",
+      "fixture": "oas30/agt-param-001.json",
+      "operationPointer": "/paths/~1orders/get",
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-PARAM-001",
+          "severity": "medium",
+          "locationPointer": "/paths/~1orders/get/parameters/0",
+          "riskCategories": [],
+          "evidence": [
+            {
+              "kind": "schema",
+              "pointer": "/paths/~1orders/get/parameters/0",
+              "value": "description"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "param-negative-oas30",
+      "ruleId": "AGT-PARAM-001",
+      "caseType": "negative",
+      "dialect": "3.0.x",
+      "fixture": "oas30/agt-param-001.json",
+      "operationPointer": "/paths/~1orders~1{orderId}/get",
+      "expectedFindings": []
+    },
+    {
+      "caseId": "param-boundary-oas31",
+      "ruleId": "AGT-PARAM-001",
+      "caseType": "boundary",
+      "dialect": "3.1.x",
+      "fixture": "oas31/agt-param-001.json",
+      "operationPointer": "/paths/~1users~1{userId}/get",
+      "expectedFindings": []
+    },
+    {
+      "caseId": "param-false-positive-oas31",
+      "ruleId": "AGT-PARAM-001",
+      "caseType": "false-positive",
+      "dialect": "3.1.x",
+      "fixture": "oas31/agt-param-001.json",
+      "operationPointer": "/paths/~1admin/get",
+      "expectedFindings": []
+    },
+    {
+      "caseId": "resp-positive-oas30",
+      "ruleId": "AGT-RESP-001",
+      "caseType": "positive",
+      "dialect": "3.0.x",
+      "fixture": "oas30/agt-resp-001.json",
+      "operationPointer": "/paths/~1jobs/post",
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-RESP-001",
+          "severity": "medium",
+          "locationPointer": "/paths/~1jobs/post/responses",
+          "riskCategories": [
+            "external_side_effect"
+          ],
+          "evidence": [
+            {
+              "kind": "extension",
+              "pointer": "/paths/~1jobs/post/x-agent-policy/risks/0",
+              "value": "external_side_effect"
+            },
+            {
+              "kind": "method",
+              "pointer": "/paths/~1jobs/post",
+              "value": "post"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "resp-negative-oas30",
+      "ruleId": "AGT-RESP-001",
+      "caseType": "negative",
+      "dialect": "3.0.x",
+      "fixture": "oas30/agt-resp-001.json",
+      "operationPointer": "/paths/~1orders/post",
+      "expectedFindings": []
+    },
+    {
+      "caseId": "resp-boundary-oas31",
+      "ruleId": "AGT-RESP-001",
+      "caseType": "boundary",
+      "dialect": "3.1.x",
+      "fixture": "oas31/agt-resp-001.json",
+      "operationPointer": "/paths/~1users~1{userId}/delete",
+      "expectedFindings": []
+    },
+    {
+      "caseId": "resp-false-positive-oas31",
+      "ruleId": "AGT-RESP-001",
+      "caseType": "false-positive",
+      "dialect": "3.1.x",
+      "fixture": "oas31/agt-resp-001.json",
+      "operationPointer": "/paths/~1health/get",
+      "expectedFindings": []
+    },
+    {
+      "caseId": "pol1-positive-oas30",
+      "ruleId": "AGT-POL-001",
+      "caseType": "positive",
+      "dialect": "3.0.x",
+      "fixture": "oas30/agt-pol-001.json",
+      "operationPointer": "/paths/~1users~1{userId}/delete",
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-POL-001",
+          "severity": "high",
+          "locationPointer": "/paths/~1users~1{userId}/delete",
+          "riskCategories": [
+            "destructive"
+          ],
+          "evidence": [
+            {
+              "kind": "extension",
+              "pointer": "/paths/~1users~1{userId}/delete/x-agent-policy/risks/0",
+              "value": "destructive"
+            },
+            {
+              "kind": "keyword",
+              "pointer": "/paths/~1users~1{userId}/delete/operationId",
+              "value": "delete"
+            },
+            {
+              "kind": "method",
+              "pointer": "/paths/~1users~1{userId}/delete",
+              "value": "delete"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "pol1-negative-oas30",
+      "ruleId": "AGT-POL-001",
+      "caseType": "negative",
+      "dialect": "3.0.x",
+      "fixture": "oas30/agt-pol-001.json",
+      "operationPointer": "/paths/~1payments~1{paymentId}~1refund/post",
+      "expectedFindings": []
+    },
+    {
+      "caseId": "pol1-boundary-oas31",
+      "ruleId": "AGT-POL-001",
+      "caseType": "boundary",
+      "dialect": "3.1.x",
+      "fixture": "oas31/agt-pol-001.json",
+      "operationPointer": "/paths/~1sessions~1{sessionId}/delete",
+      "expectedFindings": []
+    },
+    {
+      "caseId": "pol1-false-positive-oas31",
+      "ruleId": "AGT-POL-001",
+      "caseType": "false-positive",
+      "dialect": "3.1.x",
+      "fixture": "oas31/agt-pol-001.json",
+      "operationPointer": "/paths/~1search/post",
+      "expectedFindings": []
+    },
+    {
+      "caseId": "pol2-positive-oas30",
+      "ruleId": "AGT-POL-002",
+      "caseType": "positive",
+      "dialect": "3.0.x",
+      "fixture": "oas30/agt-pol-002.json",
+      "operationPointer": "/paths/~1customers~1{customerId}~1profile/get",
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-POL-002",
+          "severity": "high",
+          "locationPointer": "/paths/~1customers~1{customerId}~1profile/get/security",
+          "riskCategories": [
+            "sensitive_data"
+          ],
+          "evidence": [
+            {
+              "kind": "keyword",
+              "pointer": "/paths/~1customers~1{customerId}~1profile/get/operationId",
+              "value": "profile"
+            },
+            {
+              "kind": "path",
+              "pointer": "/paths/~1customers~1{customerId}~1profile",
+              "value": "profile"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "pol2-negative-oas30",
+      "ruleId": "AGT-POL-002",
+      "caseType": "negative",
+      "dialect": "3.0.x",
+      "fixture": "oas30/agt-pol-002.json",
+      "operationPointer": "/paths/~1admin~1users~1{userId}~1roles/patch",
+      "expectedFindings": []
+    },
+    {
+      "caseId": "pol2-boundary-oas31",
+      "ruleId": "AGT-POL-002",
+      "caseType": "boundary",
+      "dialect": "3.1.x",
+      "fixture": "oas31/agt-pol-002.json",
+      "operationPointer": "/paths/~1credentials~1{credentialId}/get",
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-POL-002",
+          "severity": "high",
+          "locationPointer": "/paths/~1credentials~1{credentialId}/get/security",
+          "riskCategories": [
+            "sensitive_data"
+          ],
+          "evidence": [
+            {
+              "kind": "path",
+              "pointer": "/paths/~1credentials~1{credentialId}",
+              "value": "credential"
+            },
+            {
+              "kind": "path",
+              "pointer": "/paths/~1credentials~1{credentialId}",
+              "value": "credentials"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "pol2-false-positive-oas31",
+      "ruleId": "AGT-POL-002",
+      "caseType": "false-positive",
+      "dialect": "3.1.x",
+      "fixture": "oas31/agt-pol-002.json",
+      "operationPointer": "/paths/~1roles/get",
+      "expectedFindings": []
+    }
+  ]
+}
