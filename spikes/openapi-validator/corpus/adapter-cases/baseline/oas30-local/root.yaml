@@ -1,0 +1,15 @@
+openapi: 3.0.3
+info:
+  title: OAS 3.0 local reference baseline
+  version: 1.0.0
+paths:
+  /pets:
+    get:
+      operationId: listPets
+      responses:
+        "200":
+          description: Pet list
+          content:
+            application/json:
+              schema:
+                $ref: "./components.yaml#/components/schemas/PetList"

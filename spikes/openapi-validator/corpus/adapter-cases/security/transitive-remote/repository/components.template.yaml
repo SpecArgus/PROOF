@@ -1,0 +1,4 @@
+components:
+  schemas:
+    RemotePet:
+      $ref: "{{REMOTE_REF_URL}}#/components/schemas/Pet"

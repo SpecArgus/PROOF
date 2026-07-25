@@ -1,0 +1,14 @@
+openapi: 3.1.0
+info:
+  title: File URI must be denied
+  version: 1.0.0
+paths:
+  /pets:
+    get:
+      responses:
+        "200":
+          description: File URI target
+          content:
+            application/json:
+              schema:
+                $ref: "file:///etc/passwd"

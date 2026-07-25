@@ -1,0 +1,923 @@
+{
+  "schemaVersion": 1,
+  "status": "active",
+  "purpose": "Common acceptance corpus for direct OpenAPI validator adapters.",
+  "selectionRule": "An adapter is selectable only when every required case applicable to its supported production platforms passes. An observed network request, an outcome inconsistent with repositoryRoot containment, or a non-deterministic normalized result is an immediate hard-gate failure. The corpus does not independently instrument operating-system file reads, so read-before-deny behavior remains an implementation-review and sandboxing concern.",
+  "limitProfiles": {
+    "default": {
+      "timeoutMs": 5000,
+      "maxEntrypointBytes": 1048576,
+      "maxReferenceDepth": 16,
+      "maxFileCount": 64,
+      "maxAggregateBytes": 8388608,
+      "maxDiagnostics": 100
+    }
+  },
+  "contract": {
+    "pathSemantics": {
+      "repositoryRoot": "The canonical real path of repositoryRoot is the containment boundary.",
+      "entrypoint": "entrypoint is relative to repositoryRoot and must be contained after canonicalization.",
+      "references": "Resolve a local reference against its defining file, canonicalize the target, then reject it before reading content when its real path is outside repositoryRoot. The harness verifies the controlled denial and reported closure statistics but does not independently trace operating-system reads.",
+      "schemes": "Only an absent URI scheme is allowed. HTTP, HTTPS, file, protocol-relative, absolute-drive, device, and UNC references are policy denials.",
+      "links": "A symlink or junction whose real target escapes repositoryRoot is denied before target content is read."
+    },
+    "referenceAccounting": {
+      "depth": "maxReferenceDepth counts local file-reference edges from the entrypoint. An internal fragment does not increase depth. A reference to an already visited canonical file terminates cycle traversal and does not create an unbounded path.",
+      "fileCount": "maxFileCount is inclusive and counts the entrypoint plus each distinct canonical referenced file exactly once.",
+      "aggregateBytes": "maxAggregateBytes is inclusive and sums raw bytes for the entrypoint plus each distinct canonical referenced file exactly once. The committed fixtures use LF and UTF-8 without a BOM.",
+      "denialLocation": "A reference limit finding points to the reference that would exceed the limit, not to the unopened target."
+    },
+    "normalizedFinding": {
+      "requiredFields": [
+        "source",
+        "line",
+        "column",
+        "pointer",
+        "code",
+        "severity",
+        "kind",
+        "message"
+      ],
+      "source": "Slash-separated path relative to repositoryRoot; never an absolute or temporary path.",
+      "coordinates": "One-based line and column at the defining document when available.",
+      "pointer": "RFC 6901 document pointer.",
+      "severity": "error",
+      "kind": "Stable finding category such as validation, parse, policy, limit, contract, or internal.",
+      "sortKeys": [
+        "source",
+        "line",
+        "column",
+        "pointer",
+        "code",
+        "severity",
+        "kind",
+        "message"
+      ],
+      "deduplicationKey": [
+        "source",
+        "line",
+        "column",
+        "pointer",
+        "code",
+        "severity",
+        "kind",
+        "message"
+      ]
+    },
+    "stableCodes": {
+      "input.entrypoint-bytes-exceeded": "The entrypoint raw byte length exceeds maxEntrypointBytes before parsing or reference resolution begins.",
+      "parse.duplicate-key": "A YAML or JSON object contains the same mapping key more than once.",
+      "parse.invalid-json": "A .json entrypoint is not valid strict JSON.",
+      "parse.invalid-utf8": "A JSON or YAML input is not valid UTF-8 and is rejected before decoding.",
+      "parse.multiple-documents": "A YAML stream contains more than one document.",
+      "parse.cyclic-alias": "A YAML alias creates an in-memory object cycle that cannot be validated safely.",
+      "ref.path-outside-root": "A lexical or canonical local path escapes repositoryRoot.",
+      "ref.scheme-denied": "A reference uses a URI or filesystem scheme outside the local relative-reference policy.",
+      "ref.depth-exceeded": "Following the reference would exceed maxReferenceDepth.",
+      "ref.file-count-exceeded": "Opening a new canonical file would exceed maxFileCount.",
+      "ref.aggregate-bytes-exceeded": "Adding a new canonical file would exceed maxAggregateBytes.",
+      "diagnostics.limit-exceeded": "Validation produced more findings than maxDiagnostics; the emitted list is truncated deterministically.",
+      "oas.schema": "The OpenAPI document or a referenced schema violates the applicable OpenAPI schema."
+    },
+    "materialization": {
+      "isolation": "Every repeat is materialized into a newly created temporary directory at a different absolute path.",
+      "copyTree": "Copy the declared source tree without changing bytes.",
+      "templates": "Substitute only declared tokens in the temporary copy; never modify the committed template.",
+      "links": "Create symlinks or Windows junctions only inside the temporary copy and remove the entire temporary copy after the run."
+    }
+  },
+  "acceptanceGates": [
+    {
+      "id": "dialect-and-local-ref-correctness",
+      "required": true,
+      "cases": [
+        "oas30-local-valid",
+        "oas31-local-valid"
+      ],
+      "passCondition": "Both dialects validate successfully and the referenced file is actually traversed."
+    },
+    {
+      "id": "strict-input-parsing",
+      "required": true,
+      "cases": [
+        "yaml-duplicate-key",
+        "malformed-json",
+        "invalid-utf8-json",
+        "yaml-multiple-documents",
+        "yaml-cyclic-alias"
+      ],
+      "passCondition": "Duplicate YAML keys, malformed or non-UTF-8 JSON, multiple YAML documents, and cyclic YAML aliases are controlled parse failures with stable codes and source locations; last-key-wins, replacement decoding, YAML fallback for .json, and cyclic object graphs are forbidden."
+    },
+    {
+      "id": "root-confined-filesystem",
+      "required": true,
+      "cases": [
+        "parent-path-escape",
+        "percent-encoded-path-escape",
+        "file-uri-denied",
+        "directory-symlink-escape",
+        "directory-junction-escape"
+      ],
+      "passCondition": "The adapter returns the required denial before admitting an outside target into its reported reference closure. Platform-specific link cases are mandatory on every supported platform to which they apply. Independent proof that no operating-system read occurred requires production sandbox or filesystem tracing beyond this corpus."
+    },
+    {
+      "id": "transitive-no-egress",
+      "required": true,
+      "cases": [
+        "transitive-remote-denied"
+      ],
+      "passCondition": "The local file is traversed, the nested remote reference is denied, and the loopback canary observes exactly zero requests."
+    },
+    {
+      "id": "reference-closure-limits",
+      "required": true,
+      "cases": [
+        "reference-depth-at-limit",
+        "reference-depth-over-limit",
+        "file-count-at-limit",
+        "file-count-over-limit",
+        "aggregate-bytes-at-limit",
+        "aggregate-bytes-over-limit"
+      ],
+      "passCondition": "Inclusive boundaries pass and the next edge or byte is denied with the exact limit code and reference-site location."
+    },
+    {
+      "id": "entrypoint-byte-boundary",
+      "required": true,
+      "cases": [
+        "entrypoint-decimal-at-limit",
+        "entrypoint-decimal-over-limit",
+        "entrypoint-binary-at-limit",
+        "entrypoint-binary-over-limit"
+      ],
+      "passCondition": "Both common meanings of 10 MB are tested independently: each exact byte boundary passes and its boundary-plus-one document is rejected before parsing with input.entrypoint-bytes-exceeded."
+    },
+    {
+      "id": "cycle-termination",
+      "required": true,
+      "cases": [
+        "recursive-cycle-valid"
+      ],
+      "passCondition": "A valid recursive schema terminates, validates, and reads each canonical file once."
+    },
+    {
+      "id": "deterministic-diagnostics",
+      "required": true,
+      "cases": [
+        "multi-file-deterministic-invalid"
+      ],
+      "passCondition": "All relocated repeats have one canonical SHA-256, defining-file locations are preserved, duplicate traversals are deduplicated, and findings use the declared global sort."
+    },
+    {
+      "id": "diagnostic-volume",
+      "required": true,
+      "cases": [
+        "diagnostic-flood"
+      ],
+      "passCondition": "The emitted list is capped after deterministic normalization, truncation is explicit, and counts distinguish observed, emitted, and truncated diagnostics."
+    }
+  ],
+  "cases": [
+    {
+      "id": "oas30-local-valid",
+      "required": true,
+      "dialect": "oas3.0",
+      "format": "yaml",
+      "materialization": {
+        "kind": "copy-tree",
+        "source": "baseline/oas30-local"
+      },
+      "repositoryRoot": ".",
+      "entrypoint": "root.yaml",
+      "limits": {
+        "profile": "default"
+      },
+      "expected": {
+        "outcome": "valid",
+        "code": null,
+        "findingCount": 0,
+        "filesRead": 2
+      },
+      "requiresLocation": false,
+      "repeat": 5,
+      "securityRationale": "A root-confined resolver must not break ordinary OAS 3.0 multi-file documents."
+    },
+    {
+      "id": "oas31-local-valid",
+      "required": true,
+      "dialect": "oas3.1",
+      "format": "json",
+      "materialization": {
+        "kind": "copy-tree",
+        "source": "baseline/oas31-local"
+      },
+      "repositoryRoot": ".",
+      "entrypoint": "root.json",
+      "limits": {
+        "profile": "default"
+      },
+      "expected": {
+        "outcome": "valid",
+        "code": null,
+        "findingCount": 0,
+        "filesRead": 2
+      },
+      "requiresLocation": false,
+      "repeat": 5,
+      "securityRationale": "The adapter must support OAS 3.1 and JSON Schema 2020-12 local references without enabling remote resolution."
+    },
+    {
+      "id": "yaml-duplicate-key",
+      "required": true,
+      "dialect": "oas3.0",
+      "format": "yaml",
+      "materialization": {
+        "kind": "copy-tree",
+        "source": "parse"
+      },
+      "repositoryRoot": ".",
+      "entrypoint": "duplicate-key.yaml",
+      "limits": {
+        "profile": "default"
+      },
+      "expected": {
+        "outcome": "parse-error",
+        "code": "parse.duplicate-key",
+        "findingCount": 1,
+        "source": "duplicate-key.yaml",
+        "line": 5,
+        "column": 3
+      },
+      "requiresLocation": true,
+      "repeat": 5,
+      "securityRationale": "Rejecting duplicate keys prevents parser differentials and last-key-wins ambiguity between validation and downstream consumers."
+    },
+    {
+      "id": "malformed-json",
+      "required": true,
+      "dialect": "oas3.1",
+      "format": "json",
+      "materialization": {
+        "kind": "copy-tree",
+        "source": "parse"
+      },
+      "repositoryRoot": ".",
+      "entrypoint": "malformed.json",
+      "limits": {
+        "profile": "default"
+      },
+      "expected": {
+        "outcome": "parse-error",
+        "code": "parse.invalid-json",
+        "findingCount": 1,
+        "source": "malformed.json",
+        "line": 5,
+        "columnRange": [
+          16,
+          22
+        ]
+      },
+      "requiresLocation": true,
+      "repeat": 5,
+      "securityRationale": "A .json file must use strict JSON parsing; accepting it through a YAML parser creates inconsistent semantics and bypass opportunities."
+    },
+    {
+      "id": "invalid-utf8-json",
+      "required": true,
+      "dialect": "oas3.1",
+      "format": "json",
+      "materialization": {
+        "kind": "generated-invalid-utf8-json"
+      },
+      "repositoryRoot": ".",
+      "entrypoint": "root.json",
+      "limits": {
+        "profile": "default"
+      },
+      "expected": {
+        "outcome": "parse-error",
+        "code": "parse.invalid-utf8",
+        "findingCount": 1,
+        "source": "root.json",
+        "line": 1
+      },
+      "requiresLocation": true,
+      "repeat": 5,
+      "securityRationale": "Invalid UTF-8 must be rejected rather than replacement-decoded into a different document before validation."
+    },
+    {
+      "id": "yaml-multiple-documents",
+      "required": true,
+      "dialect": "oas3.1",
+      "format": "yaml",
+      "materialization": {
+        "kind": "copy-tree",
+        "source": "strict/multiple-documents"
+      },
+      "repositoryRoot": ".",
+      "entrypoint": "root.yaml",
+      "limits": {
+        "profile": "default"
+      },
+      "expected": {
+        "outcome": "parse-error",
+        "code": "parse.multiple-documents",
+        "findingCount": 1,
+        "source": "root.yaml"
+      },
+      "requiresLocation": true,
+      "repeat": 5,
+      "securityRationale": "Only one OpenAPI document is allowed; silently ignoring a trailing YAML document creates parser differentials."
+    },
+    {
+      "id": "yaml-cyclic-alias",
+      "required": true,
+      "dialect": "oas3.1",
+      "format": "yaml",
+      "materialization": {
+        "kind": "copy-tree",
+        "source": "strict/cyclic-alias"
+      },
+      "repositoryRoot": ".",
+      "entrypoint": "root.yaml",
+      "limits": {
+        "profile": "default"
+      },
+      "expected": {
+        "outcome": "parse-error",
+        "code": "parse.cyclic-alias",
+        "findingCount": 1,
+        "source": "root.yaml"
+      },
+      "requiresLocation": true,
+      "repeat": 5,
+      "securityRationale": "A recursive YAML alias must not create an unbounded in-memory traversal or stack overflow."
+    },
+    {
+      "id": "parent-path-escape",
+      "required": true,
+      "dialect": "oas3.0",
+      "format": "yaml",
+      "materialization": {
+        "kind": "copy-tree",
+        "source": "security/path-escape"
+      },
+      "repositoryRoot": "repository",
+      "entrypoint": "root.yaml",
+      "limits": {
+        "profile": "default"
+      },
+      "expected": {
+        "outcome": "policy-denied",
+        "code": "ref.path-outside-root",
+        "findingCount": 1,
+        "source": "root.yaml",
+        "line": 14,
+        "column": 17,
+        "pointer": "/paths/~1pets/get/responses/200/content/application~1json/schema/$ref"
+      },
+      "requiresLocation": true,
+      "repeat": 5,
+      "securityRationale": "An existing and valid target outside repositoryRoot proves that containment is enforced rather than confused with a missing-file failure."
+    },
+    {
+      "id": "file-uri-denied",
+      "required": true,
+      "dialect": "oas3.1",
+      "format": "yaml",
+      "materialization": {
+        "kind": "copy-tree",
+        "source": "security/file-uri"
+      },
+      "repositoryRoot": "repository",
+      "entrypoint": "root.yaml",
+      "limits": {
+        "profile": "default"
+      },
+      "expected": {
+        "outcome": "policy-denied",
+        "code": "ref.scheme-denied",
+        "findingCount": 1,
+        "source": "root.yaml",
+        "line": 14,
+        "column": 17,
+        "pointer": "/paths/~1pets/get/responses/200/content/application~1json/schema/$ref"
+      },
+      "requiresLocation": true,
+      "repeat": 5,
+      "securityRationale": "file URIs must not turn the validator into an arbitrary local-file reader on either Unix or Windows."
+    },
+    {
+      "id": "percent-encoded-path-escape",
+      "required": true,
+      "dialect": "oas3.0",
+      "format": "yaml",
+      "materialization": {
+        "kind": "copy-tree",
+        "source": "security/path-escape"
+      },
+      "repositoryRoot": "repository",
+      "entrypoint": "encoded.yaml",
+      "limits": {
+        "profile": "default"
+      },
+      "expected": {
+        "outcome": "policy-denied",
+        "code": "ref.path-outside-root",
+        "findingCount": 1,
+        "source": "encoded.yaml",
+        "line": 14,
+        "column": 17,
+        "pointer": "/paths/~1pets/get/responses/200/content/application~1json/schema/$ref"
+      },
+      "requiresLocation": true,
+      "repeat": 5,
+      "securityRationale": "URI decoding must precede containment checks so percent-encoded parent segments cannot bypass the repository boundary."
+    },
+    {
+      "id": "transitive-remote-denied",
+      "required": true,
+      "dialect": "oas3.1",
+      "format": "yaml",
+      "materialization": {
+        "kind": "copy-tree-and-template",
+        "source": "security/transitive-remote",
+        "substitutions": [
+          {
+            "template": "repository/components.template.yaml",
+            "output": "repository/components.yaml",
+            "token": "{{REMOTE_REF_URL}}",
+            "valueFrom": "loopbackCanaryUrl"
+          }
+        ]
+      },
+      "repositoryRoot": "repository",
+      "entrypoint": "root.yaml",
+      "limits": {
+        "profile": "default"
+      },
+      "expected": {
+        "outcome": "policy-denied",
+        "code": "ref.scheme-denied",
+        "findingCount": 1,
+        "source": "components.yaml",
+        "line": 4,
+        "column": 7,
+        "pointer": "/components/schemas/RemotePet/$ref",
+        "networkRequests": 0,
+        "filesRead": 2
+      },
+      "requiresLocation": true,
+      "repeat": 3,
+      "securityRationale": "Scanning only the entrypoint misses remote references introduced by a local file; the resolver itself must omit network handlers."
+    },
+    {
+      "id": "directory-symlink-escape",
+      "required": true,
+      "platforms": [
+        "linux",
+        "darwin"
+      ],
+      "dialect": "oas3.0",
+      "format": "yaml",
+      "materialization": {
+        "kind": "copy-tree-and-directory-link",
+        "source": "security/link-escape",
+        "linkKind": "symlink",
+        "linkPath": "repository/linked",
+        "targetPath": "outside",
+        "requiresRuntimeMaterialization": true
+      },
+      "repositoryRoot": "repository",
+      "entrypoint": "root.yaml",
+      "limits": {
+        "profile": "default"
+      },
+      "expected": {
+        "outcome": "policy-denied",
+        "code": "ref.path-outside-root",
+        "findingCount": 1,
+        "source": "root.yaml",
+        "line": 14,
+        "column": 17,
+        "pointer": "/paths/~1pets/get/responses/200/content/application~1json/schema/$ref"
+      },
+      "requiresLocation": true,
+      "repeat": 3,
+      "securityRationale": "Lexical prefix checks pass for repository/linked, so only canonical real-path containment prevents a directory-symlink escape."
+    },
+    {
+      "id": "directory-junction-escape",
+      "required": true,
+      "platforms": [
+        "windows"
+      ],
+      "dialect": "oas3.0",
+      "format": "yaml",
+      "materialization": {
+        "kind": "copy-tree-and-directory-link",
+        "source": "security/link-escape",
+        "linkKind": "junction",
+        "linkPath": "repository/linked",
+        "targetPath": "outside",
+        "requiresRuntimeMaterialization": true
+      },
+      "repositoryRoot": "repository",
+      "entrypoint": "root.yaml",
+      "limits": {
+        "profile": "default"
+      },
+      "expected": {
+        "outcome": "policy-denied",
+        "code": "ref.path-outside-root",
+        "findingCount": 1,
+        "source": "root.yaml",
+        "line": 14,
+        "column": 17,
+        "pointer": "/paths/~1pets/get/responses/200/content/application~1json/schema/$ref"
+      },
+      "requiresLocation": true,
+      "repeat": 3,
+      "securityRationale": "Windows junctions can cross the repository boundary without a '..' segment and therefore require real-path containment. The junction is created only in the temporary test copy."
+    },
+    {
+      "id": "reference-depth-at-limit",
+      "required": true,
+      "dialect": "oas3.1",
+      "format": "yaml",
+      "materialization": {
+        "kind": "copy-tree",
+        "source": "depth/within-limit"
+      },
+      "repositoryRoot": ".",
+      "entrypoint": "root.yaml",
+      "limits": {
+        "profile": "default",
+        "maxReferenceDepth": 3
+      },
+      "expected": {
+        "outcome": "valid",
+        "code": null,
+        "findingCount": 0,
+        "filesRead": 4,
+        "maximumDepthObserved": 3
+      },
+      "requiresLocation": false,
+      "repeat": 5,
+      "securityRationale": "The inclusive boundary case prevents a safe limit from rejecting documents exactly at the published depth."
+    },
+    {
+      "id": "reference-depth-over-limit",
+      "required": true,
+      "dialect": "oas3.1",
+      "format": "yaml",
+      "materialization": {
+        "kind": "copy-tree",
+        "source": "depth/over-limit"
+      },
+      "repositoryRoot": ".",
+      "entrypoint": "root.yaml",
+      "limits": {
+        "profile": "default",
+        "maxReferenceDepth": 3
+      },
+      "expected": {
+        "outcome": "limit-exceeded",
+        "code": "ref.depth-exceeded",
+        "findingCount": 1,
+        "source": "level-3.yaml",
+        "line": 1,
+        "column": 1,
+        "pointer": "/$ref",
+        "filesRead": 4
+      },
+      "requiresLocation": true,
+      "repeat": 5,
+      "securityRationale": "Bounding reference depth prevents adversarial chains from exhausting stack, CPU, or resolver work."
+    },
+    {
+      "id": "file-count-at-limit",
+      "required": true,
+      "dialect": "oas3.0",
+      "format": "yaml",
+      "materialization": {
+        "kind": "copy-tree",
+        "source": "limits/reference-closure"
+      },
+      "repositoryRoot": ".",
+      "entrypoint": "root.yaml",
+      "limits": {
+        "profile": "default",
+        "maxFileCount": 4
+      },
+      "expected": {
+        "outcome": "valid",
+        "code": null,
+        "findingCount": 0,
+        "filesRead": 4
+      },
+      "requiresLocation": false,
+      "repeat": 5,
+      "securityRationale": "The entrypoint and three referenced files must be counted once and accepted at the inclusive file boundary."
+    },
+    {
+      "id": "file-count-over-limit",
+      "required": true,
+      "dialect": "oas3.0",
+      "format": "yaml",
+      "materialization": {
+        "kind": "copy-tree",
+        "source": "limits/reference-closure"
+      },
+      "repositoryRoot": ".",
+      "entrypoint": "root.yaml",
+      "limits": {
+        "profile": "default",
+        "maxFileCount": 3
+      },
+      "expected": {
+        "outcome": "limit-exceeded",
+        "code": "ref.file-count-exceeded",
+        "findingCount": 1,
+        "source": "two.yaml",
+        "line": 1,
+        "column": 1,
+        "pointer": "/$ref",
+        "filesRead": 3
+      },
+      "requiresLocation": true,
+      "repeat": 5,
+      "securityRationale": "A bounded file closure prevents a small entrypoint from fanning out into unbounded filesystem work."
+    },
+    {
+      "id": "aggregate-bytes-at-limit",
+      "required": true,
+      "dialect": "oas3.0",
+      "format": "yaml",
+      "materialization": {
+        "kind": "copy-tree",
+        "source": "limits/reference-closure"
+      },
+      "repositoryRoot": ".",
+      "entrypoint": "root.yaml",
+      "limits": {
+        "profile": "default",
+        "maxAggregateBytes": 379
+      },
+      "expected": {
+        "outcome": "valid",
+        "code": null,
+        "findingCount": 0,
+        "filesRead": 4,
+        "aggregateBytesRead": 379,
+        "fixtureByteBreakdown": {
+          "root.yaml": 269,
+          "one.yaml": 19,
+          "two.yaml": 20,
+          "leaf.yaml": 71
+        }
+      },
+      "requiresLocation": false,
+      "repeat": 5,
+      "securityRationale": "Exact raw-byte accounting makes the inclusive aggregate limit testable and prevents ambiguity about decoded characters or duplicate reads."
+    },
+    {
+      "id": "aggregate-bytes-over-limit",
+      "required": true,
+      "dialect": "oas3.0",
+      "format": "yaml",
+      "materialization": {
+        "kind": "copy-tree",
+        "source": "limits/reference-closure"
+      },
+      "repositoryRoot": ".",
+      "entrypoint": "root.yaml",
+      "limits": {
+        "profile": "default",
+        "maxAggregateBytes": 378
+      },
+      "expected": {
+        "outcome": "limit-exceeded",
+        "code": "ref.aggregate-bytes-exceeded",
+        "findingCount": 1,
+        "source": "two.yaml",
+        "line": 1,
+        "column": 1,
+        "pointer": "/$ref",
+        "filesRead": 3,
+        "aggregateBytesRead": 308,
+        "wouldHaveTotaledBytes": 379
+      },
+      "requiresLocation": true,
+      "repeat": 5,
+      "securityRationale": "The full reference closure, not only the entrypoint, must fit the aggregate byte budget."
+    },
+    {
+      "id": "entrypoint-decimal-at-limit",
+      "required": true,
+      "dialect": "oas3.0",
+      "format": "json",
+      "materialization": {
+        "kind": "generated-sized-openapi",
+        "generatedBytes": 10000000
+      },
+      "repositoryRoot": ".",
+      "entrypoint": "root.json",
+      "limits": {
+        "profile": "default",
+        "maxEntrypointBytes": 10000000,
+        "maxAggregateBytes": 12000000
+      },
+      "expected": {
+        "outcome": "valid",
+        "code": null,
+        "findingCount": 0,
+        "filesRead": 1,
+        "aggregateBytesRead": 10000000
+      },
+      "requiresLocation": false,
+      "repeat": 1,
+      "securityRationale": "The decimal 10 MB boundary must be inclusive and measured in raw bytes, independent of the aggregate closure limit."
+    },
+    {
+      "id": "entrypoint-decimal-over-limit",
+      "required": true,
+      "dialect": "oas3.0",
+      "format": "json",
+      "materialization": {
+        "kind": "generated-sized-openapi",
+        "generatedBytes": 10000001
+      },
+      "repositoryRoot": ".",
+      "entrypoint": "root.json",
+      "limits": {
+        "profile": "default",
+        "maxEntrypointBytes": 10000000,
+        "maxAggregateBytes": 12000000
+      },
+      "expected": {
+        "outcome": "limit-exceeded",
+        "code": "input.entrypoint-bytes-exceeded",
+        "findingCount": 1,
+        "filesRead": 0,
+        "aggregateBytesRead": 0
+      },
+      "requiresLocation": false,
+      "repeat": 1,
+      "securityRationale": "A decimal 10 MB plus one byte document must be rejected before parsing or reference traversal."
+    },
+    {
+      "id": "entrypoint-binary-at-limit",
+      "required": true,
+      "dialect": "oas3.0",
+      "format": "json",
+      "materialization": {
+        "kind": "generated-sized-openapi",
+        "generatedBytes": 10485760
+      },
+      "repositoryRoot": ".",
+      "entrypoint": "root.json",
+      "limits": {
+        "profile": "default",
+        "maxEntrypointBytes": 10485760,
+        "maxAggregateBytes": 12000000
+      },
+      "expected": {
+        "outcome": "valid",
+        "code": null,
+        "findingCount": 0,
+        "filesRead": 1,
+        "aggregateBytesRead": 10485760
+      },
+      "requiresLocation": false,
+      "repeat": 1,
+      "securityRationale": "The binary 10 MiB boundary must also be measured and demonstrated explicitly so the product policy can be chosen from evidence."
+    },
+    {
+      "id": "entrypoint-binary-over-limit",
+      "required": true,
+      "dialect": "oas3.0",
+      "format": "json",
+      "materialization": {
+        "kind": "generated-sized-openapi",
+        "generatedBytes": 10485761
+      },
+      "repositoryRoot": ".",
+      "entrypoint": "root.json",
+      "limits": {
+        "profile": "default",
+        "maxEntrypointBytes": 10485760,
+        "maxAggregateBytes": 12000000
+      },
+      "expected": {
+        "outcome": "limit-exceeded",
+        "code": "input.entrypoint-bytes-exceeded",
+        "findingCount": 1,
+        "filesRead": 0,
+        "aggregateBytesRead": 0
+      },
+      "requiresLocation": false,
+      "repeat": 1,
+      "securityRationale": "A binary 10 MiB plus one byte document must be rejected before parsing or reference traversal."
+    },
+    {
+      "id": "recursive-cycle-valid",
+      "required": true,
+      "dialect": "oas3.1",
+      "format": "json",
+      "materialization": {
+        "kind": "copy-tree",
+        "source": "cycles"
+      },
+      "repositoryRoot": ".",
+      "entrypoint": "root.json",
+      "limits": {
+        "profile": "default"
+      },
+      "expected": {
+        "outcome": "valid",
+        "code": null,
+        "findingCount": 0,
+        "filesRead": 3,
+        "maximumSimpleCanonicalDepthObserved": 2
+      },
+      "requiresLocation": false,
+      "repeat": 5,
+      "securityRationale": "Canonical visited-file tracking must terminate cycles without rejecting legitimate recursive JSON Schemas or repeatedly charging the same file."
+    },
+    {
+      "id": "multi-file-deterministic-invalid",
+      "required": true,
+      "dialect": "oas3.0",
+      "format": "yaml",
+      "materialization": {
+        "kind": "copy-tree",
+        "source": "determinism"
+      },
+      "repositoryRoot": ".",
+      "entrypoint": "root.yaml",
+      "limits": {
+        "profile": "default"
+      },
+      "expected": {
+        "outcome": "invalid",
+        "code": "oas.schema",
+        "findingCount": 2,
+        "canonicalHashCount": 1,
+        "orderedFindings": [
+          {
+            "source": "a.yaml",
+            "line": 1,
+            "column": 1,
+            "pointer": "/type"
+          },
+          {
+            "source": "z.yaml",
+            "line": 1,
+            "column": 1,
+            "pointer": "/type"
+          }
+        ]
+      },
+      "requiresLocation": true,
+      "repeat": 10,
+      "securityRationale": "Stable defining-file diagnostics and deduplication prevent temporary paths, traversal order, or map iteration from changing hashes and review output."
+    },
+    {
+      "id": "diagnostic-flood",
+      "required": true,
+      "dialect": "oas3.0",
+      "format": "yaml",
+      "materialization": {
+        "kind": "copy-tree",
+        "source": "diagnostics"
+      },
+      "repositoryRoot": ".",
+      "entrypoint": "flood.yaml",
+      "limits": {
+        "profile": "default",
+        "maxDiagnostics": 5
+      },
+      "expected": {
+        "outcome": "limit-exceeded",
+        "code": "diagnostics.limit-exceeded",
+        "retainedFindingCode": "oas.schema",
+        "minimumObservedDiagnostics": 12,
+        "emittedDiagnostics": 5,
+        "truncated": true,
+        "minimumTruncatedDiagnostics": 7,
+        "canonicalHashCount": 1,
+        "orderedEmittedPointers": [
+          "/paths/~1p11/get/responses",
+          "/paths/~1p10/get/responses",
+          "/paths/~1p09/get/responses",
+          "/paths/~1p08/get/responses",
+          "/paths/~1p07/get/responses"
+        ]
+      },
+      "requiresLocation": true,
+      "repeat": 5,
+      "securityRationale": "A validator can produce attacker-controlled diagnostic volume; the adapter must cap output deterministically and expose truncation rather than exhausting memory or hiding loss."
+    }
+  ]
+}

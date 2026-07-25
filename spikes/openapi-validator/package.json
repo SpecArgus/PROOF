@@ -9,12 +9,22 @@
     "bootstrap": "node ./scripts/bootstrap.mjs",
     "evaluate": "node ./scripts/evaluate.mjs",
     "evaluate:strict": "node ./scripts/evaluate.mjs --strict",
+    "evaluate:adapters": "node ./scripts/evaluate-adapters.mjs",
+    "evaluate:adapters:strict": "node ./scripts/evaluate-adapters.mjs --strict",
+    "assert:adapters": "node ./scripts/assert-adapter-baseline.mjs",
+    "audit:go": "node ./scripts/audit-go.mjs",
+    "audit:node": "node ./scripts/audit-node.mjs",
+    "audit:python": "node ./scripts/audit-python.mjs",
     "inventory": "node ./scripts/inventory.mjs",
     "snapshot": "node ./scripts/snapshot.mjs",
-    "test": "npm run evaluate"
+    "test:adapters:unit": "node ./scripts/test-adapters-unit.mjs",
+    "test:adapters": "npm run test:adapters:unit && npm run evaluate:adapters && npm run assert:adapters",
+    "test": "npm run evaluate && npm run test:adapters"
   },
   "devDependencies": {
     "@redocly/cli": "2.40.0",
-    "@stoplight/spectral-cli": "6.16.2"
+    "@redocly/openapi-core": "2.40.0",
+    "@stoplight/spectral-cli": "6.16.2",
+    "jsonc-parser": "3.3.1"
   }
 }

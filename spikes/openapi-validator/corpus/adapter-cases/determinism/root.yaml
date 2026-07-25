@@ -1,0 +1,41 @@
+openapi: 3.0.3
+info:
+  title: Deterministic diagnostic ordering
+  version: 1.0.0
+paths:
+  /z-first:
+    get:
+      responses:
+        "200":
+          description: Z first
+          content:
+            application/json:
+              schema:
+                $ref: "./z.yaml"
+  /a-second:
+    get:
+      responses:
+        "200":
+          description: A second
+          content:
+            application/json:
+              schema:
+                $ref: "./a.yaml"
+  /z-again:
+    get:
+      responses:
+        "200":
+          description: Z again
+          content:
+            application/json:
+              schema:
+                $ref: "./z.yaml"
+  /a-again:
+    get:
+      responses:
+        "200":
+          description: A again
+          content:
+            application/json:
+              schema:
+                $ref: "./a.yaml"

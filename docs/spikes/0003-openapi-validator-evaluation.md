@@ -1,233 +1,264 @@
 # OpenAPI validator evaluation
 
 - Issue: [#3](https://github.com/SpecArgus/PROOF/issues/3)
-- Evaluation date: 2026-07-23
-- Status: complete
-- Decision status: provisional recommendation, not a runtime selection
+- Stock CLI screening date: 2026-07-23
+- Direct adapter evaluation dates: 2026-07-24 through 2026-07-25
+- Current evidence: complete Windows x64 run
+- Cross-platform status: Linux x64 and macOS arm64 pending
+- Decision status: preliminary recommendation; maintainer approval pending
 - Reproduction harness: [`spikes/openapi-validator`](../../spikes/openapi-validator/README.md)
 
-## Recommendation
+## Preliminary recommendation
 
-Do not adopt any evaluated stock CLI as PROOF's production validation
-authority.
+Select `openapi-spec-validator 0.9.0` behind a small, versioned process adapter
+if the identical-input Linux and macOS jobs reproduce the Windows result.
+Do not merge the disposable evaluation adapters into `develop`.
 
-The preferred direction is a thin adapter over
-[`pb33f/libopenapi`](https://github.com/pb33f/libopenapi) and
-[`pb33f/libopenapi-validator`](https://github.com/pb33f/libopenapi-validator).
-Vacuum remains the baseline reference candidate because its targeted rules
-detected errors in both dialects, traversed local references, and denied the
-remote canary natively. Before selection, compare two disposable Go probes:
-Vacuum's minimal conformance profile and a direct `libopenapi-validator` call.
+The Python candidate is the only direct adapter that passed every required
+gate applicable to the reviewed Windows run. It combined strict JSON/YAML
+preflight parsing, a repository-confined local reference closure, a
+deny-by-default in-memory resolver, defining-file diagnostics, and explicit
+diagnostic truncation. Its exact CPython `3.14.2` runtime and 20 runtime
+packages are hash locked.
 
-The fallback direction to investigate is
-[`@redocly/openapi-core`](https://github.com/Redocly/redocly-cli/tree/main/packages/core)
-if a Node runtime is selected. Its documented lint and external-resolver
-interfaces are promising, and its CLI correctly found structural and
-external-reference failures, but its JSON formatter omitted line and column.
-`getLineColLocation` is exported but is not listed as a supported interface in
-the core README. A proof must therefore confirm a supported coordinate API or
-isolate that unstable helper behind the adapter before Redocly can be selected.
+This recommendation is intentionally narrower than a production architecture
+decision. PROOF's application, CLI, GitHub App, and report service do not have
+to be written in Python. The selected validator can remain an isolated
+subprocess behind a stable JSON contract.
 
-Do not use Spectral as the authoritative generic validator. It remains viable
-as a policy and style-rule engine. Its stock OAS schema rule did not validate
-the invalid schema reached through an external local `$ref`; fixing that would
-require a second structural-validation pass and source-map reconstruction.
+The production adapter must still run inside a no-egress, memory-limited
+worker. The experiment does not make its path preflight or language runtime a
+complete sandbox.
 
-This recommendation narrows the next experiment. It does not select Go, Node,
-a process boundary, or a production dependency.
+## Decision scope
 
-## Evaluation method
+This spike selects the generic OpenAPI structural and semantic validation
+authority used below PROOF's product-specific Agent contract rules. It does
+not select the complete application stack and does not implement the rule
+engine, CLI UX, GitHub orchestration, or report service.
 
-The harness pins and executes three black-box candidates:
+The comparison is decision-grade rather than a claim of formal parser
+verification. It covers the requirements most likely to force a later
+validator replacement:
+
+- OpenAPI 3.0 and 3.1 support;
+- repository-local multi-file references;
+- stable defining-file locations;
+- deterministic normalized output;
+- remote and repository-escape denial;
+- exact input and reference-closure limits;
+- diagnostic volume control;
+- Windows, Linux, and macOS packaging; and
+- pinned dependency, license, SBOM, and known-vulnerability evidence.
+
+Candidate-specific production hardening is deferred until one adapter is
+approved.
+
+## Stage 1: stock CLI screening
+
+### Candidates
 
 | Candidate | Version | Profile |
 | --- | --- | --- |
-| Vacuum | `0.29.10` | `oas3-schema` and `resolving-references`, `--resolve-all-refs`, `--remote=false` |
-| Stoplight Spectral | `6.16.2` | `oas3-schema` only |
+| Vacuum | `0.29.10` | `oas3-schema`, reference resolution, remote disabled |
+| Stoplight Spectral | `6.16.2` | official OAS ruleset |
 | Redocly CLI | `2.40.0` | `spec` ruleset |
 
-The common corpus covers OAS 3.0 YAML, OAS 3.1 JSON, malformed YAML,
-structural errors, valid and invalid multi-file local references, missing
-references, a loopback remote-reference canary, and four exact byte-boundary
-cases. Normalized findings use repository-relative slash paths, one-based
-coordinates, RFC 6901 pointers where candidates expose them, stable sorting,
-and SHA-256 comparison.
+### Method and result
 
-Normal cases run five times from relocated workspaces. Remote and large-input
-cases run once and are marked `not-assessed` rather than being treated as
-deterministic. Native behavior is recorded before the harness applies remote
-or input-size preflights.
+The black-box corpus covers valid, malformed, structurally invalid, and
+multi-file OAS 3.0/3.1 inputs, unresolved references, a loopback remote
+canary, and exact decimal and binary 10 MB boundaries. Native candidate
+behavior is recorded separately from runner preflights.
 
-The JavaScript runner is disposable evaluation tooling, not a production
-runtime decision.
+The reviewed run passed 32 of 39 candidate cases. All three stock CLIs retained
+gaps:
 
-## Results
+| Candidate | Screening conclusion |
+| --- | --- |
+| Vacuum | Strongest stock CLI baseline, but some OAS 3.1 and parse diagnostics lacked the required evidence location |
+| Spectral | Useful policy engine, but returned valid for an invalid external referenced schema |
+| Redocly CLI | Detected structural problems but frequently lacked the required source coordinates |
 
-The latest completed run recorded 39 candidate cases. Thirty-two meet the
-fixture contract after explicit adapter controls; seven expose candidate
-surface gaps. All 24 repeated cases produced one normalized hash. The
-single-run remote and size cases are not included in that determinism claim.
+A stock CLI is therefore not recommended as PROOF's generic validation
+authority. Spectral may still be useful later as an optional style or policy
+engine, but its pinned CLI closure is not part of the selected validator path.
 
-| Capability | Vacuum | Spectral | Redocly CLI |
-| --- | --- | --- | --- |
-| Valid OAS 3.0 / 3.1 | Pass | Pass | Pass |
-| Invalid OAS 3.0 | Pass with structured file, line, column, and path | Pass with structured file, line, column, and path | Detects error; JSON output has file and pointer but no line/column |
-| Invalid OAS 3.1 | Detects error and coordinates; emitted path is an internal schema path | Pass with document pointer and coordinates | Detects error; JSON output has pointer but no line/column |
-| Malformed YAML | Controlled parse failure, no line/column | Structured parser finding with line/column | Controlled parse failure with line/column parsed from CLI output |
-| Valid local multi-file `$ref` | Pass | Pass | Pass |
-| Invalid external referenced schema | Detects after `--resolve-all-refs`; location points at the referring root | **Missed; returned valid** | Detects target file and pointer; JSON output has no line/column |
-| Missing local reference | Pass with coordinates | Pass with coordinates | Detects reference; JSON output has no line/column |
-| Native remote-reference behavior | Zero canary requests and controlled error | One canary request; returned valid | One canary request; returned valid |
-| Harness remote preflight | Zero requests; pass | Zero requests; pass with adapter | Zero requests; pass with adapter |
-| Exact `10,000,000` and `10,485,760` bytes | Both accepted within timeout | Both accepted within timeout | Both accepted within timeout |
-| One byte above either boundary, native | Accepted | Accepted | Accepted |
-| One byte above either boundary, preflight | Rejected before candidate execution | Rejected before candidate execution | Rejected before candidate execution |
+## Stage 2: direct adapter comparison
 
-The harness summary deliberately labels all three candidate dispositions
-`has-gaps`. “Most cases passed” is not used as a selection score; correctness,
-no-egress behavior, and evidence location are gates.
+### Candidates
 
-### Location fidelity
+| Candidate | Pinned implementation |
+| --- | --- |
+| libopenapi | `libopenapi v0.38.7`, `libopenapi-validator v0.14.0`, Go `1.25.12` |
+| Redocly Core | `@redocly/openapi-core 2.40.0`, `jsonc-parser 3.3.1`, Node.js `24.13.0` |
+| openapi-spec-validator | `openapi-spec-validator 0.9.0`, CPython `3.14.2` |
 
-Vacuum's Spectral report uses one-based coordinates, while Spectral uses
-zero-based ranges. The adapter normalizes these independently. Redocly's CLI
-codeframe contains coordinates, but its JSON formatter only preserved source
-and pointer for structural findings. A production Redocly adapter would need
-a supported core source-location contract rather than parsing codeframes. The
-currently exported `getLineColLocation` helper is explicitly treated as
-unstable until Redocly documents it.
-
-Vacuum's OAS 3.1 structural finding reported the correct source coordinates
-but an internal JSON Schema pointer. Its invalid external schema finding
-reported the root reference site rather than the defining file. A direct
-libopenapi probe must verify whether low-level YAML nodes can provide the
-document pointer and defining-file coordinates without message parsing.
-
-### Native and adapter controls
-
-Vacuum denied the remote canary natively. Spectral and Redocly each made one
-HTTP request under their default CLI resolver. The harness then demonstrated
-an entrypoint preflight that returned a controlled diagnostic without running
-the candidate.
-
-That preflight is not a production security boundary. It only recognizes the
-fixture's HTTP(S) `$ref` in the entrypoint and does not prove safety for
-transitive references, `$id` rebasing, file URIs, path traversal, symlinks, or
-junctions. Production requires both a root-confined resolver with no HTTP(S)
-handler and worker-level no-egress.
-
-## Resource protection
-
-| Control | Spike evidence | Production requirement |
-| --- | --- | --- |
-| Entrypoint bytes | Exact decimal and binary boundaries tested; one byte over rejected | Choose and publish one inclusive raw-byte limit |
-| Wall time | Five-second candidate limit; supervisor kill self-test passes | Enforce outside the validator process |
-| Captured output | One MiB combined stdout/stderr cap; overflow self-test passes | Keep a bounded tail or structured truncation marker |
-| Diagnostic volume | 100-finding cap; 150-finding normalization self-test records truncation | Preserve raw, deduplicated, emitted, and truncated counts |
-| Reference depth | No common CLI limit | Enforce in the root-confined resolver |
-| Referenced files and aggregate bytes | Not enforced by candidate CLIs | Limit each file, file count, aggregate bytes, and cycles |
-| Memory | No portable CLI hard limit | Use worker/container/job-object memory limits |
-| Filesystem | Candidates are not sandboxed in this spike | Canonicalize real paths and reject repository-root escapes |
-| Network | Canary measures candidate behavior | Omit remote resolvers and enforce no-egress independently |
-
-`10 MB` remains intentionally unresolved. The corpus tests both
-`10,000,000` and `10,485,760` bytes so the eventual product decision can be
-made explicitly without changing the evidence harness.
-
-## Supply-chain review
-
-All direct candidate licenses are compatible with PROOF's Apache-2.0 license:
-Vacuum and Redocly are MIT; Spectral is Apache-2.0.
-
-| Candidate | Installed inventory | License result | Notable risk |
-| --- | --- | --- | --- |
-| Vacuum | 90,458,624-byte Windows binary; 95 linked Go modules | 55 MIT, 19 Apache-2.0, 18 BSD-3-Clause, 3 BSD-2-Clause; zero unresolved by local heuristic | Large CLI surface; 95 modules include UI, docs, language-server, and plugin code |
-| Spectral CLI | 240 CycloneDX components | Zero components without declared licenses | Archived JSON ref-resolver dependency, Scarf analytics package, and three deprecated Rollup-path dependencies |
-| Redocly CLI | One bundled npm component plus 108 packages disclosed in `THIRD_PARTY_NOTICES` | Direct MIT license; bundled notices require reconciliation | npm SBOM does not expand the bundled packages, so component-level SBOM coverage is incomplete |
-
-`npm audit` reported zero known vulnerabilities for the locked installation on
-the evaluation date. That result is time-bound and must be rerun in CI.
-
-The harness generates:
-
-- npm CycloneDX 1.5 JSON;
-- `go version -m -json` for the exact Vacuum binary;
-- the Vacuum binary SHA-256;
-- per-candidate dependency summaries; and
-- a local-cache license heuristic for linked Go modules.
-
-The Go license heuristic and Redocly notices are evidence, not legal
-conclusions. A production dependency change requires automated license policy
-checks and a complete SPDX or CycloneDX artifact.
-
-The 95-module Vacuum inventory contains
-`libopenapi-validator v0.13.13`. The proposed direct follow-up uses
-`v0.14.0`, which was not installed or inventoried in this spike. Its exact
-module graph, licenses, and SBOM are a follow-up gate rather than evidence
-claimed by this report.
-
-## Required adapter boundary
-
-Any selected implementation must fit a runtime-neutral boundary:
+Each disposable process implements:
 
 ```text
-validate(entrypoint, repositoryRoot, limits) -> normalized findings
+validate(entrypoint, repositoryRoot, limits) -> normalized JSON result
 ```
 
-The boundary must:
+The result contract distinguishes `valid`, `invalid`, `parse-error`,
+`policy-denied`, `limit-exceeded`, and internal failures. Diagnostics contain
+a repository-relative source, one-based coordinates, RFC 6901 pointer, stable
+code, severity, kind, and message. Sorting, deduplication, output capture, and
+process termination are bounded and deterministic.
 
-1. read raw bytes and enforce entrypoint and reference-closure limits before
-   parsing;
-2. allow only repository-contained local references;
-3. omit HTTP(S), `file://`, absolute-drive, UNC, and protocol-relative
-   resolvers;
-4. reject canonical-path, symlink, and junction escapes;
-5. return relative source, one-based line and column, RFC 6901 pointer, stable
-   code, severity, and message;
-6. distinguish validation findings, parse failures, policy denials, timeouts,
-   output limits, and internal errors;
-7. sort and deduplicate findings deterministically;
-8. cap time, memory, output, reference depth, file count, aggregate bytes, and
-   diagnostic volume outside the candidate where necessary; and
-9. run in a no-egress worker with a locked dependency graph and generated SBOM.
+### Common corpus
 
-## Next gate
+The corpus contains 26 cases grouped into nine required gates:
 
-Open a follow-up implementation issue for two small, disposable adapters:
+1. OAS 3.0/3.1 and local-reference correctness;
+2. strict JSON/YAML parsing, including duplicate keys, invalid UTF-8,
+   multiple YAML documents, and cyclic aliases;
+3. root-confined path, encoded-path, file URI, symlink, and junction handling;
+4. transitive no-egress;
+5. reference depth, canonical file-count, and aggregate-byte limits;
+6. exact decimal and binary entrypoint byte boundaries;
+7. recursive-reference termination;
+8. deterministic defining-file diagnostics; and
+9. diagnostic observation and truncation.
 
-1. `libopenapi v0.38.7` plus `libopenapi-validator v0.14.0`, configured with
-   local references allowed, remote references denied, and a root-confined
-   filesystem; and
-2. Redocly OpenAPI Core `2.40.0` with a custom local-only resolver and
-   a supported coordinate API. If the exported but undocumented
-   `getLineColLocation` helper is the only option, pin and isolate it while
-   treating API stability as an explicit risk.
+Partial or candidate-filtered runs cannot produce a selectable disposition or
+refresh the reviewed snapshot.
 
-Run the same corpus plus path-escape, symlink/junction, transitive remote
-reference, deep-reference, aggregate-byte, cycle, duplicate-key, malformed
-JSON, and diagnostic-flood fixtures. Select a production validator only after
-one adapter passes every correctness and security gate.
+### Reviewed Windows result
 
-The byte-limit convention, production runtime, and worker isolation mechanism
-remain explicit decisions for that follow-up work.
+The full Windows run evaluated 78 candidate-case combinations. Seventy-five
+were applicable, 73 passed, two were gaps, and three POSIX symlink cases were
+skipped. All supervisor self-checks and all three Windows junction cases
+passed.
+
+| Capability | libopenapi | Redocly Core | openapi-spec-validator |
+| --- | --- | --- | --- |
+| Applicable required cases | 25 | 25 | 25 |
+| Passed required cases | 24 | 24 | 25 |
+| Required gates | 8/9 | 8/9 | **9/9** |
+| Network request observed | No | No | No |
+| Hard-gate failure | No | No | No |
+| Windows disposition | `has-gaps` | `has-gaps` | **`selectable-on-windows`** |
+
+#### libopenapi gap
+
+`multi-file-deterministic-invalid` contains two invalid bare schemas in
+external local files. All ten repetitions returned `valid` with no
+diagnostic. The output was deterministic but wrong, so this is a structural
+validation false negative.
+
+#### Redocly Core gap
+
+`diagnostic-flood` contains twelve independent missing-response errors.
+Redocly Core exposed only one raw finding. The adapter's output cap is stable,
+but it cannot demonstrate the required observation, emitted-count, and
+truncation contract when the underlying rule stops after the first error.
+
+#### openapi-spec-validator result
+
+The candidate passed both cases above. It reported defining-file locations for
+the invalid external schemas and deterministically observed twelve findings,
+emitted the configured five, and reported seven truncated findings.
+
+Version `0.9.0` can raise an internal `KeyError` during a later semantic pass
+for some values already rejected by its complete meta-schema pass. The adapter
+retains previously yielded structural findings and treats an exception with no
+prior finding as an internal adapter failure. This behavior is pinned,
+unit-tested, and must be revisited on dependency upgrades.
+
+## Supply-chain evidence
+
+The local inventory was generated with npm `11.6.2`, Go `1.25.12`, and
+CPython `3.14.2`.
+
+| Surface | Inventory | Known-vulnerability observation |
+| --- | --- | --- |
+| Vacuum CLI | 90,543,104-byte binary, 95 linked modules | Not the recommended product path |
+| Spectral CLI | 240-component Node closure | 12 high-severity package records in this rejected closure |
+| Redocly Core adapter | 22-component Node closure | None of the 12 npm records occur in this closure |
+| libopenapi adapter | 20,269,056-byte binary, 16 linked modules | `govulncheck`: zero reachable or module findings |
+| openapi-spec-validator adapter | 20 exactly locked Python packages | PyPI release-specific inventory: zero active records |
+
+No inventory entry had an unrecognized declared license. This is a technical
+metadata inventory, not a legal compatibility opinion or a package-content
+audit.
+
+The vulnerability results are time-bound:
+
+- Go was checked with `govulncheck 1.6.0` against
+  `https://vuln.go.dev`;
+- Node was checked with npm `11.6.2` against the official npm registry; and
+- Python package releases were queried through PyPI's release-specific JSON
+  API.
+
+The Python check does not prove that undisclosed vulnerabilities are absent.
+The Node result attributes installed vulnerable package names to recorded
+candidate closures but does not prove exploitability or reachability.
+
+## Security boundary and remaining limitations
+
+The experiment proves controlled outcomes and reported closure accounting. It
+does not independently instrument every operating-system file read. A
+production worker must therefore enforce no-egress, memory, CPU, wall-time,
+process-tree, and filesystem boundaries outside the adapter.
+
+The common comparative corpus covers parent and percent-encoded escapes,
+`file://`, remote references, and platform link escapes. Absolute POSIX,
+Windows drive, device, UNC, and protocol-relative spellings are denied by the
+adapter implementations and focused tests or review, but they are not all
+separate required common-corpus cases in this decision snapshot.
+
+The corpus rejects cyclic YAML aliases. More general acyclic alias
+amplification, concurrent filesystem mutation, and path-resolution
+time-of-check/time-of-use attacks require worker-level limits and targeted
+production-adapter tests. These are follow-up hardening requirements, not
+reasons to make all three disposable candidates production ready.
+
+## Cross-platform evidence and disposition
+
+The workflow runs Ubuntu 24.04 x64, Windows Server 2022 x64, and macOS 15
+arm64 from the PR head commit. Every matrix job performs the locked install,
+bootstrap, unit tests, both evaluation stages, audits, inventory, and reviewed
+snapshot.
+
+The Windows snapshot in this branch is complete. Linux and macOS remain
+pending until the spike branch is pushed. A final cross-platform manifest must
+record:
+
+- source commit and Actions run;
+- platform and runtime versions;
+- identical evaluation input fingerprints;
+- candidate dispositions and required-gate results; and
+- reviewed artifact content digests.
+
+The experiment must not claim cross-platform selection until all three
+platform snapshots pass those checks.
+
+After maintainer approval:
+
+1. preserve the experiment as
+   `archive/3-openapi-validator-evaluation`;
+2. create an immutable research tag;
+3. close PR #13 without merging the disposable adapters into `develop`; and
+4. implement only the selected product adapter from a new `develop`-based
+   branch.
 
 ## Reproduce
 
-From [`spikes/openapi-validator`](../../spikes/openapi-validator/README.md):
+From `spikes/openapi-validator`:
 
 ```text
 npm ci --ignore-scripts
 npm run bootstrap
 npm test
+npm run audit:go
 npm run inventory
+npm run audit:node
+npm run audit:python
 npm run snapshot
 ```
 
-Generated raw evidence stays in the ignored `.cache/evidence` directory.
-Reviewed, normalized evidence is committed as
-[`evaluation-summary.json`](../../spikes/openapi-validator/evidence/evaluation-summary.json),
-[`inventory-summary.json`](../../spikes/openapi-validator/evidence/inventory-summary.json),
-and
-[`vacuum-modules.json`](../../spikes/openapi-validator/evidence/vacuum-modules.json).
-These snapshots omit raw candidate output and timing noise; their environment
-metadata and Vacuum binary hash remain platform-specific.
+The tracked evidence snapshot is accepted only when both evaluation stages are
+complete, the adapter run is full rather than partial, artifacts and runtime
+fingerprints match, supervisor controls pass, and no selection-relevant audit
+finding remains.

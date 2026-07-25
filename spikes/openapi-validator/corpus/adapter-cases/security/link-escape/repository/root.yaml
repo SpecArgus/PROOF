@@ -1,0 +1,14 @@
+openapi: 3.0.3
+info:
+  title: Filesystem link escape must be denied
+  version: 1.0.0
+paths:
+  /pets:
+    get:
+      responses:
+        "200":
+          description: Linked schema
+          content:
+            application/json:
+              schema:
+                $ref: "./linked/components.yaml"

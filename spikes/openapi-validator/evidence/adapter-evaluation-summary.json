@@ -1,0 +1,4361 @@
+{
+  "schemaVersion": 1,
+  "environment": {
+    "platform": "win32",
+    "architecture": "x64",
+    "node": "v24.13.0"
+  },
+  "provenance": {
+    "evaluationInputSha256": "1ed115c450a63b8e4565d5053ad597150f874138d6effdae21801838efd44d50",
+    "manifestSha256": "02911ce99d1b3473282236f62b4efdfc90ee783795acb754c0b8868429055e71",
+    "packageLockSha256": "672b08446d42acecce18d1bbd22d2555d545e217ad21e26a68bc2458901153c2",
+    "candidateArtifactSha256": {
+      "libopenapi": "76958468f1814c9584b70545a57b1299703cffb3bbd0b4b00a0112edaf79d4ed",
+      "redocly-core": "da929e60b133e06e48a49ec4b0e2372c4f47cfb527919ab9c7186743816bcc15",
+      "openapi-spec-validator": "d00235329b2e47bf3a29a6d7f3ed8e2c73e172e7a5eb8af45a9ad55269fbe71a"
+    },
+    "candidateRuntime": {
+      "openapi-spec-validator": {
+        "executableSha256": "e725f520cfbb2e4844fe0a9fc8949236f20b0d67e470d1232618b99504a0691a",
+        "requirementsLockSha256": "818bdb7510cd9d6579f302d4fe021fd4fe7d3722206a8f5106112daad2e0d43a",
+        "environmentSha256": "5fd62de431d07007f4b5499642d85cc3ae4063d8a1c8ff2bacb1557693c35c0b",
+        "environment": {
+          "implementation": "cpython",
+          "pythonVersion": "3.14.2",
+          "platform": "Windows",
+          "architecture": "AMD64",
+          "packages": [
+            {
+              "name": "annotated-types",
+              "version": "0.8.0"
+            },
+            {
+              "name": "attrs",
+              "version": "26.1.0"
+            },
+            {
+              "name": "jsonschema",
+              "version": "4.26.0"
+            },
+            {
+              "name": "jsonschema-path",
+              "version": "0.5.0"
+            },
+            {
+              "name": "jsonschema-specifications",
+              "version": "2025.9.1"
+            },
+            {
+              "name": "lazy-object-proxy",
+              "version": "1.11.0"
+            },
+            {
+              "name": "openapi-schema-validator",
+              "version": "0.9.0"
+            },
+            {
+              "name": "openapi-spec-validator",
+              "version": "0.9.0"
+            },
+            {
+              "name": "pathable",
+              "version": "0.6.0"
+            },
+            {
+              "name": "pydantic",
+              "version": "2.13.4"
+            },
+            {
+              "name": "pydantic-core",
+              "version": "2.46.4"
+            },
+            {
+              "name": "pydantic-settings",
+              "version": "2.14.2"
+            },
+            {
+              "name": "python-dotenv",
+              "version": "1.2.2"
+            },
+            {
+              "name": "pyyaml",
+              "version": "6.0.3"
+            },
+            {
+              "name": "referencing",
+              "version": "0.37.0"
+            },
+            {
+              "name": "rfc3339-validator",
+              "version": "0.1.4"
+            },
+            {
+              "name": "rpds-py",
+              "version": "2026.6.3"
+            },
+            {
+              "name": "six",
+              "version": "1.17.0"
+            },
+            {
+              "name": "typing-extensions",
+              "version": "4.16.0"
+            },
+            {
+              "name": "typing-inspection",
+              "version": "0.4.2"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "sourceSchemaVersion": 1,
+  "manifestSchemaVersion": 1,
+  "runStatus": "complete",
+  "scope": "full",
+  "coverage": {
+    "full": true,
+    "selectedCandidates": [
+      "libopenapi",
+      "redocly-core",
+      "openapi-spec-validator"
+    ],
+    "candidateCount": 3,
+    "corpusCandidateCount": 3,
+    "selectedCaseCount": 26,
+    "corpusCaseCount": 26
+  },
+  "integrityErrors": [],
+  "platform": "windows",
+  "profile": {
+    "timeoutMs": 5000,
+    "maxEntrypointBytes": 1048576,
+    "maxReferenceDepth": 16,
+    "maxFileCount": 64,
+    "maxAggregateBytes": 8388608,
+    "maxDiagnostics": 100
+  },
+  "selectionRule": "An adapter is selectable only when every required case applicable to its supported production platforms passes. An observed network request, an outcome inconsistent with repositoryRoot containment, or a non-deterministic normalized result is an immediate hard-gate failure. The corpus does not independently instrument operating-system file reads, so read-before-deny behavior remains an implementation-review and sandboxing concern.",
+  "dispositions": {
+    "libopenapi": "has-gaps",
+    "redocly-core": "has-gaps",
+    "openapi-spec-validator": "selectable-on-windows"
+  },
+  "totals": {
+    "cases": 78,
+    "applicable": 75,
+    "passed": 73,
+    "failed": 2,
+    "skipped": 3,
+    "evaluated": 75,
+    "gaps": 2,
+    "harnessErrors": 0
+  },
+  "gateResults": {
+    "libopenapi": [
+      {
+        "id": "dialect-and-local-ref-correctness",
+        "required": true,
+        "status": "passed",
+        "applicableCases": [
+          "oas30-local-valid",
+          "oas31-local-valid"
+        ],
+        "failedCases": []
+      },
+      {
+        "id": "strict-input-parsing",
+        "required": true,
+        "status": "passed",
+        "applicableCases": [
+          "yaml-duplicate-key",
+          "malformed-json",
+          "invalid-utf8-json",
+          "yaml-multiple-documents",
+          "yaml-cyclic-alias"
+        ],
+        "failedCases": []
+      },
+      {
+        "id": "root-confined-filesystem",
+        "required": true,
+        "status": "passed",
+        "applicableCases": [
+          "parent-path-escape",
+          "file-uri-denied",
+          "percent-encoded-path-escape",
+          "directory-junction-escape"
+        ],
+        "failedCases": []
+      },
+      {
+        "id": "transitive-no-egress",
+        "required": true,
+        "status": "passed",
+        "applicableCases": [
+          "transitive-remote-denied"
+        ],
+        "failedCases": []
+      },
+      {
+        "id": "reference-closure-limits",
+        "required": true,
+        "status": "passed",
+        "applicableCases": [
+          "reference-depth-at-limit",
+          "reference-depth-over-limit",
+          "file-count-at-limit",
+          "file-count-over-limit",
+          "aggregate-bytes-at-limit",
+          "aggregate-bytes-over-limit"
+        ],
+        "failedCases": []
+      },
+      {
+        "id": "entrypoint-byte-boundary",
+        "required": true,
+        "status": "passed",
+        "applicableCases": [
+          "entrypoint-decimal-at-limit",
+          "entrypoint-decimal-over-limit",
+          "entrypoint-binary-at-limit",
+          "entrypoint-binary-over-limit"
+        ],
+        "failedCases": []
+      },
+      {
+        "id": "cycle-termination",
+        "required": true,
+        "status": "passed",
+        "applicableCases": [
+          "recursive-cycle-valid"
+        ],
+        "failedCases": []
+      },
+      {
+        "id": "deterministic-diagnostics",
+        "required": true,
+        "status": "gap",
+        "applicableCases": [
+          "multi-file-deterministic-invalid"
+        ],
+        "failedCases": [
+          "multi-file-deterministic-invalid"
+        ]
+      },
+      {
+        "id": "diagnostic-volume",
+        "required": true,
+        "status": "passed",
+        "applicableCases": [
+          "diagnostic-flood"
+        ],
+        "failedCases": []
+      }
+    ],
+    "redocly-core": [
+      {
+        "id": "dialect-and-local-ref-correctness",
+        "required": true,
+        "status": "passed",
+        "applicableCases": [
+          "oas30-local-valid",
+          "oas31-local-valid"
+        ],
+        "failedCases": []
+      },
+      {
+        "id": "strict-input-parsing",
+        "required": true,
+        "status": "passed",
+        "applicableCases": [
+          "yaml-duplicate-key",
+          "malformed-json",
+          "invalid-utf8-json",
+          "yaml-multiple-documents",
+          "yaml-cyclic-alias"
+        ],
+        "failedCases": []
+      },
+      {
+        "id": "root-confined-filesystem",
+        "required": true,
+        "status": "passed",
+        "applicableCases": [
+          "parent-path-escape",
+          "file-uri-denied",
+          "percent-encoded-path-escape",
+          "directory-junction-escape"
+        ],
+        "failedCases": []
+      },
+      {
+        "id": "transitive-no-egress",
+        "required": true,
+        "status": "passed",
+        "applicableCases": [
+          "transitive-remote-denied"
+        ],
+        "failedCases": []
+      },
+      {
+        "id": "reference-closure-limits",
+        "required": true,
+        "status": "passed",
+        "applicableCases": [
+          "reference-depth-at-limit",
+          "reference-depth-over-limit",
+          "file-count-at-limit",
+          "file-count-over-limit",
+          "aggregate-bytes-at-limit",
+          "aggregate-bytes-over-limit"
+        ],
+        "failedCases": []
+      },
+      {
+        "id": "entrypoint-byte-boundary",
+        "required": true,
+        "status": "passed",
+        "applicableCases": [
+          "entrypoint-decimal-at-limit",
+          "entrypoint-decimal-over-limit",
+          "entrypoint-binary-at-limit",
+          "entrypoint-binary-over-limit"
+        ],
+        "failedCases": []
+      },
+      {
+        "id": "cycle-termination",
+        "required": true,
+        "status": "passed",
+        "applicableCases": [
+          "recursive-cycle-valid"
+        ],
+        "failedCases": []
+      },
+      {
+        "id": "deterministic-diagnostics",
+        "required": true,
+        "status": "passed",
+        "applicableCases": [
+          "multi-file-deterministic-invalid"
+        ],
+        "failedCases": []
+      },
+      {
+        "id": "diagnostic-volume",
+        "required": true,
+        "status": "gap",
+        "applicableCases": [
+          "diagnostic-flood"
+        ],
+        "failedCases": [
+          "diagnostic-flood"
+        ]
+      }
+    ],
+    "openapi-spec-validator": [
+      {
+        "id": "dialect-and-local-ref-correctness",
+        "required": true,
+        "status": "passed",
+        "applicableCases": [
+          "oas30-local-valid",
+          "oas31-local-valid"
+        ],
+        "failedCases": []
+      },
+      {
+        "id": "strict-input-parsing",
+        "required": true,
+        "status": "passed",
+        "applicableCases": [
+          "yaml-duplicate-key",
+          "malformed-json",
+          "invalid-utf8-json",
+          "yaml-multiple-documents",
+          "yaml-cyclic-alias"
+        ],
+        "failedCases": []
+      },
+      {
+        "id": "root-confined-filesystem",
+        "required": true,
+        "status": "passed",
+        "applicableCases": [
+          "parent-path-escape",
+          "file-uri-denied",
+          "percent-encoded-path-escape",
+          "directory-junction-escape"
+        ],
+        "failedCases": []
+      },
+      {
+        "id": "transitive-no-egress",
+        "required": true,
+        "status": "passed",
+        "applicableCases": [
+          "transitive-remote-denied"
+        ],
+        "failedCases": []
+      },
+      {
+        "id": "reference-closure-limits",
+        "required": true,
+        "status": "passed",
+        "applicableCases": [
+          "reference-depth-at-limit",
+          "reference-depth-over-limit",
+          "file-count-at-limit",
+          "file-count-over-limit",
+          "aggregate-bytes-at-limit",
+          "aggregate-bytes-over-limit"
+        ],
+        "failedCases": []
+      },
+      {
+        "id": "entrypoint-byte-boundary",
+        "required": true,
+        "status": "passed",
+        "applicableCases": [
+          "entrypoint-decimal-at-limit",
+          "entrypoint-decimal-over-limit",
+          "entrypoint-binary-at-limit",
+          "entrypoint-binary-over-limit"
+        ],
+        "failedCases": []
+      },
+      {
+        "id": "cycle-termination",
+        "required": true,
+        "status": "passed",
+        "applicableCases": [
+          "recursive-cycle-valid"
+        ],
+        "failedCases": []
+      },
+      {
+        "id": "deterministic-diagnostics",
+        "required": true,
+        "status": "passed",
+        "applicableCases": [
+          "multi-file-deterministic-invalid"
+        ],
+        "failedCases": []
+      },
+      {
+        "id": "diagnostic-volume",
+        "required": true,
+        "status": "passed",
+        "applicableCases": [
+          "diagnostic-flood"
+        ],
+        "failedCases": []
+      }
+    ]
+  },
+  "supervisorControls": {
+    "timeout": {
+      "status": "passed",
+      "detail": "timedOut=true,forcedSettlement=false,termination=taskkill"
+    },
+    "outputBytes": {
+      "status": "passed",
+      "detail": "outputLimited=true,forcedSettlement=false,termination=direct-kill-after-taskkill-128,capturedBytes=1048576"
+    },
+    "processTree": {
+      "status": "passed",
+      "detail": "timedOut=true,descendantPid=14112,descendantAlive=false,forcedSettlement=false,termination=taskkill"
+    },
+    "jsonContract": {
+      "status": "passed",
+      "detail": "validObjectErrors=0,rejectsMultipleObjects=true"
+    }
+  },
+  "candidates": [
+    {
+      "id": "libopenapi",
+      "disposition": "has-gaps",
+      "applicableRequiredCases": 25,
+      "passedRequiredCases": 24,
+      "hardGateFailure": false,
+      "hardGateFailures": [],
+      "requiredGapGates": [
+        "deterministic-diagnostics"
+      ]
+    },
+    {
+      "id": "redocly-core",
+      "disposition": "has-gaps",
+      "applicableRequiredCases": 25,
+      "passedRequiredCases": 24,
+      "hardGateFailure": false,
+      "hardGateFailures": [],
+      "requiredGapGates": [
+        "diagnostic-volume"
+      ]
+    },
+    {
+      "id": "openapi-spec-validator",
+      "disposition": "selectable-on-windows",
+      "applicableRequiredCases": 25,
+      "passedRequiredCases": 25,
+      "hardGateFailure": false,
+      "hardGateFailures": [],
+      "requiredGapGates": []
+    }
+  ],
+  "results": [
+    {
+      "candidate": "libopenapi",
+      "caseId": "oas30-local-valid",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "b9b50e61e9f80b08326e2bde7c336aa217b96c96d89fb8a1aa94c6491befb32b"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkRequests": 0,
+        "canonicalSha256": "b9b50e61e9f80b08326e2bde7c336aa217b96c96d89fb8a1aa94c6491befb32b",
+        "diagnostics": [],
+        "stats": {
+          "filesRead": 2,
+          "entrypointBytes": 338,
+          "totalBytes": 581,
+          "referencesSeen": 2,
+          "maxDepthObserved": 1,
+          "diagnosticsRaw": 0,
+          "diagnosticsEmitted": 0,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "libopenapi",
+      "caseId": "oas31-local-valid",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "ce82631f833fbec75cb5a1e6ca3a19edd1f51b5b99b3a7b05d4183fa469a5156"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkRequests": 0,
+        "canonicalSha256": "ce82631f833fbec75cb5a1e6ca3a19edd1f51b5b99b3a7b05d4183fa469a5156",
+        "diagnostics": [],
+        "stats": {
+          "filesRead": 2,
+          "entrypointBytes": 583,
+          "totalBytes": 970,
+          "referencesSeen": 2,
+          "maxDepthObserved": 1,
+          "diagnosticsRaw": 0,
+          "diagnosticsEmitted": 0,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "libopenapi",
+      "caseId": "yaml-duplicate-key",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "25e974a6592c5af09c8326c3d024a1c8fd3944f528144b7cc2d9d64035743a06"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "parse-error",
+        "networkRequests": 0,
+        "canonicalSha256": "25e974a6592c5af09c8326c3d024a1c8fd3944f528144b7cc2d9d64035743a06",
+        "diagnostics": [
+          {
+            "source": "duplicate-key.yaml",
+            "line": 5,
+            "column": 3,
+            "pointer": "/info/version",
+            "code": "parse.duplicate-key",
+            "severity": "error",
+            "kind": "parse",
+            "message": "duplicate mapping key \"version\""
+          }
+        ],
+        "stats": {
+          "filesRead": 0,
+          "entrypointBytes": 0,
+          "totalBytes": 0,
+          "referencesSeen": 0,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "libopenapi",
+      "caseId": "malformed-json",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "31f460f87fb636aa8acff6a1fd061e3cb49c88dbb8ec0c58a546ac085f4bbdf0"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "parse-error",
+        "networkRequests": 0,
+        "canonicalSha256": "31f460f87fb636aa8acff6a1fd061e3cb49c88dbb8ec0c58a546ac085f4bbdf0",
+        "diagnostics": [
+          {
+            "source": "malformed.json",
+            "line": 5,
+            "column": 16,
+            "pointer": "",
+            "code": "parse.invalid-json",
+            "severity": "error",
+            "kind": "parse",
+            "message": "invalid character 'i' looking for beginning of value"
+          }
+        ],
+        "stats": {
+          "filesRead": 0,
+          "entrypointBytes": 0,
+          "totalBytes": 0,
+          "referencesSeen": 0,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "libopenapi",
+      "caseId": "invalid-utf8-json",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "e95dbfcafb15bd54d2bc928788ed5bfd97de8bf83f90c4d3c0a8d28310d2edcd"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "parse-error",
+        "networkRequests": 0,
+        "canonicalSha256": "e95dbfcafb15bd54d2bc928788ed5bfd97de8bf83f90c4d3c0a8d28310d2edcd",
+        "diagnostics": [
+          {
+            "source": "root.json",
+            "line": 1,
+            "column": 37,
+            "pointer": "",
+            "code": "parse.invalid-utf8",
+            "severity": "error",
+            "kind": "parse",
+            "message": "document is not valid UTF-8"
+          }
+        ],
+        "stats": {
+          "filesRead": 0,
+          "entrypointBytes": 0,
+          "totalBytes": 0,
+          "referencesSeen": 0,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "libopenapi",
+      "caseId": "yaml-multiple-documents",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "36f5853bc709d80297184bd6b3e860b961ebc16986c0d5b4e7d0d38b5d4ec348"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "parse-error",
+        "networkRequests": 0,
+        "canonicalSha256": "36f5853bc709d80297184bd6b3e860b961ebc16986c0d5b4e7d0d38b5d4ec348",
+        "diagnostics": [
+          {
+            "source": "root.yaml",
+            "line": 6,
+            "column": 1,
+            "pointer": "",
+            "code": "parse.multiple-documents",
+            "severity": "error",
+            "kind": "parse",
+            "message": "YAML streams must contain exactly one document"
+          }
+        ],
+        "stats": {
+          "filesRead": 0,
+          "entrypointBytes": 0,
+          "totalBytes": 0,
+          "referencesSeen": 0,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "libopenapi",
+      "caseId": "yaml-cyclic-alias",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "9764383e1ac0b0b4e1a775a0ec59d1d271907161fa04292b7993fad1a90e0cac"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "parse-error",
+        "networkRequests": 0,
+        "canonicalSha256": "9764383e1ac0b0b4e1a775a0ec59d1d271907161fa04292b7993fad1a90e0cac",
+        "diagnostics": [
+          {
+            "source": "root.yaml",
+            "line": 7,
+            "column": 5,
+            "pointer": "/x-cycle/0",
+            "code": "parse.cyclic-alias",
+            "severity": "error",
+            "kind": "parse",
+            "message": "YAML aliases must not form an object cycle"
+          }
+        ],
+        "stats": {
+          "filesRead": 0,
+          "entrypointBytes": 0,
+          "totalBytes": 0,
+          "referencesSeen": 0,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "libopenapi",
+      "caseId": "parent-path-escape",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "0cbfc9c8c87415d7cebe7be1e7ccaf6df6b1bf372a76b0c3d9d60de9a231a5ab"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "policy-denied",
+        "networkRequests": 0,
+        "canonicalSha256": "0cbfc9c8c87415d7cebe7be1e7ccaf6df6b1bf372a76b0c3d9d60de9a231a5ab",
+        "diagnostics": [
+          {
+            "source": "root.yaml",
+            "line": 14,
+            "column": 17,
+            "pointer": "/paths/~1pets/get/responses/200/content/application~1json/schema/$ref",
+            "code": "ref.path-outside-root",
+            "severity": "error",
+            "kind": "policy",
+            "message": "local reference escapes the repository root"
+          }
+        ],
+        "stats": {
+          "filesRead": 1,
+          "entrypointBytes": 286,
+          "totalBytes": 286,
+          "referencesSeen": 1,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "libopenapi",
+      "caseId": "file-uri-denied",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "aee1e76ece8272cc013e59648f265af62ce267d4fba2fe4f73c5890e7e8acb7f"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "policy-denied",
+        "networkRequests": 0,
+        "canonicalSha256": "aee1e76ece8272cc013e59648f265af62ce267d4fba2fe4f73c5890e7e8acb7f",
+        "diagnostics": [
+          {
+            "source": "root.yaml",
+            "line": 14,
+            "column": 17,
+            "pointer": "/paths/~1pets/get/responses/200/content/application~1json/schema/$ref",
+            "code": "ref.scheme-denied",
+            "severity": "error",
+            "kind": "policy",
+            "message": "non-file references are not permitted"
+          }
+        ],
+        "stats": {
+          "filesRead": 1,
+          "entrypointBytes": 281,
+          "totalBytes": 281,
+          "referencesSeen": 1,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "libopenapi",
+      "caseId": "percent-encoded-path-escape",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "6f97c70fe101c41d6085256f4f2bd1dbfba74e74a7dd4f64e002c994cfee520a"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "policy-denied",
+        "networkRequests": 0,
+        "canonicalSha256": "6f97c70fe101c41d6085256f4f2bd1dbfba74e74a7dd4f64e002c994cfee520a",
+        "diagnostics": [
+          {
+            "source": "encoded.yaml",
+            "line": 14,
+            "column": 17,
+            "pointer": "/paths/~1pets/get/responses/200/content/application~1json/schema/$ref",
+            "code": "ref.path-outside-root",
+            "severity": "error",
+            "kind": "policy",
+            "message": "local reference escapes the repository root"
+          }
+        ],
+        "stats": {
+          "filesRead": 1,
+          "entrypointBytes": 287,
+          "totalBytes": 287,
+          "referencesSeen": 1,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "libopenapi",
+      "caseId": "transitive-remote-denied",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "9c7c039088c7acb5ed5697378821c3d3a64dca6afac21e4ff344f1feea10b851"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "policy-denied",
+        "networkRequests": 0,
+        "canonicalSha256": "9c7c039088c7acb5ed5697378821c3d3a64dca6afac21e4ff344f1feea10b851",
+        "diagnostics": [
+          {
+            "source": "components.yaml",
+            "line": 4,
+            "column": 7,
+            "pointer": "/components/schemas/RemotePet/$ref",
+            "code": "ref.scheme-denied",
+            "severity": "error",
+            "kind": "policy",
+            "message": "remote references are not permitted"
+          }
+        ],
+        "stats": {
+          "filesRead": 2,
+          "entrypointBytes": 327,
+          "totalBytes": 445,
+          "referencesSeen": 2,
+          "maxDepthObserved": 1,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "libopenapi",
+      "caseId": "directory-symlink-escape",
+      "required": true,
+      "status": "skipped-platform",
+      "passed": null,
+      "applicablePlatforms": [
+        "linux",
+        "darwin"
+      ],
+      "reason": "Case applies to linux, darwin; current platform is windows.",
+      "determinism": "not-assessed",
+      "uniqueHashes": [],
+      "failures": [],
+      "observation": null
+    },
+    {
+      "candidate": "libopenapi",
+      "caseId": "directory-junction-escape",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "a15e133ad82e5dbcacabea0f762a7261e59fdb3eff306921c57f4665c026e568"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "policy-denied",
+        "networkRequests": 0,
+        "canonicalSha256": "a15e133ad82e5dbcacabea0f762a7261e59fdb3eff306921c57f4665c026e568",
+        "diagnostics": [
+          {
+            "source": "root.yaml",
+            "line": 14,
+            "column": 17,
+            "pointer": "/paths/~1pets/get/responses/200/content/application~1json/schema/$ref",
+            "code": "ref.path-outside-root",
+            "severity": "error",
+            "kind": "policy",
+            "message": "local reference resolves outside the repository root"
+          }
+        ],
+        "stats": {
+          "filesRead": 1,
+          "entrypointBytes": 299,
+          "totalBytes": 299,
+          "referencesSeen": 1,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "libopenapi",
+      "caseId": "reference-depth-at-limit",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "b02264c42157b583d07fd3a078400f7784dc8a9c91c0f0a4c7e2b183cd78549f"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkRequests": 0,
+        "canonicalSha256": "b02264c42157b583d07fd3a078400f7784dc8a9c91c0f0a4c7e2b183cd78549f",
+        "diagnostics": [],
+        "stats": {
+          "filesRead": 4,
+          "entrypointBytes": 275,
+          "totalBytes": 331,
+          "referencesSeen": 3,
+          "maxDepthObserved": 3,
+          "diagnosticsRaw": 0,
+          "diagnosticsEmitted": 0,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "libopenapi",
+      "caseId": "reference-depth-over-limit",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "4764de58c7f3e99675bb23d303ab8969942000060c62891229a4bde8c1c0a564"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "limit-exceeded",
+        "networkRequests": 0,
+        "canonicalSha256": "4764de58c7f3e99675bb23d303ab8969942000060c62891229a4bde8c1c0a564",
+        "diagnostics": [
+          {
+            "source": "level-3.yaml",
+            "line": 1,
+            "column": 1,
+            "pointer": "/$ref",
+            "code": "ref.depth-exceeded",
+            "severity": "error",
+            "kind": "limit",
+            "message": "external reference depth exceeds 3"
+          }
+        ],
+        "stats": {
+          "filesRead": 4,
+          "entrypointBytes": 277,
+          "totalBytes": 343,
+          "referencesSeen": 4,
+          "maxDepthObserved": 3,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": "ref.depth-exceeded"
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "libopenapi",
+      "caseId": "file-count-at-limit",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "39f059bff996a98a50444458d58b797f4c8c94d5abe17f93b47c62174402dabe"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkRequests": 0,
+        "canonicalSha256": "39f059bff996a98a50444458d58b797f4c8c94d5abe17f93b47c62174402dabe",
+        "diagnostics": [],
+        "stats": {
+          "filesRead": 4,
+          "entrypointBytes": 269,
+          "totalBytes": 379,
+          "referencesSeen": 3,
+          "maxDepthObserved": 3,
+          "diagnosticsRaw": 0,
+          "diagnosticsEmitted": 0,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "libopenapi",
+      "caseId": "file-count-over-limit",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "9df98901168441d4e2fa32ffdf767185832f8c838fc71f079b6f24946ec51a93"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "limit-exceeded",
+        "networkRequests": 0,
+        "canonicalSha256": "9df98901168441d4e2fa32ffdf767185832f8c838fc71f079b6f24946ec51a93",
+        "diagnostics": [
+          {
+            "source": "two.yaml",
+            "line": 1,
+            "column": 1,
+            "pointer": "/$ref",
+            "code": "ref.file-count-exceeded",
+            "severity": "error",
+            "kind": "limit",
+            "message": "reference closure exceeds 3 files"
+          }
+        ],
+        "stats": {
+          "filesRead": 3,
+          "entrypointBytes": 269,
+          "totalBytes": 308,
+          "referencesSeen": 3,
+          "maxDepthObserved": 3,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": "ref.file-count-exceeded"
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "libopenapi",
+      "caseId": "aggregate-bytes-at-limit",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "39f059bff996a98a50444458d58b797f4c8c94d5abe17f93b47c62174402dabe"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkRequests": 0,
+        "canonicalSha256": "39f059bff996a98a50444458d58b797f4c8c94d5abe17f93b47c62174402dabe",
+        "diagnostics": [],
+        "stats": {
+          "filesRead": 4,
+          "entrypointBytes": 269,
+          "totalBytes": 379,
+          "referencesSeen": 3,
+          "maxDepthObserved": 3,
+          "diagnosticsRaw": 0,
+          "diagnosticsEmitted": 0,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "libopenapi",
+      "caseId": "aggregate-bytes-over-limit",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "c7e981a5e1b8267bc4089fc45b3f9e7fcfdf741d36badb69792f5568baf77f8c"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "limit-exceeded",
+        "networkRequests": 0,
+        "canonicalSha256": "c7e981a5e1b8267bc4089fc45b3f9e7fcfdf741d36badb69792f5568baf77f8c",
+        "diagnostics": [
+          {
+            "source": "two.yaml",
+            "line": 1,
+            "column": 1,
+            "pointer": "/$ref",
+            "code": "ref.aggregate-bytes-exceeded",
+            "severity": "error",
+            "kind": "limit",
+            "message": "reference closure exceeds 378 bytes"
+          }
+        ],
+        "stats": {
+          "filesRead": 3,
+          "entrypointBytes": 269,
+          "totalBytes": 308,
+          "referencesSeen": 3,
+          "maxDepthObserved": 3,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": "ref.aggregate-bytes-exceeded"
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "libopenapi",
+      "caseId": "entrypoint-decimal-at-limit",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "not-assessed",
+      "uniqueHashes": [
+        "292916b7ba4cab4feb656469da75473c14922681a26e10ea2aa7d7c03568743f"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkRequests": 0,
+        "canonicalSha256": "292916b7ba4cab4feb656469da75473c14922681a26e10ea2aa7d7c03568743f",
+        "diagnostics": [],
+        "stats": {
+          "filesRead": 1,
+          "entrypointBytes": 10000000,
+          "totalBytes": 10000000,
+          "referencesSeen": 0,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 0,
+          "diagnosticsEmitted": 0,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "libopenapi",
+      "caseId": "entrypoint-decimal-over-limit",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "not-assessed",
+      "uniqueHashes": [
+        "4753e14cf0b3fe7f9c891518c73eb8bf1a68550019a61dee8a99b77b8e838ea1"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "limit-exceeded",
+        "networkRequests": 0,
+        "canonicalSha256": "4753e14cf0b3fe7f9c891518c73eb8bf1a68550019a61dee8a99b77b8e838ea1",
+        "diagnostics": [
+          {
+            "source": "root.json",
+            "line": 1,
+            "column": 1,
+            "pointer": "",
+            "code": "input.entrypoint-bytes-exceeded",
+            "severity": "error",
+            "kind": "limit",
+            "message": "entrypoint exceeds 10000000 bytes"
+          }
+        ],
+        "stats": {
+          "filesRead": 0,
+          "entrypointBytes": 0,
+          "totalBytes": 0,
+          "referencesSeen": 0,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": "input.entrypoint-bytes-exceeded"
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "libopenapi",
+      "caseId": "entrypoint-binary-at-limit",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "not-assessed",
+      "uniqueHashes": [
+        "50b7e0c0519286f13d373e5d6740f3dc006ad14137c5f920bb2581f2f7b33472"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkRequests": 0,
+        "canonicalSha256": "50b7e0c0519286f13d373e5d6740f3dc006ad14137c5f920bb2581f2f7b33472",
+        "diagnostics": [],
+        "stats": {
+          "filesRead": 1,
+          "entrypointBytes": 10485760,
+          "totalBytes": 10485760,
+          "referencesSeen": 0,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 0,
+          "diagnosticsEmitted": 0,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "libopenapi",
+      "caseId": "entrypoint-binary-over-limit",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "not-assessed",
+      "uniqueHashes": [
+        "9496701e48796f00fa8fc49d63629bb10b456c0568c0ad7662ee4be5438a1a8d"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "limit-exceeded",
+        "networkRequests": 0,
+        "canonicalSha256": "9496701e48796f00fa8fc49d63629bb10b456c0568c0ad7662ee4be5438a1a8d",
+        "diagnostics": [
+          {
+            "source": "root.json",
+            "line": 1,
+            "column": 1,
+            "pointer": "",
+            "code": "input.entrypoint-bytes-exceeded",
+            "severity": "error",
+            "kind": "limit",
+            "message": "entrypoint exceeds 10485760 bytes"
+          }
+        ],
+        "stats": {
+          "filesRead": 0,
+          "entrypointBytes": 0,
+          "totalBytes": 0,
+          "referencesSeen": 0,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": "input.entrypoint-bytes-exceeded"
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "libopenapi",
+      "caseId": "recursive-cycle-valid",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "331582278e7eeaacd396b5563224803b476c21a58ec8b45d6d1c4c0d4a215ac4"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkRequests": 0,
+        "canonicalSha256": "331582278e7eeaacd396b5563224803b476c21a58ec8b45d6d1c4c0d4a215ac4",
+        "diagnostics": [],
+        "stats": {
+          "filesRead": 3,
+          "entrypointBytes": 458,
+          "totalBytes": 634,
+          "referencesSeen": 3,
+          "maxDepthObserved": 2,
+          "diagnosticsRaw": 0,
+          "diagnosticsEmitted": 0,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "libopenapi",
+      "caseId": "multi-file-deterministic-invalid",
+      "required": true,
+      "status": "gap",
+      "passed": false,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "4a12fd517fe326b5edca75da1a3a4d121995024e2727bbe961d77d5bb9849ab3"
+      ],
+      "failures": [
+        "repeat 1: Expected outcome invalid, observed valid.",
+        "repeat 1: Expected 2 finding(s), observed 0.",
+        "repeat 1: Expected stable code oas.schema.",
+        "repeat 1: Expected 2 ordered findings, observed 0.",
+        "repeat 2: Expected outcome invalid, observed valid.",
+        "repeat 2: Expected 2 finding(s), observed 0.",
+        "repeat 2: Expected stable code oas.schema.",
+        "repeat 2: Expected 2 ordered findings, observed 0.",
+        "repeat 3: Expected outcome invalid, observed valid.",
+        "repeat 3: Expected 2 finding(s), observed 0.",
+        "repeat 3: Expected stable code oas.schema.",
+        "repeat 3: Expected 2 ordered findings, observed 0.",
+        "repeat 4: Expected outcome invalid, observed valid.",
+        "repeat 4: Expected 2 finding(s), observed 0.",
+        "repeat 4: Expected stable code oas.schema.",
+        "repeat 4: Expected 2 ordered findings, observed 0.",
+        "repeat 5: Expected outcome invalid, observed valid.",
+        "repeat 5: Expected 2 finding(s), observed 0.",
+        "repeat 5: Expected stable code oas.schema.",
+        "repeat 5: Expected 2 ordered findings, observed 0.",
+        "repeat 6: Expected outcome invalid, observed valid.",
+        "repeat 6: Expected 2 finding(s), observed 0.",
+        "repeat 6: Expected stable code oas.schema.",
+        "repeat 6: Expected 2 ordered findings, observed 0.",
+        "repeat 7: Expected outcome invalid, observed valid.",
+        "repeat 7: Expected 2 finding(s), observed 0.",
+        "repeat 7: Expected stable code oas.schema.",
+        "repeat 7: Expected 2 ordered findings, observed 0.",
+        "repeat 8: Expected outcome invalid, observed valid.",
+        "repeat 8: Expected 2 finding(s), observed 0.",
+        "repeat 8: Expected stable code oas.schema.",
+        "repeat 8: Expected 2 ordered findings, observed 0.",
+        "repeat 9: Expected outcome invalid, observed valid.",
+        "repeat 9: Expected 2 finding(s), observed 0.",
+        "repeat 9: Expected stable code oas.schema.",
+        "repeat 9: Expected 2 ordered findings, observed 0.",
+        "repeat 10: Expected outcome invalid, observed valid.",
+        "repeat 10: Expected 2 finding(s), observed 0.",
+        "repeat 10: Expected stable code oas.schema.",
+        "repeat 10: Expected 2 ordered findings, observed 0."
+      ],
+      "observation": {
+        "outcome": "valid",
+        "networkRequests": 0,
+        "canonicalSha256": "4a12fd517fe326b5edca75da1a3a4d121995024e2727bbe961d77d5bb9849ab3",
+        "diagnostics": [],
+        "stats": {
+          "filesRead": 3,
+          "entrypointBytes": 842,
+          "totalBytes": 858,
+          "referencesSeen": 4,
+          "maxDepthObserved": 1,
+          "diagnosticsRaw": 0,
+          "diagnosticsEmitted": 0,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "libopenapi",
+      "caseId": "diagnostic-flood",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "314424f33fedb783485283e97eaca43a57248a6cab6eaa84c1d71707872f875c"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "limit-exceeded",
+        "networkRequests": 0,
+        "canonicalSha256": "314424f33fedb783485283e97eaca43a57248a6cab6eaa84c1d71707872f875c",
+        "diagnostics": [
+          {
+            "source": "flood.yaml",
+            "line": 8,
+            "column": 18,
+            "pointer": "/paths/~1p11/get/responses",
+            "code": "oas.schema",
+            "severity": "error",
+            "kind": "validation",
+            "message": "got string, want object"
+          },
+          {
+            "source": "flood.yaml",
+            "line": 11,
+            "column": 18,
+            "pointer": "/paths/~1p10/get/responses",
+            "code": "oas.schema",
+            "severity": "error",
+            "kind": "validation",
+            "message": "got string, want object"
+          },
+          {
+            "source": "flood.yaml",
+            "line": 14,
+            "column": 18,
+            "pointer": "/paths/~1p09/get/responses",
+            "code": "oas.schema",
+            "severity": "error",
+            "kind": "validation",
+            "message": "got string, want object"
+          },
+          {
+            "source": "flood.yaml",
+            "line": 17,
+            "column": 18,
+            "pointer": "/paths/~1p08/get/responses",
+            "code": "oas.schema",
+            "severity": "error",
+            "kind": "validation",
+            "message": "got string, want object"
+          },
+          {
+            "source": "flood.yaml",
+            "line": 20,
+            "column": 18,
+            "pointer": "/paths/~1p07/get/responses",
+            "code": "oas.schema",
+            "severity": "error",
+            "kind": "validation",
+            "message": "got string, want object"
+          }
+        ],
+        "stats": {
+          "filesRead": 1,
+          "entrypointBytes": 676,
+          "totalBytes": 676,
+          "referencesSeen": 0,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 12,
+          "diagnosticsEmitted": 5,
+          "diagnosticsTruncated": 7,
+          "truncated": true,
+          "limitCode": "diagnostics.limit-exceeded"
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "redocly-core",
+      "caseId": "oas30-local-valid",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "8e5ad37b8b99383bf4fdcf0b851a3e3e5384b5ad3de6a1d764d5d96be4a0c14d"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkRequests": 0,
+        "canonicalSha256": "8e5ad37b8b99383bf4fdcf0b851a3e3e5384b5ad3de6a1d764d5d96be4a0c14d",
+        "diagnostics": [],
+        "stats": {
+          "filesRead": 2,
+          "entrypointBytes": 338,
+          "totalBytes": 581,
+          "referencesSeen": 1,
+          "maxDepthObserved": 1,
+          "diagnosticsRaw": 0,
+          "diagnosticsEmitted": 0,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "redocly-core",
+      "caseId": "oas31-local-valid",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "91c422d0cc27bc85c19fc2226043222ee0da0339855a2841d025daf1a94ccc7e"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkRequests": 0,
+        "canonicalSha256": "91c422d0cc27bc85c19fc2226043222ee0da0339855a2841d025daf1a94ccc7e",
+        "diagnostics": [],
+        "stats": {
+          "filesRead": 2,
+          "entrypointBytes": 583,
+          "totalBytes": 970,
+          "referencesSeen": 1,
+          "maxDepthObserved": 1,
+          "diagnosticsRaw": 0,
+          "diagnosticsEmitted": 0,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "redocly-core",
+      "caseId": "yaml-duplicate-key",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "d342b3ef3c1fb5f957abd9fc7e886c166968e732235910e0a2ed7c73db3d74ae"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "parse-error",
+        "networkRequests": 0,
+        "canonicalSha256": "d342b3ef3c1fb5f957abd9fc7e886c166968e732235910e0a2ed7c73db3d74ae",
+        "diagnostics": [
+          {
+            "source": "duplicate-key.yaml",
+            "line": 5,
+            "column": 3,
+            "pointer": "",
+            "code": "parse.duplicate-key",
+            "severity": "error",
+            "kind": "parse",
+            "message": "duplicated mapping key in \"<repository>/duplicate-key.yaml\" (5:3)"
+          }
+        ],
+        "stats": {
+          "filesRead": 1,
+          "entrypointBytes": 115,
+          "totalBytes": 115,
+          "referencesSeen": 0,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "redocly-core",
+      "caseId": "malformed-json",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "d392a04a7793a1c22b5206b8df8c8581761071d1cb1c6e7c525dd85387cc40f2"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "parse-error",
+        "networkRequests": 0,
+        "canonicalSha256": "d392a04a7793a1c22b5206b8df8c8581761071d1cb1c6e7c525dd85387cc40f2",
+        "diagnostics": [
+          {
+            "source": "malformed.json",
+            "line": 5,
+            "column": 16,
+            "pointer": "",
+            "code": "parse.invalid-json",
+            "severity": "error",
+            "kind": "parse",
+            "message": "Invalid JSON (InvalidSymbol). (5:16)"
+          }
+        ],
+        "stats": {
+          "filesRead": 1,
+          "entrypointBytes": 133,
+          "totalBytes": 133,
+          "referencesSeen": 0,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "redocly-core",
+      "caseId": "invalid-utf8-json",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "39ebefbe2db2cb326cf98a7ee90a730d5b53cb671b838f6f837336a03044e53d"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "parse-error",
+        "networkRequests": 0,
+        "canonicalSha256": "39ebefbe2db2cb326cf98a7ee90a730d5b53cb671b838f6f837336a03044e53d",
+        "diagnostics": [
+          {
+            "source": "root.json",
+            "line": 1,
+            "column": 1,
+            "pointer": "",
+            "code": "parse.invalid-utf8",
+            "severity": "error",
+            "kind": "parse",
+            "message": "Input is not valid UTF-8."
+          }
+        ],
+        "stats": {
+          "filesRead": 0,
+          "entrypointBytes": 0,
+          "totalBytes": 0,
+          "referencesSeen": 0,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "redocly-core",
+      "caseId": "yaml-multiple-documents",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "29345ef24d4ec33a820028474466dd2065c311107766052eb59f0857e164e4b2"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "parse-error",
+        "networkRequests": 0,
+        "canonicalSha256": "29345ef24d4ec33a820028474466dd2065c311107766052eb59f0857e164e4b2",
+        "diagnostics": [
+          {
+            "source": "root.yaml",
+            "line": 6,
+            "column": 1,
+            "pointer": "",
+            "code": "parse.multiple-documents",
+            "severity": "error",
+            "kind": "parse",
+            "message": "expected a single document in the stream, but found more"
+          }
+        ],
+        "stats": {
+          "filesRead": 1,
+          "entrypointBytes": 95,
+          "totalBytes": 95,
+          "referencesSeen": 0,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "redocly-core",
+      "caseId": "yaml-cyclic-alias",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "12d3338aae6b556f0dc4ba801f54f2356b42b15936345e22ea3ed342c8bb586b"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "parse-error",
+        "networkRequests": 0,
+        "canonicalSha256": "12d3338aae6b556f0dc4ba801f54f2356b42b15936345e22ea3ed342c8bb586b",
+        "diagnostics": [
+          {
+            "source": "root.yaml",
+            "line": 7,
+            "column": 6,
+            "pointer": "/x-cycle/0",
+            "code": "parse.cyclic-alias",
+            "severity": "error",
+            "kind": "parse",
+            "message": "Cyclic YAML aliases are not supported."
+          }
+        ],
+        "stats": {
+          "filesRead": 1,
+          "entrypointBytes": 97,
+          "totalBytes": 97,
+          "referencesSeen": 0,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "redocly-core",
+      "caseId": "parent-path-escape",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "757de05238a163b106f6111a4f81635069fe834c9b683ac3add2efc934699001"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "policy-denied",
+        "networkRequests": 0,
+        "canonicalSha256": "757de05238a163b106f6111a4f81635069fe834c9b683ac3add2efc934699001",
+        "diagnostics": [
+          {
+            "source": "root.yaml",
+            "line": 14,
+            "column": 17,
+            "pointer": "/paths/~1pets/get/responses/200/content/application~1json/schema/$ref",
+            "code": "ref.path-outside-root",
+            "severity": "error",
+            "kind": "policy",
+            "message": "References outside the repository root are disabled."
+          }
+        ],
+        "stats": {
+          "filesRead": 1,
+          "entrypointBytes": 286,
+          "totalBytes": 286,
+          "referencesSeen": 1,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "redocly-core",
+      "caseId": "file-uri-denied",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "0d4aa753e9efbb11f9b400ddb940b35af7b825886fe94bc3777c7b0a7fea24e6"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "policy-denied",
+        "networkRequests": 0,
+        "canonicalSha256": "0d4aa753e9efbb11f9b400ddb940b35af7b825886fe94bc3777c7b0a7fea24e6",
+        "diagnostics": [
+          {
+            "source": "root.yaml",
+            "line": 14,
+            "column": 17,
+            "pointer": "/paths/~1pets/get/responses/200/content/application~1json/schema/$ref",
+            "code": "ref.scheme-denied",
+            "severity": "error",
+            "kind": "policy",
+            "message": "File URL references are disabled."
+          }
+        ],
+        "stats": {
+          "filesRead": 1,
+          "entrypointBytes": 281,
+          "totalBytes": 281,
+          "referencesSeen": 1,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "redocly-core",
+      "caseId": "percent-encoded-path-escape",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "fa05a08c9005113ca1ff1fa4e49855fce0b919508444ff7bbad30c1437dfdd6c"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "policy-denied",
+        "networkRequests": 0,
+        "canonicalSha256": "fa05a08c9005113ca1ff1fa4e49855fce0b919508444ff7bbad30c1437dfdd6c",
+        "diagnostics": [
+          {
+            "source": "encoded.yaml",
+            "line": 14,
+            "column": 17,
+            "pointer": "/paths/~1pets/get/responses/200/content/application~1json/schema/$ref",
+            "code": "ref.path-outside-root",
+            "severity": "error",
+            "kind": "policy",
+            "message": "References outside the repository root are disabled."
+          }
+        ],
+        "stats": {
+          "filesRead": 1,
+          "entrypointBytes": 287,
+          "totalBytes": 287,
+          "referencesSeen": 1,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "redocly-core",
+      "caseId": "transitive-remote-denied",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "4daddb77eebce3bed44580c4128fe703cd757105d5f444f44efcee31441b8409"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "policy-denied",
+        "networkRequests": 0,
+        "canonicalSha256": "4daddb77eebce3bed44580c4128fe703cd757105d5f444f44efcee31441b8409",
+        "diagnostics": [
+          {
+            "source": "components.yaml",
+            "line": 4,
+            "column": 7,
+            "pointer": "/components/schemas/RemotePet/$ref",
+            "code": "ref.scheme-denied",
+            "severity": "error",
+            "kind": "policy",
+            "message": "Remote references are disabled."
+          }
+        ],
+        "stats": {
+          "filesRead": 2,
+          "entrypointBytes": 327,
+          "totalBytes": 445,
+          "referencesSeen": 2,
+          "maxDepthObserved": 1,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "redocly-core",
+      "caseId": "directory-symlink-escape",
+      "required": true,
+      "status": "skipped-platform",
+      "passed": null,
+      "applicablePlatforms": [
+        "linux",
+        "darwin"
+      ],
+      "reason": "Case applies to linux, darwin; current platform is windows.",
+      "determinism": "not-assessed",
+      "uniqueHashes": [],
+      "failures": [],
+      "observation": null
+    },
+    {
+      "candidate": "redocly-core",
+      "caseId": "directory-junction-escape",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "31767664c99341be9e34a82b412a4860ed53b56ed5dc61113f972fe5aab61075"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "policy-denied",
+        "networkRequests": 0,
+        "canonicalSha256": "31767664c99341be9e34a82b412a4860ed53b56ed5dc61113f972fe5aab61075",
+        "diagnostics": [
+          {
+            "source": "root.yaml",
+            "line": 14,
+            "column": 17,
+            "pointer": "/paths/~1pets/get/responses/200/content/application~1json/schema/$ref",
+            "code": "ref.path-outside-root",
+            "severity": "error",
+            "kind": "policy",
+            "message": "Symlinked references outside the repository root are disabled."
+          }
+        ],
+        "stats": {
+          "filesRead": 1,
+          "entrypointBytes": 299,
+          "totalBytes": 299,
+          "referencesSeen": 1,
+          "maxDepthObserved": 1,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "redocly-core",
+      "caseId": "reference-depth-at-limit",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "8165fe7b478dfc8434ce722d055d79bf146d249cef324d7788fdaad834d1b6d1"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkRequests": 0,
+        "canonicalSha256": "8165fe7b478dfc8434ce722d055d79bf146d249cef324d7788fdaad834d1b6d1",
+        "diagnostics": [],
+        "stats": {
+          "filesRead": 4,
+          "entrypointBytes": 275,
+          "totalBytes": 331,
+          "referencesSeen": 3,
+          "maxDepthObserved": 3,
+          "diagnosticsRaw": 0,
+          "diagnosticsEmitted": 0,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "redocly-core",
+      "caseId": "reference-depth-over-limit",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "7143748c42c544eb7e40bbb97c91bef65b2ebc255bbee49db48de9cd5f934060"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "limit-exceeded",
+        "networkRequests": 0,
+        "canonicalSha256": "7143748c42c544eb7e40bbb97c91bef65b2ebc255bbee49db48de9cd5f934060",
+        "diagnostics": [
+          {
+            "source": "level-3.yaml",
+            "line": 1,
+            "column": 1,
+            "pointer": "/$ref",
+            "code": "ref.depth-exceeded",
+            "severity": "error",
+            "kind": "limit",
+            "message": "Reference depth exceeds the configured maximum of 3."
+          }
+        ],
+        "stats": {
+          "filesRead": 4,
+          "entrypointBytes": 277,
+          "totalBytes": 343,
+          "referencesSeen": 4,
+          "maxDepthObserved": 4,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": "ref.depth-exceeded"
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "redocly-core",
+      "caseId": "file-count-at-limit",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "d086ef046491601d78e435fb7dad00b8ff19224daddca985077ed1a6c53c4542"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkRequests": 0,
+        "canonicalSha256": "d086ef046491601d78e435fb7dad00b8ff19224daddca985077ed1a6c53c4542",
+        "diagnostics": [],
+        "stats": {
+          "filesRead": 4,
+          "entrypointBytes": 269,
+          "totalBytes": 379,
+          "referencesSeen": 3,
+          "maxDepthObserved": 3,
+          "diagnosticsRaw": 0,
+          "diagnosticsEmitted": 0,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "redocly-core",
+      "caseId": "file-count-over-limit",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "8b486c60328007e1f2d64946cd193830b76b955cc0887689cf157b86bc103f6d"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "limit-exceeded",
+        "networkRequests": 0,
+        "canonicalSha256": "8b486c60328007e1f2d64946cd193830b76b955cc0887689cf157b86bc103f6d",
+        "diagnostics": [
+          {
+            "source": "two.yaml",
+            "line": 1,
+            "column": 1,
+            "pointer": "/$ref",
+            "code": "ref.file-count-exceeded",
+            "severity": "error",
+            "kind": "limit",
+            "message": "Reference attempts exceed the configured maximum of 3."
+          }
+        ],
+        "stats": {
+          "filesRead": 3,
+          "entrypointBytes": 269,
+          "totalBytes": 308,
+          "referencesSeen": 3,
+          "maxDepthObserved": 3,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": "ref.file-count-exceeded"
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "redocly-core",
+      "caseId": "aggregate-bytes-at-limit",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "0a38fd9593f5b8157cba9a54d0bb47e716a23aa742306c569204d0ef034952a2"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkRequests": 0,
+        "canonicalSha256": "0a38fd9593f5b8157cba9a54d0bb47e716a23aa742306c569204d0ef034952a2",
+        "diagnostics": [],
+        "stats": {
+          "filesRead": 4,
+          "entrypointBytes": 269,
+          "totalBytes": 379,
+          "referencesSeen": 3,
+          "maxDepthObserved": 3,
+          "diagnosticsRaw": 0,
+          "diagnosticsEmitted": 0,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "redocly-core",
+      "caseId": "aggregate-bytes-over-limit",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "ede83f1a8f284e3085d34eb5708fe635381eb7f2938f7cde8d033ab6f25ada89"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "limit-exceeded",
+        "networkRequests": 0,
+        "canonicalSha256": "ede83f1a8f284e3085d34eb5708fe635381eb7f2938f7cde8d033ab6f25ada89",
+        "diagnostics": [
+          {
+            "source": "two.yaml",
+            "line": 1,
+            "column": 1,
+            "pointer": "/$ref",
+            "code": "ref.aggregate-bytes-exceeded",
+            "severity": "error",
+            "kind": "limit",
+            "message": "Loaded bytes exceed the configured maximum of 378."
+          }
+        ],
+        "stats": {
+          "filesRead": 3,
+          "entrypointBytes": 269,
+          "totalBytes": 308,
+          "referencesSeen": 3,
+          "maxDepthObserved": 3,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": "ref.aggregate-bytes-exceeded"
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "redocly-core",
+      "caseId": "entrypoint-decimal-at-limit",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "not-assessed",
+      "uniqueHashes": [
+        "8fbd9860d2f4994aadd34b6c6375e783a2935ef2dd9f04973e8a524311a4f9a2"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkRequests": 0,
+        "canonicalSha256": "8fbd9860d2f4994aadd34b6c6375e783a2935ef2dd9f04973e8a524311a4f9a2",
+        "diagnostics": [],
+        "stats": {
+          "filesRead": 1,
+          "entrypointBytes": 10000000,
+          "totalBytes": 10000000,
+          "referencesSeen": 0,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 0,
+          "diagnosticsEmitted": 0,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "redocly-core",
+      "caseId": "entrypoint-decimal-over-limit",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "not-assessed",
+      "uniqueHashes": [
+        "1b2a9da73f6fddab2ca5bfa9bcbc5782910c2973c330d83503047314d17298b8"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "limit-exceeded",
+        "networkRequests": 0,
+        "canonicalSha256": "1b2a9da73f6fddab2ca5bfa9bcbc5782910c2973c330d83503047314d17298b8",
+        "diagnostics": [
+          {
+            "source": "root.json",
+            "line": null,
+            "column": null,
+            "pointer": "",
+            "code": "input.entrypoint-bytes-exceeded",
+            "severity": "error",
+            "kind": "limit",
+            "message": "Entrypoint bytes exceed the configured maximum of 10000000."
+          }
+        ],
+        "stats": {
+          "filesRead": 0,
+          "entrypointBytes": 0,
+          "totalBytes": 0,
+          "referencesSeen": 0,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": "input.entrypoint-bytes-exceeded"
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "redocly-core",
+      "caseId": "entrypoint-binary-at-limit",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "not-assessed",
+      "uniqueHashes": [
+        "f7ca4df037b894cff9502b30657530454a316f55bdfa38cca3daa94f9ad40794"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkRequests": 0,
+        "canonicalSha256": "f7ca4df037b894cff9502b30657530454a316f55bdfa38cca3daa94f9ad40794",
+        "diagnostics": [],
+        "stats": {
+          "filesRead": 1,
+          "entrypointBytes": 10485760,
+          "totalBytes": 10485760,
+          "referencesSeen": 0,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 0,
+          "diagnosticsEmitted": 0,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "redocly-core",
+      "caseId": "entrypoint-binary-over-limit",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "not-assessed",
+      "uniqueHashes": [
+        "037355ffaeff2f175e6606b612d187bd124e8b6311b6dbae89e1bf6f59186215"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "limit-exceeded",
+        "networkRequests": 0,
+        "canonicalSha256": "037355ffaeff2f175e6606b612d187bd124e8b6311b6dbae89e1bf6f59186215",
+        "diagnostics": [
+          {
+            "source": "root.json",
+            "line": null,
+            "column": null,
+            "pointer": "",
+            "code": "input.entrypoint-bytes-exceeded",
+            "severity": "error",
+            "kind": "limit",
+            "message": "Entrypoint bytes exceed the configured maximum of 10485760."
+          }
+        ],
+        "stats": {
+          "filesRead": 0,
+          "entrypointBytes": 0,
+          "totalBytes": 0,
+          "referencesSeen": 0,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": "input.entrypoint-bytes-exceeded"
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "redocly-core",
+      "caseId": "recursive-cycle-valid",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "6176bb8352eaaa84085a084317e12ee58c1779b092d811f698dade55bfa754e8"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkRequests": 0,
+        "canonicalSha256": "6176bb8352eaaa84085a084317e12ee58c1779b092d811f698dade55bfa754e8",
+        "diagnostics": [],
+        "stats": {
+          "filesRead": 3,
+          "entrypointBytes": 458,
+          "totalBytes": 634,
+          "referencesSeen": 3,
+          "maxDepthObserved": 2,
+          "diagnosticsRaw": 0,
+          "diagnosticsEmitted": 0,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "redocly-core",
+      "caseId": "multi-file-deterministic-invalid",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "a73686d0106c6ba88f94e9f98836a65a1c0202113d9508cd461e491e2b3b1bfa"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "invalid",
+        "networkRequests": 0,
+        "canonicalSha256": "a73686d0106c6ba88f94e9f98836a65a1c0202113d9508cd461e491e2b3b1bfa",
+        "diagnostics": [
+          {
+            "source": "a.yaml",
+            "line": 1,
+            "column": 1,
+            "pointer": "/type",
+            "code": "oas.schema",
+            "severity": "error",
+            "kind": "schema",
+            "message": "`type` can be one of the following only: \"object\", \"array\", \"string\", \"number\", \"integer\", \"boolean\"."
+          },
+          {
+            "source": "z.yaml",
+            "line": 1,
+            "column": 1,
+            "pointer": "/type",
+            "code": "oas.schema",
+            "severity": "error",
+            "kind": "schema",
+            "message": "`type` can be one of the following only: \"object\", \"array\", \"string\", \"number\", \"integer\", \"boolean\"."
+          }
+        ],
+        "stats": {
+          "filesRead": 3,
+          "entrypointBytes": 842,
+          "totalBytes": 858,
+          "referencesSeen": 4,
+          "maxDepthObserved": 1,
+          "diagnosticsRaw": 2,
+          "diagnosticsEmitted": 2,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "redocly-core",
+      "caseId": "diagnostic-flood",
+      "required": true,
+      "status": "gap",
+      "passed": false,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "4f53c0be6eb5a8bb29c25c71267cd0b4237b4457de50ce412c1255838f20ac1d"
+      ],
+      "failures": [
+        "repeat 1: Expected outcome limit-exceeded, observed invalid.",
+        "repeat 1: Expected stable code diagnostics.limit-exceeded.",
+        "repeat 1: Expected emittedDiagnostics=5, observed 1.",
+        "repeat 1: Expected at least 12 observed diagnostics, observed 1.",
+        "repeat 1: Expected truncated=true, observed false.",
+        "repeat 1: Expected at least 7 truncated diagnostics, observed 0.",
+        "repeat 1: Emitted pointer order differs from [\"/paths/~1p11/get/responses\",\"/paths/~1p10/get/responses\",\"/paths/~1p09/get/responses\",\"/paths/~1p08/get/responses\",\"/paths/~1p07/get/responses\"].",
+        "repeat 2: Expected outcome limit-exceeded, observed invalid.",
+        "repeat 2: Expected stable code diagnostics.limit-exceeded.",
+        "repeat 2: Expected emittedDiagnostics=5, observed 1.",
+        "repeat 2: Expected at least 12 observed diagnostics, observed 1.",
+        "repeat 2: Expected truncated=true, observed false.",
+        "repeat 2: Expected at least 7 truncated diagnostics, observed 0.",
+        "repeat 2: Emitted pointer order differs from [\"/paths/~1p11/get/responses\",\"/paths/~1p10/get/responses\",\"/paths/~1p09/get/responses\",\"/paths/~1p08/get/responses\",\"/paths/~1p07/get/responses\"].",
+        "repeat 3: Expected outcome limit-exceeded, observed invalid.",
+        "repeat 3: Expected stable code diagnostics.limit-exceeded.",
+        "repeat 3: Expected emittedDiagnostics=5, observed 1.",
+        "repeat 3: Expected at least 12 observed diagnostics, observed 1.",
+        "repeat 3: Expected truncated=true, observed false.",
+        "repeat 3: Expected at least 7 truncated diagnostics, observed 0.",
+        "repeat 3: Emitted pointer order differs from [\"/paths/~1p11/get/responses\",\"/paths/~1p10/get/responses\",\"/paths/~1p09/get/responses\",\"/paths/~1p08/get/responses\",\"/paths/~1p07/get/responses\"].",
+        "repeat 4: Expected outcome limit-exceeded, observed invalid.",
+        "repeat 4: Expected stable code diagnostics.limit-exceeded.",
+        "repeat 4: Expected emittedDiagnostics=5, observed 1.",
+        "repeat 4: Expected at least 12 observed diagnostics, observed 1.",
+        "repeat 4: Expected truncated=true, observed false.",
+        "repeat 4: Expected at least 7 truncated diagnostics, observed 0.",
+        "repeat 4: Emitted pointer order differs from [\"/paths/~1p11/get/responses\",\"/paths/~1p10/get/responses\",\"/paths/~1p09/get/responses\",\"/paths/~1p08/get/responses\",\"/paths/~1p07/get/responses\"].",
+        "repeat 5: Expected outcome limit-exceeded, observed invalid.",
+        "repeat 5: Expected stable code diagnostics.limit-exceeded.",
+        "repeat 5: Expected emittedDiagnostics=5, observed 1.",
+        "repeat 5: Expected at least 12 observed diagnostics, observed 1.",
+        "repeat 5: Expected truncated=true, observed false.",
+        "repeat 5: Expected at least 7 truncated diagnostics, observed 0.",
+        "repeat 5: Emitted pointer order differs from [\"/paths/~1p11/get/responses\",\"/paths/~1p10/get/responses\",\"/paths/~1p09/get/responses\",\"/paths/~1p08/get/responses\",\"/paths/~1p07/get/responses\"]."
+      ],
+      "observation": {
+        "outcome": "invalid",
+        "networkRequests": 0,
+        "canonicalSha256": "4f53c0be6eb5a8bb29c25c71267cd0b4237b4457de50ce412c1255838f20ac1d",
+        "diagnostics": [
+          {
+            "source": "flood.yaml",
+            "line": 8,
+            "column": 7,
+            "pointer": "/paths/~1p11/get/responses",
+            "code": "oas.schema",
+            "severity": "error",
+            "kind": "schema",
+            "message": "Expected type `Responses` (object) but got `string`"
+          }
+        ],
+        "stats": {
+          "filesRead": 1,
+          "entrypointBytes": 676,
+          "totalBytes": 676,
+          "referencesSeen": 0,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "openapi-spec-validator",
+      "caseId": "oas30-local-valid",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "3f56155fa93357ca1d3aea99385d0486c3c8ad08dd0d745dd538e5b795c50bfa"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkRequests": 0,
+        "canonicalSha256": "3f56155fa93357ca1d3aea99385d0486c3c8ad08dd0d745dd538e5b795c50bfa",
+        "diagnostics": [],
+        "stats": {
+          "filesRead": 2,
+          "entrypointBytes": 338,
+          "totalBytes": 581,
+          "referencesSeen": 2,
+          "maxDepthObserved": 1,
+          "diagnosticsRaw": 0,
+          "diagnosticsEmitted": 0,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "openapi-spec-validator",
+      "caseId": "oas31-local-valid",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "b496922090d434d8ba9d26782c2f0cb2c96583c0a791f7bdf495c362c6e5783b"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkRequests": 0,
+        "canonicalSha256": "b496922090d434d8ba9d26782c2f0cb2c96583c0a791f7bdf495c362c6e5783b",
+        "diagnostics": [],
+        "stats": {
+          "filesRead": 2,
+          "entrypointBytes": 583,
+          "totalBytes": 970,
+          "referencesSeen": 2,
+          "maxDepthObserved": 1,
+          "diagnosticsRaw": 0,
+          "diagnosticsEmitted": 0,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "openapi-spec-validator",
+      "caseId": "yaml-duplicate-key",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "6c7502f73e1f1f836e10ddecd35e423d9b4a2e194e3587201ad6801674e04c45"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "parse-error",
+        "networkRequests": 0,
+        "canonicalSha256": "6c7502f73e1f1f836e10ddecd35e423d9b4a2e194e3587201ad6801674e04c45",
+        "diagnostics": [
+          {
+            "source": "duplicate-key.yaml",
+            "line": 5,
+            "column": 3,
+            "pointer": "/info/version",
+            "code": "parse.duplicate-key",
+            "severity": "error",
+            "kind": "parse",
+            "message": "Duplicate mapping keys are not allowed."
+          }
+        ],
+        "stats": {
+          "filesRead": 0,
+          "entrypointBytes": 115,
+          "totalBytes": 0,
+          "referencesSeen": 0,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "openapi-spec-validator",
+      "caseId": "malformed-json",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "16627b3f49c1e6abe3b84ce292aa1e18700f5d43f7fb7100aa2bd24207d6ecf0"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "parse-error",
+        "networkRequests": 0,
+        "canonicalSha256": "16627b3f49c1e6abe3b84ce292aa1e18700f5d43f7fb7100aa2bd24207d6ecf0",
+        "diagnostics": [
+          {
+            "source": "malformed.json",
+            "line": 5,
+            "column": 16,
+            "pointer": "",
+            "code": "parse.invalid-json",
+            "severity": "error",
+            "kind": "parse",
+            "message": "The JSON document is not valid strict JSON."
+          }
+        ],
+        "stats": {
+          "filesRead": 0,
+          "entrypointBytes": 133,
+          "totalBytes": 0,
+          "referencesSeen": 0,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "openapi-spec-validator",
+      "caseId": "invalid-utf8-json",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "0eaa0efb3edd1d85dfda531b53277341aed6c93104bcb0879885c7a437d0836f"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "parse-error",
+        "networkRequests": 0,
+        "canonicalSha256": "0eaa0efb3edd1d85dfda531b53277341aed6c93104bcb0879885c7a437d0836f",
+        "diagnostics": [
+          {
+            "source": "root.json",
+            "line": 1,
+            "column": 37,
+            "pointer": "",
+            "code": "parse.invalid-utf8",
+            "severity": "error",
+            "kind": "parse",
+            "message": "Input files must contain valid UTF-8."
+          }
+        ],
+        "stats": {
+          "filesRead": 0,
+          "entrypointBytes": 69,
+          "totalBytes": 0,
+          "referencesSeen": 0,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "openapi-spec-validator",
+      "caseId": "yaml-multiple-documents",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "eb066cbe4df75e0d7aa80828a5f309588161a0ce4458dbb817e5a1aa86766cd8"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "parse-error",
+        "networkRequests": 0,
+        "canonicalSha256": "eb066cbe4df75e0d7aa80828a5f309588161a0ce4458dbb817e5a1aa86766cd8",
+        "diagnostics": [
+          {
+            "source": "root.yaml",
+            "line": 7,
+            "column": 1,
+            "pointer": "",
+            "code": "parse.multiple-documents",
+            "severity": "error",
+            "kind": "parse",
+            "message": "Exactly one YAML document is allowed."
+          }
+        ],
+        "stats": {
+          "filesRead": 0,
+          "entrypointBytes": 95,
+          "totalBytes": 0,
+          "referencesSeen": 0,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "openapi-spec-validator",
+      "caseId": "yaml-cyclic-alias",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "42347c7282ceeb5254e4a1a0a189ed5a3d9bf54c2ed42d6e926c9505b209a8df"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "parse-error",
+        "networkRequests": 0,
+        "canonicalSha256": "42347c7282ceeb5254e4a1a0a189ed5a3d9bf54c2ed42d6e926c9505b209a8df",
+        "diagnostics": [
+          {
+            "source": "root.yaml",
+            "line": 6,
+            "column": 10,
+            "pointer": "/x-cycle/0",
+            "code": "parse.cyclic-alias",
+            "severity": "error",
+            "kind": "parse",
+            "message": "Recursive YAML aliases are not supported."
+          }
+        ],
+        "stats": {
+          "filesRead": 0,
+          "entrypointBytes": 97,
+          "totalBytes": 0,
+          "referencesSeen": 0,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "openapi-spec-validator",
+      "caseId": "parent-path-escape",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "b4945d278dd235bbfce9be62bbac677873d9475acd3dec18a17b72b6619c3792"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "policy-denied",
+        "networkRequests": 0,
+        "canonicalSha256": "b4945d278dd235bbfce9be62bbac677873d9475acd3dec18a17b72b6619c3792",
+        "diagnostics": [
+          {
+            "source": "root.yaml",
+            "line": 14,
+            "column": 17,
+            "pointer": "/paths/~1pets/get/responses/200/content/application~1json/schema/$ref",
+            "code": "ref.path-outside-root",
+            "severity": "error",
+            "kind": "policy",
+            "message": "References outside the repository root are disabled."
+          }
+        ],
+        "stats": {
+          "filesRead": 1,
+          "entrypointBytes": 286,
+          "totalBytes": 286,
+          "referencesSeen": 1,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "openapi-spec-validator",
+      "caseId": "file-uri-denied",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "a743df400acfb23d14a9a9117963099152fd38fdc8f8c80f2b3a0a0ab8698162"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "policy-denied",
+        "networkRequests": 0,
+        "canonicalSha256": "a743df400acfb23d14a9a9117963099152fd38fdc8f8c80f2b3a0a0ab8698162",
+        "diagnostics": [
+          {
+            "source": "root.yaml",
+            "line": 14,
+            "column": 17,
+            "pointer": "/paths/~1pets/get/responses/200/content/application~1json/schema/$ref",
+            "code": "ref.scheme-denied",
+            "severity": "error",
+            "kind": "policy",
+            "message": "URI scheme and protocol-relative references are disabled."
+          }
+        ],
+        "stats": {
+          "filesRead": 1,
+          "entrypointBytes": 281,
+          "totalBytes": 281,
+          "referencesSeen": 1,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "openapi-spec-validator",
+      "caseId": "percent-encoded-path-escape",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "2a7b37ebd4214576f5c265bcc19dd451848663a9130252cb97cc01a106798c7b"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "policy-denied",
+        "networkRequests": 0,
+        "canonicalSha256": "2a7b37ebd4214576f5c265bcc19dd451848663a9130252cb97cc01a106798c7b",
+        "diagnostics": [
+          {
+            "source": "encoded.yaml",
+            "line": 14,
+            "column": 17,
+            "pointer": "/paths/~1pets/get/responses/200/content/application~1json/schema/$ref",
+            "code": "ref.path-outside-root",
+            "severity": "error",
+            "kind": "policy",
+            "message": "References outside the repository root are disabled."
+          }
+        ],
+        "stats": {
+          "filesRead": 1,
+          "entrypointBytes": 287,
+          "totalBytes": 287,
+          "referencesSeen": 1,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "openapi-spec-validator",
+      "caseId": "transitive-remote-denied",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "ad00cf58c0833ed6582b2e169245e0d1ef0d3a952196522e3422946c0460a0e1"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "policy-denied",
+        "networkRequests": 0,
+        "canonicalSha256": "ad00cf58c0833ed6582b2e169245e0d1ef0d3a952196522e3422946c0460a0e1",
+        "diagnostics": [
+          {
+            "source": "components.yaml",
+            "line": 4,
+            "column": 7,
+            "pointer": "/components/schemas/RemotePet/$ref",
+            "code": "ref.scheme-denied",
+            "severity": "error",
+            "kind": "policy",
+            "message": "URI scheme and protocol-relative references are disabled."
+          }
+        ],
+        "stats": {
+          "filesRead": 2,
+          "entrypointBytes": 327,
+          "totalBytes": 445,
+          "referencesSeen": 2,
+          "maxDepthObserved": 1,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "openapi-spec-validator",
+      "caseId": "directory-symlink-escape",
+      "required": true,
+      "status": "skipped-platform",
+      "passed": null,
+      "applicablePlatforms": [
+        "linux",
+        "darwin"
+      ],
+      "reason": "Case applies to linux, darwin; current platform is windows.",
+      "determinism": "not-assessed",
+      "uniqueHashes": [],
+      "failures": [],
+      "observation": null
+    },
+    {
+      "candidate": "openapi-spec-validator",
+      "caseId": "directory-junction-escape",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "42b9034f17f0cf0ba0443b07d9f13743393f570e324e647ad55c818dbfbed7a0"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "policy-denied",
+        "networkRequests": 0,
+        "canonicalSha256": "42b9034f17f0cf0ba0443b07d9f13743393f570e324e647ad55c818dbfbed7a0",
+        "diagnostics": [
+          {
+            "source": "root.yaml",
+            "line": 14,
+            "column": 17,
+            "pointer": "/paths/~1pets/get/responses/200/content/application~1json/schema/$ref",
+            "code": "ref.path-outside-root",
+            "severity": "error",
+            "kind": "policy",
+            "message": "Symlinked or junction references outside the repository root are disabled."
+          }
+        ],
+        "stats": {
+          "filesRead": 1,
+          "entrypointBytes": 299,
+          "totalBytes": 299,
+          "referencesSeen": 1,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "openapi-spec-validator",
+      "caseId": "reference-depth-at-limit",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "72fe96621b6c1a529f5e7bc72ba82b6ffa764e35b1f8f02d32d36b329bce989b"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkRequests": 0,
+        "canonicalSha256": "72fe96621b6c1a529f5e7bc72ba82b6ffa764e35b1f8f02d32d36b329bce989b",
+        "diagnostics": [],
+        "stats": {
+          "filesRead": 4,
+          "entrypointBytes": 275,
+          "totalBytes": 331,
+          "referencesSeen": 3,
+          "maxDepthObserved": 3,
+          "diagnosticsRaw": 0,
+          "diagnosticsEmitted": 0,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "openapi-spec-validator",
+      "caseId": "reference-depth-over-limit",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "8fb2be07f40ba2c968283eb672ae88e25b07e723970c259ef921c3492bfc37d3"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "limit-exceeded",
+        "networkRequests": 0,
+        "canonicalSha256": "8fb2be07f40ba2c968283eb672ae88e25b07e723970c259ef921c3492bfc37d3",
+        "diagnostics": [
+          {
+            "source": "level-3.yaml",
+            "line": 1,
+            "column": 1,
+            "pointer": "/$ref",
+            "code": "ref.depth-exceeded",
+            "severity": "error",
+            "kind": "limit",
+            "message": "Reference depth exceeds the configured maximum of 3."
+          }
+        ],
+        "stats": {
+          "filesRead": 4,
+          "entrypointBytes": 277,
+          "totalBytes": 343,
+          "referencesSeen": 4,
+          "maxDepthObserved": 4,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": "ref.depth-exceeded"
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "openapi-spec-validator",
+      "caseId": "file-count-at-limit",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "85a95586a53aa0aedec3e2760067555637ad5960208670054ce426befec891a9"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkRequests": 0,
+        "canonicalSha256": "85a95586a53aa0aedec3e2760067555637ad5960208670054ce426befec891a9",
+        "diagnostics": [],
+        "stats": {
+          "filesRead": 4,
+          "entrypointBytes": 269,
+          "totalBytes": 379,
+          "referencesSeen": 3,
+          "maxDepthObserved": 3,
+          "diagnosticsRaw": 0,
+          "diagnosticsEmitted": 0,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "openapi-spec-validator",
+      "caseId": "file-count-over-limit",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "9ab365ad74e54b39cf00418ceb213c6cbe2a0066cf3a3b76ad3fba46fed9afab"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "limit-exceeded",
+        "networkRequests": 0,
+        "canonicalSha256": "9ab365ad74e54b39cf00418ceb213c6cbe2a0066cf3a3b76ad3fba46fed9afab",
+        "diagnostics": [
+          {
+            "source": "two.yaml",
+            "line": 1,
+            "column": 1,
+            "pointer": "/$ref",
+            "code": "ref.file-count-exceeded",
+            "severity": "error",
+            "kind": "limit",
+            "message": "Referenced file count exceeds the configured maximum of 3."
+          }
+        ],
+        "stats": {
+          "filesRead": 3,
+          "entrypointBytes": 269,
+          "totalBytes": 308,
+          "referencesSeen": 3,
+          "maxDepthObserved": 3,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": "ref.file-count-exceeded"
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "openapi-spec-validator",
+      "caseId": "aggregate-bytes-at-limit",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "cd198ecef2011e3c0d7d6d5a4bd79737dbe1216ae22532521e5671694a475c60"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkRequests": 0,
+        "canonicalSha256": "cd198ecef2011e3c0d7d6d5a4bd79737dbe1216ae22532521e5671694a475c60",
+        "diagnostics": [],
+        "stats": {
+          "filesRead": 4,
+          "entrypointBytes": 269,
+          "totalBytes": 379,
+          "referencesSeen": 3,
+          "maxDepthObserved": 3,
+          "diagnosticsRaw": 0,
+          "diagnosticsEmitted": 0,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "openapi-spec-validator",
+      "caseId": "aggregate-bytes-over-limit",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "6f800e369731ca78593563b84b10d31905c11e160610b169e15b2af1e45ed2b1"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "limit-exceeded",
+        "networkRequests": 0,
+        "canonicalSha256": "6f800e369731ca78593563b84b10d31905c11e160610b169e15b2af1e45ed2b1",
+        "diagnostics": [
+          {
+            "source": "two.yaml",
+            "line": 1,
+            "column": 1,
+            "pointer": "/$ref",
+            "code": "ref.aggregate-bytes-exceeded",
+            "severity": "error",
+            "kind": "limit",
+            "message": "Loaded bytes exceed the configured maximum of 378."
+          }
+        ],
+        "stats": {
+          "filesRead": 3,
+          "entrypointBytes": 269,
+          "totalBytes": 308,
+          "referencesSeen": 3,
+          "maxDepthObserved": 3,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": "ref.aggregate-bytes-exceeded"
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "openapi-spec-validator",
+      "caseId": "entrypoint-decimal-at-limit",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "not-assessed",
+      "uniqueHashes": [
+        "828161ebd68410a0ddb284fe9766935f9ced6d8993567e5cd46438e903ba00f4"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkRequests": 0,
+        "canonicalSha256": "828161ebd68410a0ddb284fe9766935f9ced6d8993567e5cd46438e903ba00f4",
+        "diagnostics": [],
+        "stats": {
+          "filesRead": 1,
+          "entrypointBytes": 10000000,
+          "totalBytes": 10000000,
+          "referencesSeen": 0,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 0,
+          "diagnosticsEmitted": 0,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "openapi-spec-validator",
+      "caseId": "entrypoint-decimal-over-limit",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "not-assessed",
+      "uniqueHashes": [
+        "9e154fa7b33a9ef1d390bc87c87d8be32bfea7a5db387eea2c7f1d0f6a9a960e"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "limit-exceeded",
+        "networkRequests": 0,
+        "canonicalSha256": "9e154fa7b33a9ef1d390bc87c87d8be32bfea7a5db387eea2c7f1d0f6a9a960e",
+        "diagnostics": [
+          {
+            "source": "root.json",
+            "line": 1,
+            "column": 1,
+            "pointer": "",
+            "code": "input.entrypoint-bytes-exceeded",
+            "severity": "error",
+            "kind": "limit",
+            "message": "Entrypoint bytes exceed the configured maximum of 10000000."
+          }
+        ],
+        "stats": {
+          "filesRead": 0,
+          "entrypointBytes": 10000001,
+          "totalBytes": 0,
+          "referencesSeen": 0,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": "input.entrypoint-bytes-exceeded"
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "openapi-spec-validator",
+      "caseId": "entrypoint-binary-at-limit",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "not-assessed",
+      "uniqueHashes": [
+        "485aae1817042affa98b160d3f93b7e556bfd4b5d0b13c08f08f293c1c2742c9"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkRequests": 0,
+        "canonicalSha256": "485aae1817042affa98b160d3f93b7e556bfd4b5d0b13c08f08f293c1c2742c9",
+        "diagnostics": [],
+        "stats": {
+          "filesRead": 1,
+          "entrypointBytes": 10485760,
+          "totalBytes": 10485760,
+          "referencesSeen": 0,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 0,
+          "diagnosticsEmitted": 0,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "openapi-spec-validator",
+      "caseId": "entrypoint-binary-over-limit",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "not-assessed",
+      "uniqueHashes": [
+        "76f55eae2c6704c2074b28b4f6b065db5b21aa7c71050c0159e88818f6a51f2f"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "limit-exceeded",
+        "networkRequests": 0,
+        "canonicalSha256": "76f55eae2c6704c2074b28b4f6b065db5b21aa7c71050c0159e88818f6a51f2f",
+        "diagnostics": [
+          {
+            "source": "root.json",
+            "line": 1,
+            "column": 1,
+            "pointer": "",
+            "code": "input.entrypoint-bytes-exceeded",
+            "severity": "error",
+            "kind": "limit",
+            "message": "Entrypoint bytes exceed the configured maximum of 10485760."
+          }
+        ],
+        "stats": {
+          "filesRead": 0,
+          "entrypointBytes": 10485761,
+          "totalBytes": 0,
+          "referencesSeen": 0,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 1,
+          "diagnosticsEmitted": 1,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": "input.entrypoint-bytes-exceeded"
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "openapi-spec-validator",
+      "caseId": "recursive-cycle-valid",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "b94ef42272938a5dd7ab492af0be31e9692d1defb41cf1b45b514567e1f05d1a"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "valid",
+        "networkRequests": 0,
+        "canonicalSha256": "b94ef42272938a5dd7ab492af0be31e9692d1defb41cf1b45b514567e1f05d1a",
+        "diagnostics": [],
+        "stats": {
+          "filesRead": 3,
+          "entrypointBytes": 458,
+          "totalBytes": 634,
+          "referencesSeen": 3,
+          "maxDepthObserved": 2,
+          "diagnosticsRaw": 0,
+          "diagnosticsEmitted": 0,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "openapi-spec-validator",
+      "caseId": "multi-file-deterministic-invalid",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "6c2c44638be357bfa2ae8695ace65e0984973bfcf4eb22c2468e31f5b1427bf8"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "invalid",
+        "networkRequests": 0,
+        "canonicalSha256": "6c2c44638be357bfa2ae8695ace65e0984973bfcf4eb22c2468e31f5b1427bf8",
+        "diagnostics": [
+          {
+            "source": "a.yaml",
+            "line": 1,
+            "column": 1,
+            "pointer": "/type",
+            "code": "oas.schema",
+            "severity": "error",
+            "kind": "schema",
+            "message": "7 is not valid under any of the given schemas"
+          },
+          {
+            "source": "z.yaml",
+            "line": 1,
+            "column": 1,
+            "pointer": "/type",
+            "code": "oas.schema",
+            "severity": "error",
+            "kind": "schema",
+            "message": "7 is not valid under any of the given schemas"
+          }
+        ],
+        "stats": {
+          "filesRead": 3,
+          "entrypointBytes": 842,
+          "totalBytes": 858,
+          "referencesSeen": 4,
+          "maxDepthObserved": 1,
+          "diagnosticsRaw": 2,
+          "diagnosticsEmitted": 2,
+          "diagnosticsTruncated": 0,
+          "truncated": false,
+          "limitCode": null
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    },
+    {
+      "candidate": "openapi-spec-validator",
+      "caseId": "diagnostic-flood",
+      "required": true,
+      "status": "passed",
+      "passed": true,
+      "applicablePlatforms": null,
+      "reason": null,
+      "determinism": "stable",
+      "uniqueHashes": [
+        "eeda2dff6d77e233a1fbc99f41f22999495b21dd487ac1811a56f2c4ebf9e499"
+      ],
+      "failures": [],
+      "observation": {
+        "outcome": "limit-exceeded",
+        "networkRequests": 0,
+        "canonicalSha256": "eeda2dff6d77e233a1fbc99f41f22999495b21dd487ac1811a56f2c4ebf9e499",
+        "diagnostics": [
+          {
+            "source": "flood.yaml",
+            "line": 8,
+            "column": 7,
+            "pointer": "/paths/~1p11/get/responses",
+            "code": "oas.schema",
+            "severity": "error",
+            "kind": "schema",
+            "message": "'not-an-object' is not of type 'object'"
+          },
+          {
+            "source": "flood.yaml",
+            "line": 11,
+            "column": 7,
+            "pointer": "/paths/~1p10/get/responses",
+            "code": "oas.schema",
+            "severity": "error",
+            "kind": "schema",
+            "message": "'not-an-object' is not of type 'object'"
+          },
+          {
+            "source": "flood.yaml",
+            "line": 14,
+            "column": 7,
+            "pointer": "/paths/~1p09/get/responses",
+            "code": "oas.schema",
+            "severity": "error",
+            "kind": "schema",
+            "message": "'not-an-object' is not of type 'object'"
+          },
+          {
+            "source": "flood.yaml",
+            "line": 17,
+            "column": 7,
+            "pointer": "/paths/~1p08/get/responses",
+            "code": "oas.schema",
+            "severity": "error",
+            "kind": "schema",
+            "message": "'not-an-object' is not of type 'object'"
+          },
+          {
+            "source": "flood.yaml",
+            "line": 20,
+            "column": 7,
+            "pointer": "/paths/~1p07/get/responses",
+            "code": "oas.schema",
+            "severity": "error",
+            "kind": "schema",
+            "message": "'not-an-object' is not of type 'object'"
+          }
+        ],
+        "stats": {
+          "filesRead": 1,
+          "entrypointBytes": 676,
+          "totalBytes": 676,
+          "referencesSeen": 0,
+          "maxDepthObserved": 0,
+          "diagnosticsRaw": 12,
+          "diagnosticsEmitted": 5,
+          "diagnosticsTruncated": 7,
+          "truncated": true,
+          "limitCode": "diagnostics.limit-exceeded"
+        },
+        "process": {
+          "exitCode": 0,
+          "signal": null,
+          "timedOut": false,
+          "outputLimited": false,
+          "forcedSettlement": false,
+          "terminationDetail": null,
+          "spawnErrorCode": null
+        }
+      }
+    }
+  ]
+}

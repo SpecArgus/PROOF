@@ -1,0 +1,14 @@
+openapi: 3.1.0
+info:
+  title: Transitive remote reference must be denied
+  version: 1.0.0
+paths:
+  /pets:
+    get:
+      responses:
+        "200":
+          description: Remote schema
+          content:
+            application/json:
+              schema:
+                $ref: "./components.yaml#/components/schemas/RemotePet"

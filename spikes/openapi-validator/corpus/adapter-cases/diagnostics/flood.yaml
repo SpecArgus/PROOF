@@ -1,0 +1,41 @@
+openapi: 3.0.3
+info:
+  title: Diagnostic volume cap
+  version: 1.0.0
+paths:
+  /p11:
+    get:
+      responses: "not-an-object"
+  /p10:
+    get:
+      responses: "not-an-object"
+  /p09:
+    get:
+      responses: "not-an-object"
+  /p08:
+    get:
+      responses: "not-an-object"
+  /p07:
+    get:
+      responses: "not-an-object"
+  /p06:
+    get:
+      responses: "not-an-object"
+  /p05:
+    get:
+      responses: "not-an-object"
+  /p04:
+    get:
+      responses: "not-an-object"
+  /p03:
+    get:
+      responses: "not-an-object"
+  /p02:
+    get:
+      responses: "not-an-object"
+  /p01:
+    get:
+      responses: "not-an-object"
+  /p00:
+    get:
+      responses: "not-an-object"

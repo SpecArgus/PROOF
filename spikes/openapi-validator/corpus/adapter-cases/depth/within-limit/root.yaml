@@ -1,0 +1,14 @@
+openapi: 3.1.0
+info:
+  title: Reference chain at depth limit
+  version: 1.0.0
+paths:
+  /value:
+    get:
+      responses:
+        "200":
+          description: Value
+          content:
+            application/json:
+              schema:
+                $ref: "./level-1.yaml"

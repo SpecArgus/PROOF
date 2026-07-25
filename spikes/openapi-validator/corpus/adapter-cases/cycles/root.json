@@ -1,0 +1,25 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Finite recursive schema closure",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/node": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Recursive node",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./a.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

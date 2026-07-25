@@ -1,0 +1,7 @@
+openapi: 3.1.0
+info:
+  title: Multiple documents
+  version: 1.0.0
+paths: {}
+---
+openapi: 3.1.0

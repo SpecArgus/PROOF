@@ -1,0 +1,14 @@
+openapi: 3.0.3
+info:
+  title: Parent path escape must be denied
+  version: 1.0.0
+paths:
+  /pets:
+    get:
+      responses:
+        "200":
+          description: Escape target
+          content:
+            application/json:
+              schema:
+                $ref: "../outside.yaml"

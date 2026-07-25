@@ -24,9 +24,19 @@ concurrency:
 
 jobs:
   openapi-validator-evaluation:
-    name: openapi-validator-evaluation
-    runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    name: openapi-validator-evaluation (${{ matrix.platform }})
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: linux-x64
+            runner: ubuntu-24.04
+          - platform: windows-x64
+            runner: windows-2022
+          - platform: macos-arm64
+            runner: macos-15
     defaults:
       run:
         working-directory: spikes/openapi-validator
@@ -34,6 +44,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
 
       - name: Set up Node.js
@@ -48,46 +59,58 @@ jobs:
           go-version: 1.25.12
           cache: false
 
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: 3.14.2
+
       - name: Install locked dependencies
         run: npm ci --ignore-scripts
 
       - name: Build pinned candidates
         run: npm run bootstrap
 
-      - name: Run candidate evaluation
+      - name: Run CLI and direct-adapter evaluation
         run: npm test
+
+      - name: Audit linked Go vulnerabilities
+        run: npm run audit:go
 
       - name: Generate dependency evidence
         run: npm run inventory
 
       - name: Audit locked Node dependencies
-        run: npm audit --audit-level=low
+        run: npm run audit:node
+
+      - name: Audit locked Python dependencies
+        run: npm run audit:python
+
+      - name: Create reviewed evidence snapshot
+        run: npm run snapshot
 
       - name: Summarize evaluation
-        shell: bash
-        run: |
-          node <<'NODE'
-          const fs = require('node:fs');
-          const summary = JSON.parse(
-            fs.readFileSync('.cache/evidence/summary.json', 'utf8'),
-          );
-          const lines = [
-            '## OpenAPI validator evaluation',
-            '',
-            `- Run status: **${summary.runStatus}**`,
-            `- Candidate cases: **${summary.totals.passed}/${summary.totals.cases}** met the fixture contract`,
-            `- Candidate gaps: **${summary.totals.gaps}**`,
-            `- Qualified with explicit adapter controls: **${summary.totals.qualifiedWithAdapter}**`,
-            '',
-            '| Candidate | Disposition |',
-            '| --- | --- |',
-            ...Object.entries(summary.dispositions).map(
-              ([candidate, disposition]) => `| ${candidate} | ${disposition} |`,
-            ),
-            '',
-          ];
-          fs.appendFileSync(
-            process.env.GITHUB_STEP_SUMMARY,
-            `${lines.join('\n')}\n`,
-          );
-          NODE
+        if: always()
+        env:
+          EVALUATION_PLATFORM: ${{ matrix.platform }}
+        run: node ./scripts/ci-summary.mjs
+
+      - name: Upload reviewed evidence
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: openapi-validator-reviewed-${{ matrix.platform }}-attempt-${{ github.run_attempt }}
+          path: spikes/openapi-validator/evidence
+          if-no-files-found: error
+          include-hidden-files: false
+          retention-days: 30
+
+      - name: Upload raw evaluation evidence
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: openapi-validator-raw-${{ matrix.platform }}-attempt-${{ github.run_attempt }}
+          path: |
+            spikes/openapi-validator/.cache/evidence
+            spikes/openapi-validator/.cache/adapter-workspaces
+          if-no-files-found: warn
+          include-hidden-files: true
+          retention-days: 30

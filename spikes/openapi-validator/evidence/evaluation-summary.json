@@ -5,6 +5,16 @@
     "architecture": "x64",
     "node": "v24.13.0"
   },
+  "provenance": {
+    "stageOneInputSha256": "f17fd6cc6c1d27dc6479a5ba8e51eedb07ad8055b182b888e46fdc3ff27c57dd",
+    "manifestSha256": "043169255a7a56fb45bbe067c2e9a76187e6bbe575352c3339986ee2fa1c8b78",
+    "packageLockSha256": "672b08446d42acecce18d1bbd22d2555d545e217ad21e26a68bc2458901153c2",
+    "candidateArtifactSha256": {
+      "vacuum": "b4a9aaedc7e867363106beb2f41152572c372dec197caa148f0af1396698d3e1",
+      "spectral": "8f7d9e76b187e9cd80f3d361606c2900dc0e4abc1d5c47d37ebae260e8ef5c5e",
+      "redocly": "0bc1c889b89327e0a4e4130782b78b63c84132d54d065be16b3357db5d30c5c8"
+    }
+  },
   "sourceSchemaVersion": 2,
   "profile": {
     "timeoutMs": 5000,
@@ -43,6 +53,10 @@
         "truncated": true
       }
     },
+    "processTree": {
+      "status": "passed",
+      "detail": "timedOut=true, forcedSettlement=false, termination=taskkill, descendantPid=13732, descendantAlive=false"
+    },
     "memory": {
       "status": "unsupported",
       "detail": "Candidate CLIs expose no portable hard memory limit; enforce it in the worker/container."
@@ -59,7 +73,7 @@
       "expected": "valid",
       "determinism": "stable",
       "uniqueHashes": [
-        "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152"
+        "9a1336abf33c5620d662de7429416ccd59ed8ccfbc03d1f4ae3494c26edab92e"
       ],
       "qualification": "candidate-qualified",
       "passed": true,
@@ -67,7 +81,7 @@
       "observation": {
         "outcome": "valid",
         "networkAttempts": 0,
-        "canonicalSha256": "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152",
+        "canonicalSha256": "9a1336abf33c5620d662de7429416ccd59ed8ccfbc03d1f4ae3494c26edab92e",
         "diagnostics": [],
         "diagnosticCounts": {
           "raw": 0,
@@ -76,8 +90,14 @@
           "truncated": false
         },
         "inputBytes": 186,
+        "exitCode": 0,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 2,
+        "stderrBytes": 0,
         "nativeProbe": null
       }
     },
@@ -87,7 +107,7 @@
       "expected": "valid",
       "determinism": "stable",
       "uniqueHashes": [
-        "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152"
+        "6a8e40b0889263942ae7128df249c14d19f622fa36cb1b0dc3771e9f0b1b76e9"
       ],
       "qualification": "candidate-qualified",
       "passed": true,
@@ -95,7 +115,7 @@
       "observation": {
         "outcome": "valid",
         "networkAttempts": 0,
-        "canonicalSha256": "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152",
+        "canonicalSha256": "6a8e40b0889263942ae7128df249c14d19f622fa36cb1b0dc3771e9f0b1b76e9",
         "diagnostics": [],
         "diagnosticCounts": {
           "raw": 0,
@@ -104,8 +124,14 @@
           "truncated": false
         },
         "inputBytes": 702,
+        "exitCode": 0,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 2,
+        "stderrBytes": 0,
         "nativeProbe": null
       }
     },
@@ -115,7 +141,7 @@
       "expected": "invalid",
       "determinism": "stable",
       "uniqueHashes": [
-        "410f4e8a769cdc3c62e0d429d6c2b2b060f8f090e9e6a1087529aed69e44724e"
+        "35135399973ca720e783a6186fb2dd67151770623858192b69e235b65b624e30"
       ],
       "qualification": "candidate-qualified",
       "passed": true,
@@ -123,7 +149,7 @@
       "observation": {
         "outcome": "invalid",
         "networkAttempts": 0,
-        "canonicalSha256": "410f4e8a769cdc3c62e0d429d6c2b2b060f8f090e9e6a1087529aed69e44724e",
+        "canonicalSha256": "35135399973ca720e783a6186fb2dd67151770623858192b69e235b65b624e30",
         "diagnostics": [
           {
             "source": "cases/oas30-invalid-structure.yaml",
@@ -143,8 +169,14 @@
           "truncated": false
         },
         "inputBytes": 124,
+        "exitCode": 0,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 263,
+        "stderrBytes": 0,
         "nativeProbe": null
       }
     },
@@ -154,18 +186,18 @@
       "expected": "invalid",
       "determinism": "stable",
       "uniqueHashes": [
-        "f2956ab086cc0f53f9a4a033628284f333a2679454ed1e73fce09e73e1743f1d"
+        "7cc41c978cdb4c78ee1c8968c111fe32bc1130cae9eff606a5dbfb5f8bb01181"
       ],
       "qualification": "gap",
       "passed": false,
       "failures": [
         "No controlled error matched evidence anchor: /info/version.",
-        "No diagnostic included both line and column."
+        "No anchor-matching diagnostic included both line and column."
       ],
       "observation": {
         "outcome": "invalid",
         "networkAttempts": 0,
-        "canonicalSha256": "f2956ab086cc0f53f9a4a033628284f333a2679454ed1e73fce09e73e1743f1d",
+        "canonicalSha256": "7cc41c978cdb4c78ee1c8968c111fe32bc1130cae9eff606a5dbfb5f8bb01181",
         "diagnostics": [
           {
             "source": "cases/oas31-invalid-structure.json",
@@ -185,8 +217,14 @@
           "truncated": false
         },
         "inputBytes": 114,
+        "exitCode": 0,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 303,
+        "stderrBytes": 0,
         "nativeProbe": null
       }
     },
@@ -196,17 +234,17 @@
       "expected": "invalid",
       "determinism": "stable",
       "uniqueHashes": [
-        "ddba3c850b858561b3927710f88f35b9e0dab12eb1155364a3e3b2e9bfa37621"
+        "6d052188a9f83f79ec5eb23f0eb958425267dca318de2aa3015af95167336dc9"
       ],
       "qualification": "gap",
       "passed": false,
       "failures": [
-        "No diagnostic included both line and column."
+        "No anchor-matching diagnostic included both line and column."
       ],
       "observation": {
         "outcome": "invalid",
         "networkAttempts": 0,
-        "canonicalSha256": "ddba3c850b858561b3927710f88f35b9e0dab12eb1155364a3e3b2e9bfa37621",
+        "canonicalSha256": "6d052188a9f83f79ec5eb23f0eb958425267dca318de2aa3015af95167336dc9",
         "diagnostics": [
           {
             "source": "cases/malformed.yaml",
@@ -226,8 +264,14 @@
           "truncated": false
         },
         "inputBytes": 74,
+        "exitCode": 2,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 143,
+        "stderrBytes": 145,
         "nativeProbe": null
       }
     },
@@ -237,7 +281,7 @@
       "expected": "valid",
       "determinism": "stable",
       "uniqueHashes": [
-        "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152"
+        "54bf44e7b02473f0b999841597ac7dded0996f6fda126cad0cd5358c27bca392"
       ],
       "qualification": "candidate-qualified",
       "passed": true,
@@ -245,7 +289,7 @@
       "observation": {
         "outcome": "valid",
         "networkAttempts": 0,
-        "canonicalSha256": "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152",
+        "canonicalSha256": "54bf44e7b02473f0b999841597ac7dded0996f6fda126cad0cd5358c27bca392",
         "diagnostics": [],
         "diagnosticCounts": {
           "raw": 0,
@@ -254,8 +298,14 @@
           "truncated": false
         },
         "inputBytes": 334,
+        "exitCode": 0,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 2,
+        "stderrBytes": 0,
         "nativeProbe": null
       }
     },
@@ -265,7 +315,7 @@
       "expected": "invalid",
       "determinism": "stable",
       "uniqueHashes": [
-        "31d56b8d675638aaaf8731ef521552964bc835558977233f6fcae2f7ba9b502f"
+        "ca5f256d1e2e523a298f2620bba9513295528ae45f35da81ceee9560b779149b"
       ],
       "qualification": "candidate-qualified",
       "passed": true,
@@ -273,7 +323,7 @@
       "observation": {
         "outcome": "invalid",
         "networkAttempts": 0,
-        "canonicalSha256": "31d56b8d675638aaaf8731ef521552964bc835558977233f6fcae2f7ba9b502f",
+        "canonicalSha256": "ca5f256d1e2e523a298f2620bba9513295528ae45f35da81ceee9560b779149b",
         "diagnostics": [
           {
             "source": "cases/local-ref-invalid/root.yaml",
@@ -293,8 +343,14 @@
           "truncated": false
         },
         "inputBytes": 336,
+        "exitCode": 0,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 352,
+        "stderrBytes": 0,
         "nativeProbe": null
       }
     },
@@ -304,7 +360,7 @@
       "expected": "invalid",
       "determinism": "stable",
       "uniqueHashes": [
-        "8878582f9feb21f43f46d8b73824b4a050b659c34699c6207da37f59463ddf80"
+        "60830ca7443b6cfa5363b4f1ff3e4af33f7a0b7e757b117c141071ae1bbf62b6"
       ],
       "qualification": "candidate-qualified",
       "passed": true,
@@ -312,7 +368,7 @@
       "observation": {
         "outcome": "invalid",
         "networkAttempts": 0,
-        "canonicalSha256": "8878582f9feb21f43f46d8b73824b4a050b659c34699c6207da37f59463ddf80",
+        "canonicalSha256": "60830ca7443b6cfa5363b4f1ff3e4af33f7a0b7e757b117c141071ae1bbf62b6",
         "diagnostics": [
           {
             "source": "cases/missing-ref.yaml",
@@ -332,8 +388,14 @@
           "truncated": false
         },
         "inputBytes": 340,
+        "exitCode": 0,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 283,
+        "stderrBytes": 0,
         "nativeProbe": null
       }
     },
@@ -343,7 +405,7 @@
       "expected": "remote-denied",
       "determinism": "not-assessed",
       "uniqueHashes": [
-        "cc4405f74745dfc8b16e2074fc8161aa63bc5735c74702a5672066c816e503b2"
+        "e4f1e95135caf8eff6799b6e6d9057382964d2dbf415a37ca39eb12053e46bee"
       ],
       "qualification": "candidate-qualified",
       "passed": true,
@@ -351,7 +413,7 @@
       "observation": {
         "outcome": "invalid",
         "networkAttempts": 0,
-        "canonicalSha256": "cc4405f74745dfc8b16e2074fc8161aa63bc5735c74702a5672066c816e503b2",
+        "canonicalSha256": "e4f1e95135caf8eff6799b6e6d9057382964d2dbf415a37ca39eb12053e46bee",
         "diagnostics": [
           {
             "source": "generated/remote-ref-denied.yaml",
@@ -361,7 +423,7 @@
             "code": "proof-remote-reference-denied",
             "severity": "error",
             "kind": "policy",
-            "message": "Remote references are disabled: http://127.0.0.1:59695/components.yaml#/components/schemas/PetList"
+            "message": "Remote references are disabled: <canary>/components.yaml#/components/schemas/PetList"
           }
         ],
         "diagnosticCounts": {
@@ -371,8 +433,14 @@
           "truncated": false
         },
         "inputBytes": 357,
+        "exitCode": 0,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 2,
+        "stderrBytes": 0,
         "nativeProbe": {
           "outcome": "invalid",
           "networkAttempts": 0,
@@ -395,6 +463,17 @@
             "deduplicated": 1,
             "emitted": 1,
             "truncated": false
+          },
+          "process": {
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputLimited": false,
+            "forcedSettlement": false,
+            "terminationDetail": null,
+            "inputBytes": 357,
+            "stdoutBytes": 289,
+            "stderrBytes": 0
           }
         }
       }
@@ -405,7 +484,7 @@
       "expected": "valid",
       "determinism": "not-assessed",
       "uniqueHashes": [
-        "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152"
+        "87b005032c3a4fc328bdff6fbbdabdf20a9c282c90778de09a2a91bfecb2179b"
       ],
       "qualification": "candidate-qualified",
       "passed": true,
@@ -413,7 +492,7 @@
       "observation": {
         "outcome": "valid",
         "networkAttempts": 0,
-        "canonicalSha256": "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152",
+        "canonicalSha256": "87b005032c3a4fc328bdff6fbbdabdf20a9c282c90778de09a2a91bfecb2179b",
         "diagnostics": [],
         "diagnosticCounts": {
           "raw": 0,
@@ -422,8 +501,14 @@
           "truncated": false
         },
         "inputBytes": 10000000,
+        "exitCode": 0,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 2,
+        "stderrBytes": 0,
         "nativeProbe": null
       }
     },
@@ -433,7 +518,7 @@
       "expected": "input-too-large",
       "determinism": "not-assessed",
       "uniqueHashes": [
-        "585a16b7f0c058a20a96221e3d13755f27a2a9b34ba3e1b1701a26edc868f425"
+        "27829fded7fa923c5e83403a178a3ba3af2f28c82c15404e2c3237b92e56236d"
       ],
       "qualification": "qualified-with-adapter",
       "passed": true,
@@ -441,7 +526,7 @@
       "observation": {
         "outcome": "invalid",
         "networkAttempts": 0,
-        "canonicalSha256": "585a16b7f0c058a20a96221e3d13755f27a2a9b34ba3e1b1701a26edc868f425",
+        "canonicalSha256": "27829fded7fa923c5e83403a178a3ba3af2f28c82c15404e2c3237b92e56236d",
         "diagnostics": [
           {
             "source": "generated/size-decimal-over.json",
@@ -461,8 +546,14 @@
           "truncated": false
         },
         "inputBytes": 10000001,
+        "exitCode": 0,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 2,
+        "stderrBytes": 0,
         "nativeProbe": {
           "outcome": "valid",
           "networkAttempts": 0,
@@ -476,6 +567,17 @@
             "deduplicated": 0,
             "emitted": 0,
             "truncated": false
+          },
+          "process": {
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputLimited": false,
+            "forcedSettlement": false,
+            "terminationDetail": null,
+            "inputBytes": 10000001,
+            "stdoutBytes": 2,
+            "stderrBytes": 0
           }
         }
       }
@@ -486,7 +588,7 @@
       "expected": "valid",
       "determinism": "not-assessed",
       "uniqueHashes": [
-        "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152"
+        "1a8e7bcd4cb308d77b061a4b32df7769cb099a7777e1f4d85a22cf2419f2ebca"
       ],
       "qualification": "candidate-qualified",
       "passed": true,
@@ -494,7 +596,7 @@
       "observation": {
         "outcome": "valid",
         "networkAttempts": 0,
-        "canonicalSha256": "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152",
+        "canonicalSha256": "1a8e7bcd4cb308d77b061a4b32df7769cb099a7777e1f4d85a22cf2419f2ebca",
         "diagnostics": [],
         "diagnosticCounts": {
           "raw": 0,
@@ -503,8 +605,14 @@
           "truncated": false
         },
         "inputBytes": 10485760,
+        "exitCode": 0,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 2,
+        "stderrBytes": 0,
         "nativeProbe": null
       }
     },
@@ -514,7 +622,7 @@
       "expected": "input-too-large",
       "determinism": "not-assessed",
       "uniqueHashes": [
-        "c2e65a58c5e3ab044b4a77ac78afcb577f819f9f39aad92b092d3a8a0ed72bc7"
+        "95cad59e5e1d5554fd66200c4bbbb58e3b91a5295c6fc3f67a2f041c7359875b"
       ],
       "qualification": "qualified-with-adapter",
       "passed": true,
@@ -522,7 +630,7 @@
       "observation": {
         "outcome": "invalid",
         "networkAttempts": 0,
-        "canonicalSha256": "c2e65a58c5e3ab044b4a77ac78afcb577f819f9f39aad92b092d3a8a0ed72bc7",
+        "canonicalSha256": "95cad59e5e1d5554fd66200c4bbbb58e3b91a5295c6fc3f67a2f041c7359875b",
         "diagnostics": [
           {
             "source": "generated/size-binary-over.json",
@@ -542,8 +650,14 @@
           "truncated": false
         },
         "inputBytes": 10485761,
+        "exitCode": 0,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 2,
+        "stderrBytes": 0,
         "nativeProbe": {
           "outcome": "valid",
           "networkAttempts": 0,
@@ -557,6 +671,17 @@
             "deduplicated": 0,
             "emitted": 0,
             "truncated": false
+          },
+          "process": {
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputLimited": false,
+            "forcedSettlement": false,
+            "terminationDetail": null,
+            "inputBytes": 10485761,
+            "stdoutBytes": 2,
+            "stderrBytes": 0
           }
         }
       }
@@ -567,7 +692,7 @@
       "expected": "valid",
       "determinism": "stable",
       "uniqueHashes": [
-        "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152"
+        "9a1336abf33c5620d662de7429416ccd59ed8ccfbc03d1f4ae3494c26edab92e"
       ],
       "qualification": "candidate-qualified",
       "passed": true,
@@ -575,7 +700,7 @@
       "observation": {
         "outcome": "valid",
         "networkAttempts": 0,
-        "canonicalSha256": "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152",
+        "canonicalSha256": "9a1336abf33c5620d662de7429416ccd59ed8ccfbc03d1f4ae3494c26edab92e",
         "diagnostics": [],
         "diagnosticCounts": {
           "raw": 0,
@@ -584,8 +709,14 @@
           "truncated": false
         },
         "inputBytes": 186,
+        "exitCode": 0,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 2,
+        "stderrBytes": 0,
         "nativeProbe": null
       }
     },
@@ -595,7 +726,7 @@
       "expected": "valid",
       "determinism": "stable",
       "uniqueHashes": [
-        "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152"
+        "6a8e40b0889263942ae7128df249c14d19f622fa36cb1b0dc3771e9f0b1b76e9"
       ],
       "qualification": "candidate-qualified",
       "passed": true,
@@ -603,7 +734,7 @@
       "observation": {
         "outcome": "valid",
         "networkAttempts": 0,
-        "canonicalSha256": "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152",
+        "canonicalSha256": "6a8e40b0889263942ae7128df249c14d19f622fa36cb1b0dc3771e9f0b1b76e9",
         "diagnostics": [],
         "diagnosticCounts": {
           "raw": 0,
@@ -612,8 +743,14 @@
           "truncated": false
         },
         "inputBytes": 702,
+        "exitCode": 0,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 2,
+        "stderrBytes": 0,
         "nativeProbe": null
       }
     },
@@ -623,7 +760,7 @@
       "expected": "invalid",
       "determinism": "stable",
       "uniqueHashes": [
-        "0185221f5a97d242c43eab0378091f3a04a63c33a22c81c8560d096343505093"
+        "5f6c310feb37885cdd3739473cdcf8201305ab5d8f6c4bbd76ff0a254e2aee61"
       ],
       "qualification": "candidate-qualified",
       "passed": true,
@@ -631,7 +768,7 @@
       "observation": {
         "outcome": "invalid",
         "networkAttempts": 0,
-        "canonicalSha256": "0185221f5a97d242c43eab0378091f3a04a63c33a22c81c8560d096343505093",
+        "canonicalSha256": "5f6c310feb37885cdd3739473cdcf8201305ab5d8f6c4bbd76ff0a254e2aee61",
         "diagnostics": [
           {
             "source": "cases/oas30-invalid-structure.yaml",
@@ -651,8 +788,14 @@
           "truncated": false
         },
         "inputBytes": 124,
+        "exitCode": 1,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 446,
+        "stderrBytes": 0,
         "nativeProbe": null
       }
     },
@@ -662,7 +805,7 @@
       "expected": "invalid",
       "determinism": "stable",
       "uniqueHashes": [
-        "4d5eb760314fa5c87fa86c4c363c633fc52204a5298dbb4fb406e7b771f664cc"
+        "4582fb499f28c23ca4b78398ace6402a11d6f885ee4b7da1f68c5c9045dbafa2"
       ],
       "qualification": "candidate-qualified",
       "passed": true,
@@ -670,7 +813,7 @@
       "observation": {
         "outcome": "invalid",
         "networkAttempts": 0,
-        "canonicalSha256": "4d5eb760314fa5c87fa86c4c363c633fc52204a5298dbb4fb406e7b771f664cc",
+        "canonicalSha256": "4582fb499f28c23ca4b78398ace6402a11d6f885ee4b7da1f68c5c9045dbafa2",
         "diagnostics": [
           {
             "source": "cases/oas31-invalid-structure.json",
@@ -690,8 +833,14 @@
           "truncated": false
         },
         "inputBytes": 114,
+        "exitCode": 1,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 415,
+        "stderrBytes": 0,
         "nativeProbe": null
       }
     },
@@ -701,7 +850,7 @@
       "expected": "invalid",
       "determinism": "stable",
       "uniqueHashes": [
-        "47b574b42ce776c23d8d2a354cc3b42e18fa6c95413a7bb6a6701f8bb562d75f"
+        "dc34e2e6e89a289ee73ba0b9c241dd502c9408ad608698dba2fd4a209dc0e678"
       ],
       "qualification": "candidate-qualified",
       "passed": true,
@@ -709,7 +858,7 @@
       "observation": {
         "outcome": "invalid",
         "networkAttempts": 0,
-        "canonicalSha256": "47b574b42ce776c23d8d2a354cc3b42e18fa6c95413a7bb6a6701f8bb562d75f",
+        "canonicalSha256": "dc34e2e6e89a289ee73ba0b9c241dd502c9408ad608698dba2fd4a209dc0e678",
         "diagnostics": [
           {
             "source": "cases/malformed.yaml",
@@ -759,8 +908,14 @@
           "truncated": false
         },
         "inputBytes": 74,
+        "exitCode": 1,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 1523,
+        "stderrBytes": 0,
         "nativeProbe": null
       }
     },
@@ -770,7 +925,7 @@
       "expected": "valid",
       "determinism": "stable",
       "uniqueHashes": [
-        "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152"
+        "54bf44e7b02473f0b999841597ac7dded0996f6fda126cad0cd5358c27bca392"
       ],
       "qualification": "candidate-qualified",
       "passed": true,
@@ -778,7 +933,7 @@
       "observation": {
         "outcome": "valid",
         "networkAttempts": 0,
-        "canonicalSha256": "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152",
+        "canonicalSha256": "54bf44e7b02473f0b999841597ac7dded0996f6fda126cad0cd5358c27bca392",
         "diagnostics": [],
         "diagnosticCounts": {
           "raw": 0,
@@ -787,8 +942,14 @@
           "truncated": false
         },
         "inputBytes": 334,
+        "exitCode": 0,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 2,
+        "stderrBytes": 0,
         "nativeProbe": null
       }
     },
@@ -798,19 +959,19 @@
       "expected": "invalid",
       "determinism": "stable",
       "uniqueHashes": [
-        "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152"
+        "315568f6b7be76e83026ff030779f7fdd43ff1423a28f71f5e99a2430bf2ebd7"
       ],
       "qualification": "gap",
       "passed": false,
       "failures": [
         "Expected invalid, observed valid.",
         "No controlled error matched evidence anchor: type.",
-        "No diagnostic included both line and column."
+        "No anchor-matching diagnostic included both line and column."
       ],
       "observation": {
         "outcome": "valid",
         "networkAttempts": 0,
-        "canonicalSha256": "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152",
+        "canonicalSha256": "315568f6b7be76e83026ff030779f7fdd43ff1423a28f71f5e99a2430bf2ebd7",
         "diagnostics": [],
         "diagnosticCounts": {
           "raw": 0,
@@ -819,8 +980,14 @@
           "truncated": false
         },
         "inputBytes": 336,
+        "exitCode": 0,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 2,
+        "stderrBytes": 0,
         "nativeProbe": null
       }
     },
@@ -830,7 +997,7 @@
       "expected": "invalid",
       "determinism": "stable",
       "uniqueHashes": [
-        "c1d1ed995c2ca01de0c008b78190a748866437220efcea28738ddcfe4a0d3d56"
+        "125c1879c1f54b0e2c62c94479c2de6eaaf0f1c4c52b355a1e99dbe3a8b1e7de"
       ],
       "qualification": "candidate-qualified",
       "passed": true,
@@ -838,7 +1005,7 @@
       "observation": {
         "outcome": "invalid",
         "networkAttempts": 0,
-        "canonicalSha256": "c1d1ed995c2ca01de0c008b78190a748866437220efcea28738ddcfe4a0d3d56",
+        "canonicalSha256": "125c1879c1f54b0e2c62c94479c2de6eaaf0f1c4c52b355a1e99dbe3a8b1e7de",
         "diagnostics": [
           {
             "source": "cases/missing-ref.yaml",
@@ -858,8 +1025,14 @@
           "truncated": false
         },
         "inputBytes": 340,
+        "exitCode": 1,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 627,
+        "stderrBytes": 0,
         "nativeProbe": null
       }
     },
@@ -869,7 +1042,7 @@
       "expected": "remote-denied",
       "determinism": "not-assessed",
       "uniqueHashes": [
-        "cc4405f74745dfc8b16e2074fc8161aa63bc5735c74702a5672066c816e503b2"
+        "c6bba1f05e61d6ba05e780e25669aa7de4a53835dea8df57d24849c0b7b512e0"
       ],
       "qualification": "qualified-with-adapter",
       "passed": true,
@@ -877,7 +1050,7 @@
       "observation": {
         "outcome": "invalid",
         "networkAttempts": 0,
-        "canonicalSha256": "cc4405f74745dfc8b16e2074fc8161aa63bc5735c74702a5672066c816e503b2",
+        "canonicalSha256": "c6bba1f05e61d6ba05e780e25669aa7de4a53835dea8df57d24849c0b7b512e0",
         "diagnostics": [
           {
             "source": "generated/remote-ref-denied.yaml",
@@ -887,7 +1060,7 @@
             "code": "proof-remote-reference-denied",
             "severity": "error",
             "kind": "policy",
-            "message": "Remote references are disabled: http://127.0.0.1:59695/components.yaml#/components/schemas/PetList"
+            "message": "Remote references are disabled: <canary>/components.yaml#/components/schemas/PetList"
           }
         ],
         "diagnosticCounts": {
@@ -897,8 +1070,14 @@
           "truncated": false
         },
         "inputBytes": 357,
+        "exitCode": 0,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 2,
+        "stderrBytes": 0,
         "nativeProbe": {
           "outcome": "valid",
           "networkAttempts": 1,
@@ -913,6 +1092,17 @@
             "deduplicated": 0,
             "emitted": 0,
             "truncated": false
+          },
+          "process": {
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputLimited": false,
+            "forcedSettlement": false,
+            "terminationDetail": null,
+            "inputBytes": 357,
+            "stdoutBytes": 2,
+            "stderrBytes": 0
           }
         }
       }
@@ -923,7 +1113,7 @@
       "expected": "valid",
       "determinism": "not-assessed",
       "uniqueHashes": [
-        "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152"
+        "87b005032c3a4fc328bdff6fbbdabdf20a9c282c90778de09a2a91bfecb2179b"
       ],
       "qualification": "candidate-qualified",
       "passed": true,
@@ -931,7 +1121,7 @@
       "observation": {
         "outcome": "valid",
         "networkAttempts": 0,
-        "canonicalSha256": "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152",
+        "canonicalSha256": "87b005032c3a4fc328bdff6fbbdabdf20a9c282c90778de09a2a91bfecb2179b",
         "diagnostics": [],
         "diagnosticCounts": {
           "raw": 0,
@@ -940,8 +1130,14 @@
           "truncated": false
         },
         "inputBytes": 10000000,
+        "exitCode": 0,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 2,
+        "stderrBytes": 0,
         "nativeProbe": null
       }
     },
@@ -951,7 +1147,7 @@
       "expected": "input-too-large",
       "determinism": "not-assessed",
       "uniqueHashes": [
-        "585a16b7f0c058a20a96221e3d13755f27a2a9b34ba3e1b1701a26edc868f425"
+        "27829fded7fa923c5e83403a178a3ba3af2f28c82c15404e2c3237b92e56236d"
       ],
       "qualification": "qualified-with-adapter",
       "passed": true,
@@ -959,7 +1155,7 @@
       "observation": {
         "outcome": "invalid",
         "networkAttempts": 0,
-        "canonicalSha256": "585a16b7f0c058a20a96221e3d13755f27a2a9b34ba3e1b1701a26edc868f425",
+        "canonicalSha256": "27829fded7fa923c5e83403a178a3ba3af2f28c82c15404e2c3237b92e56236d",
         "diagnostics": [
           {
             "source": "generated/size-decimal-over.json",
@@ -979,8 +1175,14 @@
           "truncated": false
         },
         "inputBytes": 10000001,
+        "exitCode": 0,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 2,
+        "stderrBytes": 0,
         "nativeProbe": {
           "outcome": "valid",
           "networkAttempts": 0,
@@ -994,6 +1196,17 @@
             "deduplicated": 0,
             "emitted": 0,
             "truncated": false
+          },
+          "process": {
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputLimited": false,
+            "forcedSettlement": false,
+            "terminationDetail": null,
+            "inputBytes": 10000001,
+            "stdoutBytes": 2,
+            "stderrBytes": 0
           }
         }
       }
@@ -1004,7 +1217,7 @@
       "expected": "valid",
       "determinism": "not-assessed",
       "uniqueHashes": [
-        "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152"
+        "1a8e7bcd4cb308d77b061a4b32df7769cb099a7777e1f4d85a22cf2419f2ebca"
       ],
       "qualification": "candidate-qualified",
       "passed": true,
@@ -1012,7 +1225,7 @@
       "observation": {
         "outcome": "valid",
         "networkAttempts": 0,
-        "canonicalSha256": "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152",
+        "canonicalSha256": "1a8e7bcd4cb308d77b061a4b32df7769cb099a7777e1f4d85a22cf2419f2ebca",
         "diagnostics": [],
         "diagnosticCounts": {
           "raw": 0,
@@ -1021,8 +1234,14 @@
           "truncated": false
         },
         "inputBytes": 10485760,
+        "exitCode": 0,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 2,
+        "stderrBytes": 0,
         "nativeProbe": null
       }
     },
@@ -1032,7 +1251,7 @@
       "expected": "input-too-large",
       "determinism": "not-assessed",
       "uniqueHashes": [
-        "c2e65a58c5e3ab044b4a77ac78afcb577f819f9f39aad92b092d3a8a0ed72bc7"
+        "95cad59e5e1d5554fd66200c4bbbb58e3b91a5295c6fc3f67a2f041c7359875b"
       ],
       "qualification": "qualified-with-adapter",
       "passed": true,
@@ -1040,7 +1259,7 @@
       "observation": {
         "outcome": "invalid",
         "networkAttempts": 0,
-        "canonicalSha256": "c2e65a58c5e3ab044b4a77ac78afcb577f819f9f39aad92b092d3a8a0ed72bc7",
+        "canonicalSha256": "95cad59e5e1d5554fd66200c4bbbb58e3b91a5295c6fc3f67a2f041c7359875b",
         "diagnostics": [
           {
             "source": "generated/size-binary-over.json",
@@ -1060,8 +1279,14 @@
           "truncated": false
         },
         "inputBytes": 10485761,
+        "exitCode": 0,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 2,
+        "stderrBytes": 0,
         "nativeProbe": {
           "outcome": "valid",
           "networkAttempts": 0,
@@ -1075,6 +1300,17 @@
             "deduplicated": 0,
             "emitted": 0,
             "truncated": false
+          },
+          "process": {
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputLimited": false,
+            "forcedSettlement": false,
+            "terminationDetail": null,
+            "inputBytes": 10485761,
+            "stdoutBytes": 2,
+            "stderrBytes": 0
           }
         }
       }
@@ -1085,7 +1321,7 @@
       "expected": "valid",
       "determinism": "stable",
       "uniqueHashes": [
-        "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152"
+        "17218d2b07351e5394cc1903f526041290cd138de245176c2e5e994815f05711"
       ],
       "qualification": "candidate-qualified",
       "passed": true,
@@ -1093,7 +1329,7 @@
       "observation": {
         "outcome": "valid",
         "networkAttempts": 0,
-        "canonicalSha256": "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152",
+        "canonicalSha256": "17218d2b07351e5394cc1903f526041290cd138de245176c2e5e994815f05711",
         "diagnostics": [],
         "diagnosticCounts": {
           "raw": 0,
@@ -1102,8 +1338,14 @@
           "truncated": false
         },
         "inputBytes": 186,
+        "exitCode": 0,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 115,
+        "stderrBytes": 113,
         "nativeProbe": null
       }
     },
@@ -1113,7 +1355,7 @@
       "expected": "valid",
       "determinism": "stable",
       "uniqueHashes": [
-        "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152"
+        "8e27eb9d3543628403d3e9c3fca26c96129c3427448e1657e3f017e4ea2fbf7b"
       ],
       "qualification": "candidate-qualified",
       "passed": true,
@@ -1121,7 +1363,7 @@
       "observation": {
         "outcome": "valid",
         "networkAttempts": 0,
-        "canonicalSha256": "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152",
+        "canonicalSha256": "8e27eb9d3543628403d3e9c3fca26c96129c3427448e1657e3f017e4ea2fbf7b",
         "diagnostics": [],
         "diagnosticCounts": {
           "raw": 0,
@@ -1130,8 +1372,14 @@
           "truncated": false
         },
         "inputBytes": 702,
+        "exitCode": 0,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 115,
+        "stderrBytes": 113,
         "nativeProbe": null
       }
     },
@@ -1141,17 +1389,17 @@
       "expected": "invalid",
       "determinism": "stable",
       "uniqueHashes": [
-        "d0865e18508a3d0d1b253e80f30845478923d55fced8989474116620aff1cf7d"
+        "2b2255cc51915c213e3bd23ca6cfdb37e6e2f637d044c8f03415ee43df92c6b5"
       ],
       "qualification": "gap",
       "passed": false,
       "failures": [
-        "No diagnostic included both line and column."
+        "No anchor-matching diagnostic included both line and column."
       ],
       "observation": {
         "outcome": "invalid",
         "networkAttempts": 0,
-        "canonicalSha256": "d0865e18508a3d0d1b253e80f30845478923d55fced8989474116620aff1cf7d",
+        "canonicalSha256": "2b2255cc51915c213e3bd23ca6cfdb37e6e2f637d044c8f03415ee43df92c6b5",
         "diagnostics": [
           {
             "source": "cases/oas30-invalid-structure.yaml",
@@ -1171,8 +1419,14 @@
           "truncated": false
         },
         "inputBytes": 124,
+        "exitCode": 1,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 483,
+        "stderrBytes": 211,
         "nativeProbe": null
       }
     },
@@ -1182,17 +1436,17 @@
       "expected": "invalid",
       "determinism": "stable",
       "uniqueHashes": [
-        "074a5ece7d9d52c2ac39b90f735628467df8f1b75e1d9edc8beb06cc0bd8ddcf"
+        "c56bde4ca0b37e7f9b48adb128a454e4a8422e8c5348dc8b0905ef804b0c1322"
       ],
       "qualification": "gap",
       "passed": false,
       "failures": [
-        "No diagnostic included both line and column."
+        "No anchor-matching diagnostic included both line and column."
       ],
       "observation": {
         "outcome": "invalid",
         "networkAttempts": 0,
-        "canonicalSha256": "074a5ece7d9d52c2ac39b90f735628467df8f1b75e1d9edc8beb06cc0bd8ddcf",
+        "canonicalSha256": "c56bde4ca0b37e7f9b48adb128a454e4a8422e8c5348dc8b0905ef804b0c1322",
         "diagnostics": [
           {
             "source": "cases/oas31-invalid-structure.json",
@@ -1212,8 +1466,14 @@
           "truncated": false
         },
         "inputBytes": 114,
+        "exitCode": 1,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 469,
+        "stderrBytes": 211,
         "nativeProbe": null
       }
     },
@@ -1223,7 +1483,7 @@
       "expected": "invalid",
       "determinism": "stable",
       "uniqueHashes": [
-        "d30d95b987581cfca0cbab2819c42a3c96a8853b1791cf2a5d7e6890f8ae0b11"
+        "62374645704b6507facefc777febd02add630f0044daf2ff918fe2bd99f6a27c"
       ],
       "qualification": "candidate-qualified",
       "passed": true,
@@ -1231,7 +1491,7 @@
       "observation": {
         "outcome": "invalid",
         "networkAttempts": 0,
-        "canonicalSha256": "d30d95b987581cfca0cbab2819c42a3c96a8853b1791cf2a5d7e6890f8ae0b11",
+        "canonicalSha256": "62374645704b6507facefc777febd02add630f0044daf2ff918fe2bd99f6a27c",
         "diagnostics": [
           {
             "source": "cases/malformed.yaml",
@@ -1251,8 +1511,14 @@
           "truncated": false
         },
         "inputBytes": 74,
+        "exitCode": 1,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 0,
+        "stderrBytes": 318,
         "nativeProbe": null
       }
     },
@@ -1262,7 +1528,7 @@
       "expected": "valid",
       "determinism": "stable",
       "uniqueHashes": [
-        "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152"
+        "e59f79ceb80689fb96d9caf213dc01b0eae8fd901eea0a6674cff61f0e455217"
       ],
       "qualification": "candidate-qualified",
       "passed": true,
@@ -1270,7 +1536,7 @@
       "observation": {
         "outcome": "valid",
         "networkAttempts": 0,
-        "canonicalSha256": "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152",
+        "canonicalSha256": "e59f79ceb80689fb96d9caf213dc01b0eae8fd901eea0a6674cff61f0e455217",
         "diagnostics": [],
         "diagnosticCounts": {
           "raw": 0,
@@ -1279,8 +1545,14 @@
           "truncated": false
         },
         "inputBytes": 334,
+        "exitCode": 0,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 115,
+        "stderrBytes": 99,
         "nativeProbe": null
       }
     },
@@ -1290,17 +1562,17 @@
       "expected": "invalid",
       "determinism": "stable",
       "uniqueHashes": [
-        "08ade35ae8b87c1df2094a7a8e918b79cd7c3befc43a37f888e9b5a34cd2fdf2"
+        "54b2227341b18ac587eaa8a285ca1c3b418641a88461feedf49b2979c64dfeba"
       ],
       "qualification": "gap",
       "passed": false,
       "failures": [
-        "No diagnostic included both line and column."
+        "No anchor-matching diagnostic included both line and column."
       ],
       "observation": {
         "outcome": "invalid",
         "networkAttempts": 0,
-        "canonicalSha256": "08ade35ae8b87c1df2094a7a8e918b79cd7c3befc43a37f888e9b5a34cd2fdf2",
+        "canonicalSha256": "54b2227341b18ac587eaa8a285ca1c3b418641a88461feedf49b2979c64dfeba",
         "diagnostics": [
           {
             "source": "cases/local-ref-invalid/components.yaml",
@@ -1320,8 +1592,14 @@
           "truncated": false
         },
         "inputBytes": 336,
+        "exitCode": 1,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 719,
+        "stderrBytes": 173,
         "nativeProbe": null
       }
     },
@@ -1331,17 +1609,17 @@
       "expected": "invalid",
       "determinism": "stable",
       "uniqueHashes": [
-        "f971f10c4138c087e8650f76895fe99a1ec8fd125422cb1ddce47b2b626c6557"
+        "d2e34f3493adb41ec1e56170c06685676d54b1fc1b1ae4ce6f00327d7992a198"
       ],
       "qualification": "gap",
       "passed": false,
       "failures": [
-        "No diagnostic included both line and column."
+        "No anchor-matching diagnostic included both line and column."
       ],
       "observation": {
         "outcome": "invalid",
         "networkAttempts": 0,
-        "canonicalSha256": "f971f10c4138c087e8650f76895fe99a1ec8fd125422cb1ddce47b2b626c6557",
+        "canonicalSha256": "d2e34f3493adb41ec1e56170c06685676d54b1fc1b1ae4ce6f00327d7992a198",
         "diagnostics": [
           {
             "source": "cases/missing-ref.yaml",
@@ -1361,8 +1639,14 @@
           "truncated": false
         },
         "inputBytes": 340,
+        "exitCode": 1,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 740,
+        "stderrBytes": 187,
         "nativeProbe": null
       }
     },
@@ -1372,7 +1656,7 @@
       "expected": "remote-denied",
       "determinism": "not-assessed",
       "uniqueHashes": [
-        "cc4405f74745dfc8b16e2074fc8161aa63bc5735c74702a5672066c816e503b2"
+        "f6b9897802ca30bd176fd5682791890f188b0ac0ab4e3a17fbb6c07cc5bc1c23"
       ],
       "qualification": "qualified-with-adapter",
       "passed": true,
@@ -1380,7 +1664,7 @@
       "observation": {
         "outcome": "invalid",
         "networkAttempts": 0,
-        "canonicalSha256": "cc4405f74745dfc8b16e2074fc8161aa63bc5735c74702a5672066c816e503b2",
+        "canonicalSha256": "f6b9897802ca30bd176fd5682791890f188b0ac0ab4e3a17fbb6c07cc5bc1c23",
         "diagnostics": [
           {
             "source": "generated/remote-ref-denied.yaml",
@@ -1390,7 +1674,7 @@
             "code": "proof-remote-reference-denied",
             "severity": "error",
             "kind": "policy",
-            "message": "Remote references are disabled: http://127.0.0.1:59695/components.yaml#/components/schemas/PetList"
+            "message": "Remote references are disabled: <canary>/components.yaml#/components/schemas/PetList"
           }
         ],
         "diagnosticCounts": {
@@ -1400,8 +1684,14 @@
           "truncated": false
         },
         "inputBytes": 357,
+        "exitCode": 0,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 2,
+        "stderrBytes": 0,
         "nativeProbe": {
           "outcome": "valid",
           "networkAttempts": 1,
@@ -1416,6 +1706,17 @@
             "deduplicated": 0,
             "emitted": 0,
             "truncated": false
+          },
+          "process": {
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputLimited": false,
+            "forcedSettlement": false,
+            "terminationDetail": null,
+            "inputBytes": 357,
+            "stdoutBytes": 115,
+            "stderrBytes": 125
           }
         }
       }
@@ -1426,7 +1727,7 @@
       "expected": "valid",
       "determinism": "not-assessed",
       "uniqueHashes": [
-        "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152"
+        "25bcbf0f3a807136629d4dd79cffcef1662b4af588090b509d8a34a83470bf46"
       ],
       "qualification": "candidate-qualified",
       "passed": true,
@@ -1434,7 +1735,7 @@
       "observation": {
         "outcome": "valid",
         "networkAttempts": 0,
-        "canonicalSha256": "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152",
+        "canonicalSha256": "25bcbf0f3a807136629d4dd79cffcef1662b4af588090b509d8a34a83470bf46",
         "diagnostics": [],
         "diagnosticCounts": {
           "raw": 0,
@@ -1443,8 +1744,14 @@
           "truncated": false
         },
         "inputBytes": 10000000,
+        "exitCode": 0,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 115,
+        "stderrBytes": 128,
         "nativeProbe": null
       }
     },
@@ -1454,7 +1761,7 @@
       "expected": "input-too-large",
       "determinism": "not-assessed",
       "uniqueHashes": [
-        "585a16b7f0c058a20a96221e3d13755f27a2a9b34ba3e1b1701a26edc868f425"
+        "89a2cbeb2529f68bad0fecae38658a1e8d82b14ade32ea964ce300c8f0291eca"
       ],
       "qualification": "qualified-with-adapter",
       "passed": true,
@@ -1462,7 +1769,7 @@
       "observation": {
         "outcome": "invalid",
         "networkAttempts": 0,
-        "canonicalSha256": "585a16b7f0c058a20a96221e3d13755f27a2a9b34ba3e1b1701a26edc868f425",
+        "canonicalSha256": "89a2cbeb2529f68bad0fecae38658a1e8d82b14ade32ea964ce300c8f0291eca",
         "diagnostics": [
           {
             "source": "generated/size-decimal-over.json",
@@ -1482,8 +1789,14 @@
           "truncated": false
         },
         "inputBytes": 10000001,
+        "exitCode": 0,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 2,
+        "stderrBytes": 0,
         "nativeProbe": {
           "outcome": "valid",
           "networkAttempts": 0,
@@ -1497,6 +1810,17 @@
             "deduplicated": 0,
             "emitted": 0,
             "truncated": false
+          },
+          "process": {
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputLimited": false,
+            "forcedSettlement": false,
+            "terminationDetail": null,
+            "inputBytes": 10000001,
+            "stdoutBytes": 115,
+            "stderrBytes": 126
           }
         }
       }
@@ -1507,7 +1831,7 @@
       "expected": "valid",
       "determinism": "not-assessed",
       "uniqueHashes": [
-        "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152"
+        "b47871b2cb5ac631c9a4bd970041da61ba0510fd8ba974484fd389b571adb0e5"
       ],
       "qualification": "candidate-qualified",
       "passed": true,
@@ -1515,7 +1839,7 @@
       "observation": {
         "outcome": "valid",
         "networkAttempts": 0,
-        "canonicalSha256": "577589604453f0176b633772c4e9c38376e0363d99f8eb3cccc03291edff7152",
+        "canonicalSha256": "b47871b2cb5ac631c9a4bd970041da61ba0510fd8ba974484fd389b571adb0e5",
         "diagnostics": [],
         "diagnosticCounts": {
           "raw": 0,
@@ -1524,8 +1848,14 @@
           "truncated": false
         },
         "inputBytes": 10485760,
+        "exitCode": 0,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 115,
+        "stderrBytes": 126,
         "nativeProbe": null
       }
     },
@@ -1535,7 +1865,7 @@
       "expected": "input-too-large",
       "determinism": "not-assessed",
       "uniqueHashes": [
-        "c2e65a58c5e3ab044b4a77ac78afcb577f819f9f39aad92b092d3a8a0ed72bc7"
+        "f8ea4b102389a08bd2b7b0a2fccf0e074c30e4bb941ddc2827493440b140a8e4"
       ],
       "qualification": "qualified-with-adapter",
       "passed": true,
@@ -1543,7 +1873,7 @@
       "observation": {
         "outcome": "invalid",
         "networkAttempts": 0,
-        "canonicalSha256": "c2e65a58c5e3ab044b4a77ac78afcb577f819f9f39aad92b092d3a8a0ed72bc7",
+        "canonicalSha256": "f8ea4b102389a08bd2b7b0a2fccf0e074c30e4bb941ddc2827493440b140a8e4",
         "diagnostics": [
           {
             "source": "generated/size-binary-over.json",
@@ -1563,8 +1893,14 @@
           "truncated": false
         },
         "inputBytes": 10485761,
+        "exitCode": 0,
+        "signal": null,
         "timedOut": false,
         "outputLimited": false,
+        "forcedSettlement": false,
+        "terminationDetail": null,
+        "stdoutBytes": 2,
+        "stderrBytes": 0,
         "nativeProbe": {
           "outcome": "valid",
           "networkAttempts": 0,
@@ -1578,6 +1914,17 @@
             "deduplicated": 0,
             "emitted": 0,
             "truncated": false
+          },
+          "process": {
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputLimited": false,
+            "forcedSettlement": false,
+            "terminationDetail": null,
+            "inputBytes": 10485761,
+            "stdoutBytes": 115,
+            "stderrBytes": 124
           }
         }
       }

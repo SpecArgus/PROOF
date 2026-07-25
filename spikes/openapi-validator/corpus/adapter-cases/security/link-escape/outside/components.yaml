@@ -1,0 +1,6 @@
+type: object
+required:
+  - escaped
+properties:
+  escaped:
+    type: boolean
