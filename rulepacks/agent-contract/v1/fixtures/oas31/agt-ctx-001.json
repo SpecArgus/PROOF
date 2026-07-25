@@ -1,0 +1,42 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "AGT-CTX-001 OAS 3.1 cases",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/catalog/search": {
+      "get": {
+        "operationId": "searchCatalog",
+        "summary": "Search the product catalog",
+        "responses": {
+          "200": {
+            "description": "Search results"
+          }
+        }
+      }
+    },
+    "/legacy/{id}": {
+      "get": {
+        "operationId": "get",
+        "summary": "Gets a resource",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Legacy resource identifier.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource"
+          }
+        }
+      }
+    }
+  }
+}

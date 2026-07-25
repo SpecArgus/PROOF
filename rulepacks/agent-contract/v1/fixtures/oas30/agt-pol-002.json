@@ -1,0 +1,93 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "AGT-POL-002 OAS 3.0 cases",
+    "version": "1.0.0"
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/customers/{customerId}/profile": {
+      "get": {
+        "operationId": "getCustomerProfile",
+        "summary": "Get a customer profile",
+        "security": [],
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "required": true,
+            "description": "Stable customer identifier.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Customer profile"
+          }
+        }
+      }
+    },
+    "/admin/users/{userId}/roles": {
+      "patch": {
+        "operationId": "updateUserRoles",
+        "summary": "Update user roles",
+        "x-agent-policy": {
+          "confirmation": {
+            "mode": "required",
+            "reason": "A human must approve privileged role changes."
+          },
+          "authorization": {
+            "roles": [
+              "administrator"
+            ]
+          }
+        },
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "Stable user identifier.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Roles updated"
+          },
+          "403": {
+            "description": "Insufficient privileges",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}

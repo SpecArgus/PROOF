@@ -1,0 +1,71 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "AGT-RESP-001 OAS 3.1 cases",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/users/{userId}": {
+      "delete": {
+        "operationId": "deleteUser",
+        "summary": "Delete a user",
+        "x-agent-policy": {
+          "confirmation": {
+            "mode": "required",
+            "reason": "A human must approve account deletion."
+          }
+        },
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "Stable user identifier.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted"
+          },
+          "default": {
+            "description": "Problem",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "type",
+                    "title"
+                  ],
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "title": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "operationId": "getHealth",
+        "summary": "Get service health",
+        "responses": {
+          "200": {
+            "description": "Healthy"
+          }
+        }
+      }
+    }
+  }
+}

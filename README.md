@@ -45,7 +45,10 @@ false-positive fixtures, fork pull request feasibility, and user discovery.
 The generic validation authority is `openapi-spec-validator 0.9.0` behind an
 isolated process contract, and the analysis core and CLI use a Python-first
 workspace. See [ADR 0001](docs/adr/0001-python-runtime-and-repository-architecture.md)
-and the [roadmap](ROADMAP.md) for the decisions and staged plan.
+and the [roadmap](ROADMAP.md) for the decisions and staged plan. The
+[P0 agent contract rule pack](rulepacks/agent-contract/v1) defines the five
+initial rules, deterministic risk signals, policy extension, and conformance
+fixtures.
 
 ## Development workflow
 

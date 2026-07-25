@@ -1,0 +1,94 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "AGT-POL-001 OAS 3.0 cases",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/users/{userId}": {
+      "delete": {
+        "operationId": "deleteUser",
+        "summary": "Delete a user",
+        "x-agent-policy": {
+          "risks": [
+            "destructive"
+          ]
+        },
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "Stable user identifier.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted"
+          },
+          "409": {
+            "description": "Deletion conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/payments/{paymentId}/refund": {
+      "post": {
+        "operationId": "refundPayment",
+        "summary": "Refund a payment",
+        "x-agent-policy": {
+          "confirmation": {
+            "mode": "required",
+            "reason": "A human must approve movement of funds."
+          }
+        },
+        "parameters": [
+          {
+            "name": "paymentId",
+            "in": "path",
+            "required": true,
+            "description": "Stable payment identifier.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Refund accepted"
+          },
+          "400": {
+            "description": "Invalid refund",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
