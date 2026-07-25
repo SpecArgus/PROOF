@@ -30,6 +30,50 @@ func TestRelativeEntrypointUsesCanonicalRepositoryRoot(t *testing.T) {
 	}
 }
 
+func TestAbsoluteEntrypointAcceptsFilesystemAliasIntoRepository(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	writeTestFile(t, filepath.Join(root, "openapi.yaml"), validTestDocument)
+
+	aliasParent := t.TempDir()
+	aliasRoot := filepath.Join(aliasParent, "repository-alias")
+	if err := os.Symlink(root, aliasRoot); err != nil {
+		t.Skipf("filesystem aliases are unavailable: %v", err)
+	}
+
+	got, internalErr := evaluate(testOptions(filepath.Join(aliasRoot, "openapi.yaml"), root))
+	if internalErr != nil {
+		t.Fatalf("evaluate returned internal error: %v", internalErr)
+	}
+	if got.Outcome != outcomeValid {
+		t.Fatalf("outcome = %q, want %q; diagnostics=%#v", got.Outcome, outcomeValid, got.Diagnostics)
+	}
+}
+
+func TestEntrypointSymlinkEscapeRemainsDenied(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	outside := t.TempDir()
+	outsideEntrypoint := filepath.Join(outside, "openapi.yaml")
+	writeTestFile(t, outsideEntrypoint, validTestDocument)
+
+	entrypoint := filepath.Join(root, "openapi.yaml")
+	if err := os.Symlink(outsideEntrypoint, entrypoint); err != nil {
+		t.Skipf("filesystem links are unavailable: %v", err)
+	}
+
+	got, internalErr := evaluate(testOptions(entrypoint, root))
+	if internalErr != nil {
+		t.Fatalf("evaluate returned internal error: %v", internalErr)
+	}
+	if got.Outcome != outcomePolicyDenied {
+		t.Fatalf("outcome = %q, want %q; diagnostics=%#v", got.Outcome, outcomePolicyDenied, got.Diagnostics)
+	}
+	if len(got.Diagnostics) != 1 || got.Diagnostics[0].Code != "ref.path-outside-root" {
+		t.Fatalf("unexpected diagnostics: %#v", got.Diagnostics)
+	}
+}
+
 func TestYAMLMultiDocumentStreamRejected(t *testing.T) {
 	t.Parallel()
 	root := t.TempDir()

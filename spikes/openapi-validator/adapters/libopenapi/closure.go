@@ -81,7 +81,11 @@ func scanClosure(opts options) (*closureScanner, *classifiedIssue, error) {
 		return scanner, nil, fmt.Errorf("resolve entrypoint: %w", err)
 	}
 	entryAbs = filepath.Clean(entryAbs)
-	if !isWithin(root, entryAbs) {
+	entryContainmentPath := entryAbs
+	if canonicalParent, parentErr := canonicalExistingPath(filepath.Dir(entryAbs)); parentErr == nil {
+		entryContainmentPath = filepath.Join(canonicalParent, filepath.Base(entryAbs))
+	}
+	if !isWithin(root, entryContainmentPath) {
 		return scanner, &classifiedIssue{
 			Outcome: outcomePolicyDenied,
 			Diagnostic: diagnostic{
