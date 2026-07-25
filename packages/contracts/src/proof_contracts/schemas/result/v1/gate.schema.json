@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://specargus.github.io/PROOF/schemas/result/v1/gate.schema.json",
+  "title": "PROOF gate result v1",
+  "type": "object",
+  "required": [
+    "outcome",
+    "failOn",
+    "causingFindingFingerprints"
+  ],
+  "properties": {
+    "outcome": {
+      "enum": [
+        "pass",
+        "advisory",
+        "blocked",
+        "not-evaluated"
+      ]
+    },
+    "failOn": {
+      "enum": [
+        "error",
+        "high",
+        "medium",
+        "low",
+        "none"
+      ]
+    },
+    "causingFindingFingerprints": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/fingerprint"
+      },
+      "uniqueItems": true
+    }
+  },
+  "patternProperties": {
+    "^x-[a-z0-9][a-z0-9._-]*$": {}
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "outcome": {
+            "enum": [
+              "advisory",
+              "blocked"
+            ]
+          }
+        },
+        "required": [
+          "outcome"
+        ]
+      },
+      "then": {
+        "properties": {
+          "causingFindingFingerprints": {
+            "minItems": 1
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "causingFindingFingerprints": {
+            "maxItems": 0
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "outcome": {
+            "const": "advisory"
+          }
+        },
+        "required": [
+          "outcome"
+        ]
+      },
+      "then": {
+        "properties": {
+          "failOn": {
+            "const": "none"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "outcome": {
+            "const": "blocked"
+          }
+        },
+        "required": [
+          "outcome"
+        ]
+      },
+      "then": {
+        "properties": {
+          "failOn": {
+            "not": {
+              "const": "none"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

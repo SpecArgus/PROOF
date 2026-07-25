@@ -1,0 +1,64 @@
+{
+  "schemaVersion": "1.0.0",
+  "evaluationTime": "2026-07-25T00:00:00Z",
+  "status": "internal-error",
+  "resultDigest": "sha256:c01e80f82d6b8b896ec345e8af3e7907722387a70798d05a771bdc0207172813",
+  "findings": [],
+  "errors": [
+    {
+      "code": "worker.timeout",
+      "kind": "timeout",
+      "message": "The validator worker exceeded its wall-time limit.",
+      "retryable": true
+    }
+  ],
+  "summary": {
+    "findingTotal": 0,
+    "errorTotal": 1,
+    "findingsBySeverity": {
+      "error": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0,
+      "info": 0
+    },
+    "scannedFiles": 1,
+    "scannedOperations": 0,
+    "excludedOperations": 0,
+    "riskyOperations": 0,
+    "truncatedFindings": 0
+  },
+  "gate": {
+    "outcome": "not-evaluated",
+    "failOn": "high",
+    "causingFindingFingerprints": []
+  },
+  "provenance": {
+    "core": {
+      "name": "proof-core",
+      "version": "0.1.0",
+      "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+    },
+    "validator": {
+      "name": "openapi-spec-validator",
+      "version": "0.9.0",
+      "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+    },
+    "rulePack": {
+      "name": "agent-contract",
+      "version": "0.1.0",
+      "digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+    },
+    "runtime": {
+      "name": "cpython",
+      "version": "3.14.6",
+      "digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444"
+    },
+    "configuration": {
+      "digest": "sha256:5555555555555555555555555555555555555555555555555555555555555555"
+    },
+    "input": {
+      "digest": "sha256:6666666666666666666666666666666666666666666666666666666666666666"
+    }
+  }
+}

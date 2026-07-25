@@ -1,0 +1,247 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://specargus.github.io/PROOF/schemas/result/v1/common.schema.json",
+  "title": "PROOF result v1 common definitions",
+  "$defs": {
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": ".*\\S.*"
+    },
+    "relativePath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\).+$"
+    },
+    "jsonPointer": {
+      "type": "string",
+      "pattern": "^(?:|(?:/(?:[^~/]|~[01])*)+)$"
+    },
+    "fingerprint": {
+      "$ref": "#/$defs/digest"
+    },
+    "location": {
+      "type": "object",
+      "required": [
+        "path",
+        "pointer"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/relativePath"
+        },
+        "pointer": {
+          "$ref": "#/$defs/jsonPointer"
+        },
+        "line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "column": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "patternProperties": {
+        "^x-[a-z0-9][a-z0-9._-]*$": {}
+      },
+      "additionalProperties": false
+    },
+    "operation": {
+      "type": "object",
+      "required": [
+        "method",
+        "path"
+      ],
+      "properties": {
+        "method": {
+          "enum": [
+            "get",
+            "put",
+            "post",
+            "delete",
+            "options",
+            "head",
+            "patch",
+            "trace"
+          ]
+        },
+        "path": {
+          "type": "string",
+          "pattern": "^/"
+        },
+        "operationId": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      },
+      "patternProperties": {
+        "^x-[a-z0-9][a-z0-9._-]*$": {}
+      },
+      "additionalProperties": false
+    },
+    "artifactIdentity": {
+      "type": "object",
+      "required": [
+        "name",
+        "version",
+        "digest"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "version": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "digest": {
+          "$ref": "#/$defs/digest"
+        }
+      },
+      "patternProperties": {
+        "^x-[a-z0-9][a-z0-9._-]*$": {}
+      },
+      "additionalProperties": false
+    },
+    "contentIdentity": {
+      "type": "object",
+      "required": [
+        "digest"
+      ],
+      "properties": {
+        "digest": {
+          "$ref": "#/$defs/digest"
+        }
+      },
+      "patternProperties": {
+        "^x-[a-z0-9][a-z0-9._-]*$": {}
+      },
+      "additionalProperties": false
+    },
+    "terminalError": {
+      "type": "object",
+      "required": [
+        "code",
+        "kind",
+        "message",
+        "retryable"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]*$"
+        },
+        "kind": {
+          "enum": [
+            "input",
+            "configuration",
+            "timeout",
+            "dependency",
+            "protocol",
+            "sandbox",
+            "internal"
+          ]
+        },
+        "message": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "retryable": {
+          "type": "boolean"
+        },
+        "location": {
+          "$ref": "#/$defs/location"
+        }
+      },
+      "patternProperties": {
+        "^x-[a-z0-9][a-z0-9._-]*$": {}
+      },
+      "additionalProperties": false
+    },
+    "summary": {
+      "type": "object",
+      "required": [
+        "findingTotal",
+        "errorTotal",
+        "findingsBySeverity",
+        "scannedFiles",
+        "scannedOperations",
+        "excludedOperations",
+        "riskyOperations",
+        "truncatedFindings"
+      ],
+      "properties": {
+        "findingTotal": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "errorTotal": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "findingsBySeverity": {
+          "type": "object",
+          "required": [
+            "error",
+            "high",
+            "medium",
+            "low",
+            "info"
+          ],
+          "properties": {
+            "error": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "high": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "medium": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "low": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "info": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "patternProperties": {
+            "^x-[a-z0-9][a-z0-9._-]*$": {}
+          },
+          "additionalProperties": false
+        },
+        "scannedFiles": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "scannedOperations": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "excludedOperations": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "riskyOperations": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "truncatedFindings": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "patternProperties": {
+        "^x-[a-z0-9][a-z0-9._-]*$": {}
+      },
+      "additionalProperties": false
+    }
+  }
+}

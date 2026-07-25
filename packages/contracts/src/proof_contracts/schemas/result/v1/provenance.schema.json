@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://specargus.github.io/PROOF/schemas/result/v1/provenance.schema.json",
+  "title": "PROOF provenance v1",
+  "type": "object",
+  "required": [
+    "core",
+    "validator",
+    "rulePack",
+    "runtime",
+    "configuration",
+    "input"
+  ],
+  "properties": {
+    "core": {
+      "$ref": "common.schema.json#/$defs/artifactIdentity"
+    },
+    "validator": {
+      "$ref": "common.schema.json#/$defs/artifactIdentity"
+    },
+    "rulePack": {
+      "$ref": "common.schema.json#/$defs/artifactIdentity"
+    },
+    "runtime": {
+      "$ref": "common.schema.json#/$defs/artifactIdentity"
+    },
+    "configuration": {
+      "$ref": "common.schema.json#/$defs/contentIdentity"
+    },
+    "input": {
+      "$ref": "common.schema.json#/$defs/contentIdentity"
+    }
+  },
+  "patternProperties": {
+    "^x-[a-z0-9][a-z0-9._-]*$": {}
+  },
+  "additionalProperties": false
+}

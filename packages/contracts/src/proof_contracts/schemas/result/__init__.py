@@ -1,0 +1,1 @@
+"""PROOF normalized result contracts."""
