@@ -1,0 +1,14 @@
+{
+  "ruleId": "AGT-POL-001",
+  "source": "agent-rule",
+  "severity": "high",
+  "message": "A destructive operation has no explicit confirmation policy.",
+  "fingerprint": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "location": {
+    "path": "api/openapi.yaml",
+    "pointer": "/paths/~1users~1{id}/delete"
+  },
+  "remediation": {
+    "recommendation": "Declare the required confirmation behavior."
+  }
+}

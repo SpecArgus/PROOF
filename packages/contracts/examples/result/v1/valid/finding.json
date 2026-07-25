@@ -1,0 +1,33 @@
+{
+  "ruleId": "AGT-POL-001",
+  "source": "agent-rule",
+  "severity": "high",
+  "message": "A destructive operation has no explicit confirmation policy.",
+  "fingerprint": "sha256:75c318727694ba211746b223c80ed83e1738c98d87d607bc131cf017b3c05d68",
+  "location": {
+    "path": "api/openapi.yaml",
+    "pointer": "/paths/~1users~1{id}/delete",
+    "line": 42,
+    "column": 5
+  },
+  "operation": {
+    "method": "delete",
+    "path": "/users/{id}",
+    "operationId": "deleteUser"
+  },
+  "riskCategories": [
+    "destructive"
+  ],
+  "evidence": [
+    {
+      "kind": "method",
+      "description": "DELETE is a destructive-method signal.",
+      "pointer": "/paths/~1users~1{id}/delete",
+      "value": "delete"
+    }
+  ],
+  "remediation": {
+    "recommendation": "Declare the required confirmation behavior in x-agent-policy."
+  },
+  "x-proof-case": "valid-finding"
+}

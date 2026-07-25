@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://specargus.github.io/PROOF/schemas/result/v1/finding.schema.json",
+  "title": "PROOF normalized finding v1",
+  "type": "object",
+  "required": [
+    "ruleId",
+    "source",
+    "severity",
+    "message",
+    "fingerprint",
+    "location",
+    "evidence",
+    "remediation"
+  ],
+  "properties": {
+    "ruleId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "source": {
+      "enum": [
+        "openapi-validator",
+        "agent-rule",
+        "configuration",
+        "core"
+      ]
+    },
+    "severity": {
+      "enum": [
+        "error",
+        "high",
+        "medium",
+        "low",
+        "info"
+      ]
+    },
+    "message": {
+      "$ref": "common.schema.json#/$defs/nonEmptyString"
+    },
+    "fingerprint": {
+      "$ref": "common.schema.json#/$defs/fingerprint"
+    },
+    "location": {
+      "$ref": "common.schema.json#/$defs/location"
+    },
+    "operation": {
+      "$ref": "common.schema.json#/$defs/operation"
+    },
+    "riskCategories": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "destructive",
+          "financial_action",
+          "external_side_effect",
+          "permission_change",
+          "sensitive_data"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "kind",
+          "description"
+        ],
+        "properties": {
+          "kind": {
+            "enum": [
+              "method",
+              "path",
+              "keyword",
+              "extension",
+              "schema",
+              "value",
+              "text"
+            ]
+          },
+          "description": {
+            "$ref": "common.schema.json#/$defs/nonEmptyString"
+          },
+          "pointer": {
+            "$ref": "common.schema.json#/$defs/jsonPointer"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "patternProperties": {
+          "^x-[a-z0-9][a-z0-9._-]*$": {}
+        },
+        "additionalProperties": false
+      }
+    },
+    "remediation": {
+      "type": "object",
+      "required": [
+        "recommendation"
+      ],
+      "properties": {
+        "recommendation": {
+          "$ref": "common.schema.json#/$defs/nonEmptyString"
+        },
+        "documentationUrl": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "patternProperties": {
+        "^x-[a-z0-9][a-z0-9._-]*$": {}
+      },
+      "additionalProperties": false
+    }
+  },
+  "patternProperties": {
+    "^x-[a-z0-9][a-z0-9._-]*$": {}
+  },
+  "additionalProperties": false
+}

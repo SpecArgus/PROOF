@@ -1,0 +1,92 @@
+{
+  "schemaVersion": "1.0.0",
+  "evaluationTime": "2026-07-25T00:00:00Z",
+  "status": "completed",
+  "resultDigest": "sha256:7e3a00d7a354d567e1c40145d4a337cb0f746b0bdce840a57834022b2c8132ab",
+  "findings": [
+    {
+      "ruleId": "AGT-POL-001",
+      "source": "agent-rule",
+      "severity": "high",
+      "message": "A destructive operation has no explicit confirmation policy.",
+      "fingerprint": "sha256:75c318727694ba211746b223c80ed83e1738c98d87d607bc131cf017b3c05d68",
+      "location": {
+        "path": "api/openapi.yaml",
+        "pointer": "/paths/~1users~1{id}/delete",
+        "line": 42,
+        "column": 5
+      },
+      "operation": {
+        "method": "delete",
+        "path": "/users/{id}",
+        "operationId": "deleteUser"
+      },
+      "riskCategories": [
+        "destructive"
+      ],
+      "evidence": [
+        {
+          "kind": "method",
+          "description": "DELETE is a destructive-method signal.",
+          "pointer": "/paths/~1users~1{id}/delete",
+          "value": "delete"
+        }
+      ],
+      "remediation": {
+        "recommendation": "Declare the required confirmation behavior in x-agent-policy."
+      }
+    }
+  ],
+  "errors": [],
+  "summary": {
+    "findingTotal": 1,
+    "errorTotal": 0,
+    "findingsBySeverity": {
+      "error": 0,
+      "high": 1,
+      "medium": 0,
+      "low": 0,
+      "info": 0
+    },
+    "scannedFiles": 1,
+    "scannedOperations": 1,
+    "excludedOperations": 0,
+    "riskyOperations": 1,
+    "truncatedFindings": 0
+  },
+  "gate": {
+    "outcome": "blocked",
+    "failOn": "high",
+    "causingFindingFingerprints": [
+      "sha256:75c318727694ba211746b223c80ed83e1738c98d87d607bc131cf017b3c05d68"
+    ]
+  },
+  "provenance": {
+    "core": {
+      "name": "proof-core",
+      "version": "0.1.0",
+      "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+    },
+    "validator": {
+      "name": "openapi-spec-validator",
+      "version": "0.9.0",
+      "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+    },
+    "rulePack": {
+      "name": "agent-contract",
+      "version": "0.1.0",
+      "digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+    },
+    "runtime": {
+      "name": "cpython",
+      "version": "3.14.6",
+      "digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444"
+    },
+    "configuration": {
+      "digest": "sha256:5555555555555555555555555555555555555555555555555555555555555555"
+    },
+    "input": {
+      "digest": "sha256:6666666666666666666666666666666666666666666666666666666666666666"
+    }
+  }
+}

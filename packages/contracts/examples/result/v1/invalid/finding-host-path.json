@@ -1,0 +1,20 @@
+{
+  "ruleId": "oas.schema",
+  "source": "openapi-validator",
+  "severity": "error",
+  "message": "The response object is invalid.",
+  "fingerprint": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "location": {
+    "path": "C:\\work\\repository\\openapi.yaml",
+    "pointer": "/paths/~1health/get/responses"
+  },
+  "evidence": [
+    {
+      "kind": "schema",
+      "description": "responses must be an object"
+    }
+  ],
+  "remediation": {
+    "recommendation": "Replace the value with a Responses Object."
+  }
+}
