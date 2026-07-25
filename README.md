@@ -7,8 +7,9 @@ gate for OpenAPI operations that will be exposed as AI agent or MCP tools.
 
 > [!IMPORTANT]
 > PROOF is currently in pre-alpha discovery. There is no installable scanner
-> yet, and the runtime, OpenAPI validator, and hosted architecture have not
-> been selected.
+> yet. The Python-first runtime and generic OpenAPI validator are selected,
+> while the hosted architecture remains subject to the Phase 0 go/no-go
+> decision.
 
 ## Problem
 
@@ -39,9 +40,12 @@ A passing result means only that the configured static contract checks passed.
 ## Project status
 
 Work is organized by exit criteria rather than target dates. The current phase
-focuses on validator evaluation, a normalized result schema, rule definitions,
+focuses on the normalized result schema, initial rule definitions,
 false-positive fixtures, fork pull request feasibility, and user discovery.
-See the [roadmap](ROADMAP.md) for the staged plan.
+The generic validation authority is `openapi-spec-validator 0.9.0` behind an
+isolated process contract, and the analysis core and CLI use a Python-first
+workspace. See [ADR 0001](docs/adr/0001-python-runtime-and-repository-architecture.md)
+and the [roadmap](ROADMAP.md) for the decisions and staged plan.
 
 ## Development workflow
 
