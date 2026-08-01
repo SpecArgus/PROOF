@@ -1,0 +1,61 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "AGT-POL-001 corpus cases",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/transfers": {
+      "post": {
+        "operationId": "initiateTransfer",
+        "summary": "Initiate a fund transfer",
+        "responses": {
+          "202": {
+            "description": "Transfer accepted"
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/search": {
+      "post": {
+        "operationId": "searchCatalog",
+        "summary": "Search the catalog with a structured filter",
+        "responses": {
+          "200": {
+            "description": "Results"
+          },
+          "400": {
+            "description": "Invalid search filter",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
