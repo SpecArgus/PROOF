@@ -1,6 +1,6 @@
 # ADR 0001: Adopt the Phase 0 product identity and governance
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-07-23
 - **Accountable role:** Phase 0 co-maintainers
 - **Role members:** `@back1ash`, `@Seo-yul`, `@minsubyun1`
@@ -92,12 +92,11 @@ branch-protection approval requirement during the repository-foundation period.
 
 ### Role acceptance
 
-This ADR remains Proposed while role acceptance is pending. After all three
-current role members record their acceptance of the co-maintainer
-responsibilities in issue #6 or its linked pull request, this pull request must
-change the ADR status to Accepted before merge. Merging the Accepted ADR into
-`develop` activates the role and records Phase 0 entry. The acknowledgements
-are governance records, not branch-protection approval requirements.
+All three current role members recorded their acceptance of the co-maintainer
+responsibilities in the linked pull request. The ADR was therefore changed to
+Accepted before merge. Merging it into `develop` activates the role and records
+Phase 0 entry. The acknowledgements are governance records, not
+branch-protection approval requirements.
 
 ### Phase 0 gate
 
@@ -222,3 +221,5 @@ and compatibility aliases must be documented in #5 before publication.
 
 - 2026-07-23: Proposed `SpecArgus PROOF`, equal Phase 0 authority for the three
   co-maintainers, and an exit-criteria-driven gate without a calendar date.
+- 2026-07-31: Accepted after `@back1ash`, `@Seo-yul`, and `@minsubyun1`
+  acknowledged the shared co-maintainer responsibilities in pull request #12.

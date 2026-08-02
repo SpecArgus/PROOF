@@ -28,4 +28,4 @@ issue explicitly authorizes a reversible spike.
 ## Records
 
 - [ADR 0001: Adopt the Phase 0 product identity and governance](0001-product-identity-and-phase-0-governance.md)
-  — Proposed on 2026-07-23.
+  — Accepted on 2026-07-31.
