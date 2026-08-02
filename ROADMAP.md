@@ -23,7 +23,7 @@ PROOF helps maintainers review whether OpenAPI operations provide clear, actiona
   issues and this roadmap.
 
 Foundation PR #2 satisfied the repository-policy and protection prerequisites.
-The merge of ADR 0001 into `develop` in Accepted status, after all three role
+The merge of ADR 0002 into `develop` in Accepted status, after all three role
 members acknowledge their responsibilities, satisfies the remaining criteria
 and records Phase 0 entry. The merge date does not establish a fixed review
 date.
@@ -39,7 +39,7 @@ date.
 - Review timing: exit-criteria-driven, with no fixed calendar date.
 - Gate outcomes: proceed, revise and re-evaluate, or stop.
 
-See [ADR 0001](docs/adr/0001-product-identity-and-phase-0-governance.md) for the
+See [ADR 0002](docs/adr/0002-product-identity-and-phase-0-governance.md) for the
 decision and evidence trigger.
 
 ### Outcomes

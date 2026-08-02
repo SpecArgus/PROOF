@@ -22,7 +22,7 @@ The Phase 0 gate has no fixed calendar date. It is convened when the evidence
 listed in the roadmap is complete, or earlier when blocking evidence requires a
 formal `proceed`, `revise and re-evaluate`, or `stop` decision. The full
 identity and governance decision is recorded in
-[ADR 0001](docs/adr/0001-product-identity-and-phase-0-governance.md).
+[ADR 0002](docs/adr/0002-product-identity-and-phase-0-governance.md).
 
 ## Decisions
 

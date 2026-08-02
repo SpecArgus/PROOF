@@ -198,6 +198,42 @@ foreach ($relativePath in $markdownFiles) {
   }
 }
 
+$adrDirectory = Get-RepositoryPath 'docs/adr'
+$adrFiles = @(
+  Get-ChildItem -LiteralPath $adrDirectory -File |
+    Where-Object { $_.Name -match '^(?<number>\d{4})-.+\.md$' -and $Matches['number'] -ne '0000' } |
+    ForEach-Object {
+      [PSCustomObject]@{
+        Number = [System.Text.RegularExpressions.Regex]::Match($_.Name, '^\d{4}').Value
+        Name = $_.Name
+        Path = $_.FullName
+      }
+    }
+)
+
+$duplicateAdrNumbers = $adrFiles | Group-Object Number | Where-Object Count -gt 1
+foreach ($duplicateAdrNumber in $duplicateAdrNumbers) {
+  $duplicateNames = @($duplicateAdrNumber.Group.Name | Sort-Object) -join ', '
+  Add-ValidationFailure "Duplicate ADR number '$($duplicateAdrNumber.Name)': $duplicateNames"
+}
+
+foreach ($adrFile in $adrFiles) {
+  $adrContent = [System.IO.File]::ReadAllText($adrFile.Path, $strictUtf8)
+  $expectedTitlePrefix = "# ADR $($adrFile.Number): "
+  if (-not $adrContent.StartsWith($expectedTitlePrefix, [System.StringComparison]::Ordinal)) {
+    Add-ValidationFailure "ADR title does not match filename number '$($adrFile.Number)': docs/adr/$($adrFile.Name)"
+  }
+}
+
+$adrIndexPath = Get-RepositoryPath 'docs/adr/README.md'
+$adrIndexContent = [System.IO.File]::ReadAllText($adrIndexPath, $strictUtf8)
+foreach ($adrFile in $adrFiles) {
+  $expectedIndexTarget = "]($($adrFile.Name))"
+  if ($adrIndexContent.IndexOf($expectedIndexTarget, [System.StringComparison]::Ordinal) -lt 0) {
+    Add-ValidationFailure "ADR is missing from docs/adr/README.md: $($adrFile.Name)"
+  }
+}
+
 $expectedIssueFormIds = [ordered]@{
   '.github/ISSUE_TEMPLATE/bug.yml' = @(
     'description', 'reproduction', 'fixture', 'expected', 'actual', 'version',
