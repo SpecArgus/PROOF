@@ -1,0 +1,234 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://specargus.github.io/PROOF/corpus/manifest.schema.json",
+  "title": "PROOF corpus manifest v1",
+  "type": "object",
+  "required": ["manifestVersion", "cases"],
+  "properties": {
+    "manifestVersion": {
+      "type": "integer",
+      "const": 1
+    },
+    "cases": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/case"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "case": {
+      "type": "object",
+      "required": [
+        "caseId",
+        "ruleId",
+        "fixture",
+        "dialect",
+        "format",
+        "operationPointer",
+        "method",
+        "apiPath",
+        "sourceType",
+        "provenance",
+        "caseLabels",
+        "expectedRisks",
+        "expectedNonRisks",
+        "expectedFindings",
+        "expectedNonFindings",
+        "rationale",
+        "reviewStatus"
+      ],
+      "properties": {
+        "caseId": {
+          "type": "string",
+          "pattern": "^(syn|pub)-[a-z0-9-]+$"
+        },
+        "ruleId": {
+          "type": "string"
+        },
+        "fixture": {
+          "type": "string"
+        },
+        "dialect": {
+          "enum": ["3.0.x", "3.1.x"]
+        },
+        "format": {
+          "enum": ["json", "yaml"]
+        },
+        "operationPointer": {
+          "type": "string",
+          "pattern": "^/paths/"
+        },
+        "method": {
+          "enum": [
+            "get", "put", "post", "delete",
+            "options", "head", "patch", "trace"
+          ]
+        },
+        "apiPath": {
+          "type": "string",
+          "pattern": "^/"
+        },
+        "sourceType": {
+          "enum": ["synthetic", "public"]
+        },
+        "provenance": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "required": ["sourceUrl", "license", "sourceRef"],
+              "properties": {
+                "sourceUrl": {"type": "string", "format": "uri"},
+                "license": {"type": "string", "minLength": 1},
+                "sourceRef": {"type": "string", "minLength": 1},
+                "modifications": {"type": "string", "minLength": 1}
+              },
+              "additionalProperties": false
+            }
+          ]
+        },
+        "caseLabels": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "enum": [
+              "positive", "negative", "boundary",
+              "false-positive", "ambiguous"
+            ]
+          }
+        },
+        "expectedRisks": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "destructive", "external_side_effect",
+              "financial_action", "permission_change", "sensitive_data"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "expectedNonRisks": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "destructive", "external_side_effect",
+              "financial_action", "permission_change", "sensitive_data"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "expectedFindings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/expectedFinding"
+          }
+        },
+        "expectedNonFindings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reviewStatus": {
+          "enum": ["pending", "approved"]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "sourceType": {"const": "public"}
+            }
+          },
+          "then": {
+            "properties": {
+              "provenance": {"type": "object"}
+            }
+          },
+          "else": {
+            "properties": {
+              "provenance": {"type": "null"}
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "expectedFinding": {
+      "type": "object",
+      "required": [
+        "ruleId", "severity", "locationPointer",
+        "riskCategories", "evidence", "reviewers"
+      ],
+      "properties": {
+        "ruleId": {
+          "type": "string"
+        },
+        "severity": {
+          "enum": ["error", "high", "medium", "low", "info"]
+        },
+        "locationPointer": {
+          "type": "string"
+        },
+        "riskCategories": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "destructive", "external_side_effect",
+              "financial_action", "permission_change", "sensitive_data"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/evidenceItem"
+          }
+        },
+        "reviewers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/reviewer"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "evidenceItem": {
+      "type": "object",
+      "required": ["kind"],
+      "properties": {
+        "kind": {
+          "enum": [
+            "method", "path", "keyword",
+            "extension", "schema", "value", "text"
+          ]
+        },
+        "pointer": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "reviewer": {
+      "type": "object",
+      "properties": {
+        "id": {"type": "string"},
+        "name": {"type": "string"},
+        "approvedAt": {"type": "string", "format": "date-time"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

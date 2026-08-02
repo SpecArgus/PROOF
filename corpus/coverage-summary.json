@@ -1,0 +1,37 @@
+{
+  "generated": "2026-08-02",
+  "totalCases": 10,
+  "byRule": {
+    "AGT-CTX-001":  {"total": 2, "positive": 1, "negative": 1},
+    "AGT-PARAM-001": {"total": 2, "positive": 1, "negative": 1},
+    "AGT-RESP-001": {"total": 2, "positive": 1, "negative": 1},
+    "AGT-POL-001":  {"total": 2, "positive": 1, "negative": 1},
+    "AGT-POL-002":  {"total": 2, "positive": 1, "negative": 1}
+  },
+  "byDialect": {
+    "3.0.x": 6,
+    "3.1.x": 4
+  },
+  "byFormat": {
+    "json": 10,
+    "yaml": 0
+  },
+  "bySourceType": {
+    "synthetic": 10,
+    "public": 0
+  },
+  "byRisk": {
+    "destructive": {"total": 10, "positive": 2, "negative": 8},
+    "external_side_effect": {"total": 10, "positive": 0, "negative": 10},
+    "financial_action": {"total": 10, "positive": 1, "negative": 9},
+    "permission_change": {"total": 10, "positive": 1, "negative": 9},
+    "sensitive_data": {"total": 10, "positive": 1, "negative": 9}
+  },
+  "notes": [
+    "YAML format coverage deferred: no approved YAML parser dependency in current lockfile.",
+    "Public-source cases deferred to full-corpus expansion stage.",
+    "external_side_effect has no positive finding case in this pilot.",
+    "permission_change has no positive finding case in this pilot (Case 10 has permission_change risk but no finding).",
+    "Automated classify_operation validation deferred until a canonical shared classifier helper or engine is available."
+  ]
+}
