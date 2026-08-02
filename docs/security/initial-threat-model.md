@@ -1,8 +1,9 @@
 # Initial threat model
 
-- **Status:** Accepted P0 security baseline
+- **Status:** Proposed P0 security baseline
 - **Date:** 2026-07-30
-- **Owner:** PROOF maintainers (`@back1ash`)
+- **Owner:** Phase 0 co-maintainers (`@back1ash`, `@Seo-yul`, and
+  `@minsubyun1`)
 - **Issue:** [#8](https://github.com/SpecArgus/PROOF/issues/8)
 - **Applies to:** the local CLI and any future PROOF-managed GitHub App,
   scan worker, and public report service
@@ -321,8 +322,9 @@ Before a hosted-product `go` decision:
   cache behavior, and JSON download;
 - exercise public-to-private, uninstall, transfer, rename, delete, provider
   outage, tombstone, primary deletion, and backup-expiry transitions; and
-- conduct a security-owner review of this document and every accepted residual
-  risk.
+- conduct a Phase 0 co-maintainer review of this document and every accepted
+  residual risk under the material-decision rule in
+  [ADR 0002](../adr/0002-product-identity-and-phase-0-governance.md).
 
 Security tests are release gates, not optional monitoring. A platform that
 cannot enforce or pass a required control is unsupported until a separate
@@ -330,7 +332,8 @@ review narrows the product scope.
 
 ## Accepted residual risks
 
-The maintainer accepts only the following residual risks at this stage:
+The Phase 0 co-maintainers accept only the following residual risks at this
+stage:
 
 1. **Local host isolation is best-effort.** A user explicitly invoking the CLI
    accepts that the host OS may not enforce no-egress, CPU, and memory controls
@@ -348,18 +351,18 @@ The maintainer accepts only the following residual risks at this stage:
 
 No residual risk permits a hosted launch without hard worker isolation,
 credential separation, current-visibility enforcement, or terminal failure
-behavior. Any new material residual risk requires explicit maintainer approval
-in an issue or ADR.
+behavior. Any new material residual risk requires recorded agreement under the
+material-decision rule in an issue or ADR.
 
 ## Open risks, owners, and review points
 
 | Open risk or decision | Owner | Mandatory review point |
 | --- | --- | --- |
-| Maximum entrypoints per command, cumulative whole-job time, and service concurrency or tenant quotas | Core and service maintainers (`@back1ash`) | Before the CLI implementation accepts multiple entrypoints; service quotas before hosted `go` |
-| Concrete hosted sandbox technology and proof that every initial ceiling is externally enforced | Hosted service maintainers (`@back1ash`) | Phase 0 hosted-product go/no-go |
+| Maximum entrypoints per command, cumulative whole-job time, and service concurrency or tenant quotas | Core and service maintainers (Phase 0 co-maintainers) | Before the CLI implementation accepts multiple entrypoints; service quotas before hosted `go` |
+| Concrete hosted sandbox technology and proof that every initial ceiling is externally enforced | Hosted service maintainers (Phase 0 co-maintainers) | Phase 0 hosted-product go/no-go |
 | Public-fork fetch and Check attachment behavior | Issue #7 owner and maintainers | Before public-fork support is advertised or hosted `go` |
-| Operational evidence for 24-hour primary deletion, 30-day backup expiry, and 90-day audit-metadata deletion | Hosted service maintainers (`@back1ash`) | Before storing the first hosted report |
-| Parser, validator, and locked dependency vulnerability changes | Security owner (`@back1ash`) | Every dependency upgrade and every release |
+| Operational evidence for 24-hour primary deletion, 30-day backup expiry, and 90-day audit-metadata deletion | Hosted service maintainers (Phase 0 co-maintainers) | Before storing the first hosted report |
+| Parser, validator, and locked dependency vulnerability changes | Phase 0 co-maintainers | Every dependency upgrade and every release |
 | Private-repository authorization, encryption, and retention | Future private-repository feature owner | Before any private repository is enrolled; not covered by this P0 acceptance |
 
 Review points are event-based rather than calendar-based. This threat model
