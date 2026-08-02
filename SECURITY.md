@@ -11,8 +11,8 @@ Do not report suspected vulnerabilities in a public issue, discussion, pull requ
 Use the repository's **Private vulnerability reporting** option under the
 Security tab. This creates a private GitHub Security Advisory where maintainers
 can investigate and coordinate a fix. If GitHub makes that option temporarily
-unavailable, contact the repository owner privately before sharing vulnerability
-details.
+unavailable, contact any current co-maintainer privately and request a secure
+reporting channel before sharing vulnerability details.
 
 Please include, when possible:
 

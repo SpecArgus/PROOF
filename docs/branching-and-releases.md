@@ -36,9 +36,11 @@ Keep each branch focused on one reviewable outcome. Rebase or update it as requi
 2. Explain the change, verification, risks, and any follow-up work.
 3. Pass required checks and resolve review conversations.
 4. During the repository-foundation phase, no approving review is required by
-   the ruleset. A maintainer with write access still decides whether to merge.
-   Required approvals will be enabled only after an explicit repository-owner
-   decision.
+   the ruleset. Any co-maintainer may decide a routine merge after the required
+   controls pass. A pull request containing a material product, architecture,
+   security, governance, or release decision also requires the recorded
+   agreement defined in [GOVERNANCE.md](../GOVERNANCE.md). Enabling required
+   approvals is itself a material governance decision.
 5. For normal topic branches, use **squash merge** so one topic pull request
    becomes one coherent commit.
 6. Delete the topic branch after merge.
