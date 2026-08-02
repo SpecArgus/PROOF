@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 import json
+from copy import deepcopy
 from pathlib import Path
 
 import pytest
-from jsonschema import Draft202012Validator
+from jsonschema import Draft202012Validator, FormatChecker
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 CORPUS_ROOT = REPOSITORY_ROOT / "corpus"
@@ -44,6 +45,7 @@ ALLOWED_SEVERITIES = frozenset(FINDING_SCHEMA["properties"]["severity"]["enum"])
 
 CASES = MANIFEST["cases"]
 CASE_IDS = [case["caseId"] for case in CASES]
+FORMAT_CHECKER = FormatChecker()
 
 
 def decode_pointer_token(token: str) -> str:
@@ -81,10 +83,55 @@ def load_fixture(fixture_rel: str) -> dict:
     return load_json(path)
 
 
+def manifest_validation_errors(manifest: dict) -> list:
+    validator = Draft202012Validator(
+        MANIFEST_SCHEMA,
+        format_checker=FORMAT_CHECKER,
+    )
+    return list(validator.iter_errors(manifest))
+
+
 def test_manifest_validates_against_schema() -> None:
-    validator = Draft202012Validator(MANIFEST_SCHEMA)
-    errors = list(validator.iter_errors(MANIFEST))
+    errors = manifest_validation_errors(MANIFEST)
     assert errors == [], [str(e) for e in errors]
+
+
+def test_public_source_requires_provenance() -> None:
+    candidate = deepcopy(MANIFEST)
+    case = candidate["cases"][0]
+    case["caseId"] = "pub-missing-provenance"
+    case["sourceType"] = "public"
+    case["provenance"] = None
+    assert manifest_validation_errors(candidate), (
+        "public source with null provenance must fail schema validation"
+    )
+
+
+def test_public_source_accepts_complete_provenance() -> None:
+    candidate = deepcopy(MANIFEST)
+    case = candidate["cases"][0]
+    case["caseId"] = "pub-complete-provenance"
+    case["sourceType"] = "public"
+    case["provenance"] = {
+        "sourceUrl": "https://example.com/openapi.json",
+        "license": "Apache-2.0",
+        "sourceRef": "0123456789abcdef",
+        "modifications": "Reduced to one operation for deterministic coverage.",
+    }
+    assert manifest_validation_errors(candidate) == []
+
+
+def test_synthetic_source_requires_null_provenance() -> None:
+    candidate = deepcopy(MANIFEST)
+    case = candidate["cases"][0]
+    case["provenance"] = {
+        "sourceUrl": "https://example.com/openapi.json",
+        "license": "Apache-2.0",
+        "sourceRef": "0123456789abcdef",
+    }
+    assert manifest_validation_errors(candidate), (
+        "synthetic source with provenance metadata must fail schema validation"
+    )
 
 
 def test_case_ids_are_unique() -> None:
@@ -277,11 +324,42 @@ def test_coverage_summary_consistent_with_manifest() -> None:
         f"coverage totalCases {COVERAGE['totalCases']} != "
         f"manifest case count {len(CASES)}"
     )
-    by_rule: dict[str, int] = {}
+    by_rule = {
+        rule_id: {"total": 0, "positive": 0, "negative": 0}
+        for rule_id in sorted(ALLOWED_RULE_IDS)
+    }
+    dialects = MANIFEST_SCHEMA["$defs"]["case"]["properties"]["dialect"]["enum"]
+    formats = MANIFEST_SCHEMA["$defs"]["case"]["properties"]["format"]["enum"]
+    source_types = MANIFEST_SCHEMA["$defs"]["case"]["properties"]["sourceType"][
+        "enum"
+    ]
+    by_dialect = {dialect: 0 for dialect in dialects}
+    by_format = {format_name: 0 for format_name in formats}
+    by_source_type = {source_type: 0 for source_type in source_types}
+    by_risk = {
+        risk: {"total": 0, "positive": 0, "negative": 0}
+        for risk in sorted(ALL_RISK_CATEGORIES)
+    }
+
     for case in CASES:
-        by_rule[case["ruleId"]] = by_rule.get(case["ruleId"], 0) + 1
-    for rule_id, total in by_rule.items():
-        assert COVERAGE["byRule"][rule_id]["total"] == total, (
-            f"coverage byRule[{rule_id}].total {COVERAGE['byRule'][rule_id]['total']} "
-            f"!= manifest count {total}"
-        )
+        labels = set(case["caseLabels"])
+        rule_counts = by_rule[case["ruleId"]]
+        rule_counts["total"] += 1
+        rule_counts["positive"] += int("positive" in labels)
+        rule_counts["negative"] += int("negative" in labels)
+        by_dialect[case["dialect"]] += 1
+        by_format[case["format"]] += 1
+        by_source_type[case["sourceType"]] += 1
+
+        for risk in case["expectedRisks"]:
+            by_risk[risk]["total"] += 1
+            by_risk[risk]["positive"] += 1
+        for risk in case["expectedNonRisks"]:
+            by_risk[risk]["total"] += 1
+            by_risk[risk]["negative"] += 1
+
+    assert COVERAGE["byRule"] == by_rule
+    assert COVERAGE["byDialect"] == by_dialect
+    assert COVERAGE["byFormat"] == by_format
+    assert COVERAGE["bySourceType"] == by_source_type
+    assert COVERAGE["byRisk"] == by_risk

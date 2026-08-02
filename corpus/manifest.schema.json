@@ -81,9 +81,9 @@
               "required": ["sourceUrl", "license", "sourceRef"],
               "properties": {
                 "sourceUrl": {"type": "string", "format": "uri"},
-                "license": {"type": "string"},
-                "sourceRef": {"type": "string"},
-                "modifications": {"type": "string"}
+                "license": {"type": "string", "minLength": 1},
+                "sourceRef": {"type": "string", "minLength": 1},
+                "modifications": {"type": "string", "minLength": 1}
               },
               "additionalProperties": false
             }
@@ -139,6 +139,25 @@
           "enum": ["pending", "approved"]
         }
       },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "sourceType": {"const": "public"}
+            }
+          },
+          "then": {
+            "properties": {
+              "provenance": {"type": "object"}
+            }
+          },
+          "else": {
+            "properties": {
+              "provenance": {"type": "null"}
+            }
+          }
+        }
+      ],
       "additionalProperties": false
     },
     "expectedFinding": {

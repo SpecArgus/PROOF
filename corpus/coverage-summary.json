@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-01",
+  "generated": "2026-08-02",
   "totalCases": 10,
   "byRule": {
     "AGT-CTX-001":  {"total": 2, "positive": 1, "negative": 1},
@@ -19,6 +19,13 @@
   "bySourceType": {
     "synthetic": 10,
     "public": 0
+  },
+  "byRisk": {
+    "destructive": {"total": 10, "positive": 2, "negative": 8},
+    "external_side_effect": {"total": 10, "positive": 0, "negative": 10},
+    "financial_action": {"total": 10, "positive": 1, "negative": 9},
+    "permission_change": {"total": 10, "positive": 1, "negative": 9},
+    "sensitive_data": {"total": 10, "positive": 1, "negative": 9}
   },
   "notes": [
     "YAML format coverage deferred: no approved YAML parser dependency in current lockfile.",

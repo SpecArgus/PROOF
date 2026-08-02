@@ -35,6 +35,11 @@ until at least 100 operations are labeled and the full acceptance criteria are m
 3. Update `coverage-summary.json` totals.
 4. Run `uv run --locked pytest tests/corpus/` to verify all checks pass.
 
+The coverage test derives rule, dialect, format, source-type, and risk counts
+from the manifest and requires the summary to match exactly. Public-source
+cases must provide a source URL, license, and immutable source reference;
+synthetic cases must keep `provenance` set to `null`.
+
 Pilot cases must keep `reviewStatus: "pending"`. Two-reviewer approval policy
 is not enforced until the full corpus stage.
 
