@@ -1,4 +1,4 @@
-# ADR 0001: Adopt the Phase 0 product identity and governance
+# ADR 0002: Adopt the Phase 0 product identity and governance
 
 - **Status:** Accepted
 - **Date:** 2026-07-23

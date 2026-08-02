@@ -27,5 +27,7 @@ issue explicitly authorizes a reversible spike.
 
 ## Records
 
-- [ADR 0001: Adopt the Phase 0 product identity and governance](0001-product-identity-and-phase-0-governance.md)
+- [ADR 0001: Use a Python-first workspace with an isolated validator process](0001-python-runtime-and-repository-architecture.md)
+  — Accepted on 2026-07-25.
+- [ADR 0002: Adopt the Phase 0 product identity and governance](0002-product-identity-and-phase-0-governance.md)
   — Accepted on 2026-07-31.
