@@ -90,22 +90,27 @@
     "policy": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["present", "source", "pointer", "risks", "confirmation", "authorizationRoles", "dataClassification"],
+      "required": ["present", "valid", "source", "pointer", "risks", "confirmation", "authorizationPresent", "authorizationRoles", "dataClassificationPresent", "dataClassification"],
       "properties": {
         "present": {"type": "boolean"},
+        "valid": {"type": "boolean"},
         "source": {"$ref": "#/$defs/source"},
         "pointer": {"$ref": "#/$defs/pointer"},
         "risks": {"$ref": "#/$defs/riskCategories"},
         "confirmation": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["mode", "reason"],
+          "required": ["present", "mode", "condition", "reason"],
           "properties": {
+            "present": {"type": "boolean"},
             "mode": {"$ref": "#/$defs/nullableString"},
+            "condition": {"$ref": "#/$defs/nullableString"},
             "reason": {"$ref": "#/$defs/nullableString"}
           }
         },
+        "authorizationPresent": {"type": "boolean"},
         "authorizationRoles": {"$ref": "#/$defs/stringArray"},
+        "dataClassificationPresent": {"type": "boolean"},
         "dataClassification": {"$ref": "#/$defs/nullableString"}
       }
     },

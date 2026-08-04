@@ -357,9 +357,49 @@ paths:
     assert any(item.code == "normalize.invalid-operation" for item in broken.issues)
     assert missing.state == "indeterminate"
     assert any(item.code == "normalize.missing-responses" for item in missing.issues)
-    assert policy.state == "indeterminate"
+    assert policy.state == "ready"
+    assert policy.policy.valid is False
     assert policy.risk_categories == ("destructive",)
     assert any(item.code == "normalize.invalid-agent-policy" for item in policy.issues)
+
+
+def test_policy_presence_and_conditional_metadata_are_preserved(tmp_path: Path) -> None:
+    _write(
+        tmp_path / "root.yaml",
+        """openapi: 3.1.0
+info: {title: Test, version: 1.0.0}
+paths:
+  /payments:
+    post:
+      operationId: transferPayment
+      x-agent-policy:
+        confirmation:
+          mode: conditional
+          condition: Require approval above the configured limit.
+        authorization:
+          roles: [operator]
+        dataClassification: confidential
+      responses:
+        '200': {description: ok}
+""",
+    )
+
+    policy = normalize_operations(
+        build_input_closure(tmp_path, "root.yaml")
+    ).operations[0].policy
+
+    assert policy.present is True
+    assert policy.valid is True
+    assert policy.confirmation_present is True
+    assert policy.confirmation_mode == "conditional"
+    assert policy.confirmation_condition == (
+        "Require approval above the configured limit."
+    )
+    assert policy.confirmation_reason is None
+    assert policy.authorization_present is True
+    assert policy.authorization_roles == ("operator",)
+    assert policy.data_classification_present is True
+    assert policy.data_classification == "confidential"
 
 
 def test_operation_views_are_deterministic_immutable_and_dialect_neutral(

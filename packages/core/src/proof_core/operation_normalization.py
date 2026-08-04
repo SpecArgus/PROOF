@@ -208,25 +208,35 @@ class SecurityRequirement:
 @dataclass(frozen=True, slots=True)
 class AgentPolicy:
     present: bool
+    valid: bool
     source: str
     pointer: str
     explicit_risks: tuple[str, ...]
+    confirmation_present: bool
     confirmation_mode: str | None
+    confirmation_condition: str | None
     confirmation_reason: str | None
+    authorization_present: bool
     authorization_roles: tuple[str, ...]
+    data_classification_present: bool
     data_classification: str | None
 
     def to_dict(self) -> dict[str, Any]:
         return {
             "present": self.present,
+            "valid": self.valid,
             "source": self.source,
             "pointer": self.pointer,
             "risks": list(self.explicit_risks),
             "confirmation": {
+                "present": self.confirmation_present,
                 "mode": self.confirmation_mode,
+                "condition": self.confirmation_condition,
                 "reason": self.confirmation_reason,
             },
+            "authorizationPresent": self.authorization_present,
             "authorizationRoles": list(self.authorization_roles),
+            "dataClassificationPresent": self.data_classification_present,
             "dataClassification": self.data_classification,
         }
 
@@ -523,6 +533,7 @@ def _string_or_none(
     pointer: str,
     field: str,
     issues: list[NormalizationIssue],
+    issue_code: str = "normalize.invalid-field",
 ) -> str | None:
     if value is None:
         return None
@@ -530,7 +541,7 @@ def _string_or_none(
         return value
     issues.append(
         NormalizationIssue(
-            "normalize.invalid-field",
+            issue_code,
             source,
             _append_pointer(pointer, field),
             f"{field} must be a string when present.",
@@ -764,13 +775,41 @@ def _normalize_policy(
     raw_policy = operation.get("x-agent-policy")
     if raw_policy is None:
         return (
-            AgentPolicy(False, source, policy_pointer, (), None, None, (), None),
+            AgentPolicy(
+                False,
+                True,
+                source,
+                policy_pointer,
+                (),
+                False,
+                None,
+                None,
+                None,
+                False,
+                (),
+                False,
+                None,
+            ),
             (),
             [],
         )
     if not isinstance(raw_policy, Mapping):
         return (
-            AgentPolicy(True, source, policy_pointer, (), None, None, (), None),
+            AgentPolicy(
+                True,
+                False,
+                source,
+                policy_pointer,
+                (),
+                False,
+                None,
+                None,
+                None,
+                False,
+                (),
+                False,
+                None,
+            ),
             (),
             [
                 NormalizationIssue(
@@ -813,8 +852,10 @@ def _normalize_policy(
             signals.append(RiskSignal(risk, "extension", item_pointer, risk, source))
 
     confirmation_mode: str | None = None
+    confirmation_condition: str | None = None
     confirmation_reason: str | None = None
     raw_confirmation = raw_policy.get("confirmation")
+    confirmation_present = "confirmation" in raw_policy
     if raw_confirmation is not None:
         confirmation_pointer = _append_pointer(policy_pointer, "confirmation")
         if not isinstance(raw_confirmation, Mapping):
@@ -833,6 +874,15 @@ def _normalize_policy(
                 pointer=confirmation_pointer,
                 field="mode",
                 issues=issues,
+                issue_code="normalize.invalid-agent-policy",
+            )
+            confirmation_condition = _string_or_none(
+                raw_confirmation.get("condition"),
+                source=source,
+                pointer=confirmation_pointer,
+                field="condition",
+                issues=issues,
+                issue_code="normalize.invalid-agent-policy",
             )
             confirmation_reason = _string_or_none(
                 raw_confirmation.get("reason"),
@@ -840,10 +890,12 @@ def _normalize_policy(
                 pointer=confirmation_pointer,
                 field="reason",
                 issues=issues,
+                issue_code="normalize.invalid-agent-policy",
             )
 
     authorization_roles: tuple[str, ...] = ()
     raw_authorization = raw_policy.get("authorization")
+    authorization_present = "authorization" in raw_policy
     if raw_authorization is not None:
         authorization_pointer = _append_pointer(policy_pointer, "authorization")
         if not isinstance(raw_authorization, Mapping):
@@ -873,21 +925,28 @@ def _normalize_policy(
             else:
                 authorization_roles = tuple(sorted(set(raw_roles)))
 
+    data_classification_present = "dataClassification" in raw_policy
     data_classification = _string_or_none(
         raw_policy.get("dataClassification"),
         source=source,
         pointer=policy_pointer,
         field="dataClassification",
         issues=issues,
+        issue_code="normalize.invalid-agent-policy",
     )
     policy = AgentPolicy(
         True,
+        not issues,
         source,
         policy_pointer,
         tuple(sorted(set(explicit))),
+        confirmation_present,
         confirmation_mode,
+        confirmation_condition,
         confirmation_reason,
+        authorization_present,
         authorization_roles,
+        data_classification_present,
         data_classification,
     )
     return policy, tuple(signals), issues
@@ -1062,7 +1121,14 @@ def _normalize_operation(
         policy=policy,
         risk_categories=risk_categories,
         risk_signals=risk_signals,
-        state="ready" if not ordered_issues else "indeterminate",
+        state=(
+            "ready"
+            if all(
+                item.code == "normalize.invalid-agent-policy"
+                for item in ordered_issues
+            )
+            else "indeterminate"
+        ),
         issues=ordered_issues,
     )
 
