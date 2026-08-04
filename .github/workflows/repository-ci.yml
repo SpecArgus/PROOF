@@ -108,5 +108,8 @@ jobs:
           uv build --package proof-validator-worker
           --out-dir .artifacts/validator-worker
 
+      - name: Build built-in rule-pack package
+        run: uv build --package proof-rulepack --out-dir .artifacts/rulepack
+
       - name: Verify packaged schemas
         run: uv run --locked python scripts/verify-contract-package.py .artifacts/contracts

@@ -130,6 +130,7 @@ RISK_CATEGORIES = tuple(
     )
 )
 _INVALID_POINTER_ESCAPE = re.compile(r"~(?![01])")
+_EXTENSION_KEY = re.compile(r"^x-[a-z0-9][a-z0-9._-]*$")
 
 
 @dataclass(frozen=True, slots=True)
@@ -822,8 +823,27 @@ def _normalize_policy(
         )
 
     issues: list[NormalizationIssue] = []
+    allowed_policy_fields = {
+        "risks",
+        "confirmation",
+        "authorization",
+        "dataClassification",
+    }
+    for field in raw_policy:
+        if field not in allowed_policy_fields and not (
+            isinstance(field, str) and _EXTENSION_KEY.fullmatch(field)
+        ):
+            issues.append(
+                NormalizationIssue(
+                    "normalize.invalid-agent-policy",
+                    source,
+                    _append_pointer(policy_pointer, field),
+                    "The policy contains an unsupported field.",
+                )
+            )
     explicit: list[str] = []
     signals: list[RiskSignal] = []
+    risks_present = "risks" in raw_policy
     raw_risks = raw_policy.get("risks", [])
     risks_pointer = _append_pointer(policy_pointer, "risks")
     if not isinstance(raw_risks, Sequence) or isinstance(raw_risks, (str, bytes)):
@@ -836,6 +856,16 @@ def _normalize_policy(
             )
         )
     else:
+        if risks_present and not raw_risks:
+            issues.append(
+                NormalizationIssue(
+                    "normalize.invalid-agent-policy",
+                    source,
+                    risks_pointer,
+                    "Policy risks must contain at least one category.",
+                )
+            )
+        seen_risks: set[str] = set()
         for index, risk in enumerate(raw_risks):
             item_pointer = _append_pointer(risks_pointer, index)
             if risk not in RISK_CATEGORIES:
@@ -848,6 +878,16 @@ def _normalize_policy(
                     )
                 )
                 continue
+            if risk in seen_risks:
+                issues.append(
+                    NormalizationIssue(
+                        "normalize.invalid-agent-policy",
+                        source,
+                        item_pointer,
+                        "Policy risks must be unique.",
+                    )
+                )
+            seen_risks.add(risk)
             explicit.append(risk)
             signals.append(RiskSignal(risk, "extension", item_pointer, risk, source))
 
@@ -868,6 +908,19 @@ def _normalize_policy(
                 )
             )
         else:
+            allowed_confirmation_fields = {"mode", "condition", "reason"}
+            for field in raw_confirmation:
+                if field not in allowed_confirmation_fields and not (
+                    isinstance(field, str) and _EXTENSION_KEY.fullmatch(field)
+                ):
+                    issues.append(
+                        NormalizationIssue(
+                            "normalize.invalid-agent-policy",
+                            source,
+                            _append_pointer(confirmation_pointer, field),
+                            "Policy confirmation contains an unsupported field.",
+                        )
+                    )
             confirmation_mode = _string_or_none(
                 raw_confirmation.get("mode"),
                 source=source,
@@ -876,6 +929,15 @@ def _normalize_policy(
                 issues=issues,
                 issue_code="normalize.invalid-agent-policy",
             )
+            if confirmation_mode not in {"required", "conditional", "not-required"}:
+                issues.append(
+                    NormalizationIssue(
+                        "normalize.invalid-agent-policy",
+                        source,
+                        _append_pointer(confirmation_pointer, "mode"),
+                        "Policy confirmation requires a supported mode.",
+                    )
+                )
             confirmation_condition = _string_or_none(
                 raw_confirmation.get("condition"),
                 source=source,
@@ -884,6 +946,17 @@ def _normalize_policy(
                 issues=issues,
                 issue_code="normalize.invalid-agent-policy",
             )
+            if confirmation_condition is not None and not confirmation_condition.strip(
+                " \t\r\n"
+            ):
+                issues.append(
+                    NormalizationIssue(
+                        "normalize.invalid-agent-policy",
+                        source,
+                        _append_pointer(confirmation_pointer, "condition"),
+                        "Policy confirmation condition must be non-empty.",
+                    )
+                )
             confirmation_reason = _string_or_none(
                 raw_confirmation.get("reason"),
                 source=source,
@@ -892,6 +965,40 @@ def _normalize_policy(
                 issues=issues,
                 issue_code="normalize.invalid-agent-policy",
             )
+            if confirmation_reason is not None and not confirmation_reason.strip(
+                " \t\r\n"
+            ):
+                issues.append(
+                    NormalizationIssue(
+                        "normalize.invalid-agent-policy",
+                        source,
+                        _append_pointer(confirmation_pointer, "reason"),
+                        "Policy confirmation reason must be non-empty.",
+                    )
+                )
+            if confirmation_mode == "conditional" and not (
+                confirmation_condition
+                and confirmation_condition.strip(" \t\r\n")
+            ):
+                issues.append(
+                    NormalizationIssue(
+                        "normalize.invalid-agent-policy",
+                        source,
+                        _append_pointer(confirmation_pointer, "condition"),
+                        "Conditional confirmation requires a non-empty condition.",
+                    )
+                )
+            if confirmation_mode == "not-required" and not (
+                confirmation_reason and confirmation_reason.strip(" \t\r\n")
+            ):
+                issues.append(
+                    NormalizationIssue(
+                        "normalize.invalid-agent-policy",
+                        source,
+                        _append_pointer(confirmation_pointer, "reason"),
+                        "Not-required confirmation requires a non-empty reason.",
+                    )
+                )
 
     authorization_roles: tuple[str, ...] = ()
     raw_authorization = raw_policy.get("authorization")
@@ -908,6 +1015,19 @@ def _normalize_policy(
                 )
             )
         else:
+            allowed_authorization_fields = {"roles"}
+            for field in raw_authorization:
+                if field not in allowed_authorization_fields and not (
+                    isinstance(field, str) and _EXTENSION_KEY.fullmatch(field)
+                ):
+                    issues.append(
+                        NormalizationIssue(
+                            "normalize.invalid-agent-policy",
+                            source,
+                            _append_pointer(authorization_pointer, field),
+                            "Policy authorization contains an unsupported field.",
+                        )
+                    )
             raw_roles = raw_authorization.get("roles", [])
             if (
                 not isinstance(raw_roles, Sequence)
@@ -924,6 +1044,22 @@ def _normalize_policy(
                 )
             else:
                 authorization_roles = tuple(sorted(set(raw_roles)))
+                if (
+                    not raw_roles
+                    or len(authorization_roles) != len(raw_roles)
+                    or any(not item.strip(" \t\r\n") for item in raw_roles)
+                ):
+                    issues.append(
+                        NormalizationIssue(
+                            "normalize.invalid-agent-policy",
+                            source,
+                            _append_pointer(authorization_pointer, "roles"),
+                            (
+                                "Policy authorization roles must be unique "
+                                "non-empty strings."
+                            ),
+                        )
+                    )
 
     data_classification_present = "dataClassification" in raw_policy
     data_classification = _string_or_none(
@@ -934,6 +1070,20 @@ def _normalize_policy(
         issues=issues,
         issue_code="normalize.invalid-agent-policy",
     )
+    if data_classification is not None and data_classification not in {
+        "public",
+        "internal",
+        "confidential",
+        "restricted",
+    }:
+        issues.append(
+            NormalizationIssue(
+                "normalize.invalid-agent-policy",
+                source,
+                _append_pointer(policy_pointer, "dataClassification"),
+                "Policy dataClassification is outside the v1 vocabulary.",
+            )
+        )
     policy = AgentPolicy(
         True,
         not issues,

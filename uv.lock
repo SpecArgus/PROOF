@@ -6,6 +6,7 @@ requires-python = "==3.14.*"
 members = [
     "proof-contracts",
     "proof-core",
+    "proof-rulepack",
     "proof-validator-worker",
     "proof-workspace",
 ]
@@ -242,6 +243,17 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [{ name = "pyyaml", specifier = "==6.0.3" }]
+
+[[package]]
+name = "proof-rulepack"
+version = "0.1.0"
+source = { editable = "packages/rulepack" }
+dependencies = [
+    { name = "rfc8785" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "rfc8785", specifier = "==0.1.4" }]
 
 [[package]]
 name = "proof-validator-worker"
