@@ -31,7 +31,7 @@ rules are documented in
 From the repository root:
 
 ```text
-uv sync --locked
+uv sync --all-packages --locked
 uv run --locked pytest
 uv run --locked ruff check .
 ```

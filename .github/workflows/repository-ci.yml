@@ -89,7 +89,7 @@ jobs:
           cache-dependency-glob: uv.lock
 
       - name: Install locked dependencies
-        run: uv sync --locked
+        run: uv sync --all-packages --locked
 
       - name: Run contract tests
         run: uv run --locked pytest
@@ -99,6 +99,9 @@ jobs:
 
       - name: Build contract package
         run: uv build --package proof-contracts --out-dir .artifacts/contracts
+
+      - name: Build core package
+        run: uv build --package proof-core --out-dir .artifacts/core
 
       - name: Verify packaged schemas
         run: uv run --locked python scripts/verify-contract-package.py .artifacts/contracts
