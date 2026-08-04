@@ -103,5 +103,10 @@ jobs:
       - name: Build core package
         run: uv build --package proof-core --out-dir .artifacts/core
 
+      - name: Build validator worker package
+        run: >-
+          uv build --package proof-validator-worker
+          --out-dir .artifacts/validator-worker
+
       - name: Verify packaged schemas
         run: uv run --locked python scripts/verify-contract-package.py .artifacts/contracts

@@ -10,6 +10,13 @@ from proof_core.input_closure import (
     build_input_closure,
     build_input_manifest,
 )
+from proof_core.validator_client import (
+    ValidatorDiagnostic,
+    ValidatorResult,
+    WorkerFailure,
+    WorkerLimits,
+    validate_openapi,
+)
 
 __all__ = [
     "InputClosure",
@@ -20,6 +27,11 @@ __all__ = [
     "InputResource",
     "build_input_closure",
     "build_input_manifest",
+    "ValidatorDiagnostic",
+    "ValidatorResult",
+    "WorkerFailure",
+    "WorkerLimits",
+    "validate_openapi",
 ]
 
 __version__ = "0.1.0"

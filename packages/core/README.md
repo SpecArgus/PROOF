@@ -19,9 +19,13 @@ unsupported references. It applies exact entrypoint-size, aggregate-size,
 file-count, and reference-depth limits and rejects a file if its identity or
 content metadata changes while it is being read.
 
-The input closure does not perform OpenAPI semantic validation or execute any
-repository content. The supervised validator worker consumes this closed byte
-set in a later package.
+The input closure does not execute repository content. The supervised validator
+worker consumes this closed byte set without reopening repository files.
+
+`proof_core.validate_openapi(closure)` sends that snapshot through a bounded
+subprocess protocol to the pinned OpenAPI validator. Timeouts, output overflow,
+malformed responses, missing dependencies, and worker crashes raise
+`WorkerFailure` and cannot be reported as a valid document.
 
 ## Validation
 

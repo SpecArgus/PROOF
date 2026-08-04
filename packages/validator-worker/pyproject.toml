@@ -1,0 +1,18 @@
+[project]
+name = "proof-validator-worker"
+version = "0.1.0"
+description = "Isolated OpenAPI validation worker for PROOF"
+requires-python = ">=3.14,<3.15"
+dependencies = [
+  "jsonschema==4.26.0",
+  "jsonschema-path==0.5.0",
+  "openapi-spec-validator==0.9.0",
+  "pyyaml==6.0.3",
+]
+
+[build-system]
+requires = ["hatchling==1.31.0"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/proof_validator_worker"]
