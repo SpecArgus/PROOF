@@ -1,0 +1,1 @@
+"""Versioned normalized operation contracts."""

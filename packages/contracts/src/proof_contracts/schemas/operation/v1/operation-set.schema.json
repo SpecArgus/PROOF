@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://specargus.github.io/PROOF/schemas/operation/v1/operation-set.schema.json",
+  "title": "PROOF normalized operation set v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "classifierVersion", "entrypoint", "manifestDigest", "dialect", "state", "operations", "issues"],
+  "properties": {
+    "schemaVersion": {"const": "1.0.0"},
+    "classifierVersion": {"const": 1},
+    "entrypoint": {"$ref": "#/$defs/source"},
+    "manifestDigest": {"$ref": "#/$defs/digest"},
+    "dialect": {"enum": ["3.0", "3.1", null]},
+    "state": {"enum": ["ready", "indeterminate"]},
+    "operations": {"type": "array", "items": {"$ref": "#/$defs/operation"}},
+    "issues": {"type": "array", "items": {"$ref": "#/$defs/issue"}}
+  },
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "source": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*\\\\)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+    },
+    "pointer": {"type": "string", "pattern": "^(?:|/.*)$"},
+    "nullableString": {"type": ["string", "null"]},
+    "stringArray": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+    "riskCategory": {
+      "enum": ["destructive", "external_side_effect", "financial_action", "permission_change", "sensitive_data"]
+    },
+    "riskCategories": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/riskCategory"}
+    },
+    "issue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "source", "pointer", "message"],
+      "properties": {
+        "code": {"type": "string", "pattern": "^normalize\\.[a-z0-9-]+$"},
+        "source": {"$ref": "#/$defs/source"},
+        "pointer": {"$ref": "#/$defs/pointer"},
+        "message": {"type": "string", "minLength": 1}
+      }
+    },
+    "parameter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "pointer", "name", "in", "required", "description"],
+      "properties": {
+        "source": {"$ref": "#/$defs/source"},
+        "pointer": {"$ref": "#/$defs/pointer"},
+        "name": {"type": "string"},
+        "in": {"type": "string"},
+        "required": {"type": "boolean"},
+        "description": {"$ref": "#/$defs/nullableString"}
+      }
+    },
+    "response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "pointer", "statusCode", "description", "mediaTypes", "schemaMediaTypes"],
+      "properties": {
+        "source": {"$ref": "#/$defs/source"},
+        "pointer": {"$ref": "#/$defs/pointer"},
+        "statusCode": {"type": "string", "minLength": 1},
+        "description": {"$ref": "#/$defs/nullableString"},
+        "mediaTypes": {"$ref": "#/$defs/stringArray"},
+        "schemaMediaTypes": {"$ref": "#/$defs/stringArray"}
+      }
+    },
+    "securityScheme": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "scopes"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "scopes": {"$ref": "#/$defs/stringArray"}
+      }
+    },
+    "securityRequirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemes"],
+      "properties": {
+        "schemes": {"type": "array", "items": {"$ref": "#/$defs/securityScheme"}}
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["present", "source", "pointer", "risks", "confirmation", "authorizationRoles", "dataClassification"],
+      "properties": {
+        "present": {"type": "boolean"},
+        "source": {"$ref": "#/$defs/source"},
+        "pointer": {"$ref": "#/$defs/pointer"},
+        "risks": {"$ref": "#/$defs/riskCategories"},
+        "confirmation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "reason"],
+          "properties": {
+            "mode": {"$ref": "#/$defs/nullableString"},
+            "reason": {"$ref": "#/$defs/nullableString"}
+          }
+        },
+        "authorizationRoles": {"$ref": "#/$defs/stringArray"},
+        "dataClassification": {"$ref": "#/$defs/nullableString"}
+      }
+    },
+    "riskSignal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["category", "kind", "source", "pointer", "value"],
+      "properties": {
+        "category": {"$ref": "#/$defs/riskCategory"},
+        "kind": {"enum": ["extension", "keyword", "method", "path"]},
+        "source": {"$ref": "#/$defs/source"},
+        "pointer": {"$ref": "#/$defs/pointer"},
+        "value": {"type": "string", "minLength": 1}
+      }
+    },
+    "operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source", "pointer", "pathSource", "pathPointer", "path", "method",
+        "operationId", "summary", "description", "parameters", "responses",
+        "securityPresent", "securitySource", "securityPointer", "security",
+        "policy", "riskCategories", "riskSignals", "state", "issues"
+      ],
+      "properties": {
+        "source": {"$ref": "#/$defs/source"},
+        "pointer": {"$ref": "#/$defs/pointer"},
+        "pathSource": {"$ref": "#/$defs/source"},
+        "pathPointer": {"$ref": "#/$defs/pointer"},
+        "path": {"type": "string", "pattern": "^/"},
+        "method": {"enum": ["delete", "get", "head", "options", "patch", "post", "put", "trace"]},
+        "operationId": {"$ref": "#/$defs/nullableString"},
+        "summary": {"$ref": "#/$defs/nullableString"},
+        "description": {"$ref": "#/$defs/nullableString"},
+        "parameters": {"type": "array", "items": {"$ref": "#/$defs/parameter"}},
+        "responses": {"type": "array", "items": {"$ref": "#/$defs/response"}},
+        "securityPresent": {"type": "boolean"},
+        "securitySource": {"anyOf": [{"$ref": "#/$defs/source"}, {"type": "null"}]},
+        "securityPointer": {"anyOf": [{"$ref": "#/$defs/pointer"}, {"type": "null"}]},
+        "security": {"type": "array", "items": {"$ref": "#/$defs/securityRequirement"}},
+        "policy": {"$ref": "#/$defs/policy"},
+        "riskCategories": {"$ref": "#/$defs/riskCategories"},
+        "riskSignals": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/riskSignal"}},
+        "state": {"enum": ["ready", "indeterminate"]},
+        "issues": {"type": "array", "items": {"$ref": "#/$defs/issue"}}
+      }
+    }
+  }
+}

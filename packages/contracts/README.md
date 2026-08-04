@@ -4,6 +4,9 @@ This workspace member contains language-neutral, versioned contracts shared by
 the local CLI, hosted workers, persistence, and report consumers. It does not
 contain a second result model or presentation-specific fields.
 
+The packaged operation-set v1 schema is the language-neutral boundary between
+the OpenAPI normalization core and built-in rule packs.
+
 ## Result schema v1
 
 The canonical source files are packaged below
