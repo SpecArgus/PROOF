@@ -21,6 +21,10 @@ PROTOCOL_VERSION = 1
 WORKER_NAME = "openapi-spec-validator"
 WORKER_VERSION = "0.9.0"
 MAX_REQUEST_BYTES = 32 * 1024 * 1024
+MAX_EMITTED_DIAGNOSTICS = 100
+MAX_OBSERVED_DIAGNOSTICS = 2_048
+MAX_VALIDATOR_WALL_SECONDS = 5.0
+MAX_PROCESS_OUTPUT_BYTES = 1024 * 1024
 _READ_CHUNK = 64 * 1024
 
 
@@ -41,27 +45,41 @@ class WorkerLimits:
     """Inclusive protocol and process limits for one validator invocation."""
 
     max_diagnostics: int = 100
-    timeout_seconds: float = 10.0
-    max_stdout_bytes: int = 2 * 1024 * 1024
-    max_stderr_bytes: int = 64 * 1024
+    timeout_seconds: float = MAX_VALIDATOR_WALL_SECONDS
+    max_stdout_bytes: int = MAX_PROCESS_OUTPUT_BYTES
+    max_stderr_bytes: int = MAX_PROCESS_OUTPUT_BYTES
+    max_output_bytes: int = MAX_PROCESS_OUTPUT_BYTES
 
     def __post_init__(self) -> None:
         if (
             isinstance(self.max_diagnostics, bool)
             or not isinstance(self.max_diagnostics, int)
-            or not 0 <= self.max_diagnostics <= 1_000
+            or not 0 <= self.max_diagnostics <= MAX_EMITTED_DIAGNOSTICS
         ):
-            raise ValueError("max_diagnostics must be an integer between 0 and 1000")
+            raise ValueError(
+                "max_diagnostics must be an integer between 0 and "
+                f"{MAX_EMITTED_DIAGNOSTICS}"
+            )
         if (
             isinstance(self.timeout_seconds, bool)
             or not isinstance(self.timeout_seconds, (int, float))
-            or not 0 < self.timeout_seconds <= 300
+            or not 0 < self.timeout_seconds <= MAX_VALIDATOR_WALL_SECONDS
         ):
-            raise ValueError("timeout_seconds must be greater than 0 and at most 300")
-        for name in ("max_stdout_bytes", "max_stderr_bytes"):
+            raise ValueError(
+                "timeout_seconds must be greater than 0 and at most "
+                f"{MAX_VALIDATOR_WALL_SECONDS:g}"
+            )
+        for name in ("max_stdout_bytes", "max_stderr_bytes", "max_output_bytes"):
             value = getattr(self, name)
-            if isinstance(value, bool) or not isinstance(value, int) or value < 1:
-                raise ValueError(f"{name} must be a positive integer")
+            if (
+                isinstance(value, bool)
+                or not isinstance(value, int)
+                or not 1 <= value <= MAX_PROCESS_OUTPUT_BYTES
+            ):
+                raise ValueError(
+                    f"{name} must be an integer between 1 and "
+                    f"{MAX_PROCESS_OUTPUT_BYTES}"
+                )
 
 
 @dataclass(frozen=True, slots=True)
@@ -115,6 +133,15 @@ class ValidatorResult:
 class _PipeCapture:
     limit: int
     data: bytearray
+    exceeded: threading.Event
+    budget: _OutputBudget
+
+
+@dataclass(slots=True)
+class _OutputBudget:
+    limit: int
+    observed: int
+    lock: threading.Lock
     exceeded: threading.Event
 
 
@@ -207,6 +234,10 @@ def _capture_pipe(stream: BinaryIO, capture: _PipeCapture) -> None:
                 capture.data.extend(chunk[:remaining])
             if len(chunk) > remaining:
                 capture.exceeded.set()
+            with capture.budget.lock:
+                capture.budget.observed += len(chunk)
+                if capture.budget.observed > capture.budget.limit:
+                    capture.budget.exceeded.set()
     finally:
         stream.close()
 
@@ -276,8 +307,15 @@ def _invoke_worker(
     assert process.stdout is not None
     assert process.stderr is not None
 
-    stdout = _PipeCapture(limits.max_stdout_bytes, bytearray(), threading.Event())
-    stderr = _PipeCapture(limits.max_stderr_bytes, bytearray(), threading.Event())
+    output_budget = _OutputBudget(
+        limits.max_output_bytes, 0, threading.Lock(), threading.Event()
+    )
+    stdout = _PipeCapture(
+        limits.max_stdout_bytes, bytearray(), threading.Event(), output_budget
+    )
+    stderr = _PipeCapture(
+        limits.max_stderr_bytes, bytearray(), threading.Event(), output_budget
+    )
     threads = [
         threading.Thread(
             target=_capture_pipe, args=(process.stdout, stdout), daemon=True
@@ -295,7 +333,11 @@ def _invoke_worker(
     deadline = time.monotonic() + float(limits.timeout_seconds)
     failure: WorkerFailure | None = None
     while process.poll() is None:
-        if stdout.exceeded.is_set() or stderr.exceeded.is_set():
+        if (
+            stdout.exceeded.is_set()
+            or stderr.exceeded.is_set()
+            or output_budget.exceeded.is_set()
+        ):
             failure = WorkerFailure(
                 "worker.output-limit",
                 "limit",
@@ -329,7 +371,11 @@ def _invoke_worker(
         termination_error = None
     for thread in threads:
         thread.join(timeout=5)
-    if failure is None and (stdout.exceeded.is_set() or stderr.exceeded.is_set()):
+    if failure is None and (
+        stdout.exceeded.is_set()
+        or stderr.exceeded.is_set()
+        or output_budget.exceeded.is_set()
+    ):
         failure = WorkerFailure(
             "worker.output-limit",
             "limit",
@@ -537,13 +583,16 @@ def _parse_response(
                 "The validator emitted invalid statistics.",
             )
         integers[name] = item
+    observed = integers["diagnosticsObserved"]
+    emitted = integers["diagnosticsEmitted"]
+    truncated = integers["diagnosticsTruncated"]
     if (
-        integers["diagnosticsEmitted"] != len(diagnostics)
-        or integers["diagnosticsObserved"]
-        != len(diagnostics) + integers["diagnosticsTruncated"]
-        or (outcome == "valid" and integers["diagnosticsObserved"] != 0)
-        or (outcome == "invalid" and not diagnostics)
-        or (outcome == "limit-exceeded" and integers["diagnosticsTruncated"] == 0)
+        emitted != len(diagnostics)
+        or not len(diagnostics) <= observed <= MAX_OBSERVED_DIAGNOSTICS
+        or truncated > observed - len(diagnostics) + 1
+        or (outcome == "valid" and (observed != 0 or diagnostics or truncated != 0))
+        or (outcome == "invalid" and (not diagnostics or truncated != 0))
+        or (outcome == "limit-exceeded" and (observed == 0 or truncated == 0))
     ):
         raise WorkerFailure(
             "worker.protocol",

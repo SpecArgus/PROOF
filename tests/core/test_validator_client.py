@@ -98,6 +98,29 @@ def test_invocation_enforces_stdout_limit() -> None:
     assert failure.value.code == "worker.output-limit"
 
 
+def test_invocation_enforces_combined_output_limit() -> None:
+    limits = WorkerLimits(
+        max_stdout_bytes=128,
+        max_stderr_bytes=128,
+        max_output_bytes=192,
+    )
+    command = [
+        sys.executable,
+        "-I",
+        "-c",
+        (
+            "import sys; "
+            "sys.stdout.buffer.write(b'x' * 128); sys.stdout.buffer.flush(); "
+            "sys.stderr.buffer.write(b'y' * 128); sys.stderr.buffer.flush()"
+        ),
+    ]
+
+    with pytest.raises(WorkerFailure) as failure:
+        _invoke_worker(b"{}", limits, command)
+
+    assert failure.value.code == "worker.output-limit"
+
+
 def test_invocation_preserves_nonzero_exit_for_supervisor_mapping() -> None:
     command = [sys.executable, "-I", "-c", "raise SystemExit(7)"]
 
@@ -152,14 +175,56 @@ def test_internal_error_response_cannot_be_valid_result() -> None:
         )
 
 
+def test_response_accepts_raw_observations_above_deduplicated_emissions() -> None:
+    payload = {
+        "protocolVersion": 1,
+        "worker": {"name": "openapi-spec-validator", "version": "0.9.0"},
+        "entrypoint": "root.yaml",
+        "manifestDigest": "0" * 64,
+        "outcome": "invalid",
+        "diagnostics": [
+            {
+                "source": "root.yaml",
+                "line": 1,
+                "column": 1,
+                "pointer": "/paths",
+                "code": "oas.schema",
+                "severity": "error",
+                "kind": "schema",
+                "message": "duplicate",
+            }
+        ],
+        "stats": {
+            "diagnosticsObserved": 3,
+            "diagnosticsEmitted": 1,
+            "diagnosticsTruncated": 0,
+        },
+    }
+
+    result = _parse_response(
+        json.dumps(payload, separators=(",", ":")).encode() + b"\n",
+        entrypoint="root.yaml",
+        manifest_digest="0" * 64,
+        limits=WorkerLimits(),
+    )
+
+    assert result.diagnostics_observed == 3
+    assert len(result.diagnostics) == 1
+    assert result.diagnostics_truncated == 0
+
+
 @pytest.mark.parametrize(
     "keyword,value",
     [
         ("max_diagnostics", -1),
+        ("max_diagnostics", 101),
         ("max_diagnostics", True),
         ("timeout_seconds", 0),
+        ("timeout_seconds", 5.01),
         ("max_stdout_bytes", 0),
+        ("max_stdout_bytes", 1024 * 1024 + 1),
         ("max_stderr_bytes", False),
+        ("max_output_bytes", 1024 * 1024 + 1),
     ],
 )
 def test_worker_limits_reject_invalid_values(keyword: str, value: object) -> None:

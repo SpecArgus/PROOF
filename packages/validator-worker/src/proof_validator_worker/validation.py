@@ -657,7 +657,7 @@ def _deduplicate(diagnostics: list[Diagnostic]) -> list[Diagnostic]:
 
 def _collect_diagnostics(
     entrypoint: Document, documents: Mapping[str, Document]
-) -> tuple[list[Diagnostic], bool]:
+) -> tuple[list[Diagnostic], int, bool]:
     version = entrypoint.root.get("openapi")
     if isinstance(version, str) and version.startswith("3.0."):
         validator_type = OpenAPIV30SpecValidator
@@ -665,19 +665,17 @@ def _collect_diagnostics(
         validator_type = OpenAPIV31SpecValidator
     else:
         location = entrypoint.origins.get("/openapi", entrypoint.origins[""])
-        return (
-            [
-                _diagnostic(
-                    code="oas.schema",
-                    kind="schema",
-                    message="Only OpenAPI 3.0 and 3.1 documents are supported.",
-                    origin=Origin(
-                        location.source, location.line, location.column, "/openapi"
-                    ),
-                )
-            ],
-            False,
-        )
+        diagnostics = [
+            _diagnostic(
+                code="oas.schema",
+                kind="schema",
+                message="Only OpenAPI 3.0 and 3.1 documents are supported.",
+                origin=Origin(
+                    location.source, location.line, location.column, "/openapi"
+                ),
+            )
+        ]
+        return diagnostics, len(diagnostics), False
 
     by_uri = {document.uri: document for document in documents.values()}
     schema_path = SchemaPath.from_dict(
@@ -688,22 +686,17 @@ def _collect_diagnostics(
     )
     validator = validator_type(schema_path)
     diagnostics: list[Diagnostic] = []
+    observed = 0
     overflow = False
-    try:
-        for index, error in enumerate(validator.iter_errors()):
-            if index >= MAX_OBSERVED_DIAGNOSTICS:
-                overflow = True
-                break
-            diagnostics.append(
-                _normalize_error(error, entrypoint=entrypoint, documents=documents)
-            )
-    except Exception:
-        # 0.9.0 can raise KeyError in its semantic pass after it has yielded the
-        # complete structural findings. Preserve those findings, but never hide
-        # an exception that occurred before the first diagnostic.
-        if not diagnostics:
-            raise
-    return diagnostics, overflow
+    for error in validator.iter_errors():
+        observed += 1
+        diagnostics.append(
+            _normalize_error(error, entrypoint=entrypoint, documents=documents)
+        )
+        if observed >= MAX_OBSERVED_DIAGNOSTICS:
+            overflow = True
+            break
+    return diagnostics, observed, overflow
 
 
 def validate_request(request: ValidationRequest) -> ValidationResponse:
@@ -716,16 +709,16 @@ def validate_request(request: ValidationRequest) -> ValidationResponse:
         }
         _check_reference_closure(documents)
         entrypoint = documents[request.entrypoint]
-        diagnostics, overflow = _collect_diagnostics(entrypoint, documents)
+        diagnostics, observed, overflow = _collect_diagnostics(entrypoint, documents)
     except ControlledValidation as error:
         diagnostics = [error.diagnostic]
+        observed = 1
         overflow = False
 
     normalized = _deduplicate(diagnostics)
     emitted = normalized[: request.max_diagnostics]
-    observed = len(normalized) + (1 if overflow else 0)
-    truncated = observed - len(emitted)
-    if truncated:
+    truncated = len(normalized) - len(emitted) + (1 if overflow else 0)
+    if overflow or truncated:
         outcome = "limit-exceeded"
     elif normalized:
         outcome = "invalid"

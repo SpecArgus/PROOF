@@ -6,6 +6,7 @@ import subprocess
 import sys
 from pathlib import Path
 
+import proof_validator_worker.validation as validation_module
 import pytest
 from proof_core import WorkerLimits, build_input_closure
 from proof_core.validator_client import _build_request
@@ -15,7 +16,7 @@ from proof_validator_worker import (
     parse_request,
     validate_request,
 )
-from proof_validator_worker.protocol import Resource
+from proof_validator_worker.protocol import Diagnostic, Resource
 from proof_validator_worker.validation import ClosedMemoryHandlers, NoSuchResource
 
 
@@ -129,7 +130,7 @@ paths:
     assert results[0].diagnostics_truncated == 5
 
 
-def test_known_post_schema_exception_keeps_structural_finding(tmp_path: Path) -> None:
+def test_structural_finding_is_reported(tmp_path: Path) -> None:
     _write(
         tmp_path / "root.yaml",
         """openapi: 3.1.0
@@ -151,6 +152,105 @@ paths:
         item.pointer == "/paths/~1pets/get/responses"
         for item in result.diagnostics
     )
+
+
+def _repeated_diagnostic() -> Diagnostic:
+    return Diagnostic(
+        source="root.yaml",
+        line=1,
+        column=1,
+        pointer="/paths",
+        code="oas.schema",
+        severity="error",
+        kind="schema",
+        message="duplicate",
+    )
+
+
+def test_unrelated_exception_after_a_diagnostic_is_not_suppressed(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    _write(tmp_path / "root.yaml", _valid_document())
+    _closure, _raw, request = _request(tmp_path)
+
+    class BrokenValidator:
+        def __init__(self, _schema_path: object) -> None:
+            pass
+
+        def iter_errors(self):
+            yield object()
+            raise RuntimeError("validator failed")
+
+    monkeypatch.setattr(validation_module, "OpenAPIV31SpecValidator", BrokenValidator)
+    monkeypatch.setattr(
+        validation_module,
+        "_normalize_error",
+        lambda *_args, **_kwargs: _repeated_diagnostic(),
+    )
+
+    with pytest.raises(RuntimeError, match="validator failed"):
+        validate_request(request)
+
+
+def test_raw_diagnostic_observations_are_counted_before_deduplication(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    _write(tmp_path / "root.yaml", _valid_document())
+    _closure, _raw, request = _request(tmp_path)
+
+    class DuplicateValidator:
+        def __init__(self, _schema_path: object) -> None:
+            pass
+
+        def iter_errors(self):
+            yield from (object(), object(), object())
+
+    monkeypatch.setattr(
+        validation_module, "OpenAPIV31SpecValidator", DuplicateValidator
+    )
+    monkeypatch.setattr(
+        validation_module,
+        "_normalize_error",
+        lambda *_args, **_kwargs: _repeated_diagnostic(),
+    )
+
+    result = validate_request(request)
+
+    assert result.outcome == "invalid"
+    assert result.diagnostics_observed == 3
+    assert len(result.diagnostics) == 1
+    assert result.diagnostics_truncated == 0
+
+
+def test_reaching_observation_ceiling_is_visible_as_incomplete(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    _write(tmp_path / "root.yaml", _valid_document())
+    _closure, _raw, request = _request(tmp_path)
+
+    class DuplicateValidator:
+        def __init__(self, _schema_path: object) -> None:
+            pass
+
+        def iter_errors(self):
+            yield from (object(), object(), object(), object())
+
+    monkeypatch.setattr(validation_module, "MAX_OBSERVED_DIAGNOSTICS", 3)
+    monkeypatch.setattr(
+        validation_module, "OpenAPIV31SpecValidator", DuplicateValidator
+    )
+    monkeypatch.setattr(
+        validation_module,
+        "_normalize_error",
+        lambda *_args, **_kwargs: _repeated_diagnostic(),
+    )
+
+    result = validate_request(request)
+
+    assert result.outcome == "limit-exceeded"
+    assert result.diagnostics_observed == 3
+    assert len(result.diagnostics) == 1
+    assert result.diagnostics_truncated == 1
 
 
 def test_request_rejects_resource_identity_tampering(tmp_path: Path) -> None:
