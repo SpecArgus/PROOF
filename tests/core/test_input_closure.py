@@ -370,6 +370,82 @@ def test_rejects_yaml_alias_limit_and_recursive_cycle(tmp_path: Path) -> None:
     assert cycle.value.code == "document-cycle"
 
 
+def test_yaml_alias_reuse_preserves_effective_nesting_depth(tmp_path: Path) -> None:
+    write(
+        tmp_path / "reused.yaml",
+        """shared: &shared
+  child:
+    leaf: value
+shallow: *shared
+deep:
+  a:
+    b:
+      reused: *shared
+""",
+    )
+
+    build_input_closure(
+        tmp_path,
+        "reused.yaml",
+        limits=limits(max_document_nesting=6),
+    )
+    with pytest.raises(InputClosureError) as captured:
+        build_input_closure(
+            tmp_path,
+            "reused.yaml",
+            limits=limits(max_document_nesting=5),
+        )
+    assert captured.value.code == "document-nesting-limit"
+
+
+@pytest.mark.parametrize("depth,accepted", [(100, True), (101, False)])
+def test_document_nesting_limit_is_inclusive(
+    tmp_path: Path, depth: int, accepted: bool
+) -> None:
+    document = "null"
+    for _ in range(depth):
+        document = f'{{"value":{document}}}'
+    write(tmp_path / "nested.json", document)
+
+    if accepted:
+        build_input_closure(
+            tmp_path,
+            "nested.json",
+            limits=limits(max_document_nesting=100),
+        )
+    else:
+        with pytest.raises(InputClosureError) as captured:
+            build_input_closure(
+                tmp_path,
+                "nested.json",
+                limits=limits(max_document_nesting=100),
+            )
+        assert captured.value.code == "document-nesting-limit"
+
+
+@pytest.mark.parametrize("alias_count,accepted", [(50, True), (51, False)])
+def test_yaml_alias_limit_is_inclusive(
+    tmp_path: Path, alias_count: int, accepted: bool
+) -> None:
+    aliases = "\n".join(f"value{index}: *base" for index in range(alias_count))
+    write(tmp_path / "aliases.yaml", f"base: &base value\n{aliases}\n")
+
+    if accepted:
+        build_input_closure(
+            tmp_path,
+            "aliases.yaml",
+            limits=limits(max_yaml_aliases=50),
+        )
+    else:
+        with pytest.raises(InputClosureError) as captured:
+            build_input_closure(
+                tmp_path,
+                "aliases.yaml",
+                limits=limits(max_yaml_aliases=50),
+            )
+        assert captured.value.code == "yaml-alias-limit"
+
+
 def test_detects_partial_read(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     write(tmp_path / "openapi.json", openapi_json(description="x" * 1000))
     original_read = input_closure_module.os.read

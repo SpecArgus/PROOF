@@ -646,10 +646,10 @@ def _assert_json_compatible(
     *,
     max_depth: int,
 ) -> None:
-    checked: set[int] = set()
+    subtree_depths: dict[int, int] = {}
     active: set[int] = set()
 
-    def visit(item: Any, depth: int) -> None:
+    def visit(item: Any, depth: int) -> int:
         if depth > max_depth:
             raise InputClosureError(
                 "document-nesting-limit",
@@ -657,10 +657,10 @@ def _assert_json_compatible(
                 path=relative_path,
             )
         if item is None or isinstance(item, (str, bool, int)):
-            return
+            return 0
         if isinstance(item, float):
             if math.isfinite(item):
-                return
+                return 0
             raise InputClosureError(
                 "non-json-value",
                 "input document contains a non-finite number",
@@ -680,9 +680,18 @@ def _assert_json_compatible(
                 "input document contains a recursive alias cycle",
                 path=relative_path,
             )
-        if identity in checked:
-            return
+        cached_depth = subtree_depths.get(identity)
+        if cached_depth is not None:
+            if depth + cached_depth > max_depth:
+                raise InputClosureError(
+                    "document-nesting-limit",
+                    "input document exceeds the nesting limit",
+                    path=relative_path,
+                )
+            return cached_depth
+
         active.add(identity)
+        subtree_depth = 0
         if isinstance(item, dict):
             for key, child in item.items():
                 if not isinstance(key, str):
@@ -691,12 +700,13 @@ def _assert_json_compatible(
                         "object keys must be strings",
                         path=relative_path,
                     )
-                visit(child, depth + 1)
+                subtree_depth = max(subtree_depth, visit(child, depth + 1) + 1)
         else:
             for child in item:
-                visit(child, depth + 1)
+                subtree_depth = max(subtree_depth, visit(child, depth + 1) + 1)
         active.remove(identity)
-        checked.add(identity)
+        subtree_depths[identity] = subtree_depth
+        return subtree_depth
 
     visit(value, 0)
 
