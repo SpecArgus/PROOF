@@ -402,6 +402,43 @@ paths:
     assert policy.data_classification == "confidential"
 
 
+def test_explicit_null_policy_is_present_but_invalid(tmp_path: Path) -> None:
+    _write(
+        tmp_path / "root.yaml",
+        """openapi: 3.1.0
+info: {title: Test, version: 1.0.0}
+paths:
+  /absent:
+    get:
+      operationId: absentPolicy
+      responses:
+        '200': {description: ok}
+  /null:
+    get:
+      operationId: nullPolicy
+      x-agent-policy: null
+      responses:
+        '200': {description: ok}
+""",
+    )
+
+    absent, explicit_null = normalize_operations(
+        build_input_closure(tmp_path, "root.yaml")
+    ).operations
+
+    assert absent.policy.present is False
+    assert absent.policy.valid is True
+    assert not absent.issues
+    assert explicit_null.state == "ready"
+    assert explicit_null.policy.present is True
+    assert explicit_null.policy.valid is False
+    assert any(
+        item.code == "normalize.invalid-agent-policy"
+        and item.pointer == "/paths/~1null/get/x-agent-policy"
+        for item in explicit_null.issues
+    )
+
+
 def test_operation_views_are_deterministic_immutable_and_dialect_neutral(
     tmp_path: Path,
 ) -> None:

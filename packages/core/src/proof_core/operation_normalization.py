@@ -772,8 +772,7 @@ def _normalize_policy(
     operation: Mapping[str, Any], source: str, pointer: str
 ) -> tuple[AgentPolicy, tuple[RiskSignal, ...], list[NormalizationIssue]]:
     policy_pointer = _append_pointer(pointer, "x-agent-policy")
-    raw_policy = operation.get("x-agent-policy")
-    if raw_policy is None:
+    if "x-agent-policy" not in operation:
         return (
             AgentPolicy(
                 False,
@@ -793,6 +792,7 @@ def _normalize_policy(
             (),
             [],
         )
+    raw_policy = operation["x-agent-policy"]
     if not isinstance(raw_policy, Mapping):
         return (
             AgentPolicy(
