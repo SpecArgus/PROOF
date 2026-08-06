@@ -384,6 +384,32 @@ paths:
     assert evaluation.indeterminate_operations == 1
 
 
+def test_indeterminate_operation_set_suppresses_ready_operation_findings(
+    tmp_path: Path,
+) -> None:
+    _write(
+        tmp_path / "root.yaml",
+        """openapi: 2.0
+info: {title: Unsupported, version: 1.0.0}
+paths:
+  /pets:
+    get:
+      responses:
+        '200': {description: ok}
+""",
+    )
+    operations = normalize_operations(build_input_closure(tmp_path, "root.yaml"))
+
+    assert operations.state == "indeterminate"
+    assert operations.operations[0].state == "ready"
+
+    evaluation = evaluate_agent_contract(operations)
+
+    assert evaluation.findings == ()
+    assert evaluation.evaluated_operations == 0
+    assert evaluation.indeterminate_operations == 1
+
+
 def test_messages_and_remediation_do_not_claim_runtime_enforcement() -> None:
     manifest = json.loads((FIXTURE_ROOT / "manifest.json").read_text(encoding="utf-8"))
     fixtures = sorted({item["fixture"] for item in manifest["cases"]})

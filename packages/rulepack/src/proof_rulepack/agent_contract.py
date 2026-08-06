@@ -547,6 +547,14 @@ def _finding_sort_key(finding: Finding) -> tuple[Any, ...]:
 def evaluate_agent_contract(operation_set: Any) -> RuleEvaluation:
     """Evaluate all five built-in rules over a normalized operation set."""
 
+    if operation_set.state != "ready":
+        return RuleEvaluation(
+            rulepack=AGENT_CONTRACT_IDENTITY,
+            findings=(),
+            evaluated_operations=0,
+            indeterminate_operations=len(operation_set.operations),
+        )
+
     findings: list[Finding] = []
     evaluated = 0
     indeterminate = 0
