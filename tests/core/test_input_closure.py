@@ -223,6 +223,20 @@ def test_rejects_missing_and_non_file_targets(
     assert captured.value.code == code
 
 
+def test_rejects_reference_with_mismatched_path_case(tmp_path: Path) -> None:
+    write(tmp_path / "Schema.yaml", "type: object\n")
+    write(
+        tmp_path / "openapi.json",
+        openapi_json(components={"schemas": {"Item": {"$ref": "schema.yaml"}}}),
+    )
+
+    with pytest.raises(InputClosureError) as captured:
+        build_input_closure(tmp_path, "openapi.json", limits=limits())
+
+    assert captured.value.code == "path-case-mismatch"
+    assert captured.value.path == "schema.yaml"
+
+
 def test_rejects_symlinked_reference(tmp_path: Path) -> None:
     outside = tmp_path.parent / f"{tmp_path.name}-outside.yaml"
     write(outside, "type: object\n")
@@ -349,6 +363,26 @@ def test_rejects_non_strict_documents(tmp_path: Path, content: str) -> None:
 
     with pytest.raises(InputClosureError):
         build_input_closure(tmp_path, path.name, limits=limits())
+
+
+def test_accepts_quoted_merge_marker_as_a_string_key(tmp_path: Path) -> None:
+    content = write(tmp_path / "quoted.yaml", '"<<": ordinary value\n')
+
+    closure = build_input_closure(tmp_path, "quoted.yaml", limits=limits())
+
+    assert closure.read("quoted.yaml") == content
+
+
+def test_rejects_yaml_merge_key(tmp_path: Path) -> None:
+    write(
+        tmp_path / "merge.yaml",
+        "base: &base {type: string}\nmerged:\n  <<: *base\n",
+    )
+
+    with pytest.raises(InputClosureError) as captured:
+        build_input_closure(tmp_path, "merge.yaml", limits=limits())
+
+    assert captured.value.code == "invalid-document"
 
 
 def test_rejects_yaml_alias_limit_and_recursive_cycle(tmp_path: Path) -> None:

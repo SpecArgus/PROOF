@@ -178,7 +178,7 @@ def _construct_unique_mapping(
 
     mapping: dict[Any, Any] = {}
     for key_node, value_node in node.value:
-        if key_node.value == "<<":
+        if key_node.tag == "tag:yaml.org,2002:merge":
             raise ConstructorError(
                 "while constructing a mapping",
                 node.start_mark,
@@ -480,6 +480,22 @@ def _safe_file(root: Path, relative_path: str) -> tuple[Path, Path, os.stat_resu
     candidate = root.joinpath(*PurePosixPath(relative_path).parts)
     current = root
     for part in PurePosixPath(relative_path).parts:
+        try:
+            directory_entries = os.listdir(current)
+        except OSError as error:
+            raise InputClosureError(
+                "unreadable-file",
+                "input file cannot be inspected safely",
+                path=relative_path,
+            ) from error
+        if part not in directory_entries and any(
+            entry.casefold() == part.casefold() for entry in directory_entries
+        ):
+            raise InputClosureError(
+                "path-case-mismatch",
+                "input path casing does not match the repository entry",
+                path=relative_path,
+            )
         current /= part
         try:
             path_stat = os.stat(current, follow_symlinks=False)
