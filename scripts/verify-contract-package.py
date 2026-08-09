@@ -4,13 +4,13 @@ import sys
 from pathlib import Path
 from zipfile import ZipFile
 
-SCHEMA_ROOT = "proof_contracts/schemas/result/v1"
 EXPECTED_SCHEMAS = {
-    f"{SCHEMA_ROOT}/common.schema.json",
-    f"{SCHEMA_ROOT}/finding.schema.json",
-    f"{SCHEMA_ROOT}/gate.schema.json",
-    f"{SCHEMA_ROOT}/provenance.schema.json",
-    f"{SCHEMA_ROOT}/run.schema.json",
+    "proof_contracts/schemas/result/v1/common.schema.json",
+    "proof_contracts/schemas/result/v1/finding.schema.json",
+    "proof_contracts/schemas/result/v1/gate.schema.json",
+    "proof_contracts/schemas/result/v1/provenance.schema.json",
+    "proof_contracts/schemas/result/v1/run.schema.json",
+    "proof_contracts/schemas/operation/v1/operation-set.schema.json",
 }
 
 
