@@ -465,6 +465,42 @@ paths:
     )
 
 
+def test_malformed_policy_remains_determinate_but_is_marked_invalid(
+    tmp_path: Path,
+) -> None:
+    _write(
+        tmp_path / "root.yaml",
+        """openapi: 3.1.0
+info: {title: Test, version: 1.0.0}
+paths:
+  /payments:
+    post:
+      operationId: transferPayment
+      x-agent-policy:
+        confirmation: {mode: conditional}
+        authorization: {roles: ["", operator, operator]}
+        dataClassification: secret
+        unknown: value
+      responses:
+        '200': {description: ok}
+""",
+    )
+
+    operation = normalize_operations(
+        build_input_closure(tmp_path, "root.yaml")
+    ).operations[0]
+
+    assert operation.state == "ready"
+    assert operation.policy.valid is False
+    assert operation.policy.confirmation_present is True
+    assert operation.policy.confirmation_condition is None
+    assert operation.policy.authorization_roles == ("", "operator")
+    assert operation.policy.data_classification == "secret"
+    assert all(
+        item.code == "normalize.invalid-agent-policy" for item in operation.issues
+    )
+
+
 def test_operation_views_are_deterministic_immutable_and_dialect_neutral(
     tmp_path: Path,
 ) -> None:

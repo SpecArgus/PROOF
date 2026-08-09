@@ -60,11 +60,27 @@
       "get": {
         "operationId": "getHealth",
         "summary": "Get service health",
+        "x-agent-policy": {
+          "dataClassification": "confidential"
+        },
+        "security": [
+          {
+            "serviceAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Healthy"
           }
         }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "serviceAuth": {
+        "type": "http",
+        "scheme": "bearer"
       }
     }
   }
