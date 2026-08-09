@@ -69,6 +69,71 @@
           }
         }
       }
+    },
+    "/roles": {
+      "post": {
+        "operationId": "createRole",
+        "summary": "Create a new role",
+        "x-agent-policy": {
+          "confirmation": {
+            "mode": "required"
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "listRoles",
+        "summary": "List available roles",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/credentials/{credentialId}": {
+      "get": {
+        "operationId": "getCredential",
+        "summary": "Get a stored credential",
+        "x-agent-policy": {
+          "dataClassification": "confidential"
+        },
+        "parameters": [
+          {
+            "name": "credentialId",
+            "in": "path",
+            "required": true,
+            "description": "Credential identifier.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
