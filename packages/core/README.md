@@ -27,6 +27,12 @@ subprocess protocol to the pinned OpenAPI validator. Timeouts, output overflow,
 malformed responses, missing dependencies, and worker crashes raise
 `WorkerFailure` and cannot be reported as a valid document.
 
+After generic validation, `proof_core.normalize_operations(closure)` produces
+one immutable OpenAPI 3.0/3.1 operation contract with effective parameters,
+responses, security, Agent policy metadata, and deterministic risk evidence.
+The v1 classifier uses only method, exact path and operationId tokens, and
+explicit policy risks; descriptions never influence classification.
+
 ## Validation
 
 From the repository root:
