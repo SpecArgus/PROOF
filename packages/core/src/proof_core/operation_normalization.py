@@ -1189,6 +1189,8 @@ def normalize_operations(
     else:
         for raw_path in sorted(raw_paths, key=str):
             path = str(raw_path)
+            if not path.startswith("/"):
+                continue
             path_pointer = _append_pointer("/paths", raw_path)
             try:
                 path_item = store.resolve_mapping(

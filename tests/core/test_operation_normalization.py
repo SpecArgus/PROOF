@@ -187,6 +187,32 @@ paths:
     ]
 
 
+def test_paths_extensions_do_not_create_phantom_operations(tmp_path: Path) -> None:
+    _write(
+        tmp_path / "root.yaml",
+        """openapi: 3.1.0
+info: {title: Test, version: 1.0.0}
+paths:
+  x-operation-shaped-extension:
+    get:
+      operationId: phantomOperation
+      responses:
+        '200': {description: not an operation}
+  /real:
+    get:
+      operationId: realOperation
+      responses:
+        '200': {description: ok}
+""",
+    )
+
+    result = normalize_operations(build_input_closure(tmp_path, "root.yaml"))
+
+    assert result.state == "ready"
+    assert [operation.path for operation in result.operations] == ["/real"]
+    assert result.issues == ()
+
+
 def test_effective_parameters_override_path_item_by_name_and_location(
     tmp_path: Path,
 ) -> None:
