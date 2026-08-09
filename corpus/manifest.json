@@ -1430,6 +1430,11 @@
               "kind": "extension",
               "pointer": "/paths/~1queue/get/x-agent-policy/risks/0",
               "value": "destructive"
+            },
+            {
+              "kind": "method",
+              "pointer": "/paths/~1queue/get",
+              "value": "get"
             }
           ],
           "reviewers": []
@@ -1441,7 +1446,7 @@
         "AGT-POL-001",
         "AGT-POL-002"
       ],
-      "rationale": "GET /queue has x-agent-policy.risks:[destructive]; extension classifier assigns destructive satisfying RESP-001 condition 2. No error response exists so RESP-001 fires.",
+      "rationale": "GET /queue has x-agent-policy.risks:[destructive]; extension classifier assigns destructive satisfying RESP-001 condition 2. No error response exists so RESP-001 fires with the method signal and explicit-risk evidence.",
       "reviewStatus": "pending"
     },
     {
