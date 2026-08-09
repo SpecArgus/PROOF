@@ -311,6 +311,91 @@ paths:
     assert result.diagnostics[0].code == "ref.scheme-denied"
 
 
+@pytest.mark.parametrize("reference", ["shared schema.yaml", "shared%20schema.yaml"])
+def test_resolves_raw_and_encoded_space_in_local_reference(
+    tmp_path: Path, reference: str
+) -> None:
+    _write(
+        tmp_path / "root.yaml",
+        f"""openapi: 3.1.0
+info: {{title: Local reference, version: 1.0.0}}
+paths:
+  /pets:
+    get:
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: {reference}#/Pet
+""",
+    )
+    _write(tmp_path / "shared schema.yaml", "Pet: {type: string}\n")
+    _closure, _raw, request = _request(tmp_path)
+
+    result = validate_request(request)
+
+    assert result.outcome == "valid"
+    assert result.diagnostics == ()
+
+
+def test_resolves_raw_non_ascii_local_reference(tmp_path: Path) -> None:
+    _write(
+        tmp_path / "root.yaml",
+        """openapi: 3.1.0
+info: {title: Local reference, version: 1.0.0}
+paths:
+  /pets:
+    get:
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: café.yaml#/Pet
+""",
+    )
+    _write(tmp_path / "café.yaml", "Pet: {type: string}\n")
+    _closure, _raw, request = _request(tmp_path)
+
+    result = validate_request(request)
+
+    assert result.outcome == "valid"
+    assert result.diagnostics == ()
+
+
+def test_missing_reference_fragment_is_a_controlled_diagnostic(
+    tmp_path: Path,
+) -> None:
+    _write(
+        tmp_path / "root.yaml",
+        """openapi: 3.1.0
+info: {title: Missing fragment, version: 1.0.0}
+paths:
+  /pets:
+    get:
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: shared.yaml#/Missing
+""",
+    )
+    _write(tmp_path / "shared.yaml", "Pet: {type: string}\n")
+    _closure, _raw, request = _request(tmp_path)
+
+    result = validate_request(request)
+
+    assert result.outcome == "invalid"
+    assert [item.code for item in result.diagnostics] == ["ref.unresolved"]
+    assert result.diagnostics[0].kind == "reference"
+    assert result.diagnostics_observed == 1
+
+
 def test_process_contract_failure_is_one_json_line_and_nonzero() -> None:
     completed = subprocess.run(
         [sys.executable, "-I", "-m", "proof_validator_worker"],

@@ -20,7 +20,7 @@ from jsonschema.exceptions import ValidationError
 from jsonschema_path import SchemaPath
 from jsonschema_path.loaders import JsonschemaSafeLoader
 from openapi_spec_validator import OpenAPIV30SpecValidator, OpenAPIV31SpecValidator
-from referencing.exceptions import NoSuchResource
+from referencing.exceptions import NoSuchResource, Unresolvable
 from yaml.events import AliasEvent, CollectionEndEvent, CollectionStartEvent
 from yaml.nodes import MappingNode, Node, ScalarNode, SequenceNode
 
@@ -115,7 +115,17 @@ class ClosedMemoryHandlers(Mapping[str, Any]):
 
     def _retrieve(self, uri: str) -> LocatedDict:
         resource_uri, _fragment = urldefrag(uri)
-        document = self._resources.get(resource_uri)
+        canonical_uri = resource_uri
+        if resource_uri.startswith(_RESOURCE_BASE):
+            raw_path = resource_uri[len(_RESOURCE_BASE) :]
+            try:
+                decoded_path = unquote_to_bytes(raw_path).decode(
+                    "utf-8", errors="strict"
+                )
+            except UnicodeDecodeError:
+                raise NoSuchResource(ref=uri) from None
+            canonical_uri = _RESOURCE_BASE + quote(decoded_path, safe="/")
+        document = self._resources.get(canonical_uri)
         if document is None:
             raise NoSuchResource(ref=uri)
         return document.root
@@ -688,14 +698,30 @@ def _collect_diagnostics(
     diagnostics: list[Diagnostic] = []
     observed = 0
     overflow = False
-    for error in validator.iter_errors():
-        observed += 1
-        diagnostics.append(
-            _normalize_error(error, entrypoint=entrypoint, documents=documents)
+    try:
+        for error in validator.iter_errors():
+            observed += 1
+            diagnostics.append(
+                _normalize_error(error, entrypoint=entrypoint, documents=documents)
+            )
+            if observed >= MAX_OBSERVED_DIAGNOSTICS:
+                overflow = True
+                break
+    except Unresolvable as error:
+        location = entrypoint.origins.get(
+            "", Origin(entrypoint.path, 1, 1, "")
         )
-        if observed >= MAX_OBSERVED_DIAGNOSTICS:
-            overflow = True
-            break
+        raise ControlledValidation(
+            _diagnostic(
+                code="ref.unresolved",
+                kind="reference",
+                message=(
+                    "A local reference could not be resolved: "
+                    f"{_normalize_message(error.ref)}."
+                ),
+                origin=location,
+            )
+        ) from error
     return diagnostics, observed, overflow
 
 
