@@ -323,6 +323,13 @@ components:
   securitySchemes:
     auth: {type: http, scheme: bearer}
 paths:
+  /optional-profile:
+    get:
+      operationId: getOptionalProfile
+      summary: Get optional profile
+      security: [{auth: []}, {}]
+      x-agent-policy: {dataClassification: restricted}
+      responses: {'200': {description: ok}}
   /profile:
     get:
       operationId: getProfile
@@ -357,11 +364,58 @@ paths:
     findings = [item for item in evaluation.findings if item.rule_id == "AGT-POL-002"]
 
     assert [(item.operation.path, item.location.pointer) for item in findings] == [
+        (
+            "/optional-profile",
+            "/paths/~1optional-profile/get/security",
+        ),
         ("/profile", "/paths/~1profile/get/security"),
         ("/roles", "/paths/~1roles/patch/x-agent-policy/authorization/roles"),
     ]
     assert "security" in findings[0].message
-    assert "authorization.roles" in findings[1].message
+    assert "security" in findings[1].message
+    assert "authorization.roles" in findings[2].message
+
+
+@pytest.mark.parametrize(
+    ("root_security", "expects_finding"),
+    [
+        ("[{auth: []}]", False),
+        ("[{}]", True),
+        ("[{auth: []}, {}]", True),
+        ("[]", True),
+    ],
+)
+def test_inherited_security_requires_every_alternative_to_authenticate(
+    tmp_path: Path,
+    root_security: str,
+    expects_finding: bool,
+) -> None:
+    _write(
+        tmp_path / "root.yaml",
+        f"""openapi: 3.1.0
+info: {{title: Test, version: 1.0.0}}
+components:
+  securitySchemes:
+    auth: {{type: http, scheme: bearer}}
+security: {root_security}
+paths:
+  /profile:
+    get:
+      operationId: getProfile
+      summary: Get profile
+      x-agent-policy: {{dataClassification: restricted}}
+      responses: {{'200': {{description: ok}}}}
+""",
+    )
+
+    operations = normalize_operations(build_input_closure(tmp_path, "root.yaml"))
+    evaluation = evaluate_agent_contract(operations)
+    findings = [item for item in evaluation.findings if item.rule_id == "AGT-POL-002"]
+
+    assert bool(findings) is expects_finding
+    if expects_finding:
+        assert findings[0].location.pointer == "/security"
+        assert "security" in findings[0].message
 
 
 def test_invalid_operation_is_skipped_without_speculative_finding(

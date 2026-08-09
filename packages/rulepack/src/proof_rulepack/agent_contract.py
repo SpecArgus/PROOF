@@ -478,8 +478,10 @@ def _evaluate_confirmation(operation: Any) -> list[Finding]:
 
 
 def _security_satisfied(operation: Any) -> bool:
-    return operation.security_present and any(
-        requirement.schemes for requirement in operation.security
+    return (
+        operation.security_present
+        and bool(operation.security)
+        and all(requirement.schemes for requirement in operation.security)
     )
 
 
