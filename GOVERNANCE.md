@@ -50,9 +50,13 @@ Changes that materially affect architecture, compatibility, data formats, securi
 
 The co-maintainers seek practical consensus. Material product, architecture,
 security, governance, and release decisions require recorded agreement from at
-least two of the three co-maintainers. A conflicted co-maintainer recuses, in
-which case both non-conflicted co-maintainers must agree. If fewer than two
-eligible co-maintainers are available, the material decision pauses.
+least one co-maintainer, recorded in the relevant issue, pull request, or ADR.
+A conflicted co-maintainer must not be the one recording that agreement. If no
+eligible co-maintainer is available, the material decision pauses.
+
+This single-approval rule amends the two-of-three quorum originally recorded
+in [ADR 0002](docs/adr/0002-product-identity-and-phase-0-governance.md); see
+that ADR's amendment notes for the decision record.
 
 Any co-maintainer may take an urgent, proportionate action to contain an active
 security incident, including credential revocation or rotation, and must record
