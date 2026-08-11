@@ -78,6 +78,15 @@ of interest recuses from the decision; both non-conflicted co-maintainers must
 then agree. If fewer than two eligible co-maintainers are available, the
 material decision pauses.
 
+> **Amendment (2026-08-10):** The three co-maintainers decided offline to
+> simplify this rule. A material decision now requires recorded agreement from
+> at least one co-maintainer instead of two of three, and a conflicted
+> co-maintainer must not be the one recording that agreement. This paragraph's
+> original two-of-three quorum is preserved above as the decision record; the
+> current rule is stated in [GOVERNANCE.md](../../GOVERNANCE.md). This
+> amendment does not by itself change the designated evidence-reviewer policy
+> below or Issue #11's review requirements.
+
 Any co-maintainer may take an urgent, proportionate action needed to contain an
 active security incident, including credential revocation or rotation. The
 action and rationale must be recorded as soon as safe disclosure permits.
@@ -134,6 +143,10 @@ An earlier gate may be convened if evidence exposes a blocker that invalidates
 the product hypothesis or makes further work irresponsible. The final outcome
 requires recorded agreement from at least two co-maintainers. `@Seo-yul` and
 `@minsubyun1` also participate as the designated evidence reviewers.
+
+> **Amendment (2026-08-10):** The gate-outcome agreement threshold follows the
+> same amended material-decision rule noted above — at least one co-maintainer
+> instead of two. The evidence-reviewer roles are unchanged.
 
 The permitted gate outcomes are:
 
@@ -195,7 +208,8 @@ or `defer` recommendation through #9 before Phase 2 work begins.
 
 Security responsibility is shared equally by the three co-maintainers.
 Material residual-risk acceptance must be recorded and requires agreement from
-at least two co-maintainers. Public naming must not overstate static-analysis
+at least two co-maintainers — amended 2026-08-10 to at least one, per the
+amendment note above. Public naming must not overstate static-analysis
 assurances or expose confidential vulnerability information.
 
 ## Reproducibility and compatibility
