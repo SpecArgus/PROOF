@@ -108,6 +108,19 @@ Commits, for example `feat(core): add finding schema`. Update tests and
 documentation when behavior changes, and ensure all required checks pass before
 requesting review.
 
+### Reviewing pull requests
+
+No branch ruleset requires approval from a requested reviewer or a code owner;
+GitHub's reviewer-request feature does not gate a merge here. A co-maintainer
+who intends to review a pull request self-assigns by requesting review on
+themselves, or by commenting that they are reviewing, rather than waiting to
+be assigned by the author or another maintainer. This mirrors the self-claim
+convention for issues described above.
+
+An author may still request a specific co-maintainer's attention, but that
+request is informational: it does not reserve the review and does not stop
+another co-maintainer from self-assigning and reviewing in parallel.
+
 During the repository-foundation phase, protected branches do not require a
 minimum number of approving reviews. Required checks and resolved review
 conversations still apply. Any co-maintainer may decide a routine merge after
