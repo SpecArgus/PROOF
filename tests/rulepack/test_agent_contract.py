@@ -18,6 +18,7 @@ from referencing import Registry, Resource
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 FIXTURE_ROOT = REPOSITORY_ROOT / "rulepacks" / "agent-contract" / "v1" / "fixtures"
+CORPUS_FIXTURE_ROOT = REPOSITORY_ROOT / "corpus" / "fixtures"
 RULE_ROOT = REPOSITORY_ROOT / "rulepacks" / "agent-contract" / "v1"
 RESULT_SCHEMA_ROOT = (
     REPOSITORY_ROOT
@@ -374,6 +375,123 @@ paths:
     assert "security" in findings[0].message
     assert "security" in findings[1].message
     assert "authorization.roles" in findings[2].message
+
+
+@pytest.mark.parametrize(
+    ("case_id", "relative", "dialect", "operation_path"),
+    [
+        (
+            "syn-pol2-permission-xpolicy-no-roles-30",
+            "synthetic/pol2-cases.json",
+            "3.0",
+            "/roles",
+        ),
+        (
+            "syn-pol2-both-risks-roles-missing-31",
+            "synthetic/pol2-cases-31.json",
+            "3.1",
+            "/access/credentials",
+        ),
+    ],
+)
+def test_missing_policy_subfield_locates_present_policy_object(
+    case_id: str,
+    relative: str,
+    dialect: str,
+    operation_path: str,
+) -> None:
+    fixture = CORPUS_FIXTURE_ROOT / relative
+    operations = normalize_operations(
+        build_input_closure(fixture.parent, fixture.name)
+    )
+    manifest = json.loads(
+        (REPOSITORY_ROOT / "corpus" / "manifest.json").read_text(encoding="utf-8")
+    )
+    case = next(item for item in manifest["cases"] if item["caseId"] == case_id)
+    expected = next(
+        item
+        for item in case["expectedFindings"]
+        if item["ruleId"] == "AGT-POL-002"
+    )
+
+    assert operations.dialect == dialect
+    first = evaluate_agent_contract(operations)
+    second = evaluate_agent_contract(operations)
+    finding = next(
+        item
+        for item in first.findings
+        if item.rule_id == "AGT-POL-002" and item.operation.path == operation_path
+    )
+    actual = finding.to_dict()
+    projected = {
+        "ruleId": actual["ruleId"],
+        "severity": actual["severity"],
+        "locationPointer": actual["location"]["pointer"],
+        "riskCategories": actual["riskCategories"],
+        "evidence": _projected_evidence(actual),
+    }
+    expected_projection = {
+        key: value for key, value in expected.items() if key != "reviewers"
+    }
+
+    assert projected == expected_projection
+    assert finding.fingerprint == _expected_fingerprint(actual)
+    assert [item.to_dict() for item in first.findings] == [
+        item.to_dict() for item in second.findings
+    ]
+
+
+@pytest.mark.parametrize(
+    ("authorization", "expected_suffix"),
+    [
+        ("{}", "/x-agent-policy"),
+        ("null", "/x-agent-policy"),
+        ("{roles: []}", "/x-agent-policy/authorization/roles"),
+        ('{roles: [" "]}', "/x-agent-policy/authorization/roles"),
+    ],
+)
+def test_security_location_uses_only_present_authorization_roles_field(
+    tmp_path: Path,
+    authorization: str,
+    expected_suffix: str,
+) -> None:
+    _write(
+        tmp_path / "root.yaml",
+        f"""openapi: 3.1.0
+info: {{title: Review, version: 1.0.0}}
+components:
+  securitySchemes:
+    auth: {{type: http, scheme: bearer}}
+security: [{{auth: []}}]
+paths:
+  /roles:
+    post:
+      operationId: createRole
+      summary: Create role
+      x-agent-policy:
+        confirmation: {{mode: required}}
+        authorization: {authorization}
+      responses:
+        default:
+          description: problem
+          content:
+            application/json: {{schema: {{type: object}}}}
+""",
+    )
+
+    operations = normalize_operations(build_input_closure(tmp_path, "root.yaml"))
+    first = evaluate_agent_contract(operations)
+    second = evaluate_agent_contract(operations)
+    finding = next(
+        item for item in first.findings if item.rule_id == "AGT-POL-002"
+    )
+    actual = finding.to_dict()
+
+    assert finding.location.pointer == f"/paths/~1roles/post{expected_suffix}"
+    assert finding.fingerprint == _expected_fingerprint(actual)
+    assert [item.to_dict() for item in first.findings] == [
+        item.to_dict() for item in second.findings
+    ]
 
 
 @pytest.mark.parametrize(
