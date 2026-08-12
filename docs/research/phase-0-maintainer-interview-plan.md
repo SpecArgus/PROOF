@@ -1,8 +1,10 @@
 # Phase 0 maintainer interview plan
 
-- **Status:** Proposed interview protocol (awaiting recorded co-maintainer agreement)
+- **Status:** Approved interview protocol
 - **Owner:** Phase 0 co-maintainers
 - **Issue:** [#9](https://github.com/SpecArgus/PROOF/issues/9)
+- **Decision record:** [PR #52](https://github.com/SpecArgus/PROOF/pull/52)
+  — approved on 2026-08-12 under the one-co-maintainer material-decision rule
 - **Decision:** Hosted GitHub App, CLI-only, or defer
 
 This plan defines how PROOF will interview maintainers before deciding whether
