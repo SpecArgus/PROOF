@@ -707,7 +707,10 @@ def _repository_candidates(
             if stat.S_ISDIR(info.st_mode):
                 visit(child, child_relative, depth + 1)
             elif stat.S_ISREG(info.st_mode):
-                if child_relative.suffix in _SUPPORTED_SUFFIXES:
+                if (
+                    child_relative.suffix in _SUPPORTED_SUFFIXES
+                    and _valid_candidate_path(child_relative)
+                ):
                     candidates.append(child_relative.as_posix())
 
     visit(root, PurePosixPath(), 0)
@@ -722,6 +725,26 @@ def _is_junction(path: Path) -> bool:
         return bool(predicate())
     except OSError:
         return True
+
+
+def _valid_candidate_path(path: PurePosixPath) -> bool:
+    for segment in path.parts:
+        if (
+            not segment
+            or segment in {".", ".."}
+            or "\\" in segment
+            or ":" in segment
+            or "%" in segment
+            or "#" in segment
+            or segment.endswith((" ", "."))
+            or _WINDOWS_DEVICE.fullmatch(segment)
+            or any(
+                ord(character) < 32 or ord(character) == 127
+                for character in segment
+            )
+        ):
+            return False
+    return True
 
 
 def _json_pointer(parts: Iterable[Any]) -> str:

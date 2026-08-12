@@ -334,6 +334,25 @@ def test_strict_parser_rejects_ambiguous_documents(
     assert str(tmp_path) not in str(caught.value)
 
 
+@pytest.mark.parametrize("suffix", ["json", "yaml"])
+def test_strict_parser_sanitizes_oversized_integer(
+    tmp_path: Path, suffix: str
+) -> None:
+    integer = "9" * 5_000
+    content = (
+        '{"schemaVersion":"1.0.0","x-big":' + integer + "}"
+        if suffix == "json"
+        else "schemaVersion: 1.0.0\nx-big: " + integer + "\n"
+    )
+    write_text(tmp_path, f"proof.{suffix}", content)
+
+    with pytest.raises(ConfigurationError) as caught:
+        load_scan_configuration(tmp_path, f"proof.{suffix}")
+
+    assert caught.value.code == "configuration.invalid-document"
+    assert "integer" not in str(caught.value).lower()
+
+
 def test_matching_is_sorted_deduplicated_and_each_selector_must_match(
     tmp_path: Path,
 ) -> None:
@@ -367,6 +386,16 @@ def test_matching_does_not_traverse_directory_links(tmp_path: Path) -> None:
         linked.symlink_to(external, target_is_directory=True)
     except OSError:
         pytest.skip("directory symlinks are unavailable on this platform")
+    config = resolve_scan_configuration(source_config(specifications=["**/*.json"]))
+
+    with pytest.raises(ConfigurationError) as caught:
+        match_specifications(tmp_path, config)
+
+    assert caught.value.code == "configuration.no-specification-match"
+
+
+def test_matching_skips_non_portable_repository_names(tmp_path: Path) -> None:
+    write_text(tmp_path, "api/bad%2fname.json", "{}")
     config = resolve_scan_configuration(source_config(specifications=["**/*.json"]))
 
     with pytest.raises(ConfigurationError) as caught:

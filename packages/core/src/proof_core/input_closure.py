@@ -734,6 +734,7 @@ def _parse_document(
         _DuplicateKeyError,
         json.JSONDecodeError,
         yaml.YAMLError,
+        ValueError,
         RecursionError,
     ) as error:
         raise InputClosureError(
