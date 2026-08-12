@@ -1,10 +1,12 @@
 # Initial threat model
 
-- **Status:** Proposed P0 security baseline
+- **Status:** Accepted P0 security baseline
 - **Date:** 2026-07-30
 - **Owner:** Phase 0 co-maintainers (`@back1ash`, `@Seo-yul`, and
   `@minsubyun1`)
 - **Issue:** [#8](https://github.com/SpecArgus/PROOF/issues/8)
+- **Decision record:** [PR #47](https://github.com/SpecArgus/PROOF/pull/47)
+  — accepted on 2026-08-12 under the one-co-maintainer material-decision rule
 - **Applies to:** the local CLI and any future PROOF-managed GitHub App,
   scan worker, and public report service
 
