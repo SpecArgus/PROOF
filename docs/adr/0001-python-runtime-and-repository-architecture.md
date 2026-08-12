@@ -263,7 +263,9 @@ worker cannot choose report destinations or modify trusted policy.
 The process adapter, strict parser, and path preflight reduce risk but do not
 replace OS-level isolation. Hosted production use is blocked until the threat
 model defines and tests hard filesystem, network, CPU, memory, process, output,
-and time boundaries.
+and time boundaries. The accepted
+[initial threat model](../security/initial-threat-model.md) defines those
+boundaries and the verification gates that must precede hosted use.
 
 Normalized results and provenance must not contain secrets, absolute host
 paths, environment variables, or credentials. Raw untrusted diagnostics are
@@ -294,8 +296,9 @@ public contract.
 - [ ] Implement only the selected production validator worker and protocol —
       follow-up implementation issue.
 - [ ] Specify and test the five P0 rule contracts — issue #10.
-- [ ] Define hard worker limits and residual risk in the threat model —
-      issue #8.
+- [x] Review and accept the hard worker limits and residual risks in the
+      accepted [initial threat model](../security/initial-threat-model.md) —
+      issue #8 and PR #47.
 - [ ] Decide public distribution names before publishing packages — issue #6.
 - [ ] Measure subprocess startup and first-scan installation time before the
       CLI alpha exit review.

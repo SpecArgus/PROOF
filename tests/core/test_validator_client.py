@@ -9,6 +9,7 @@ from proof_core import (
     WorkerFailure,
     WorkerLimits,
     build_input_closure,
+    normalize_operations,
     validate_openapi,
 )
 from proof_core.validator_client import _invoke_worker, _parse_response
@@ -57,6 +58,33 @@ paths: {}
     assert result.outcome == "invalid"
     assert result.diagnostics
     assert result.diagnostics[0].code == "oas.schema"
+
+
+def test_unsupported_dialect_remains_not_evaluated_across_layers(
+    tmp_path: Path,
+) -> None:
+    _write(
+        tmp_path / "root.yaml",
+        """openapi: '2.0'
+info:
+  title: Pets
+  version: 1.0.0
+paths: {}
+""",
+    )
+    closure = build_input_closure(tmp_path, "root.yaml")
+
+    validation = validate_openapi(closure)
+    operation_set = normalize_operations(closure)
+
+    assert validation.outcome == "invalid"
+    assert [item.code for item in validation.diagnostics] == [
+        "input.unsupported-dialect"
+    ]
+    assert operation_set.state == "indeterminate"
+    assert [item.code for item in operation_set.issues] == [
+        "normalize.unsupported-dialect"
+    ]
 
 
 def test_supervisor_requires_entrypoint_for_multi_entrypoint_closure(
@@ -211,6 +239,41 @@ def test_response_accepts_raw_observations_above_deduplicated_emissions() -> Non
     assert result.diagnostics_observed == 3
     assert len(result.diagnostics) == 1
     assert result.diagnostics_truncated == 0
+
+
+def test_response_rejects_control_characters_in_diagnostic_message() -> None:
+    payload = {
+        "protocolVersion": 1,
+        "worker": {"name": "openapi-spec-validator", "version": "0.9.0"},
+        "entrypoint": "root.yaml",
+        "manifestDigest": "0" * 64,
+        "outcome": "invalid",
+        "diagnostics": [
+            {
+                "source": "root.yaml",
+                "line": 1,
+                "column": 1,
+                "pointer": "/openapi",
+                "code": "oas.schema",
+                "severity": "error",
+                "kind": "schema",
+                "message": "unsafe\u001b[31m",
+            }
+        ],
+        "stats": {
+            "diagnosticsObserved": 1,
+            "diagnosticsEmitted": 1,
+            "diagnosticsTruncated": 0,
+        },
+    }
+
+    with pytest.raises(WorkerFailure, match="control characters"):
+        _parse_response(
+            json.dumps(payload, separators=(",", ":")).encode() + b"\n",
+            entrypoint="root.yaml",
+            manifest_digest="0" * 64,
+            limits=WorkerLimits(),
+        )
 
 
 @pytest.mark.parametrize(

@@ -77,7 +77,10 @@ work.
 ## Security
 
 Do not open public issues for suspected vulnerabilities. Follow the private
-reporting process in [SECURITY.md](SECURITY.md).
+reporting process in [SECURITY.md](SECURITY.md). The
+[initial threat model](docs/security/initial-threat-model.md) defines the P0
+security boundary, processing limits, hosted launch gates, and accepted
+residual risks.
 
 ## License
 

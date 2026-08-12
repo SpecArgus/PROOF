@@ -456,6 +456,13 @@ def _parse_diagnostic(value: Any) -> ValidatorDiagnostic:
             "protocol",
             "The validator emitted an incomplete diagnostic coordinate.",
         )
+    message = _require_string(value["message"], "diagnostic message")
+    if any(ord(character) < 32 or ord(character) == 127 for character in message):
+        raise WorkerFailure(
+            "worker.protocol",
+            "protocol",
+            "The validator emitted control characters in a diagnostic message.",
+        )
     return ValidatorDiagnostic(
         source=source,
         line=line,
@@ -464,7 +471,7 @@ def _parse_diagnostic(value: Any) -> ValidatorDiagnostic:
         code=_require_string(value["code"], "diagnostic code"),
         severity=_require_string(value["severity"], "diagnostic severity"),
         kind=_require_string(value["kind"], "diagnostic kind"),
-        message=_require_string(value["message"], "diagnostic message"),
+        message=message,
     )
 
 

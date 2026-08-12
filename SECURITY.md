@@ -1,5 +1,13 @@
 # Security Policy
 
+## Security model
+
+The [initial threat model](docs/security/initial-threat-model.md) defines the
+P0 trust boundaries, processing limits, required controls, verification, and
+accepted residual risks for untrusted OpenAPI documents and GitHub events.
+Hosted scanning remains blocked until its launch gates are implemented and
+verified.
+
 ## Supported versions
 
 PROOF has not published a stable release yet. Until a version support policy is announced, security fixes are applied to the active development line and included in the next release as appropriate.
