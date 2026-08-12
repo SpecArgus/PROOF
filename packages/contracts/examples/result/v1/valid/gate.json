@@ -1,6 +1,6 @@
 {
   "outcome": "advisory",
-  "failOn": "none",
+  "failOn": "high",
   "causingFindingFingerprints": [
     "sha256:75c318727694ba211746b223c80ed83e1738c98d87d607bc131cf017b3c05d68"
   ]

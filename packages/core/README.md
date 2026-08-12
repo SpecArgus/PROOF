@@ -41,6 +41,15 @@ RFC 8785 SHA-256 digest is shared by local and future hosted workers.
 case-sensitive, cross-platform semantics and never traverses repository links
 or version-control metadata.
 
+`proof_core.assemble_input_closure_run` derives validation, normalization, and
+rule evaluation directly from one immutable input closure, then combines their
+diagnostics and findings into the immutable normalized result-v1 contract. It
+independently recomputes finding fingerprints, checks
+configuration/input/rule-pack provenance joins, derives summary and gate state,
+and computes the RFC 8785 result digest. Incomplete validator output and
+configuration, input, or worker failures are emitted only as not-evaluated
+terminal runs; they cannot become a pass.
+
 ## Validation
 
 From the repository root:

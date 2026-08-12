@@ -15,6 +15,7 @@ from dataclasses import dataclass
 from pathlib import PurePosixPath
 from typing import Any, BinaryIO
 
+from proof_core.canonical_json import content_digest
 from proof_core.input_closure import InputClosure
 
 PROTOCOL_VERSION = 1
@@ -26,6 +27,15 @@ MAX_OBSERVED_DIAGNOSTICS = 2_048
 MAX_VALIDATOR_WALL_SECONDS = 5.0
 MAX_PROCESS_OUTPUT_BYTES = 1024 * 1024
 _READ_CHUNK = 64 * 1024
+VALIDATOR_SEMANTIC_DIGEST = content_digest(
+    {
+        "protocolVersion": PROTOCOL_VERSION,
+        "worker": {"name": WORKER_NAME, "version": WORKER_VERSION},
+        "maxRequestBytes": MAX_REQUEST_BYTES,
+        "maxEmittedDiagnostics": MAX_EMITTED_DIAGNOSTICS,
+        "maxObservedDiagnostics": MAX_OBSERVED_DIAGNOSTICS,
+    }
+)
 
 
 class WorkerFailure(RuntimeError):

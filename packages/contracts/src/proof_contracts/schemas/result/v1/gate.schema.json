@@ -72,25 +72,6 @@
       "if": {
         "properties": {
           "outcome": {
-            "const": "advisory"
-          }
-        },
-        "required": [
-          "outcome"
-        ]
-      },
-      "then": {
-        "properties": {
-          "failOn": {
-            "const": "none"
-          }
-        }
-      }
-    },
-    {
-      "if": {
-        "properties": {
-          "outcome": {
             "const": "blocked"
           }
         },

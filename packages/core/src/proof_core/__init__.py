@@ -50,6 +50,27 @@ from proof_core.operation_normalization import (
     normalize_operations,
     tokenize_risk_text,
 )
+from proof_core.result_model import (
+    RESULT_SCHEMA_VERSION,
+    AnalysisArtifacts,
+    ArtifactIdentity,
+    ContentIdentity,
+    GateResult,
+    NormalizedRun,
+    RunProvenance,
+    RunSummary,
+    TerminalError,
+)
+from proof_core.result_schema import ResultSchemaError, validate_normalized_run
+from proof_core.run_assembly import (
+    RunAssemblyError,
+    analysis_artifacts_v1,
+    assemble_configuration_error_run,
+    assemble_input_closure_run,
+    assemble_input_error_run,
+    evaluate_gate,
+    finding_fingerprint,
+)
 from proof_core.validator_client import (
     ValidatorDiagnostic,
     ValidatorResult,
@@ -106,6 +127,24 @@ __all__ = [
     "SecuritySchemeRequirement",
     "normalize_operations",
     "tokenize_risk_text",
+    "RESULT_SCHEMA_VERSION",
+    "AnalysisArtifacts",
+    "ArtifactIdentity",
+    "ContentIdentity",
+    "GateResult",
+    "NormalizedRun",
+    "RunProvenance",
+    "RunSummary",
+    "TerminalError",
+    "ResultSchemaError",
+    "validate_normalized_run",
+    "RunAssemblyError",
+    "analysis_artifacts_v1",
+    "assemble_configuration_error_run",
+    "assemble_input_closure_run",
+    "assemble_input_error_run",
+    "evaluate_gate",
+    "finding_fingerprint",
 ]
 
 __version__ = "0.1.0"
