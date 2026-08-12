@@ -55,7 +55,10 @@ decision and evidence trigger.
 - Build a labeled corpus of at least 100 OAS 3.0/3.1 operations.
 - Validate GitHub App permissions and public-fork behavior across the identified pull-request matrix.
 - Document the threat model for parsers, `$ref`, denial of service, SSRF, tokens, reports, and untrusted repository content.
-- Interview 5–8 target maintainers about App installation, vendor extensions, acceptable false positives, and offline alternatives.
+- Interview 5–8 target maintainers using the pre-registered
+  [Phase 0 interview plan](docs/research/phase-0-maintainer-interview-plan.md)
+  to evaluate App installation, vendor extensions, acceptable false positives,
+  and offline alternatives.
 
 ### Exit criteria
 
@@ -137,4 +140,9 @@ This phase begins only after the Phase 0 hosted-product go decision.
 
 ## Deferred beyond beta
 
-Custom rule languages, executable user plugins, MCP `tools/list` adapters, framework source adapters, LLM remediation, non-GitHub forges, and implementation/traffic drift analysis remain out of scope until the core contract-gating workflow is proven.
+Custom rule languages, executable user plugins, MCP `tools/list` adapters,
+framework source adapters, LLM remediation, non-GitHub forges, and
+implementation/traffic drift analysis remain out of scope until the core
+contract-gating workflow is proven. A versioned, specification-only projection
+profile may document how existing converters carry reviewed policy metadata;
+it does not authorize PROOF to implement or ship an adapter.

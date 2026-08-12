@@ -501,6 +501,37 @@ paths:
     )
 
 
+def test_authorization_issue_location_preserves_roles_field_presence(
+    tmp_path: Path,
+) -> None:
+    _write(
+        tmp_path / "root.yaml",
+        """openapi: 3.1.0
+info: {title: Test, version: 1.0.0}
+paths:
+  /absent:
+    post:
+      x-agent-policy: {authorization: {}}
+      responses: {'200': {description: ok}}
+  /present-empty:
+    post:
+      x-agent-policy: {authorization: {roles: []}}
+      responses: {'200': {description: ok}}
+""",
+    )
+
+    absent, present_empty = normalize_operations(
+        build_input_closure(tmp_path, "root.yaml")
+    ).operations
+
+    assert [item.pointer for item in absent.issues] == [
+        "/paths/~1absent/post/x-agent-policy/authorization"
+    ]
+    assert [item.pointer for item in present_empty.issues] == [
+        "/paths/~1present-empty/post/x-agent-policy/authorization/roles"
+    ]
+
+
 def test_operation_views_are_deterministic_immutable_and_dialect_neutral(
     tmp_path: Path,
 ) -> None:
