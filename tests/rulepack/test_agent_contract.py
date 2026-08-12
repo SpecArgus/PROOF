@@ -442,6 +442,59 @@ def test_missing_policy_subfield_locates_present_policy_object(
 
 
 @pytest.mark.parametrize(
+    ("authorization", "expected_suffix"),
+    [
+        ("{}", "/x-agent-policy"),
+        ("null", "/x-agent-policy"),
+        ("{roles: []}", "/x-agent-policy/authorization/roles"),
+        ('{roles: [" "]}', "/x-agent-policy/authorization/roles"),
+    ],
+)
+def test_security_location_uses_only_present_authorization_roles_field(
+    tmp_path: Path,
+    authorization: str,
+    expected_suffix: str,
+) -> None:
+    _write(
+        tmp_path / "root.yaml",
+        f"""openapi: 3.1.0
+info: {{title: Review, version: 1.0.0}}
+components:
+  securitySchemes:
+    auth: {{type: http, scheme: bearer}}
+security: [{{auth: []}}]
+paths:
+  /roles:
+    post:
+      operationId: createRole
+      summary: Create role
+      x-agent-policy:
+        confirmation: {{mode: required}}
+        authorization: {authorization}
+      responses:
+        default:
+          description: problem
+          content:
+            application/json: {{schema: {{type: object}}}}
+""",
+    )
+
+    operations = normalize_operations(build_input_closure(tmp_path, "root.yaml"))
+    first = evaluate_agent_contract(operations)
+    second = evaluate_agent_contract(operations)
+    finding = next(
+        item for item in first.findings if item.rule_id == "AGT-POL-002"
+    )
+    actual = finding.to_dict()
+
+    assert finding.location.pointer == f"/paths/~1roles/post{expected_suffix}"
+    assert finding.fingerprint == _expected_fingerprint(actual)
+    assert [item.to_dict() for item in first.findings] == [
+        item.to_dict() for item in second.findings
+    ]
+
+
+@pytest.mark.parametrize(
     ("root_security", "expects_finding"),
     [
         ("[{auth: []}]", False),
