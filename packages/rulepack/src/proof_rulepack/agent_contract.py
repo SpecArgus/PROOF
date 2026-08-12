@@ -494,10 +494,18 @@ def _security_location(operation: Any, missing: list[str]) -> FindingLocation:
             f"{operation.policy.pointer}/dataClassification",
         )
     if "authorization.roles" in missing and operation.policy.authorization_present:
-        return FindingLocation(
-            operation.policy.source,
-            f"{operation.policy.pointer}/authorization/roles",
+        authorization_pointer = f"{operation.policy.pointer}/authorization"
+        roles_absent = any(
+            issue.code == "normalize.invalid-agent-policy"
+            and issue.source == operation.policy.source
+            and issue.pointer == authorization_pointer
+            for issue in operation.issues
         )
+        if not roles_absent:
+            return FindingLocation(
+                operation.policy.source,
+                f"{authorization_pointer}/roles",
+            )
     if operation.policy.present and {
         "dataClassification",
         "authorization.roles",
