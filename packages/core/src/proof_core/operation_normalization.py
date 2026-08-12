@@ -1001,9 +1001,9 @@ def _normalize_policy(
                 )
 
     authorization_roles: tuple[str, ...] = ()
-    raw_authorization = raw_policy.get("authorization")
     authorization_present = "authorization" in raw_policy
-    if raw_authorization is not None:
+    if authorization_present:
+        raw_authorization = raw_policy["authorization"]
         authorization_pointer = _append_pointer(policy_pointer, "authorization")
         if not isinstance(raw_authorization, Mapping):
             issues.append(
@@ -1028,20 +1028,32 @@ def _normalize_policy(
                             "Policy authorization contains an unsupported field.",
                         )
                     )
-            raw_roles = raw_authorization.get("roles", [])
-            if (
-                not isinstance(raw_roles, Sequence)
-                or isinstance(raw_roles, (str, bytes))
-                or not all(isinstance(item, str) for item in raw_roles)
-            ):
+            roles_present = "roles" in raw_authorization
+            if not roles_present:
                 issues.append(
                     NormalizationIssue(
                         "normalize.invalid-agent-policy",
                         source,
-                        _append_pointer(authorization_pointer, "roles"),
-                        "Policy authorization roles must be an array of strings.",
+                        authorization_pointer,
+                        "Policy authorization requires roles.",
                     )
                 )
+            raw_roles = raw_authorization.get("roles")
+            if (
+                not roles_present
+                or not isinstance(raw_roles, Sequence)
+                or isinstance(raw_roles, (str, bytes))
+                or not all(isinstance(item, str) for item in raw_roles)
+            ):
+                if roles_present:
+                    issues.append(
+                        NormalizationIssue(
+                            "normalize.invalid-agent-policy",
+                            source,
+                            _append_pointer(authorization_pointer, "roles"),
+                            "Policy authorization roles must be an array of strings.",
+                        )
+                    )
             else:
                 authorization_roles = tuple(sorted(set(raw_roles)))
                 if (

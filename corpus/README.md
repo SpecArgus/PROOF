@@ -8,8 +8,8 @@ agent-contract rules.
 
 The conformance fixtures in `rulepacks/agent-contract/v1/fixtures/` verify that
 rule specifications are unambiguous. This corpus serves a different purpose: it
-provides a deterministic evaluation baseline that a future engine implementation
-can be run against to measure accuracy.
+provides a deterministic evaluation baseline that the PROOF engine is run against
+to measure accuracy.
 
 ## Structure
 
@@ -24,7 +24,7 @@ corpus/
 
 ## Pilot status
 
-This directory contains the 10-operation synthetic pilot. Issue #11 remains open
+This directory contains the 61-operation synthetic pilot. Issue #11 remains open
 until at least 100 operations are labeled and the full acceptance criteria are met.
 
 ## Adding cases
@@ -45,24 +45,12 @@ is not enforced until the full corpus stage.
 
 ## Known limitations of the pilot test suite
 
-**`classify_operation` validation is deferred.**
-
-`tests/corpus/test_corpus_manifest.py` validates that `expectedRisks` and
-`expectedNonRisks` are exhaustive and internally consistent, and that each
-finding's `riskCategories` is a subset of `expectedRisks`. It does not execute
-the deterministic risk classifier against fixtures and compare the output to
-`expectedRisks`.
-
-Automated classifier execution requires either a canonical shared helper
-extracted from `tests/rulepack/test_p0_rule_specifications.py` or the actual
-PROOF engine. Extracting the shared helper requires adding `pythonpath` to
-`pyproject.toml` and touching `test_p0_rule_specifications.py`; both changes
-are deferred to a follow-up issue.
-
-Until that follow-up is resolved, `expectedRisks` values in this corpus are
-validated by manual review only. The conformance tests in
-`tests/rulepack/test_p0_rule_specifications.py` remain the authoritative
-regression guard for the classifier algorithm.
+The corpus test runs every fixture through the closure-only OpenAPI validator,
+normalizer, risk classifier, and agent-contract rule evaluator. It requires a
+one-to-one mapping between fixture operations and manifest cases, then compares
+the engine's risks and projected findings with each labeled expectation. Results
+are cached once per fixture for the pytest session so the check remains bounded
+as the corpus grows.
 
 **YAML fixtures are not supported in the pilot.**
 
