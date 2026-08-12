@@ -137,4 +137,9 @@ This phase begins only after the Phase 0 hosted-product go decision.
 
 ## Deferred beyond beta
 
-Custom rule languages, executable user plugins, MCP `tools/list` adapters, framework source adapters, LLM remediation, non-GitHub forges, and implementation/traffic drift analysis remain out of scope until the core contract-gating workflow is proven.
+Custom rule languages, executable user plugins, MCP `tools/list` adapters,
+framework source adapters, LLM remediation, non-GitHub forges, and
+implementation/traffic drift analysis remain out of scope until the core
+contract-gating workflow is proven. A versioned, specification-only projection
+profile may document how existing converters carry reviewed policy metadata;
+it does not authorize PROOF to implement or ship an adapter.

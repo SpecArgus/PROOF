@@ -103,6 +103,13 @@ is delivered to an agent. This is separate from the runtime boundary above: a
 declaration can be absent from the agent's context even before any question of
 runtime enforcement arises.
 
+The optional, versioned
+[Agent policy to MCP projection profile v1](../../../docs/contracts/agent-policy-mcp-projection-v1.md)
+defines how converter operators can carry the policy into MCP descriptions and
+the subset of standard annotations supported by exact policy evidence. Profile
+adoption is separate from a rule-pack pass and does not change this rule pack's
+identity.
+
 ## Resolved P0 choices
 
 The following choices remove ambiguities from the product requirements:
