@@ -92,6 +92,17 @@ category inferred from the method, path, or `operationId`. The confirmation
 mode `not-required` is a valid explicit policy only when it has a non-empty
 reason. It records a static declaration; it does not bypass a runtime control.
 
+### Delivery assumption
+
+`x-agent-policy` reaches a human reviewer through PROOF findings. It does not
+automatically reach a tool-calling model. Surveyed OpenAPI-to-MCP converters
+propagate `summary`, `description`, and parameter descriptions, but do not
+surface third-party `x-*` extensions by default. `AGT-POL-001` and
+`AGT-POL-002` verify that a declaration exists and is well formed, not that it
+is delivered to an agent. This is separate from the runtime boundary above: a
+declaration can be absent from the agent's context even before any question of
+runtime enforcement arises.
+
 ## Resolved P0 choices
 
 The following choices remove ambiguities from the product requirements:
