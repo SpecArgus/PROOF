@@ -1,78 +1,79 @@
 {
-  "openapi": "3.1.1",
+  "openapi": "3.0.3",
   "info": {
-    "title": "AGT-POL-001 corpus cases",
+    "title": "AGT-POL-001 corpus cases (OAS 3.0.x)",
     "version": "1.0.0"
   },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
   "paths": {
-    "/transfers": {
+    "/cache": {
+      "delete": {
+        "operationId": "flushCache",
+        "summary": "Flush the application cache",
+        "responses": {
+          "204": {
+            "description": "Flushed"
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/permissions": {
       "post": {
-        "operationId": "initiateTransfer",
-        "summary": "Initiate a fund transfer",
+        "operationId": "setEntitlement",
+        "summary": "Grant an entitlement permission",
+        "x-agent-policy": {
+          "authorization": {
+            "roles": ["admin"]
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks/actions": {
+      "post": {
+        "operationId": "cancelTask",
+        "summary": "Cancel a pending task",
         "responses": {
           "202": {
-            "description": "Transfer accepted"
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "operationId": "listTransfers",
-        "summary": "List payment transfers",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/search": {
-      "post": {
-        "operationId": "searchCatalog",
-        "summary": "Search the catalog with a structured filter",
-        "responses": {
-          "200": {
-            "description": "Results"
-          },
-          "400": {
-            "description": "Invalid search filter",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/notifications": {
-      "post": {
-        "operationId": "createAlert",
-        "summary": "Send a notification alert",
-        "responses": {
-          "201": {
-            "description": "Created"
+            "description": "Accepted"
           },
           "400": {
             "description": "Invalid request",
@@ -92,16 +93,24 @@
         }
       }
     },
-    "/batch/status": {
-      "get": {
-        "operationId": "getBatchStatus",
-        "summary": "Get batch processing status",
-        "x-agent-policy": {
-          "risks": ["external_side_effect"]
-        },
+    "/payments/{paymentId}": {
+      "delete": {
+        "operationId": "voidPayment",
+        "summary": "Void a payment transaction",
+        "parameters": [
+          {
+            "name": "paymentId",
+            "in": "path",
+            "required": true,
+            "description": "Payment identifier.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "Voided"
           },
           "400": {
             "description": "Invalid request",
@@ -121,14 +130,14 @@
         }
       }
     },
-    "/webhooks": {
+    "/invoices": {
       "post": {
-        "operationId": "registerWebhook",
-        "summary": "Register a webhook endpoint",
+        "operationId": "createInvoice",
+        "summary": "Create a billing invoice",
         "x-agent-policy": {
           "confirmation": {
-            "mode": "conditional",
-            "condition": "Outbound network requests are enabled in tenant settings."
+            "mode": "not-required",
+            "reason": "Invoice creation is a bookkeeping record only; the charge is applied separately through the billing workflow."
           }
         },
         "responses": {
@@ -153,13 +162,16 @@
         }
       }
     },
-    "/charges": {
+    "/grants": {
       "post": {
-        "operationId": "submitCharge",
-        "summary": "Submit a charge to the payment processor",
+        "operationId": "createGrant",
+        "summary": "Create an authorization grant",
         "x-agent-policy": {
           "confirmation": {
-            "mode": "required"
+            "mode": "conditional"
+          },
+          "authorization": {
+            "roles": ["admin"]
           }
         },
         "responses": {
@@ -182,6 +194,45 @@
             }
           }
         }
+      }
+    },
+    "/purges": {
+      "post": {
+        "operationId": "executeCleanup",
+        "summary": "Purge stale data records",
+        "x-agent-policy": {
+          "confirmation": {
+            "mode": "not-required"
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
       }
     }
   }

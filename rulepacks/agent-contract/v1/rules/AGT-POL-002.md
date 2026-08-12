@@ -57,6 +57,20 @@ These fields are untrusted static hints. Passing this rule does not prove that
 the API enforces authentication, authorization, least privilege, or data
 handling controls.
 
+## Delivery assumption
+
+`x-agent-policy` is a PROOF-defined OpenAPI extension, and OpenAPI `security` is
+consumed by a converter to wire authentication rather than to describe the
+operation to a model. Surveyed OpenAPI-to-MCP converters propagate `summary`,
+`description`, and parameter descriptions, but do not surface third-party `x-*`
+extensions by default.
+
+A pass therefore records an auditable declaration for human review. It does not
+establish that an agent will be told the operation is privileged or handles
+sensitive data. This limit is distinct from the enforcement limit above: it
+applies before invocation, to whether the metadata is present in the agent's
+context at all.
+
 ## Dialects and false positives
 
 Behavior is identical for OpenAPI 3.0.x and 3.1.x. `GET /roles` is not a

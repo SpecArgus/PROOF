@@ -35,7 +35,10 @@ date.
   and releases: Phase 0 co-maintainers.
 - Equal role members: `@back1ash`, `@Seo-yul`, and `@minsubyun1`.
 - Evidence reviewers: `@Seo-yul` and `@minsubyun1`.
-- Material-decision rule: recorded agreement from at least two co-maintainers.
+- Material-decision rule: recorded agreement from at least one co-maintainer
+  (amended from the original two-of-three quorum; see
+  [ADR 0002](docs/adr/0002-product-identity-and-phase-0-governance.md)'s
+  amendment notes).
 - Review timing: exit-criteria-driven, with no fixed calendar date.
 - Gate outcomes: proceed, revise and re-evaluate, or stop.
 
