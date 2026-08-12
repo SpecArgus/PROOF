@@ -42,6 +42,14 @@ PROOF does not execute agents, generate MCP servers, call production APIs, or
 replace authorization, confirmation, sandboxing, and other runtime controls.
 A passing result means only that the configured static contract checks passed.
 
+Separately from runtime enforcement, PROOF cannot verify delivery. Its policy
+rules read `x-agent-policy`, a PROOF-defined OpenAPI extension. Surveyed
+OpenAPI-to-MCP converters propagate `summary`, `description`, and parameter
+descriptions, but do not surface third-party `x-*` extensions to a model by
+default. Unless the toolchain that exposes an operation propagates the
+extension, a passing policy rule records an auditable declaration for human
+review and does not establish that an agent will see it.
+
 ## Project status
 
 Work is organized by exit criteria rather than target dates. The current phase

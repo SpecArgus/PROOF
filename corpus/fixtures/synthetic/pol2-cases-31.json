@@ -1,0 +1,176 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "AGT-POL-002 corpus cases (OAS 3.1.x)",
+    "version": "1.0.0"
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/profiles": {
+      "get": {
+        "operationId": "listProfiles",
+        "summary": "List user profiles",
+        "x-agent-policy": {
+          "dataClassification": "public"
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/credentials/{credentialId}": {
+      "get": {
+        "operationId": "getCredential",
+        "summary": "Get a stored credential",
+        "security": [{}],
+        "x-agent-policy": {
+          "dataClassification": "restricted"
+        },
+        "parameters": [
+          {
+            "name": "credentialId",
+            "in": "path",
+            "required": true,
+            "description": "Credential identifier.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/tokens": {
+      "get": {
+        "operationId": "listTokens",
+        "summary": "List active tokens",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/access/credentials": {
+      "post": {
+        "operationId": "createEntry",
+        "summary": "Create an access credential entry",
+        "x-agent-policy": {
+          "dataClassification": "confidential",
+          "confirmation": {
+            "mode": "required"
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/secrets/{secretId}": {
+      "get": {
+        "operationId": "getSecret",
+        "summary": "Get a stored secret",
+        "x-agent-policy": {
+          "dataClassification": "restricted"
+        },
+        "parameters": [
+          {
+            "name": "secretId",
+            "in": "path",
+            "required": true,
+            "description": "Secret identifier.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/roles/{roleId}/secrets": {
+      "patch": {
+        "operationId": "updateRoleSecrets",
+        "summary": "Update the secrets associated with a role",
+        "x-agent-policy": {
+          "dataClassification": "confidential",
+          "authorization": {
+            "roles": ["admin"]
+          },
+          "confirmation": {
+            "mode": "required"
+          }
+        },
+        "parameters": [
+          {
+            "name": "roleId",
+            "in": "path",
+            "required": true,
+            "description": "Role identifier.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}

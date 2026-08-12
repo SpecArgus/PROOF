@@ -55,6 +55,20 @@ semantics.
 - Recommendation: `Declare x-agent-policy.confirmation with required, conditional, or a reasoned not-required mode.`
 - Risk categories: all deterministically assigned categories.
 
+## Delivery assumption
+
+`x-agent-policy` is a PROOF-defined OpenAPI extension. This rule verifies that a
+confirmation declaration exists and is well formed. It cannot verify that the
+declaration reaches an agent: surveyed OpenAPI-to-MCP converters propagate
+`summary`, `description`, and parameter descriptions, but do not surface
+third-party `x-*` extensions by default, so a compliant confirmation policy may
+be invisible to a tool-calling model.
+
+A pass therefore records an auditable declaration for human review. It does not
+establish that an agent will be told confirmation is required. This limit is
+distinct from the runtime limit above: it applies before invocation, to whether
+the policy is present in the agent's context at all.
+
 ## Dialects and false positives
 
 Behavior is identical for OpenAPI 3.0.x and 3.1.x. A generic `POST /search`

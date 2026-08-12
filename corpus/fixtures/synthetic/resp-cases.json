@@ -80,6 +80,103 @@
           }
         }
       }
+    },
+    "/runs": {
+      "post": {
+        "operationId": "createRun",
+        "summary": "Start a pipeline run",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/documents/{documentId}": {
+      "patch": {
+        "operationId": "updateDocument",
+        "summary": "Apply a partial update to a document",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "required": true,
+            "description": "Document identifier.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/payments": {
+      "post": {
+        "operationId": "createPayment",
+        "summary": "Submit a payment request",
+        "x-agent-policy": {
+          "confirmation": {
+            "mode": "required"
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/builds": {
+      "post": {
+        "operationId": "submitBuild",
+        "summary": "Submit a build job",
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          },
+          "5XX": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/queue": {
+      "get": {
+        "operationId": "listQueueEntries",
+        "summary": "List pending queue entries",
+        "x-agent-policy": {
+          "risks": ["destructive"],
+          "confirmation": {
+            "mode": "required"
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   }
 }
