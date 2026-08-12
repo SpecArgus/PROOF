@@ -498,6 +498,11 @@ def _security_location(operation: Any, missing: list[str]) -> FindingLocation:
             operation.policy.source,
             f"{operation.policy.pointer}/authorization/roles",
         )
+    if operation.policy.present and {
+        "dataClassification",
+        "authorization.roles",
+    } & set(missing):
+        return FindingLocation(operation.policy.source, operation.policy.pointer)
     return FindingLocation(operation.source, operation.pointer)
 
 
