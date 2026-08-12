@@ -31,3 +31,5 @@ issue explicitly authorizes a reversible spike.
   — Accepted on 2026-07-25.
 - [ADR 0002: Adopt the Phase 0 product identity and governance](0002-product-identity-and-phase-0-governance.md)
   — Accepted on 2026-07-31.
+- [ADR 0003: Adopt a versioned Agent policy to MCP projection profile](0003-adopt-agent-policy-mcp-projection-profile.md)
+  — Accepted on 2026-08-12.

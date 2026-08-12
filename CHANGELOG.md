@@ -11,6 +11,8 @@ The format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0
 - Establish the repository governance, contribution workflow, issue templates,
   release policy, review ownership, and exit-criteria-based roadmap.
 - Add language-neutral repository metadata validation for pull requests.
+- Add a versioned, specification-only profile for projecting `x-agent-policy`
+  into MCP tool descriptions and supported annotation hints.
 
 ### Changed
 
