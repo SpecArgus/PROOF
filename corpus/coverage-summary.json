@@ -29,7 +29,6 @@
   },
   "notes": [
     "YAML format coverage deferred: no approved YAML parser dependency in current lockfile.",
-    "Public-source cases deferred to full-corpus expansion stage.",
-    "Automated classify_operation validation deferred until a canonical shared classifier helper or engine is available."
+    "Public-source cases deferred to full-corpus expansion stage."
   ]
 }
