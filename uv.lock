@@ -238,11 +238,21 @@ name = "proof-core"
 version = "0.1.0"
 source = { editable = "packages/core" }
 dependencies = [
+    { name = "jsonschema" },
+    { name = "proof-contracts" },
+    { name = "proof-rulepack" },
     { name = "pyyaml" },
+    { name = "rfc8785" },
 ]
 
 [package.metadata]
-requires-dist = [{ name = "pyyaml", specifier = "==6.0.3" }]
+requires-dist = [
+    { name = "jsonschema", specifier = "==4.26.0" },
+    { name = "proof-contracts", editable = "packages/contracts" },
+    { name = "proof-rulepack", editable = "packages/rulepack" },
+    { name = "pyyaml", specifier = "==6.0.3" },
+    { name = "rfc8785", specifier = "==0.1.4" },
+]
 
 [[package]]
 name = "proof-rulepack"

@@ -4,8 +4,16 @@ version = "0.1.0"
 description = "Deterministic analysis core for PROOF"
 requires-python = ">=3.14,<3.15"
 dependencies = [
+  "jsonschema==4.26.0",
   "pyyaml==6.0.3",
+  "proof-contracts==0.1.0",
+  "proof-rulepack==0.1.0",
+  "rfc8785==0.1.4",
 ]
+
+[tool.uv.sources]
+proof-contracts = { workspace = true }
+proof-rulepack = { workspace = true }
 
 [build-system]
 requires = ["hatchling==1.31.0"]

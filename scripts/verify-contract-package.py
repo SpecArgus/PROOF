@@ -5,6 +5,7 @@ from pathlib import Path
 from zipfile import ZipFile
 
 EXPECTED_SCHEMAS = {
+    "proof_contracts/schemas/config/v1/config.schema.json",
     "proof_contracts/schemas/result/v1/common.schema.json",
     "proof_contracts/schemas/result/v1/finding.schema.json",
     "proof_contracts/schemas/result/v1/gate.schema.json",

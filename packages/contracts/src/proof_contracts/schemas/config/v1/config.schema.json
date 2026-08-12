@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://specargus.github.io/PROOF/schemas/config/v1/config.schema.json",
+  "title": "PROOF scan configuration v1",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "specifications",
+    "rulePack"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "specifications": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 32,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512,
+        "pattern": "^(?!/)(?!.*//)(?!.*(?:^|/)\\.\\.?(?:/|$))(?!.*(?:^|/)(?:[Cc][Oo][Nn]|[Pp][Rr][Nn]|[Aa][Uu][Xx]|[Nn][Uu][Ll]|[Cc][Oo][Mm][1-9]|[Ll][Pp][Tt][1-9])(?:\\.[^/]*)?(?:/|$))(?!.*(?:^|/)[^/]*[ .](?:/|$))(?!.*(?:^|/)\\.+(?:json|yaml|yml)$)(?!.*[\\[\\]{}])[^\\\\:#%\\u0000-\\u001f\\u007f]+\\.(?:json|yaml|yml)$"
+      }
+    },
+    "rulePack": {
+      "$ref": "#/$defs/artifactIdentity"
+    },
+    "failOn": {
+      "enum": [
+        "error",
+        "high",
+        "medium",
+        "low",
+        "none"
+      ],
+      "default": "high"
+    },
+    "scope": {
+      "const": "all",
+      "default": "all"
+    }
+  },
+  "patternProperties": {
+    "^x-[a-z0-9][a-z0-9._-]*$": {}
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": ".*\\S.*"
+    },
+    "artifactIdentity": {
+      "type": "object",
+      "required": [
+        "name",
+        "version",
+        "digest"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "version": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "digest": {
+          "$ref": "#/$defs/digest"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

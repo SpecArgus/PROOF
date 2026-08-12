@@ -17,6 +17,7 @@ Thumbs.db
 *.log
 .cache/
 .pytest_cache/
+.test-tmp/
 .ruff_cache/
 __pycache__/
 *.py[cod]
