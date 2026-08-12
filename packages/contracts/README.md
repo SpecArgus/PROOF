@@ -21,6 +21,11 @@ The canonical source files are packaged below
   summary counts, gate outcome, and provenance.
 - `common.schema.json` contains shared strict definitions.
 
+The shared scan-configuration contract is packaged at
+`src/proof_contracts/schemas/config/v1/config.schema.json`. It pins the input
+selectors, exact semantic rule-pack identity, gate threshold, and P0 scope used
+by both local and future hosted execution.
+
 Repository examples are under `examples/result/v1`. Files in `valid` must pass
 their matching schema. Files in `invalid` are regression cases that must be
 rejected.

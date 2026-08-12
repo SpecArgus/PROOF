@@ -33,6 +33,14 @@ responses, security, Agent policy metadata, and deterministic risk evidence.
 The v1 classifier uses only method, exact path and operationId tokens, and
 explicit policy risks; descriptions never influence classification.
 
+`proof_core.load_scan_configuration` strictly parses one repository-relative
+JSON or YAML configuration without following `$ref`. It resolves deterministic
+defaults and explicit local overrides into an immutable effective policy whose
+RFC 8785 SHA-256 digest is shared by local and future hosted workers.
+`proof_core.match_specifications` expands its bounded POSIX selectors with
+case-sensitive, cross-platform semantics and never traverses repository links
+or version-control metadata.
+
 ## Validation
 
 From the repository root:

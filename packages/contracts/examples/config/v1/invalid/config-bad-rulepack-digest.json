@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "1.0.0",
+  "specifications": ["openapi.json"],
+  "rulePack": {
+    "name": "agent-contract",
+    "version": "0.1.0",
+    "digest": "sha256:6EE271830AD74F69F77BC83BC6D783020E4E895408EA1DEE4BD332139E3FF71B"
+  }
+}

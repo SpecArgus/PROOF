@@ -84,6 +84,22 @@ class InputLimits:
 
 
 @dataclass(frozen=True, slots=True)
+class DocumentLimits:
+    """Inclusive limits for one strict JSON or YAML repository document."""
+
+    max_bytes: int = 256 * 1024
+    max_document_nesting: int = 32
+    max_yaml_aliases: int = 20
+
+    def __post_init__(self) -> None:
+        for field in fields(self):
+            value = getattr(self, field.name)
+            minimum = 1 if field.name != "max_yaml_aliases" else 0
+            if isinstance(value, bool) or not isinstance(value, int) or value < minimum:
+                raise ValueError(f"{field.name} must be an integer >= {minimum}")
+
+
+@dataclass(frozen=True, slots=True)
 class InputFile:
     """Content identity recorded in an input manifest."""
 
@@ -158,6 +174,14 @@ class InputClosure:
             if resource.path == path:
                 return resource.content
         raise KeyError(path)
+
+
+@dataclass(frozen=True, slots=True)
+class RepositoryDocument:
+    """A stable repository file and its strictly parsed JSON-compatible value."""
+
+    resource: InputResource
+    value: Any
 
 
 class _DuplicateKeyError(ValueError):
@@ -335,6 +359,83 @@ def build_input_manifest(
         entrypoints,
         limits=limits,
     ).manifest
+
+
+def read_repository_document(
+    repository_root: str | os.PathLike[str],
+    path: str,
+    *,
+    limits: DocumentLimits | None = None,
+) -> RepositoryDocument:
+    """Read one repository-relative JSON/YAML file without following `$ref`."""
+
+    effective_limits = limits or DocumentLimits()
+    resource = read_repository_resource(
+        repository_root,
+        path,
+        max_bytes=effective_limits.max_bytes,
+    )
+    return parse_repository_document(resource, limits=effective_limits)
+
+
+def read_repository_resource(
+    repository_root: str | os.PathLike[str],
+    path: str,
+    *,
+    max_bytes: int = 256 * 1024,
+) -> InputResource:
+    """Read one stable repository-relative JSON/YAML resource without parsing."""
+
+    if isinstance(max_bytes, bool) or not isinstance(max_bytes, int) or max_bytes < 1:
+        raise ValueError("max_bytes must be an integer >= 1")
+    root = _repository_root(repository_root)
+    normalized_paths = _normalize_entrypoints(path)
+    normalized_path = normalized_paths[0]
+    content = _read_stable_file(
+        root,
+        normalized_path,
+        size_limits=(
+            (
+                max_bytes,
+                "document-bytes-limit",
+                "document exceeds the byte limit",
+            ),
+        ),
+    )
+    return InputResource(
+        path=normalized_path,
+        content=content,
+        digest=f"sha256:{hashlib.sha256(content).hexdigest()}",
+    )
+
+
+def parse_repository_document(
+    resource: InputResource,
+    *,
+    limits: DocumentLimits | None = None,
+) -> RepositoryDocument:
+    """Strictly parse one previously captured repository resource."""
+
+    effective_limits = limits or DocumentLimits()
+    if resource.size > effective_limits.max_bytes:
+        raise InputClosureError(
+            "document-bytes-limit",
+            "document exceeds the byte limit",
+            path=resource.path,
+        )
+    value = _parse_document(
+        resource.path,
+        resource.content,
+        limits=InputLimits(
+            max_entrypoint_bytes=effective_limits.max_bytes,
+            max_total_bytes=effective_limits.max_bytes,
+            max_files=1,
+            max_reference_depth=0,
+            max_document_nesting=effective_limits.max_document_nesting,
+            max_yaml_aliases=effective_limits.max_yaml_aliases,
+        ),
+    )
+    return RepositoryDocument(resource=resource, value=value)
 
 
 def _repository_root(repository_root: str | os.PathLike[str]) -> Path:
@@ -585,6 +686,12 @@ def _parse_document(
     *,
     limits: InputLimits,
 ) -> Any:
+    if content.startswith(b"\xef\xbb\xbf"):
+        raise InputClosureError(
+            "utf8-bom",
+            "input document must use UTF-8 without a byte-order mark",
+            path=relative_path,
+        )
     try:
         text = content.decode("utf-8")
     except UnicodeDecodeError as error:
@@ -627,6 +734,7 @@ def _parse_document(
         _DuplicateKeyError,
         json.JSONDecodeError,
         yaml.YAMLError,
+        ValueError,
         RecursionError,
     ) as error:
         raise InputClosureError(
