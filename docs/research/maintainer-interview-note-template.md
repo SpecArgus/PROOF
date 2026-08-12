@@ -17,6 +17,8 @@ never names or organization identifiers.
 - **OpenAPI dialects:** 3.0.x / 3.1.x
 - **Current automation:** none / validator / linter / generated diff / other
 - **App or CI authority:** approver / documented requester / unknown
+- **Concept presentation order:** hosted / CLI-only / deferred (record exact
+  rotation)
 
 ## Consent and sanitization
 
@@ -84,6 +86,16 @@ Do not infer a numeric false-positive threshold from qualitative language.
 
 ## Delivery concept reactions
 
+Assume the Hosted App and repository-controlled CI can present equivalent
+pull-request feedback: a Check or status, summary, and web-shaped report. Record
+whether the participant accepts that comparison. Do not count preference for a
+presentation surface alone as preference for PROOF-managed hosting.
+
+- **Equivalent feedback-surface assumption:** accepted / challenged
+- **Preferred PR surface:** Check / status / job summary / artifact / static
+  report / other
+- **Required-gate and public-fork behavior expected from either path:**
+
 ### Hosted App
 
 - **Trial conditions:**
@@ -91,6 +103,7 @@ Do not infer a numeric false-positive threshold from qualitative language.
 - **Permission concerns:**
 - **Public-report or data concerns:**
 - **Fork or required-check concerns:**
+- **PROOF-managed execution, retention, deletion, and support concerns:**
 - **Hard blocker:** none / described below
 
 ### CLI-only
@@ -98,7 +111,10 @@ Do not infer a numeric false-positive threshold from qualitative language.
 - **Trial conditions:**
 - **Local or CI owner:**
 - **Offline/no-egress requirement:**
-- **Operational or presentation concerns:**
+- **Repository-owned Check/status or job-summary reaction:**
+- **Repository-owned artifact or static-report reaction:**
+- **Fork or required-check concerns:**
+- **Operational, retention, or presentation concerns:**
 - **Hard blocker:** none / described below
 
 ### Deferred hosted
@@ -125,6 +141,8 @@ into an adoption commitment.
 - **Repeated pain signal:** supports / opposes / neutral
 - **Hosted adoption signal:** supports / opposes / neutral
 - **CLI adoption signal:** supports / opposes / neutral
+- **Hosting signal after holding PR presentation equivalent:** supports /
+  opposes / neutral
 - **Public-fork relevance:** supports / opposes / neutral
 - **Material objection:**
 - **Research limitation:**

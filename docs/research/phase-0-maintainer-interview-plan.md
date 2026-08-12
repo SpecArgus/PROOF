@@ -1,6 +1,6 @@
 # Phase 0 maintainer interview plan
 
-- **Status:** Proposed interview protocol
+- **Status:** Proposed interview protocol (awaiting recorded co-maintainer agreement)
 - **Owner:** Phase 0 co-maintainers
 - **Issue:** [#9](https://github.com/SpecArgus/PROOF/issues/9)
 - **Decision:** Hosted GitHub App, CLI-only, or defer
@@ -11,8 +11,9 @@ guide, evidence model, and decision thresholds before the first interview so
 that interest in a proposed solution cannot be substituted for evidence of a
 real problem.
 
-The protocol may be used only after at least two Phase 0 co-maintainers record
-agreement in the linked pull request or issue. Interview evidence can be
+The protocol may be used only after at least one eligible, non-conflicted Phase
+0 co-maintainer records agreement in the linked pull request or issue, as
+required by the current material-decision rule. Interview evidence can be
 collected while the GitHub and security investigations are in progress, but a
 final hosted-product recommendation remains gated on issues
 [#7](https://github.com/SpecArgus/PROOF/issues/7) and
@@ -81,8 +82,8 @@ represent a broad market. The qualifying set should include:
 
 If five qualifying interviews are complete but a diversity target is missing,
 the evidence bundle must name that limitation and the final recommendation is
-`defer` unless two co-maintainers approve a narrower target segment before
-interpreting the results.
+`defer` unless at least one eligible, non-conflicted co-maintainer records
+agreement with a narrower target segment before interpreting the results.
 
 Recruitment messages must describe the topic as OpenAPI contract review, not as
 a request to validate PROOF or endorse a GitHub App. Do not offer a product
@@ -164,15 +165,18 @@ Present all three concepts with equal detail and in rotating order across
 participants.
 
 **Hosted App.** A least-privilege App reads immutable public-repository content
-and pull-request metadata, evaluates trusted base policy without executing
-repository code, and publishes a pull-request Check. Any public report follows
-an explicit retention and visibility policy. Feasibility and security remain
+and pull-request metadata, uses a PROOF-managed worker to evaluate trusted base
+policy without executing repository code, and publishes a pull-request Check.
+A PROOF-managed report service may present the same normalized result under an
+explicit retention and visibility policy. Feasibility and security remain
 subject to #7 and #8.
 
-**CLI-only.** A versioned command runs locally or in repository-controlled CI,
-uses the same static rules and result contract, and sends no specification to a
-PROOF-hosted service. The repository owns installation, credentials, caching,
-and presentation.
+**CLI-only.** A versioned command runs locally or in repository-controlled CI
+and uses the same static rules and result contract. Repository CI may publish
+an equivalent pull-request Check or status, job summary, and repository-owned
+static artifact or report. No specification or result is sent to a
+PROOF-managed worker or report service. The repository owns installation,
+credentials, caching, retention, and presentation.
 
 **Deferred hosted.** PROOF validates the CLI and rule quality first. A hosted
 App is reconsidered only after usage evidence and the technical gates are
@@ -185,6 +189,12 @@ For each concept ask:
 3. What data, public-report, fork, or operational concern would prevent use?
 4. Which concept best fits the current workflow, and what trade-off drives that
    choice?
+
+Do not count preference for a Check, required gate, or web-shaped report as
+preference for hosted execution: both active concepts can provide those
+surfaces. Ask the participant to compare execution, credential, support, data,
+retention, and operational ownership while holding the pull-request feedback
+surface equivalent.
 
 ### 6. Contradictory evidence and close — 5 minutes
 
@@ -218,9 +228,9 @@ The aggregate evidence table uses these dimensions:
 | Repeated pain | Concrete recent examples, consequence, frequency, and current workaround |
 | Current alternatives | Tool or process, useful behavior, gaps, switching cost |
 | Check policy | Blocking/advisory preference, participant-defined false-positive tolerance, failure behavior |
-| Hosted adoption | Installation authority, approval path, acceptable permissions, public-report and data constraints |
+| Hosted adoption | Installation authority, approval path, acceptable permissions, and acceptance of PROOF-managed execution, report, retention, and support boundaries |
 | Fork workflow | Fork frequency, first-time contributor path, stale-result expectations, required-check behavior |
-| CLI adoption | Local/CI ownership, offline requirement, operational burden, result presentation |
+| CLI adoption | Local/CI ownership, offline requirement, operational burden, and repository-owned Check/status, summary, artifact, or report presentation |
 | Contradictory evidence | Counterexample, source context, and whether it narrows or rejects the target hypothesis |
 
 ## Pre-registered decision thresholds
@@ -240,16 +250,20 @@ These evidence-quality gates apply to every recommendation:
   with a meaningful cost, delay, risk, or repeated manual workaround;
 - direct observations, interpretation, opposition, and missing evidence remain
   separately visible; and
-- at least two co-maintainers approve the final evidence interpretation.
+- at least one eligible, non-conflicted co-maintainer records agreement with the
+  final evidence interpretation.
 
 ### Recommend `hosted`
 
 Recommend a hosted GitHub App only when all of the following are true:
 
-- at least `S` participants prefer or would realistically trial pull-request
-  Check feedback over a CLI-only workflow;
+- while holding pull-request Check and report surfaces equivalent, at least `S`
+  participants would realistically trial the PROOF-managed App, worker, and
+  report boundary instead of repository-controlled CI;
 - at least `S` can approve the proposed installation or identify a demonstrated
   approval path for the minimum permissions;
+- at least `S` accept the proposed PROOF-managed data, visibility, retention,
+  deletion, credential, and operational-support boundaries;
 - at least `S` accept an advisory-first rollout and describe a path to blocking
   use after the participant-defined false-positive threshold is met;
 - no installation, public-report, or data-handling hard blocker recurs across
@@ -263,7 +277,8 @@ Recommend CLI-only when the common evidence-quality gates pass and all of the
 following are true:
 
 - at least `S` participants would realistically use the CLI locally or in
-  repository-controlled CI;
+  repository-controlled CI, including a repository-owned Check/status, summary,
+  artifact, or report when pull-request presentation is required;
 - the hosted path fails an installation, fork, report, or security criterion;
   and
 - no equivalent hard blocker recurs for the CLI path across two independent
@@ -279,8 +294,9 @@ hypothesis is forwarded explicitly to the Phase 0 gate; `defer` must not hide a
 possible `stop` outcome for the product direction.
 
 Thresholds cannot be loosened after the first interview. A material correction
-must be recorded, approved by two co-maintainers, and applied only to interviews
-conducted after the amendment or to a fresh study.
+must be recorded, receive agreement from at least one eligible, non-conflicted
+co-maintainer, and be applied only to interviews conducted after the amendment
+or to a fresh study.
 
 ## Delivery-path comparison
 
@@ -289,10 +305,10 @@ score a cell before its evidence source is available.
 
 | Decision dimension | Hosted App | CLI-only | Deferred hosted |
 | --- | --- | --- | --- |
-| Pull-request feedback and required gate | Pending interviews and #7 | Pending interviews | No hosted gate during deferral |
+| Pull-request feedback and required gate | App-owned Check; pending interviews and #7 | Repository-owned Check/status or Actions summary; pending interviews | No hosted gate during deferral |
 | Public-fork behavior | Pending #7 | Repository CI policy | Re-evaluate after evidence |
 | Installation and permissions | Pending interviews and #7 | Package and CI approval | No App installation yet |
-| Data handling and public reports | Pending interviews and #8 | Repository-controlled | No hosted report yet |
+| Data handling and web reports | PROOF-managed; pending interviews and #8 | Repository-controlled static artifact or report | No hosted report yet |
 | Offline or no-egress operation | Hosted worker gate in #8 | Local best-effort boundary | CLI evidence first |
 | False-positive rollout | Pending participant thresholds | Pending participant thresholds | Collect CLI quality evidence |
 | Maintainer operational burden | Pending interviews | Pending interviews | Lower immediate hosted burden |
@@ -320,5 +336,6 @@ The final record must include:
 - `hosted`, `CLI-only`, or `defer` recommendation;
 - explicit relationship to #7 and #8;
 - contradictory evidence and known limitations;
-- agreement from at least two Phase 0 co-maintainers; and
+- recorded agreement from at least one eligible, non-conflicted Phase 0
+  co-maintainer; and
 - owned follow-up actions for the Phase 0 gate.
