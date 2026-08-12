@@ -55,7 +55,10 @@ decision and evidence trigger.
 - Build a labeled corpus of at least 100 OAS 3.0/3.1 operations.
 - Validate GitHub App permissions and public-fork behavior across the identified pull-request matrix.
 - Document the threat model for parsers, `$ref`, denial of service, SSRF, tokens, reports, and untrusted repository content.
-- Interview 5–8 target maintainers about App installation, vendor extensions, acceptable false positives, and offline alternatives.
+- Interview 5–8 target maintainers using the pre-registered
+  [Phase 0 interview plan](docs/research/phase-0-maintainer-interview-plan.md)
+  to evaluate App installation, vendor extensions, acceptable false positives,
+  and offline alternatives.
 
 ### Exit criteria
 
