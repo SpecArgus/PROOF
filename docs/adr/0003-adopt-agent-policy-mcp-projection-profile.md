@@ -24,9 +24,14 @@ relevant boundary:
 - Speakeasy exposes descriptions and standard MCP behavioral hints through its
   own `x-speakeasy-mcp` extension and documents OpenAPI Overlays as the way to
   add that extension without modifying the source document.
-- MCP specification `2025-11-25` defines only the standard title, read-only,
-  destructive, idempotent, and open-world hints. It requires clients to treat
-  tool annotations as untrusted unless they come from a trusted server.
+- MCP specifications `2025-11-25` and `2026-07-28` define the same standard
+  title, read-only, destructive, idempotent, and open-world hints. Both require
+  clients to treat tool annotations as untrusted unless they come from a
+  trusted server. The later specification also makes clear that omitted hints
+  have concrete defaults rather than an unknown state.
+- MCP `2026-07-28` adds runtime elicitation through multi round-trip requests.
+  That is a call-time confirmation mechanism, not static tool metadata, so it
+  does not carry or enforce an OpenAPI policy declaration by itself.
 
 The production example recorded in #64 remains reproducible: the
 `inkeep/agents` OpenAPI document declares an `x-authz` description and role for
@@ -53,11 +58,15 @@ Adopt [Agent policy to MCP projection profile v1](../contracts/agent-policy-mcp-
 The profile is an opt-in, versioned specification for converter and gateway
 operators. It:
 
-- uses the MCP tool description as the primary model-visible channel;
-- maps only semantically justified policy signals to current standard MCP
-  annotations;
+- uses the MCP tool description as the primary metadata channel eligible for
+  model consumption, without claiming that a client delivers it to a prompt;
+- maps only semantically justified positive policy signals to current standard
+  MCP annotations, documents their effective defaults and lossy meaning, and
+  preserves non-conflicting existing annotations field by field;
 - names the destination or explicit non-mapping for every v1
   `x-agent-policy` field;
+- fixes byte-level rendering, size limits, stable diagnostics, and all-or-
+  nothing failure behavior;
 - treats annotations as untrusted hints rather than enforcement; and
 - gives implementation routes for FastMCP and Speakeasy without adding either
   dependency to PROOF.
@@ -159,6 +168,10 @@ contract to `x-mcp` or a vendor namespace.
   by clients and gateways.
 - Current MCP annotations cannot represent financial action, confirmation
   policy, authorization roles, or data classification directly.
+- Annotation omission is not an unknown value: MCP defaults read-only to
+  `false`, destructive to `true`, idempotent to `false`, and open-world to
+  `true`. The profile's annotation writes are therefore conservative and
+  lossy, with the full declaration retained only in description text.
 - C1's possible value remains unresolved until user or operational evidence is
   collected.
 
@@ -166,20 +179,32 @@ contract to `x-mcp` or a vendor namespace.
 
 Operation descriptions, policy reasons, conditions, role names, and extension
 values are untrusted input. A projector must validate the policy before use,
-render free-form values as bounded quoted data, and avoid treating projected
-text as executable instructions. Projection does not replace authentication,
-authorization, confirmation, sandboxing, or no-egress controls.
+enforce the profile's UTF-8 byte limits, render free-form values as bounded
+quoted data, and fail without partial mutation on an annotation conflict or
+limit error. JSON quoting preserves syntax; it does not neutralize the semantic
+prompt-injection risk of the quoted text. Projection does not replace
+authentication, authorization, confirmation, sandboxing, or no-egress
+controls.
 
 MCP annotations remain hints. Clients must not make security-critical decisions
-from annotations supplied by an untrusted server. Authentication wiring remains
-owned by the converter and runtime; projecting `authorization.roles` into a
-description does not enforce those roles.
+from annotations supplied by an untrusted server. Existing annotations are
+merged field by field and a conflicting explicit value stops the whole
+projection; a projector must not overwrite unrelated title or idempotency
+metadata. Authentication wiring remains owned by the converter and runtime;
+projecting `authorization.roles` into a description does not enforce those
+roles.
 
 ## Reproducibility and compatibility
 
 Profile v1 records the following reviewed references:
 
-- [MCP tools specification 2025-11-25](https://modelcontextprotocol.io/specification/2025-11-25/server/tools);
+- [MCP tools specification 2025-11-25](https://modelcontextprotocol.io/specification/2025-11-25/server/tools),
+  retained as the compatibility baseline;
+- [MCP tools specification 2026-07-28](https://modelcontextprotocol.io/specification/2026-07-28/server/tools),
+  [schema reference](https://modelcontextprotocol.io/specification/2026-07-28/schema),
+  and [release record](https://blog.modelcontextprotocol.io/posts/2026-07-28/),
+  used to verify the current annotations, defaults, trust caveat, and runtime-
+  elicitation boundary;
 - [FastMCP 3.4.4 source at `9138d40e8813c2a7c6c7a015f3dffe0a120730e0`](https://github.com/PrefectHQ/fastmcp/tree/9138d40e8813c2a7c6c7a015f3dffe0a120730e0);
 - [FastMCP OpenAPI integration](https://gofastmcp.com/integrations/openapi); and
 - [Speakeasy MCP tool customization](https://www.speakeasy.com/docs/standalone-mcp/customize-tools).
@@ -204,4 +229,5 @@ does not silently rewrite profile v1.
 ## Decision history
 
 - 2026-08-12: Accepted C2 as a specification-only profile, deferred C1 pending
-  evidence, and retained the existing `x-agent-policy` source contract.
+  evidence, retained the existing `x-agent-policy` source contract, and
+  verified compatibility through MCP `2026-07-28`.
