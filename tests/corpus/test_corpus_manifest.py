@@ -5,7 +5,16 @@ from copy import deepcopy
 from pathlib import Path
 
 import pytest
+import rfc8785
 from jsonschema import Draft202012Validator, FormatChecker
+from proof_core import (
+    OperationSet,
+    ValidatorResult,
+    build_input_closure,
+    normalize_operations,
+    validate_openapi,
+)
+from proof_rulepack import RuleEvaluation, evaluate_agent_contract
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 CORPUS_ROOT = REPOSITORY_ROOT / "corpus"
@@ -46,6 +55,14 @@ ALLOWED_SEVERITIES = frozenset(FINDING_SCHEMA["properties"]["severity"]["enum"])
 CASES = MANIFEST["cases"]
 CASE_IDS = [case["caseId"] for case in CASES]
 FORMAT_CHECKER = FormatChecker()
+FIXTURE_FILES = tuple(
+    sorted(
+        path.relative_to(FIXTURE_ROOT).as_posix()
+        for path in FIXTURE_ROOT.rglob("*")
+        if path.is_file()
+    )
+)
+EngineResult = tuple[ValidatorResult, OperationSet, RuleEvaluation]
 
 
 def decode_pointer_token(token: str) -> str:
@@ -89,6 +106,46 @@ def manifest_validation_errors(manifest: dict) -> list:
         format_checker=FORMAT_CHECKER,
     )
     return list(validator.iter_errors(manifest))
+
+
+@pytest.fixture(scope="session")
+def corpus_engine_cache() -> dict[str, EngineResult]:
+    """Run each immutable corpus fixture through the engine exactly once."""
+    cache: dict[str, EngineResult] = {}
+    for fixture_rel in FIXTURE_FILES:
+        closure = build_input_closure(FIXTURE_ROOT, fixture_rel)
+        validation = validate_openapi(closure)
+        operation_set = normalize_operations(closure)
+        evaluation = evaluate_agent_contract(operation_set)
+        cache[fixture_rel] = (validation, operation_set, evaluation)
+    return cache
+
+
+def projected_evidence(finding: dict) -> list[dict]:
+    projection = []
+    for evidence in finding["evidence"]:
+        item = {
+            "kind": evidence["kind"],
+            "value": evidence.get("value", evidence["description"]),
+        }
+        if "pointer" in evidence:
+            item["pointer"] = evidence["pointer"]
+        projection.append(item)
+    return sorted(projection, key=rfc8785.dumps)
+
+
+def projected_finding(finding: dict) -> dict:
+    return {
+        "ruleId": finding["ruleId"],
+        "severity": finding["severity"],
+        "locationPointer": finding["location"]["pointer"],
+        "riskCategories": finding.get("riskCategories", []),
+        "evidence": projected_evidence(finding),
+    }
+
+
+def expected_finding_projection(finding: dict) -> dict:
+    return {key: value for key, value in finding.items() if key != "reviewers"}
 
 
 def test_manifest_validates_against_schema() -> None:
@@ -212,6 +269,75 @@ def test_no_remote_refs() -> None:
             assert isinstance(ref, str) and ref.startswith("#/"), (
                 f"Remote $ref {ref!r} found in {case['fixture']}"
             )
+
+
+def test_all_corpus_fixtures_pass_closure_only_openapi_validation(
+    corpus_engine_cache: dict[str, EngineResult],
+) -> None:
+    outcomes = {
+        fixture_rel: {
+            "outcome": validation.outcome,
+            "diagnostics": [item.to_dict() for item in validation.diagnostics],
+        }
+        for fixture_rel, (validation, _, _) in corpus_engine_cache.items()
+    }
+    assert all(item["outcome"] == "valid" for item in outcomes.values()), outcomes
+
+
+def test_manifest_and_normalized_operations_are_a_bijection(
+    corpus_engine_cache: dict[str, EngineResult],
+) -> None:
+    manifest_operations = [
+        (case["fixture"], case["operationPointer"]) for case in CASES
+    ]
+    normalized_operations = [
+        (fixture_rel, operation.pointer)
+        for fixture_rel, (_, operation_set, _) in corpus_engine_cache.items()
+        for operation in operation_set.operations
+    ]
+
+    assert len(manifest_operations) == len(set(manifest_operations)), (
+        "Each manifest operation must be represented exactly once"
+    )
+    assert len(normalized_operations) == len(set(normalized_operations)), (
+        "Each normalized fixture operation must be unique"
+    )
+    assert set(manifest_operations) == set(normalized_operations), {
+        "missingFromManifest": sorted(
+            set(normalized_operations) - set(manifest_operations)
+        ),
+        "missingFromFixtures": sorted(
+            set(manifest_operations) - set(normalized_operations)
+        ),
+    }
+
+
+@pytest.mark.parametrize("case", CASES, ids=CASE_IDS)
+def test_engine_results_match_manifest_expectations(
+    case: dict,
+    corpus_engine_cache: dict[str, EngineResult],
+) -> None:
+    _, operation_set, evaluation = corpus_engine_cache[case["fixture"]]
+    operation = next(
+        item for item in operation_set.operations
+        if item.pointer == case["operationPointer"]
+    )
+    assert list(operation.risk_categories) == case["expectedRisks"]
+
+    actual_findings = [
+        projected_finding(finding.to_dict())
+        for finding in evaluation.findings
+        if finding.operation.method == operation.method
+        and finding.operation.path == operation.path
+    ]
+    expected_findings = [
+        expected_finding_projection(finding)
+        for finding in case["expectedFindings"]
+    ]
+    assert sorted(actual_findings, key=rfc8785.dumps) == sorted(
+        expected_findings,
+        key=rfc8785.dumps,
+    )
 
 
 @pytest.mark.parametrize("case", CASES, ids=CASE_IDS)
