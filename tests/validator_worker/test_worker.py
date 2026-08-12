@@ -56,6 +56,30 @@ def test_validates_supported_openapi_versions(tmp_path: Path, version: str) -> N
     assert result.diagnostics_observed == 0
 
 
+def test_rejects_unsupported_dialect_before_schema_validation(
+    tmp_path: Path,
+) -> None:
+    _write(tmp_path / "root.yaml", _valid_document("2.0"))
+    _closure, _raw, request = _request(tmp_path)
+
+    result = validate_request(request)
+
+    assert result.outcome == "invalid"
+    assert len(result.diagnostics) == 1
+    assert result.diagnostics[0].code == "input.unsupported-dialect"
+    assert result.diagnostics[0].kind == "input"
+    assert result.diagnostics[0].pointer == "/openapi"
+
+
+def test_diagnostic_messages_neutralize_c0_and_terminal_escapes() -> None:
+    actual = validation_module._normalize_message(
+        "unsafe\x1b[31mred\x00 text\r\nnext"
+    )
+
+    assert actual == "unsafe [31mred text next"
+    assert all(ord(character) >= 32 and ord(character) != 127 for character in actual)
+
+
 def test_reports_diagnostic_in_defining_reference_file(tmp_path: Path) -> None:
     _write(
         tmp_path / "root.yaml",

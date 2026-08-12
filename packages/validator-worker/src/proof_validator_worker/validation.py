@@ -591,7 +591,10 @@ def _instance_origin(instance: Any) -> Origin | None:
 
 
 def _normalize_message(message: object) -> str:
-    value = str(message).replace("\r", " ").replace("\n", " ")
+    value = "".join(
+        " " if ord(character) < 32 or ord(character) == 127 else character
+        for character in str(message)
+    )
     value = value.replace(_RESOURCE_BASE, "<resource>/")
     normalized = " ".join(value.split())
     if len(normalized) > MAX_DIAGNOSTIC_MESSAGE_CHARS:
@@ -677,8 +680,8 @@ def _collect_diagnostics(
         location = entrypoint.origins.get("/openapi", entrypoint.origins[""])
         diagnostics = [
             _diagnostic(
-                code="oas.schema",
-                kind="schema",
+                code="input.unsupported-dialect",
+                kind="input",
                 message="Only OpenAPI 3.0 and 3.1 documents are supported.",
                 origin=Origin(
                     location.source, location.line, location.column, "/openapi"

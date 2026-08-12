@@ -120,15 +120,18 @@ The principal trust boundaries are:
 
 Limits are inclusive: an input exactly at a limit is accepted, while the next
 byte, file, level, alias, diagnostic, or millisecond is rejected or terminated.
-Byte limits are measured on raw bytes before text decoding. Distinct canonical
-files are charged once to a reference closure.
+Byte limits are measured on raw bytes before text decoding. Every admitted path
+must match the repository entry's exact casing at each segment. That makes path
+identity consistent on case-sensitive and case-insensitive hosts; a mismatched
+spelling is an input error rather than a second resource. Each exact-case
+normalized path is charged once to a reference closure.
 
 | Control | P0 limit | Required behavior |
 | --- | ---: | --- |
 | Entrypoint size | 10,000,000 bytes | Reject before parsing when exceeded. |
 | Aggregate reference-closure size | 20 MiB (20,971,520 bytes) | Stop before reading a file that would exceed the budget. |
-| Canonical files in one closure | 100 | Count the entrypoint and each distinct canonical referenced file. |
-| External-reference depth | 32 | Reject the reference that would enter depth 33. Legitimate cycles terminate through canonical visited-resource tracking. |
+| Exact-case repository files in one closure | 100 | Count the entrypoint and each distinct exact-case normalized referenced path. |
+| External-reference depth | 32 | Reject the reference that would enter depth 33. Legitimate cycles terminate through exact-case normalized-path tracking. |
 | Parsed document nesting | 100 levels | Reject deeper JSON or YAML before semantic validation. |
 | YAML alias references | 50 | Reject cycles and a 51st alias before expanding an attacker-controlled graph. |
 | Emitted diagnostics | 100 | Sort and deduplicate deterministically, retain the first 100, and report truncation. |
@@ -149,10 +152,12 @@ canonicalization occur before containment checks. Files must be regular files
 inside the immutable repository snapshot.
 
 Only strict UTF-8 JSON or YAML is accepted. The preflight parser rejects
-duplicate keys, multiple YAML documents, non-JSON YAML values, recursive
-aliases, and unsupported OpenAPI dialects. It does not run YAML constructors,
-repository code, plugins, package installation hooks, templates, or shell
-commands.
+duplicate keys, multiple YAML documents, non-JSON YAML values, and recursive
+aliases. Before schema validation, the validator worker rejects an unsupported
+OpenAPI dialect with the stable `input.unsupported-dialect` diagnostic, and the
+normalizer leaves the operation set `indeterminate`. The parser does not run
+YAML constructors, repository code, plugins, package installation hooks,
+templates, or shell commands.
 
 ## Hosted isolation launch gates
 
@@ -263,7 +268,7 @@ is a release blocker until its required controls and verification exist.
 | TM-03 | A direct or transitive `$ref` causes SSRF, local-file disclosure, or unintended network egress. | P0 / Critical | Deny all remote and `file:` schemes, build a closed local resource allowlist, omit network handlers, run hosted validation with no egress. | Direct and transitive loopback canaries must observe zero requests; scheme and protocol-relative corpus. | Local CLI network denial is best-effort, so resolver denial remains the primary control there. |
 | TM-04 | Traversal, encoding, symlink, junction, race, or path-confusion reads outside the intended repository. | P0 / Critical | Decode then canonicalize, require immutable root containment and regular files, use bounded descriptors, read from a prepared hosted snapshot. | Parent, encoded, absolute, drive, device, UNC, symlink, junction, and concurrent-mutation tests across supported platforms. | Local files can change concurrently; the CLI records content digests and fails when acquisition is inconsistent. |
 | TM-05 | Repository code, workflow, plugin, or dependency hook executes with service credentials. | P0 / Critical | Never run repository code or install repository dependencies; worker has no credentials or egress; rule packs are pinned PROOF artifacts. | Canary executables and install hooks must not run; credential-absence and syscall or sandbox policy tests. | A vulnerability in the pinned analysis runtime could still execute inside the worker sandbox. |
-| TM-06 | A diagnostic or metadata value injects HTML, Markdown, terminal escapes, logs, paths, or secrets into output. | P0 / High | Typed result validation, repository-relative paths, control-character handling, contextual escaping, no active content, bounded logs and output, secret redaction. | XSS, Markdown, ANSI, newline, path, credential-pattern, MIME-sniffing, and CSP browser tests. | Public specification text deliberately appears as escaped report evidence during retention. |
+| TM-06 | A diagnostic or metadata value injects HTML, Markdown, terminal escapes, logs, paths, or secrets into output. | P0 / High | The validator worker neutralizes C0 and DEL characters in diagnostic messages before the protocol boundary, and the supervisor rejects a response if those characters remain. Reporters contextually escape every other untrusted string and never derive ANSI control sequences from input. Active content is disabled; logs and output are bounded; secrets are redacted. | Worker normalization and supervisor-rejection tests plus XSS, Markdown, ANSI, newline, path, credential-pattern, MIME-sniffing, and CSP browser tests. | Public specification text deliberately appears as escaped report evidence during retention. |
 | TM-07 | A forged, replayed, oversized, duplicated, or reordered webhook creates unauthorized or inconsistent work. | P0 / High | Raw-body HMAC before parsing, payload limit, unique durable delivery receipt, transactional enqueue, idempotent logical scan key. | Invalid and rotated secrets, byte mutation, replay, redelivery, out-of-order, and enqueue-crash integration tests. | A valid delayed event can arrive after newer work; immutable identity and stale-result handling prevent reuse as current success. |
 | TM-08 | An installation token or service secret is exposed to a fork, worker, log, URL, report, or sibling job. | P0 / Critical | Minimum App permissions, fetcher-only memory use, no command-line or URL token, redaction, isolated jobs, audited secret rotation. | Permission snapshot regression, token canaries, environment and process inspection, log scanning, and fork tests. | GitHub and authorized operators remain privileged trust dependencies. |
 | TM-09 | Head-branch configuration weakens policy, or content from one repository or pull request affects another. | P0 / Critical | Trusted base policy with monotonic head changes, immutable repository and PR IDs, per-attempt workspace, no cross-job cache of untrusted content. | Policy-removal and threshold-lowering fixtures, repository transfer, same-head multiple-PR, and parallel isolation tests. | A compromised trusted base or maintainer can change future policy through normal reviewed governance. |
@@ -271,7 +276,7 @@ is a release blocker until its required controls and verification exist.
 | TM-11 | A report remains visible after a repository becomes private, is deleted or transferred, or uninstalls the App. | P0 / Critical | Current visibility and installation check, fail closed, immediate tombstone and cache purge, event reconciliation, immutable IDs, declared deletion deadlines. | Public/private/public, uninstall, transfer, rename, delete, missed-event, cache, backup-expiry, and authorization-outage tests. | Event and reconciliation delay can briefly reduce availability; stale content is denied during uncertainty. |
 | TM-12 | Mutable dependencies, actions, runtime drift, or artifact substitution changes findings or compromises builds. | P0 / High | Exact locks and action SHAs, clean builds, SBOM, vulnerability review, content digests, signed provenance, no implicit upgrades. | Lockfile rejection, artifact digest mismatch, reproducible build, SBOM, vulnerability, and full validator corpus on upgrades. | Signed and pinned software can contain unknown vulnerabilities. |
 | TM-13 | The local CLI is mistaken for a complete sandbox, exposing a developer machine to residual parser or runtime flaws. | P0 / High | Document the boundary, deny remote refs and code, supervise the validator, apply portable limits, exclude credentials from the child environment. | Windows, Linux, and macOS process-tree, timeout, output, path, and environment tests. | CPU, memory, filesystem, and network isolation are best-effort on a user-controlled host; this is accepted only for an explicit local scan. |
-| TM-14 | Resource limits themselves are bypassed or multiplied across many entrypoints, retries, or concurrent jobs. | P0 / High | Raw-byte accounting, canonical file charging, finite cumulative job and tenant budgets, bounded retries and concurrency, hosted resource quotas. | Exact inclusive boundaries, many-entrypoint, retry-storm, queue-backpressure, and concurrent-tenant load tests. | Multi-entrypoint and service concurrency values remain open until their implementation issues, and block the relevant release until fixed. |
+| TM-14 | Resource limits themselves are bypassed or multiplied across many entrypoints, retries, or concurrent jobs. | P0 / High | Raw-byte accounting, exact-case normalized-path charging, finite cumulative job and tenant budgets, bounded retries and concurrency, hosted resource quotas. | Exact inclusive boundaries, wrong-case aliases, many-entrypoint, retry-storm, queue-backpressure, and concurrent-tenant load tests. | Multi-entrypoint and service concurrency values remain open until their implementation issues, and block the relevant release until fixed. |
 | TM-15 | Static metadata findings are presented as runtime security enforcement, causing unsafe reliance on a pass. | P0 / High | Every interface states the static-analysis boundary; findings use evidence and recommendations; no “safe API” claim or opaque safety score. | Snapshot and usability tests verify pass, blocked, advisory, input-error, and internal-error wording. | Users can still ignore the limitation; documentation and conservative product language reduce but cannot eliminate misuse. |
 
 ## Visible failure behavior
@@ -287,6 +292,13 @@ durably accepted run pending indefinitely.
 | Timeout, process crash, output overflow, malformed worker protocol, dependency failure, sandbox kill, or storage integrity failure | `internal-error`, gate `not-evaluated` | `3` | Terminal error Check; bounded retry only when identity and idempotency are preserved |
 | Invalid webhook signature or payload rejected before durable acceptance | No analysis result | Not applicable | Reject request and create no Check or report |
 | Visibility or installation cannot be confirmed | No report content is served | Not applicable | Fail closed with a tombstoned or not-found response |
+
+The validator worker's transport-level `invalid` outcome means that it emitted
+a controlled diagnostic; it is not a normalized run status. For an unsupported
+dialect the worker must emit `input.unsupported-dialect` without invoking a
+dialect validator, while normalization must remain `indeterminate`. The run
+assembler in issue [#24](https://github.com/SpecArgus/PROOF/issues/24) must map
+that pair to `input-error` and `not-evaluated`, never to a completed run.
 
 Public messages contain no stack trace, absolute path, secret, raw request
 header, or mutable infrastructure identifier. Operators may correlate a safe
