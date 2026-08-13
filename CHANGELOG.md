@@ -16,6 +16,9 @@ The format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0
 - Add a deterministic normalized-run producer that combines validator,
   normalization, and rule-pack findings with verified provenance, gate state,
   summaries, terminal failures, and RFC 8785 result digests.
+- Add the non-interactive `specargus proof scan` command with
+  repository-confined JSON and YAML analysis, canonical result output, and
+  stable exit codes 0 through 3.
 
 ### Changed
 

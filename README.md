@@ -11,8 +11,9 @@ PROOF is an early-stage open source project exploring a deterministic quality
 gate for OpenAPI operations that will be exposed as AI agent or MCP tools.
 
 > [!IMPORTANT]
-> PROOF is currently in pre-alpha discovery. There is no installable scanner
-> yet. The Python-first runtime and generic OpenAPI validator are selected,
+> PROOF is currently in pre-alpha development. The CLI is implemented in the
+> source workspace but is not yet published as a release artifact. The
+> Python-first runtime and generic OpenAPI validator are selected,
 > while the hosted architecture remains subject to the Phase 0 go/no-go
 > decision.
 
@@ -62,6 +63,21 @@ and the [roadmap](ROADMAP.md) for the decisions and staged plan. The
 [P0 agent contract rule pack](rulepacks/agent-contract/v1) defines the five
 initial rules, deterministic risk signals, policy extension, and conformance
 fixtures.
+
+## Local scan
+
+After installing the workspace packages, run `specargus proof scan` from a
+repository containing `proof.yaml`:
+
+```text
+specargus proof scan --evaluation-time 2026-08-13T00:00:00Z
+```
+
+The command emits canonical result-v1 JSON. It returns `0` for pass or
+advisory, `1` for a blocked gate, `2` for configuration or input errors, and
+`3` for internal failures. Run `specargus proof scan --help` for configuration,
+selector, output, threshold, rule-pack identity, and invocation selection
+options.
 
 ## Development workflow
 
