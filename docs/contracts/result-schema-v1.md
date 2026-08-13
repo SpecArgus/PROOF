@@ -23,7 +23,9 @@ The result contract excludes:
 `evaluationTime` is not ambient clock data. It is an explicit analysis input.
 The first hosted run fixes it at durable webhook acceptance time, and an exact
 rerequest reuses it. A new evaluation uses a new value and therefore has a
-different result digest.
+different result digest. Producers use the exact UTC whole-second form
+`YYYY-MM-DDTHH:MM:SSZ`; offsets and fractional seconds are not canonical v1
+inputs.
 
 Optional properties are omitted when they are unknown. `null` is not a
 substitute for omission unless a future schema explicitly permits it.
@@ -41,12 +43,15 @@ substitute for omission unless a future schema explicitly permits it.
 A structural or semantic OpenAPI violation is a normalized finding and a
 completed blocked run, not an input error. A timeout, malformed worker
 response, dependency failure, or sandbox failure is never reported as a
-successful run.
+successful run. Exceeding the bounded validator-observation limit is an
+`input-error` with a not-evaluated gate and retained `truncatedFindings` count;
+partial diagnostics are not used to make a gate claim.
 
 Gate outcomes mean:
 
-- `pass`: no finding meets the configured blocking threshold;
-- `advisory`: findings exist but `failOn` is `none`;
+- `pass`: the run has no findings;
+- `advisory`: findings exist, but none meet the configured blocking threshold,
+  including when `failOn` is `none`;
 - `blocked`: at least one finding meets the configured threshold; and
 - `not-evaluated`: the run did not complete, so no gate claim is made.
 
@@ -93,9 +98,10 @@ The projection rules are:
    `operationId`.
 3. Sort risk categories by Unicode code point and omit the property when the
    finding has none.
-4. For each evidence item, include `kind`, and include `pointer` and `value`
-   when present. If `value` is absent, include `description` as the identity
-   value.
+4. For each evidence item, include `kind`, and include `pointer` when present.
+   The identity projection always includes a `value` property: use the evidence
+   `value` when present, otherwise use the evidence `description` string as that
+   property's value.
 5. Sort projected evidence items by their RFC 8785 byte representation.
 6. Omit absent optional properties; never synthesize `null`.
 
@@ -157,9 +163,19 @@ The run requires identities for:
 - effective configuration; and
 - transitive input manifest.
 
-Artifacts require name, version, and content digest. Configuration and input
-require content digests. Host paths, download URLs, credentials, and mutable
-labels are not provenance identities.
+Artifacts require name, version, and content digest. A valid configuration uses
+the digest of its effective, default-materialized content. If configuration
+resolution fails, the configuration identity is the versioned, sanitized
+attempt identity defined by the configuration contract.
+
+A completed run or a failure after closure construction uses the transitive
+input-manifest digest. If evaluation cannot construct a manifest, the input
+identity is the digest of a versioned attempt projection containing only its
+state, sorted repository-relative configuration selectors, and any
+already-known bounded file identities. A configuration failure uses an
+explicit `not-attempted`
+input projection. Host paths, raw bytes, error messages, references, download
+URLs, credentials, and mutable labels are not provenance identities.
 
 ## Extensions
 

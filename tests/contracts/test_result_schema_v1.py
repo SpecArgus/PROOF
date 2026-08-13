@@ -216,6 +216,42 @@ def test_locations_reject_host_and_escaping_paths(invalid_path: str) -> None:
     assert not validator("finding.schema.json").is_valid(finding)
 
 
+def test_high_threshold_allows_medium_finding_to_be_advisory() -> None:
+    run = load_json(EXAMPLE_ROOT / "valid" / "run-blocked.json")
+    run["findings"][0]["severity"] = "medium"
+    run["summary"]["findingsBySeverity"]["high"] = 0
+    run["summary"]["findingsBySeverity"]["medium"] = 1
+    run["gate"]["outcome"] = "advisory"
+    run["gate"]["failOn"] = "high"
+    run["resultDigest"] = normalized_result_digest(run)
+
+    assert validator("run.schema.json").is_valid(run)
+
+
+def test_pass_and_advisory_gate_causes_are_constrained() -> None:
+    advisory_with_cause = load_json(EXAMPLE_ROOT / "valid" / "gate.json")
+    fingerprint = advisory_with_cause["causingFindingFingerprints"][0]
+    pass_without_cause = {
+        "outcome": "pass",
+        "failOn": "high",
+        "causingFindingFingerprints": [],
+    }
+
+    pass_with_cause = {
+        **pass_without_cause,
+        "causingFindingFingerprints": [fingerprint],
+    }
+    advisory_without_cause = {
+        **advisory_with_cause,
+        "causingFindingFingerprints": [],
+    }
+
+    assert validator("gate.schema.json").is_valid(pass_without_cause)
+    assert validator("gate.schema.json").is_valid(advisory_with_cause)
+    assert not validator("gate.schema.json").is_valid(pass_with_cause)
+    assert not validator("gate.schema.json").is_valid(advisory_without_cause)
+
+
 @pytest.mark.parametrize(
     "example_path",
     sorted(

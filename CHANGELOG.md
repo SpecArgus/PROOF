@@ -13,6 +13,9 @@ The format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0
 - Add language-neutral repository metadata validation for pull requests.
 - Add a versioned, specification-only profile for projecting `x-agent-policy`
   into MCP tool descriptions and supported annotation hints.
+- Add a deterministic normalized-run producer that combines validator,
+  normalization, and rule-pack findings with verified provenance, gate state,
+  summaries, terminal failures, and RFC 8785 result digests.
 
 ### Changed
 
