@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 import argparse
+import os
 import re
 import sys
+import tempfile
 from collections.abc import Sequence
 from dataclasses import dataclass
 from datetime import UTC, datetime
@@ -25,6 +27,8 @@ from proof_core import (
     match_specifications,
 )
 from proof_rulepack import RulePackIdentity
+
+from proof_cli.reporters import ReportFormat, render_report
 
 EXIT_OK = 0
 EXIT_BLOCKED = 1
@@ -106,7 +110,19 @@ def _parser() -> argparse.ArgumentParser:
     scan.add_argument(
         "--output",
         metavar="PATH",
-        help="write canonical result JSON to PATH instead of standard output",
+        help="atomically write the selected report to PATH instead of standard output",
+    )
+    scan.add_argument(
+        "--format",
+        choices=("json", "console"),
+        default="json",
+        help="report format (default: json, preserving result-v1 canonical bytes)",
+    )
+    scan.add_argument(
+        "--color",
+        choices=("auto", "always", "never"),
+        default="auto",
+        help="console color mode; presentation-only (default: auto)",
     )
     scan.add_argument(
         "--fail-on",
@@ -148,12 +164,17 @@ def main(
     output = stdout if stdout is not None else sys.stdout.buffer
     errors = stderr if stderr is not None else sys.stderr
     if arguments.command == "scan":
-        return _scan(arguments, output, errors)
+        color = arguments.color == "always" or (
+            arguments.color == "auto" and stdout is None and sys.stdout.isatty()
+        )
+        return _scan(arguments, output, errors, color=color)
     parser.error("a command is required")
     return EXIT_INPUT_ERROR
 
 
-def _scan(arguments: argparse.Namespace, stdout: BinaryIO, stderr: TextIO) -> int:
+def _scan(
+    arguments: argparse.Namespace, stdout: BinaryIO, stderr: TextIO, *, color: bool
+) -> int:
     evaluation_time = arguments.evaluation_time or _invocation_time()
     if not _valid_evaluation_time(evaluation_time):
         return _usage_failure(
@@ -171,7 +192,7 @@ def _scan(arguments: argparse.Namespace, stdout: BinaryIO, stderr: TextIO) -> in
             output_path=arguments.output,
             resource_paths=(),
         )
-    except (OSError, ValueError):
+    except OSError, ValueError:
         stderr.write("PROOF could not safely select the normalized output path.\n")
         return EXIT_INTERNAL_ERROR
 
@@ -194,7 +215,9 @@ def _scan(arguments: argparse.Namespace, stdout: BinaryIO, stderr: TextIO) -> in
             evaluation_time=evaluation_time,
             error=error,
         )
-        return _finish(run, arguments.output, stdout, stderr)
+        return _finish(
+            run, arguments.output, arguments.format, stdout, stderr, color=color
+        )
 
     try:
         entrypoints = match_specifications(root, configuration)
@@ -203,7 +226,9 @@ def _scan(arguments: argparse.Namespace, stdout: BinaryIO, stderr: TextIO) -> in
             evaluation_time=evaluation_time,
             error=error,
         )
-        return _finish(run, arguments.output, stdout, stderr)
+        return _finish(
+            run, arguments.output, arguments.format, stdout, stderr, color=color
+        )
 
     try:
         closure = build_input_closure(root, entrypoints)
@@ -213,7 +238,9 @@ def _scan(arguments: argparse.Namespace, stdout: BinaryIO, stderr: TextIO) -> in
             error=error,
             configuration=configuration,
         )
-        return _finish(run, arguments.output, stdout, stderr)
+        return _finish(
+            run, arguments.output, arguments.format, stdout, stderr, color=color
+        )
 
     try:
         _reject_input_output_alias(
@@ -227,10 +254,10 @@ def _scan(arguments: argparse.Namespace, stdout: BinaryIO, stderr: TextIO) -> in
             configuration=configuration,
             closure=closure,
         )
-    except (OSError, RunAssemblyError, ValueError):
+    except OSError, RunAssemblyError, ValueError:
         stderr.write("PROOF failed internally before producing a normalized result.\n")
         return EXIT_INTERNAL_ERROR
-    return _finish(run, arguments.output, stdout, stderr)
+    return _finish(run, arguments.output, arguments.format, stdout, stderr, color=color)
 
 
 def _rule_pack_override(arguments: argparse.Namespace) -> RulePackIdentity | None:
@@ -285,21 +312,48 @@ def _reject_input_output_alias(
 def _finish(
     run: NormalizedRun,
     output_path: str | None,
+    report_format: ReportFormat,
     stdout: BinaryIO,
     stderr: TextIO,
+    *,
+    color: bool,
 ) -> int:
-    payload = run.canonical_bytes() + b"\n"
+    payload = render_report(run, report_format, color=color)
     try:
         if output_path is None:
             stdout.write(payload)
             stdout.flush()
         else:
-            with Path(output_path).open("wb") as output:
-                output.write(payload)
+            _write_atomically(Path(output_path), payload)
     except OSError:
         stderr.write("PROOF could not write the normalized result.\n")
         return EXIT_INTERNAL_ERROR
     return _exit_code(run)
+
+
+def _write_atomically(output_path: Path, payload: bytes) -> None:
+    """Replace an output only after a complete report is durable in its directory."""
+
+    temporary: Path | None = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="wb",
+            dir=output_path.parent,
+            prefix=f".{output_path.name}.",
+            delete=False,
+        ) as output:
+            temporary = Path(output.name)
+            output.write(payload)
+            output.flush()
+            os.fsync(output.fileno())
+        os.replace(temporary, output_path)
+        temporary = None
+    finally:
+        if temporary is not None:
+            try:
+                temporary.unlink(missing_ok=True)
+            except OSError:
+                pass
 
 
 def _exit_code(run: NormalizedRun) -> int:

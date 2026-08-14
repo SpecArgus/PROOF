@@ -73,7 +73,10 @@ repository containing `proof.yaml`:
 specargus proof scan --evaluation-time 2026-08-13T00:00:00Z
 ```
 
-The command emits canonical result-v1 JSON. It returns `0` for pass or
+The command emits canonical result-v1 JSON by default. Use `--format console`
+for a concise human-readable summary with detailed findings; `--color` affects
+only that presentation. Both formats can be written with `--output`, which
+replaces the destination atomically. It returns `0` for pass or
 advisory, `1` for a blocked gate, `2` for configuration or input errors, and
 `3` for internal failures. Run `specargus proof scan --help` for configuration,
 selector, output, threshold, rule-pack identity, and invocation selection

@@ -207,6 +207,47 @@ def test_output_path_receives_canonical_json(tmp_path: Path) -> None:
     assert output.read_bytes().endswith(b"\n")
 
 
+def test_console_output_file_is_atomic_and_output_failure_is_sanitized(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    _spec(tmp_path / "api.json", method="delete")
+    _config(tmp_path / "proof.json", ["api.json"])
+    output = tmp_path / "report.txt"
+    output.write_bytes(b"previous report\n")
+
+    def fail_replace(*_: object) -> None:
+        raise OSError("SECRET host path")
+
+    monkeypatch.setattr(cli.os, "replace", fail_replace)
+    stdout = io.BytesIO()
+    stderr = io.StringIO()
+    code = cli.main(
+        [
+            "proof",
+            "scan",
+            "--repository",
+            str(tmp_path),
+            "--config",
+            "proof.json",
+            "--format",
+            "console",
+            "--output",
+            str(output),
+            "--evaluation-time",
+            EVALUATION_TIME,
+        ],
+        stdout=stdout,
+        stderr=stderr,
+    )
+
+    assert code == 3
+    assert output.read_bytes() == b"previous report\n"
+    assert stdout.getvalue() == b""
+    assert stderr.getvalue() == "PROOF could not write the normalized result.\n"
+    assert "SECRET" not in stderr.getvalue()
+    assert not list(tmp_path.glob(".report.txt.*"))
+
+
 def test_cli_overrides_are_atomic_and_invocation_labels_do_not_change_result(
     tmp_path: Path,
 ) -> None:
