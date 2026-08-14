@@ -9,6 +9,7 @@ members = [
     "proof-rulepack",
     "proof-validator-worker",
     "proof-workspace",
+    "specargus-proof",
 ]
 
 [[package]]
@@ -305,6 +306,23 @@ dev = [
     { name = "pytest", specifier = "==9.1.1" },
     { name = "rfc8785", specifier = "==0.1.4" },
     { name = "ruff", specifier = "==0.15.22" },
+]
+
+[[package]]
+name = "specargus-proof"
+version = "0.1.0"
+source = { editable = "packages/cli" }
+dependencies = [
+    { name = "proof-core" },
+    { name = "proof-rulepack" },
+    { name = "proof-validator-worker" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "proof-core", editable = "packages/core" },
+    { name = "proof-rulepack", editable = "packages/rulepack" },
+    { name = "proof-validator-worker", editable = "packages/validator-worker" },
 ]
 
 [[package]]

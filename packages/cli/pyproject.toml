@@ -1,0 +1,25 @@
+[project]
+name = "specargus-proof"
+version = "0.1.0"
+description = "Deterministic local command-line scanner for PROOF"
+requires-python = ">=3.14,<3.15"
+dependencies = [
+  "proof-core==0.1.0",
+  "proof-rulepack==0.1.0",
+  "proof-validator-worker==0.1.0",
+]
+
+[project.scripts]
+specargus = "proof_cli.cli:main"
+
+[tool.uv.sources]
+proof-core = { workspace = true }
+proof-rulepack = { workspace = true }
+proof-validator-worker = { workspace = true }
+
+[build-system]
+requires = ["hatchling==1.31.0"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/proof_cli"]
