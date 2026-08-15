@@ -13,6 +13,7 @@ from proof_core import (
     ValidatorResult,
     build_input_closure,
     normalize_operations,
+    parse_repository_document,
     validate_openapi,
 )
 from proof_rulepack import RuleEvaluation, evaluate_agent_contract
@@ -84,15 +85,10 @@ def resolve_pointer(document: object, pointer: str) -> object:
 
 
 def load_fixture(fixture_rel: str) -> dict:
-    """Load a JSON fixture. Fail clearly if a YAML fixture is referenced."""
-    path = FIXTURE_ROOT / fixture_rel
-    if path.suffix in (".yaml", ".yml"):
-        pytest.fail(
-            f"YAML fixture '{fixture_rel}' cannot be loaded: no approved YAML parser "
-            "is available in the current lockfile. Convert the fixture to JSON or add "
-            "an approved YAML parser dependency before introducing YAML corpus cases."
-        )
-    return load_json(path)
+    """Parse a JSON or YAML fixture with the strict parser the engine uses."""
+    closure = build_input_closure(FIXTURE_ROOT, fixture_rel)
+    resource = next(item for item in closure.resources if item.path == fixture_rel)
+    return parse_repository_document(resource).value
 
 
 def manifest_validation_errors(manifest: dict) -> list:
@@ -149,9 +145,7 @@ def projected_finding(finding: dict) -> dict:
 
 def expected_finding_projection(finding: dict) -> dict:
     projection = {
-        key: deepcopy(value)
-        for key, value in finding.items()
-        if key != "reviewers"
+        key: deepcopy(value) for key, value in finding.items() if key != "reviewers"
     }
     projection["riskCategories"] = sorted(set(projection["riskCategories"]))
     projection["evidence"] = sorted(projection["evidence"], key=rfc8785.dumps)
@@ -206,17 +200,6 @@ def test_case_ids_are_unique() -> None:
     assert len(ids) == len(set(ids))
 
 
-def test_no_yaml_cases_in_pilot() -> None:
-    yaml_cases = [c for c in CASES if c.get("format") in ("yaml", "yml")]
-    if yaml_cases:
-        ids = ", ".join(c["caseId"] for c in yaml_cases)
-        pytest.fail(
-            f"YAML fixtures are not supported in this pilot ({ids}). "
-            "Add an approved YAML parser dependency before introducing YAML cases. "
-            "See corpus/README.md for details."
-        )
-
-
 @pytest.mark.parametrize("case", CASES, ids=CASE_IDS)
 def test_fixture_path_and_operation_pointer_resolve(case: dict) -> None:
     expected_pointer = (
@@ -232,7 +215,7 @@ def test_fixture_path_and_operation_pointer_resolve(case: dict) -> None:
     pointer = case["operationPointer"]
     last_slash = pointer.rfind("/")
     parent_pointer = pointer[:last_slash]
-    method_token = decode_pointer_token(pointer[last_slash + 1:])
+    method_token = decode_pointer_token(pointer[last_slash + 1 :])
     operation = resolve_pointer(document, pointer)
     assert isinstance(operation, dict)
     assert method_token == case["method"], (
@@ -407,7 +390,8 @@ def test_engine_results_match_manifest_expectations(
 ) -> None:
     _, operation_set, evaluation = corpus_engine_cache[case["fixture"]]
     operation = next(
-        item for item in operation_set.operations
+        item
+        for item in operation_set.operations
         if item.pointer == case["operationPointer"]
     )
     assert frozenset(operation.risk_categories) == frozenset(case["expectedRisks"])
@@ -419,8 +403,7 @@ def test_engine_results_match_manifest_expectations(
         and finding.operation.path == operation.path
     ]
     expected_findings = [
-        expected_finding_projection(finding)
-        for finding in case["expectedFindings"]
+        expected_finding_projection(finding) for finding in case["expectedFindings"]
     ]
     assert sorted(actual_findings, key=rfc8785.dumps) == sorted(
         expected_findings,
@@ -560,9 +543,7 @@ def test_coverage_summary_consistent_with_manifest() -> None:
     }
     dialects = MANIFEST_SCHEMA["$defs"]["case"]["properties"]["dialect"]["enum"]
     formats = MANIFEST_SCHEMA["$defs"]["case"]["properties"]["format"]["enum"]
-    source_types = MANIFEST_SCHEMA["$defs"]["case"]["properties"]["sourceType"][
-        "enum"
-    ]
+    source_types = MANIFEST_SCHEMA["$defs"]["case"]["properties"]["sourceType"]["enum"]
     by_dialect = {dialect: 0 for dialect in dialects}
     by_format = {format_name: 0 for format_name in formats}
     by_source_type = {source_type: 0 for source_type in source_types}

@@ -2468,6 +2468,796 @@
       ],
       "rationale": "GET /roles: 'roles' is a permission_change token but stateChangingTokenCategories requires a state-changing method; GET is excluded so no classification occurs.",
       "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-ctx-yaml30-missing-identification",
+      "ruleId": "AGT-CTX-001",
+      "fixture": "synthetic/ctx-cases-30.yaml",
+      "dialect": "3.0.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1reports/post",
+      "method": "post",
+      "apiPath": "/reports",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": ["positive"],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-CTX-001",
+          "severity": "medium",
+          "locationPointer": "/paths/~1reports/post",
+          "riskCategories": [],
+          "evidence": [
+            {
+              "kind": "schema",
+              "pointer": "/paths/~1reports/post",
+              "value": "operationId"
+            },
+            {
+              "kind": "schema",
+              "pointer": "/paths/~1reports/post",
+              "value": "summary-or-description"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "YAML-format counterpart of syn-ctx-missing-identification in OAS 3.0.x: POST /reports has neither operationId nor summary/description, so the rule must fire identically when the document is parsed from YAML.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-ctx-yaml31-missing-identification",
+      "ruleId": "AGT-CTX-001",
+      "fixture": "synthetic/ctx-cases-31.yaml",
+      "dialect": "3.1.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1reports/post",
+      "method": "post",
+      "apiPath": "/reports",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": ["positive"],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-CTX-001",
+          "severity": "medium",
+          "locationPointer": "/paths/~1reports/post",
+          "riskCategories": [],
+          "evidence": [
+            {
+              "kind": "schema",
+              "pointer": "/paths/~1reports/post",
+              "value": "operationId"
+            },
+            {
+              "kind": "schema",
+              "pointer": "/paths/~1reports/post",
+              "value": "summary-or-description"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "YAML-format counterpart of syn-ctx-missing-identification in OAS 3.1.x: POST /reports has neither operationId nor summary/description, so the rule must fire identically when the document is parsed from YAML.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-ctx-yaml30-compliant-with-description",
+      "ruleId": "AGT-CTX-001",
+      "fixture": "synthetic/ctx-cases-30.yaml",
+      "dialect": "3.0.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1status/get",
+      "method": "get",
+      "apiPath": "/status",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": ["negative"],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "YAML-format counterpart of syn-ctx-compliant-with-description in OAS 3.0.x: GET /status has both operationId and description, so the rule must not fire when the document is parsed from YAML.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-ctx-yaml31-compliant-with-description",
+      "ruleId": "AGT-CTX-001",
+      "fixture": "synthetic/ctx-cases-31.yaml",
+      "dialect": "3.1.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1status/get",
+      "method": "get",
+      "apiPath": "/status",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": ["negative"],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "YAML-format counterpart of syn-ctx-compliant-with-description in OAS 3.1.x: GET /status has both operationId and description, so the rule must not fire when the document is parsed from YAML.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-param-yaml30-missing-description",
+      "ruleId": "AGT-PARAM-001",
+      "fixture": "synthetic/param-cases-30.yaml",
+      "dialect": "3.0.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1items/get",
+      "method": "get",
+      "apiPath": "/items",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": ["positive"],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-PARAM-001",
+          "severity": "medium",
+          "locationPointer": "/paths/~1items/get/parameters/0",
+          "riskCategories": [],
+          "evidence": [
+            {
+              "kind": "schema",
+              "pointer": "/paths/~1items/get/parameters/0",
+              "value": "description"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "YAML-format counterpart of syn-param-missing-description in OAS 3.0.x: GET /items has a query parameter 'page' without a description, so the rule must emit the same single finding when the document is parsed from YAML.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-param-yaml31-missing-description",
+      "ruleId": "AGT-PARAM-001",
+      "fixture": "synthetic/param-cases-31.yaml",
+      "dialect": "3.1.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1items/get",
+      "method": "get",
+      "apiPath": "/items",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": ["positive"],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-PARAM-001",
+          "severity": "medium",
+          "locationPointer": "/paths/~1items/get/parameters/0",
+          "riskCategories": [],
+          "evidence": [
+            {
+              "kind": "schema",
+              "pointer": "/paths/~1items/get/parameters/0",
+              "value": "description"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "YAML-format counterpart of syn-param-missing-description in OAS 3.1.x: GET /items has a query parameter 'page' without a description, so the rule must emit the same single finding when the document is parsed from YAML.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-param-yaml30-authorization-header-excluded",
+      "ruleId": "AGT-PARAM-001",
+      "fixture": "synthetic/param-cases-30.yaml",
+      "dialect": "3.0.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1catalog/get",
+      "method": "get",
+      "apiPath": "/catalog",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": ["negative", "false-positive"],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "YAML-format counterpart of syn-param-authorization-header-excluded in OAS 3.0.x: GET /catalog has only an Authorization header parameter, which the rule excludes, so no finding must be emitted when the document is parsed from YAML.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-param-yaml31-authorization-header-excluded",
+      "ruleId": "AGT-PARAM-001",
+      "fixture": "synthetic/param-cases-31.yaml",
+      "dialect": "3.1.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1catalog/get",
+      "method": "get",
+      "apiPath": "/catalog",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": ["negative", "false-positive"],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "YAML-format counterpart of syn-param-authorization-header-excluded in OAS 3.1.x: GET /catalog has only an Authorization header parameter, which the rule excludes, so no finding must be emitted when the document is parsed from YAML.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-pol1-yaml30-post-transfer-no-confirmation",
+      "ruleId": "AGT-POL-001",
+      "fixture": "synthetic/pol1-cases-30.yaml",
+      "dialect": "3.0.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1transfers/post",
+      "method": "post",
+      "apiPath": "/transfers",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": ["positive"],
+      "expectedRisks": ["financial_action"],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-POL-001",
+          "severity": "high",
+          "locationPointer": "/paths/~1transfers/post",
+          "riskCategories": ["financial_action"],
+          "evidence": [
+            {
+              "kind": "keyword",
+              "pointer": "/paths/~1transfers/post/operationId",
+              "value": "transfer"
+            },
+            {
+              "kind": "path",
+              "pointer": "/paths/~1transfers",
+              "value": "transfers"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "YAML-format counterpart of syn-pol1-post-transfer-no-confirmation in OAS 3.0.x: POST /transfers is classified as financial_action via path and operationId tokens and declares no confirmation policy, so the rule must fire identically when the document is parsed from YAML.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-pol1-yaml31-post-transfer-no-confirmation",
+      "ruleId": "AGT-POL-001",
+      "fixture": "synthetic/pol1-cases-31.yaml",
+      "dialect": "3.1.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1transfers/post",
+      "method": "post",
+      "apiPath": "/transfers",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": ["positive"],
+      "expectedRisks": ["financial_action"],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-POL-001",
+          "severity": "high",
+          "locationPointer": "/paths/~1transfers/post",
+          "riskCategories": ["financial_action"],
+          "evidence": [
+            {
+              "kind": "keyword",
+              "pointer": "/paths/~1transfers/post/operationId",
+              "value": "transfer"
+            },
+            {
+              "kind": "path",
+              "pointer": "/paths/~1transfers",
+              "value": "transfers"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "YAML-format counterpart of syn-pol1-post-transfer-no-confirmation in OAS 3.1.x: POST /transfers is classified as financial_action via path and operationId tokens and declares no confirmation policy, so the rule must fire identically when the document is parsed from YAML.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-pol1-yaml30-post-search-no-risk",
+      "ruleId": "AGT-POL-001",
+      "fixture": "synthetic/pol1-cases-30.yaml",
+      "dialect": "3.0.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1search/post",
+      "method": "post",
+      "apiPath": "/search",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": ["negative", "false-positive"],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "YAML-format counterpart of syn-pol1-post-search-no-risk in OAS 3.0.x: POST /search carries no risk-classified tokens, so the rule must not fire even for a state-changing method when the document is parsed from YAML.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-pol1-yaml31-post-search-no-risk",
+      "ruleId": "AGT-POL-001",
+      "fixture": "synthetic/pol1-cases-31.yaml",
+      "dialect": "3.1.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1search/post",
+      "method": "post",
+      "apiPath": "/search",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": ["negative", "false-positive"],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "YAML-format counterpart of syn-pol1-post-search-no-risk in OAS 3.1.x: POST /search carries no risk-classified tokens, so the rule must not fire even for a state-changing method when the document is parsed from YAML.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-pol2-yaml30-get-secrets-no-security",
+      "ruleId": "AGT-POL-002",
+      "fixture": "synthetic/pol2-cases-30.yaml",
+      "dialect": "3.0.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1users~1{userId}~1secrets/get",
+      "method": "get",
+      "apiPath": "/users/{userId}/secrets",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": ["positive"],
+      "expectedRisks": ["sensitive_data"],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-POL-002",
+          "severity": "high",
+          "locationPointer": "/paths/~1users~1{userId}~1secrets/get/security",
+          "riskCategories": ["sensitive_data"],
+          "evidence": [
+            {
+              "kind": "keyword",
+              "pointer": "/paths/~1users~1{userId}~1secrets/get/operationId",
+              "value": "secrets"
+            },
+            {
+              "kind": "path",
+              "pointer": "/paths/~1users~1{userId}~1secrets",
+              "value": "secrets"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-RESP-001"
+      ],
+      "rationale": "YAML-format counterpart of syn-pol2-get-secrets-no-security in OAS 3.0.x: GET /users/{userId}/secrets is classified as sensitive_data and overrides global security with security: [], so the rule must fire identically when the document is parsed from YAML.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-pol2-yaml31-get-secrets-no-security",
+      "ruleId": "AGT-POL-002",
+      "fixture": "synthetic/pol2-cases-31.yaml",
+      "dialect": "3.1.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1users~1{userId}~1secrets/get",
+      "method": "get",
+      "apiPath": "/users/{userId}/secrets",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": ["positive"],
+      "expectedRisks": ["sensitive_data"],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-POL-002",
+          "severity": "high",
+          "locationPointer": "/paths/~1users~1{userId}~1secrets/get/security",
+          "riskCategories": ["sensitive_data"],
+          "evidence": [
+            {
+              "kind": "keyword",
+              "pointer": "/paths/~1users~1{userId}~1secrets/get/operationId",
+              "value": "secrets"
+            },
+            {
+              "kind": "path",
+              "pointer": "/paths/~1users~1{userId}~1secrets",
+              "value": "secrets"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-RESP-001"
+      ],
+      "rationale": "YAML-format counterpart of syn-pol2-get-secrets-no-security in OAS 3.1.x: GET /users/{userId}/secrets is classified as sensitive_data and overrides global security with security: [], so the rule must fire identically when the document is parsed from YAML.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-pol2-yaml30-patch-roles-compliant",
+      "ruleId": "AGT-POL-002",
+      "fixture": "synthetic/pol2-cases-30.yaml",
+      "dialect": "3.0.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1admin~1roles/patch",
+      "method": "patch",
+      "apiPath": "/admin/roles",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": ["negative", "boundary"],
+      "expectedRisks": ["permission_change"],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "sensitive_data"
+      ],
+      "expectedFindings": [],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-RESP-001",
+        "AGT-POL-001",
+        "AGT-POL-002"
+      ],
+      "rationale": "YAML-format counterpart of syn-pol2-patch-roles-compliant in OAS 3.0.x: PATCH /admin/roles is classified as permission_change with effective inherited security and a complete x-agent-policy, so no finding must be emitted when the document is parsed from YAML.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-pol2-yaml31-patch-roles-compliant",
+      "ruleId": "AGT-POL-002",
+      "fixture": "synthetic/pol2-cases-31.yaml",
+      "dialect": "3.1.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1admin~1roles/patch",
+      "method": "patch",
+      "apiPath": "/admin/roles",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": ["negative", "boundary"],
+      "expectedRisks": ["permission_change"],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "sensitive_data"
+      ],
+      "expectedFindings": [],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-RESP-001",
+        "AGT-POL-001",
+        "AGT-POL-002"
+      ],
+      "rationale": "YAML-format counterpart of syn-pol2-patch-roles-compliant in OAS 3.1.x: PATCH /admin/roles is classified as permission_change with effective inherited security and a complete x-agent-policy, so no finding must be emitted when the document is parsed from YAML.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-resp-yaml30-delete-no-error-schema",
+      "ruleId": "AGT-RESP-001",
+      "fixture": "synthetic/resp-cases-30.yaml",
+      "dialect": "3.0.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1tasks~1{taskId}/delete",
+      "method": "delete",
+      "apiPath": "/tasks/{taskId}",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": ["positive"],
+      "expectedRisks": ["destructive"],
+      "expectedNonRisks": [
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-RESP-001",
+          "severity": "medium",
+          "locationPointer": "/paths/~1tasks~1{taskId}/delete/responses",
+          "riskCategories": ["destructive"],
+          "evidence": [
+            {
+              "kind": "keyword",
+              "pointer": "/paths/~1tasks~1{taskId}/delete/operationId",
+              "value": "delete"
+            },
+            {
+              "kind": "method",
+              "pointer": "/paths/~1tasks~1{taskId}/delete",
+              "value": "delete"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002"
+      ],
+      "rationale": "YAML-format counterpart of syn-resp-delete-no-error-schema in OAS 3.0.x: DELETE /tasks/{taskId} has a valid confirmation policy but no 4xx/5xx/default response with a JSON schema, so the rule must fire identically when the document is parsed from YAML.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-resp-yaml31-delete-no-error-schema",
+      "ruleId": "AGT-RESP-001",
+      "fixture": "synthetic/resp-cases-31.yaml",
+      "dialect": "3.1.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1tasks~1{taskId}/delete",
+      "method": "delete",
+      "apiPath": "/tasks/{taskId}",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": ["positive"],
+      "expectedRisks": ["destructive"],
+      "expectedNonRisks": [
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-RESP-001",
+          "severity": "medium",
+          "locationPointer": "/paths/~1tasks~1{taskId}/delete/responses",
+          "riskCategories": ["destructive"],
+          "evidence": [
+            {
+              "kind": "keyword",
+              "pointer": "/paths/~1tasks~1{taskId}/delete/operationId",
+              "value": "delete"
+            },
+            {
+              "kind": "method",
+              "pointer": "/paths/~1tasks~1{taskId}/delete",
+              "value": "delete"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002"
+      ],
+      "rationale": "YAML-format counterpart of syn-resp-delete-no-error-schema in OAS 3.1.x: DELETE /tasks/{taskId} has a valid confirmation policy but no 4xx/5xx/default response with a JSON schema, so the rule must fire identically when the document is parsed from YAML.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-resp-yaml30-delete-with-default-plusjson",
+      "ruleId": "AGT-RESP-001",
+      "fixture": "synthetic/resp-cases-30.yaml",
+      "dialect": "3.0.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1sessions~1{sessionId}/delete",
+      "method": "delete",
+      "apiPath": "/sessions/{sessionId}",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": ["negative", "boundary"],
+      "expectedRisks": ["destructive"],
+      "expectedNonRisks": [
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-RESP-001",
+        "AGT-POL-001",
+        "AGT-POL-002"
+      ],
+      "rationale": "YAML-format counterpart of syn-resp-delete-with-default-plusjson in OAS 3.0.x: DELETE /sessions/{sessionId} declares a default application/problem+json response with a schema, so the rule must not fire when the document is parsed from YAML.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-resp-yaml31-delete-with-default-plusjson",
+      "ruleId": "AGT-RESP-001",
+      "fixture": "synthetic/resp-cases-31.yaml",
+      "dialect": "3.1.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1sessions~1{sessionId}/delete",
+      "method": "delete",
+      "apiPath": "/sessions/{sessionId}",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": ["negative", "boundary"],
+      "expectedRisks": ["destructive"],
+      "expectedNonRisks": [
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-RESP-001",
+        "AGT-POL-001",
+        "AGT-POL-002"
+      ],
+      "rationale": "YAML-format counterpart of syn-resp-delete-with-default-plusjson in OAS 3.1.x: DELETE /sessions/{sessionId} declares a default application/problem+json response with a schema, so the rule must not fire when the document is parsed from YAML.",
+      "reviewStatus": "pending"
     }
   ]
 }

@@ -24,13 +24,15 @@ corpus/
 
 ## Pilot status
 
-This directory contains the 61-operation synthetic pilot. Issue #11 remains open
-until at least 100 operations are labeled and the full acceptance criteria are met.
+This directory contains 81 labeled synthetic operations (61 JSON, 20 YAML).
+Issue #11 remains open until at least 100 operations are labeled and the full
+acceptance criteria are met.
 
 ## Adding cases
 
-1. Create or extend a fixture file under `fixtures/synthetic/` (JSON only until
-   an approved YAML parser dependency is added).
+1. Create or extend a fixture file under `fixtures/synthetic/` in JSON or YAML.
+   YAML fixtures are parsed with the same strict loader the engine uses: no
+   aliases, merge keys, or duplicate keys.
 2. Add one manifest entry per operation with all required fields.
 3. Update `coverage-summary.json` totals.
 4. Run `uv run --locked pytest tests/corpus/` to verify all checks pass.
@@ -52,9 +54,8 @@ the engine's risks and projected findings with each labeled expectation. Results
 are cached once per fixture for the pytest session so the check remains bounded
 as the corpus grows.
 
-**YAML fixtures are not supported in the pilot.**
-
-No approved YAML parser is present in the current lockfile. The manifest schema
-permits `format: "yaml"` for forward compatibility, but the pilot test loader
-will fail with a clear error message if a YAML case is introduced before a YAML
-dependency is approved and added.
+YAML fixtures are supported: the locked workspace provides the approved YAML
+parser (pyyaml), and the corpus test loader parses every fixture through
+`parse_repository_document`, the same strict document parser the engine uses.
+The current YAML cases mirror labeled JSON scenarios so that format-invariant
+engine behavior is asserted directly.
