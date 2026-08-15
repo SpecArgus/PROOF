@@ -66,21 +66,44 @@ fixtures.
 
 ## Local scan
 
-After installing the workspace packages, run `specargus proof scan` from a
+Install the locked workspace packages, then run `specargus proof scan` from a
 repository containing `proof.yaml`:
 
-```text
-specargus proof scan --evaluation-time 2026-08-13T00:00:00Z
+```powershell
+uv sync --all-packages --locked
+uv run specargus proof scan --evaluation-time 2026-08-13T00:00:00Z
 ```
 
 The command emits canonical result-v1 JSON by default. Use `--format console`
 for a concise human-readable summary with detailed findings; `--color` affects
-only that presentation. Both formats can be written with `--output`, which
-replaces the destination atomically. It returns `0` for pass or
-advisory, `1` for a blocked gate, `2` for configuration or input errors, and
-`3` for internal failures. Run `specargus proof scan --help` for configuration,
-selector, output, threshold, rule-pack identity, and invocation selection
-options.
+only that presentation:
+
+```powershell
+uv run specargus proof scan --format console --evaluation-time 2026-08-13T00:00:00Z
+```
+
+Both formats support atomic file output. A console report can be saved as
+plain text, including in a `.md` file for convenient viewing. The extension
+does not select the format, and this is not yet a dedicated Markdown reporter:
+
+```powershell
+uv run specargus proof scan --format console --color never --output proof-report.txt
+uv run specargus proof scan --format console --color never --output proof-report.md
+```
+
+For automation and a future web report, keep the canonical JSON as the source
+artifact instead of parsing console text. It preserves the normalized findings,
+gate, provenance, versions, truncation counts, and `resultDigest` for downstream
+rendering:
+
+```powershell
+uv run specargus proof scan --format json --output proof-result.json
+```
+
+The command returns `0` for pass or advisory, `1` for a blocked gate, `2` for
+configuration or input errors, and `3` for internal failures. Run `specargus
+proof scan --help` for configuration, selector, output, threshold, rule-pack
+identity, and invocation selection options.
 
 ## Development workflow
 

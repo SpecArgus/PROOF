@@ -248,6 +248,43 @@ def test_console_output_file_is_atomic_and_output_failure_is_sanitized(
     assert not list(tmp_path.glob(".report.txt.*"))
 
 
+def test_console_output_file_disables_auto_color(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    _spec(tmp_path / "api.json", method="delete")
+    _config(tmp_path / "proof.json", ["api.json"])
+    output = tmp_path / "report.md"
+
+    class InteractiveStdout:
+        buffer = io.BytesIO()
+
+        @staticmethod
+        def isatty() -> bool:
+            return True
+
+    monkeypatch.setattr(cli.sys, "stdout", InteractiveStdout())
+    code = cli.main(
+        [
+            "proof",
+            "scan",
+            "--repository",
+            str(tmp_path),
+            "--config",
+            "proof.json",
+            "--format",
+            "console",
+            "--output",
+            str(output),
+            "--evaluation-time",
+            EVALUATION_TIME,
+        ]
+    )
+
+    assert code == 1
+    assert b"\x1b[" not in output.read_bytes()
+    assert b"PROOF scan: COMPLETED" in output.read_bytes()
+
+
 def test_cli_overrides_are_atomic_and_invocation_labels_do_not_change_result(
     tmp_path: Path,
 ) -> None:

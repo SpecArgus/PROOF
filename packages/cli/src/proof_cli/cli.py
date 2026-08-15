@@ -165,7 +165,10 @@ def main(
     errors = stderr if stderr is not None else sys.stderr
     if arguments.command == "scan":
         color = arguments.color == "always" or (
-            arguments.color == "auto" and stdout is None and sys.stdout.isatty()
+            arguments.color == "auto"
+            and arguments.output is None
+            and stdout is None
+            and sys.stdout.isatty()
         )
         return _scan(arguments, output, errors, color=color)
     parser.error("a command is required")
