@@ -13,10 +13,12 @@ the selected report file. The default gate blocks `error` and `high` findings.
 Exit codes are `0` for pass or advisory, `1` for a blocked gate, `2` for
 configuration or input errors, and `3` for internal failures.
 
-Use `--format console --color never --output proof-report.txt` for a plain-text
-report. A `.md` output filename is also viewable as plain text, but is not a
-dedicated Markdown report format. For automation or future web rendering, use
-`--format json --output proof-result.json` and consume the stable normalized
-result rather than parsing console output.
+Use `--format console --color never --output ../proof-report.txt` for a
+plain-text report outside the scanned repository. A `.md` output filename is
+also viewable as plain text, but is not a dedicated Markdown report format.
+For automation or future web rendering, use `--format json --output
+../proof-result.json` and consume the stable normalized result rather than
+parsing console output. `--output` accepts a regular file path; pipelines and
+special sinks should use stdout redirection.
 
 Run `specargus proof scan --help` for the supported inputs.

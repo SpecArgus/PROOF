@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import io
 import json
+import os
+import stat
 from pathlib import Path
 
 import pytest
@@ -244,7 +246,6 @@ def test_console_output_file_is_atomic_and_output_failure_is_sanitized(
     assert output.read_bytes() == b"previous report\n"
     assert stdout.getvalue() == b""
     assert stderr.getvalue() == "PROOF could not write the normalized result.\n"
-    assert "SECRET" not in stderr.getvalue()
     assert not list(tmp_path.glob(".report.txt.*"))
 
 
@@ -256,13 +257,15 @@ def test_console_output_file_disables_auto_color(
     output = tmp_path / "report.md"
 
     class InteractiveStdout:
-        buffer = io.BytesIO()
+        def __init__(self) -> None:
+            self.buffer = io.BytesIO()
 
         @staticmethod
         def isatty() -> bool:
             return True
 
-    monkeypatch.setattr(cli.sys, "stdout", InteractiveStdout())
+    interactive = InteractiveStdout()
+    monkeypatch.setattr(cli.sys, "stdout", interactive)
     code = cli.main(
         [
             "proof",
@@ -281,8 +284,62 @@ def test_console_output_file_disables_auto_color(
     )
 
     assert code == 1
+    assert interactive.buffer.getvalue() == b""
     assert b"\x1b[" not in output.read_bytes()
     assert b"PROOF scan: COMPLETED" in output.read_bytes()
+
+
+def test_console_color_policy_honors_environment(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    arguments = cli._parser().parse_args(["proof", "scan", "--format", "console"])
+    monkeypatch.setattr(cli.sys.stdout, "isatty", lambda: True)
+    monkeypatch.setattr(cli, "_enable_windows_virtual_terminal", lambda: True)
+    monkeypatch.delenv("NO_COLOR", raising=False)
+    monkeypatch.delenv("TERM", raising=False)
+
+    assert cli._console_color_enabled(arguments, injected_stdout=None)
+
+    monkeypatch.setenv("NO_COLOR", "1")
+    assert not cli._console_color_enabled(arguments, injected_stdout=None)
+    monkeypatch.delenv("NO_COLOR")
+    monkeypatch.setenv("TERM", "dumb")
+    assert not cli._console_color_enabled(arguments, injected_stdout=None)
+
+
+def test_reporter_exception_is_sanitized_as_internal_error(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    _spec(tmp_path / "api.json", method="delete")
+    _config(tmp_path / "proof.json", ["api.json"])
+
+    def fail(*_: object, **__: object) -> bytes:
+        raise RuntimeError("SECRET host detail")
+
+    monkeypatch.setattr(cli, "render_report", fail)
+    code, result, error = _run(tmp_path, "--config", "proof.json")
+
+    assert code == 3
+    assert result == {}
+    assert error == "PROOF could not write the normalized result.\n"
+
+
+@pytest.mark.skipif(os.name == "nt", reason="POSIX mode semantics")
+def test_atomic_output_preserves_mode_and_new_file_uses_umask(tmp_path: Path) -> None:
+    existing = tmp_path / "existing.txt"
+    existing.write_bytes(b"old")
+    existing.chmod(0o640)
+
+    cli._write_atomically(existing, b"new")
+
+    assert stat.S_IMODE(existing.stat().st_mode) == 0o640
+    created = tmp_path / "created.txt"
+    previous_umask = os.umask(0o027)
+    try:
+        cli._write_atomically(created, b"new")
+    finally:
+        os.umask(previous_umask)
+    assert stat.S_IMODE(created.stat().st_mode) == 0o640
 
 
 def test_cli_overrides_are_atomic_and_invocation_labels_do_not_change_result(
@@ -433,6 +490,74 @@ def test_output_cannot_overwrite_configuration_or_input(tmp_path: Path) -> None:
     assert config_error == (
         "PROOF could not safely select the normalized output path.\n"
     )
+
+
+def test_output_cannot_overwrite_input_through_hardlink(tmp_path: Path) -> None:
+    specification = tmp_path / "api.json"
+    _spec(specification)
+    original = specification.read_bytes()
+    alias = tmp_path / "report.json"
+    os.link(specification, alias)
+    _config(tmp_path / "proof.json", ["api.json"])
+
+    code, result, error = _run(
+        tmp_path,
+        "--config",
+        "proof.json",
+        "--output",
+        str(alias),
+    )
+
+    assert code == 3
+    assert result == {}
+    assert error == "PROOF failed internally before producing a normalized result.\n"
+    assert specification.read_bytes() == original
+
+
+def test_output_cannot_overwrite_case_variant_input(tmp_path: Path) -> None:
+    specification = tmp_path / "api.json"
+    _spec(specification)
+    output = tmp_path / "API.JSON"
+    try:
+        same_file = os.path.samefile(specification, output)
+    except FileNotFoundError:
+        pytest.skip("test filesystem is case-sensitive")
+    if not same_file:
+        pytest.skip("test filesystem is case-sensitive")
+    original = specification.read_bytes()
+    _config(tmp_path / "proof.json", ["api.json"])
+
+    code, result, error = _run(
+        tmp_path,
+        "--config",
+        "proof.json",
+        "--output",
+        str(output),
+    )
+
+    assert code == 3
+    assert result == {}
+    assert error == "PROOF failed internally before producing a normalized result.\n"
+    assert specification.read_bytes() == original
+
+
+def test_output_rejects_non_regular_target(tmp_path: Path) -> None:
+    _spec(tmp_path / "api.json")
+    _config(tmp_path / "proof.json", ["api.json"], fail_on="none")
+    output = tmp_path / "report-target"
+    output.mkdir()
+
+    code, result, error = _run(
+        tmp_path,
+        "--config",
+        "proof.json",
+        "--output",
+        str(output),
+    )
+
+    assert code == 3
+    assert result == {}
+    assert error == "PROOF could not write the normalized result.\n"
 
 
 def test_help_describes_static_boundary_and_default_gate(

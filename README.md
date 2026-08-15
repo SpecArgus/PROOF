@@ -66,29 +66,34 @@ fixtures.
 
 ## Local scan
 
-Install the locked workspace packages, then run `specargus proof scan` from a
-repository containing `proof.yaml`:
+The CLI is currently available from the source workspace rather than a
+published release. From a PROOF checkout, install the locked packages and use
+`--repository` to select the separate API repository that contains
+`proof.yaml`:
 
-```powershell
+```console
 uv sync --all-packages --locked
-uv run specargus proof scan --evaluation-time 2026-08-13T00:00:00Z
+uv run specargus proof scan --repository ../my-api-repository --evaluation-time 2026-08-13T00:00:00Z
 ```
+
+After installing the CLI into another environment, the bare `specargus`
+command can instead be run from the API repository itself.
 
 The command emits canonical result-v1 JSON by default. Use `--format console`
 for a concise human-readable summary with detailed findings; `--color` affects
 only that presentation:
 
-```powershell
-uv run specargus proof scan --format console --evaluation-time 2026-08-13T00:00:00Z
+```console
+uv run specargus proof scan --repository ../my-api-repository --format console --evaluation-time 2026-08-13T00:00:00Z
 ```
 
 Both formats support atomic file output. A console report can be saved as
 plain text, including in a `.md` file for convenient viewing. The extension
 does not select the format, and this is not yet a dedicated Markdown reporter:
 
-```powershell
-uv run specargus proof scan --format console --color never --output proof-report.txt
-uv run specargus proof scan --format console --color never --output proof-report.md
+```console
+uv run specargus proof scan --repository ../my-api-repository --format console --color never --output ../proof-report.txt
+uv run specargus proof scan --repository ../my-api-repository --format console --color never --output ../proof-report.md
 ```
 
 For automation and a future web report, keep the canonical JSON as the source
@@ -96,9 +101,14 @@ artifact instead of parsing console text. It preserves the normalized findings,
 gate, provenance, versions, truncation counts, and `resultDigest` for downstream
 rendering:
 
-```powershell
-uv run specargus proof scan --format json --output proof-result.json
+```console
+uv run specargus proof scan --repository ../my-api-repository --format json --output ../proof-result.json
 ```
+
+Keep output paths outside the scanned repository so broad selectors such as
+`**/*.json` cannot include a prior report on the next scan. `--output` accepts
+a regular file path; use ordinary stdout redirection when a pipeline or special
+sink is needed.
 
 The command returns `0` for pass or advisory, `1` for a blocked gate, `2` for
 configuration or input errors, and `3` for internal failures. Run `specargus

@@ -3,7 +3,7 @@ from __future__ import annotations
 import re
 
 import pytest
-from proof_cli.reporters import render_report
+from proof_cli import reporters
 from proof_core import (
     ArtifactIdentity,
     ContentIdentity,
@@ -62,8 +62,10 @@ def _finding() -> dict[str, object]:
     return finding
 
 
-def _run(kind: str) -> NormalizedRun:
-    findings = (_finding(),) if kind in {"advisory", "blocked"} else ()
+def _run(kind: str, custom_finding: dict[str, object] | None = None) -> NormalizedRun:
+    findings = (
+        (custom_finding or _finding(),) if kind in {"advisory", "blocked"} else ()
+    )
     errors: tuple[TerminalError, ...] = ()
     status = "completed"
     gate = GateResult("pass", "high")
@@ -138,10 +140,12 @@ def test_console_snapshots_cover_terminal_and_gate_states(
 ) -> None:
     run = _run(kind)
 
-    snapshot = render_report(run, "console").decode("utf-8")
+    snapshot = reporters.render_report(run, "console").decode("utf-8")
 
     assert snapshot.startswith(headline + "\n")
     assert detail in snapshot
+    assert "Evaluation time: 2026-08-14T00:00:00Z" in snapshot
+    assert "Schema version: 1.0.0" in snapshot
     assert "Gate: " in snapshot
     assert "Provenance:\n" in snapshot
     assert "rule-pack: proof-rulepack@1.0.0" in snapshot
@@ -149,17 +153,20 @@ def test_console_snapshots_cover_terminal_and_gate_states(
 
 
 def test_console_detail_preserves_normalized_finding_fields() -> None:
-    snapshot = render_report(_run("blocked"), "console").decode("utf-8")
+    run = _run("blocked")
+    snapshot = reporters.render_report(run, "console").decode("utf-8")
 
     assert "DELETE /items (deleteItems)" in snapshot
+    assert "Source: agent-rule" in snapshot
     assert "Evidence:\n      - method:" in snapshot
     assert "Remediation: Declare an explicit safety boundary." in snapshot
     assert "Risks: destructive" in snapshot
+    assert f"Gate causes: {run.findings[0]['fingerprint']}" in snapshot
 
 
 def test_json_report_is_the_exact_schema_valid_normalized_run() -> None:
     run = _run("blocked")
-    payload = render_report(run, "json")
+    payload = reporters.render_report(run, "json")
 
     assert payload == run.canonical_bytes() + b"\n"
     assert run.result_digest.encode("ascii") in payload
@@ -169,9 +176,53 @@ def test_json_report_is_the_exact_schema_valid_normalized_run() -> None:
 def test_color_is_presentation_only_and_does_not_change_ordering() -> None:
     run = _run("blocked")
     original = run.canonical_bytes()
-    plain = render_report(run, "console", color=False)
-    colored = render_report(run, "console", color=True)
+    plain = reporters.render_report(run, "console", color=False)
+    colored = reporters.render_report(run, "console", color=True)
 
     assert b"\x1b[" in colored
     assert re.sub(rb"\x1b\[[0-9;]*m", b"", colored) == plain
     assert run.canonical_bytes() == original
+
+
+def test_console_neutralizes_untrusted_control_characters() -> None:
+    finding = _finding()
+    operation = finding["operation"]
+    assert isinstance(operation, dict)
+    operation["operationId"] = "delete\x00Items"
+    finding["message"] = "unsafe\r\nPROOF scan: COMPLETED — PASS"
+    evidence = finding["evidence"]
+    assert isinstance(evidence, list)
+    evidence[0]["description"] = "erase\x1b[2Kline"
+    remediation = finding["remediation"]
+    assert isinstance(remediation, dict)
+    remediation["recommendation"] = "fix\x7fthis"
+
+    snapshot = reporters.render_report(
+        _run("blocked", finding), "console", color=False
+    ).decode("utf-8")
+
+    assert "\x00" not in snapshot
+    assert "\x1b" not in snapshot
+    assert "\r" not in snapshot
+    assert "unsafe\ufffd\ufffdPROOF scan: COMPLETED — PASS" in snapshot
+    assert "erase\ufffd[2Kline" in snapshot
+    assert "fix\ufffdthis" in snapshot
+
+
+def test_location_uses_pointer_delimiter_and_independent_coordinates() -> None:
+    assert (
+        reporters._location_text(
+            {
+                "path": "api/v1.json",
+                "pointer": "/paths/~1items/delete",
+                "column": 7,
+            }
+        )
+        == "api/v1.json#/paths/~1items/delete (column 7)"
+    )
+    assert (
+        reporters._location_text(
+            {"path": "api/v1.json", "pointer": "", "line": 3, "column": 7}
+        )
+        == "api/v1.json# (line 3, column 7)"
+    )

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from collections.abc import Mapping
 from typing import Literal
 
@@ -10,6 +11,7 @@ from proof_core import NormalizedRun
 ReportFormat = Literal["console", "json"]
 
 _SEVERITIES = ("error", "high", "medium", "low", "info")
+_CONTROL_CHARACTERS = re.compile(r"[\x00-\x1f\x7f]")
 _COLOR = {
     "error": "31",
     "high": "31",
@@ -38,6 +40,8 @@ def _render_console(run: NormalizedRun, *, color: bool) -> str:
     lines = [
         f"PROOF scan: {run.status.upper()} — "
         f"{_styled(run.gate.outcome.upper(), run.gate.outcome, color)}",
+        f"Evaluation time: {_safe_text(run.evaluation_time)}",
+        f"Schema version: {_safe_text(run.schema_version)}",
         (
             "Findings: "
             f"{summary.finding_total} ("
@@ -53,6 +57,15 @@ def _render_console(run: NormalizedRun, *, color: bool) -> str:
             f"excluded={summary.excluded_operations}, risky={summary.risky_operations}"
         ),
         f"Gate: {run.gate.outcome} (fail-on: {run.gate.fail_on})",
+        (
+            "Gate causes: "
+            + (
+                ", ".join(
+                    _safe_text(value) for value in run.gate.causing_finding_fingerprints
+                )
+                or "none"
+            )
+        ),
         f"Truncated findings: {summary.truncated_findings}",
         f"Result digest: {run.result_digest}",
     ]
@@ -66,7 +79,11 @@ def _render_console(run: NormalizedRun, *, color: bool) -> str:
             location = ""
             if error.location is not None:
                 location = f" at {_location_text(error.location)}"
-            lines.append(f"  - [{error.kind}/{error.code}] {error.message}{location}")
+            lines.append(
+                f"  - [{_safe_text(error.kind)}/{_safe_text(error.code)}] "
+                f"{_safe_text(error.message)}{location} "
+                f"(retryable: {'yes' if error.retryable else 'no'})"
+            )
     lines.append("Provenance:")
     for name, identity in (
         ("core", run.provenance.core),
@@ -75,10 +92,11 @@ def _render_console(run: NormalizedRun, *, color: bool) -> str:
         ("runtime", run.provenance.runtime),
     ):
         lines.append(
-            f"  {name}: {identity.name}@{identity.version} ({identity.digest})"
+            f"  {name}: {_safe_text(identity.name)}@{_safe_text(identity.version)} "
+            f"({_safe_text(identity.digest)})"
         )
-    lines.append(f"  configuration: {run.provenance.configuration.digest}")
-    lines.append(f"  input: {run.provenance.input.digest}")
+    lines.append(f"  configuration: {_safe_text(run.provenance.configuration.digest)}")
+    lines.append(f"  input: {_safe_text(run.provenance.input.digest)}")
     return "\n".join(lines) + "\n"
 
 
@@ -87,48 +105,63 @@ def _render_finding(finding: Mapping[str, object], *, color: bool) -> list[str]:
     operation = finding.get("operation")
     operation_text = ""
     if isinstance(operation, Mapping):
-        operation_text = f" — {operation['method'].upper()} {operation['path']}"
+        operation_text = (
+            f" — {_safe_text(operation['method']).upper()} "
+            f"{_safe_text(operation['path'])}"
+        )
         if "operationId" in operation:
-            operation_text += f" ({operation['operationId']})"
+            operation_text += f" ({_safe_text(operation['operationId'])})"
     lines = [
         "  - "
-        f"[{_styled(severity.upper(), severity, color)}] {finding['ruleId']}"
+        f"[{_styled(severity.upper(), severity, color)}] "
+        f"{_safe_text(finding['ruleId'])}"
         f"{operation_text}",
-        f"    Message: {finding['message']}",
+        f"    Source: {_safe_text(finding['source'])}",
+        f"    Message: {_safe_text(finding['message'])}",
         f"    Location: {_location_text(finding['location'])}",
-        f"    Fingerprint: {finding['fingerprint']}",
+        f"    Fingerprint: {_safe_text(finding['fingerprint'])}",
     ]
     risks = finding.get("riskCategories")
     if isinstance(risks, (list, tuple)) and risks:
-        lines.append("    Risks: " + ", ".join(str(risk) for risk in risks))
+        lines.append("    Risks: " + ", ".join(_safe_text(risk) for risk in risks))
     lines.append("    Evidence:")
     for evidence in finding["evidence"]:
         assert isinstance(evidence, Mapping)
         suffix = ""
         if "pointer" in evidence:
-            suffix += f" at {evidence['pointer']}"
+            suffix += f" at {_safe_text(evidence['pointer'])}"
         if "value" in evidence:
-            suffix += f" = {evidence['value']}"
-        lines.append(f"      - {evidence['kind']}: {evidence['description']}{suffix}")
+            suffix += f" = {_safe_text(evidence['value'])}"
+        lines.append(
+            f"      - {_safe_text(evidence['kind'])}: "
+            f"{_safe_text(evidence['description'])}{suffix}"
+        )
     remediation = finding["remediation"]
     assert isinstance(remediation, Mapping)
-    lines.append(f"    Remediation: {remediation['recommendation']}")
+    lines.append(f"    Remediation: {_safe_text(remediation['recommendation'])}")
     if "documentationUrl" in remediation:
-        lines.append(f"    Documentation: {remediation['documentationUrl']}")
+        lines.append(
+            f"    Documentation: {_safe_text(remediation['documentationUrl'])}"
+        )
     return lines
 
 
 def _location_text(location: object) -> str:
     assert isinstance(location, Mapping)
-    position = ""
+    coordinates = []
     if "line" in location:
-        position = f":{location['line']}"
-        if "column" in location:
-            position += f":{location['column']}"
-    return f"{location['path']}{position}{location['pointer']}"
+        coordinates.append(f"line {location['line']}")
+    if "column" in location:
+        coordinates.append(f"column {location['column']}")
+    position = f" ({', '.join(coordinates)})" if coordinates else ""
+    return f"{_safe_text(location['path'])}#{_safe_text(location['pointer'])}{position}"
 
 
 def _styled(value: str, category: str, color: bool) -> str:
     if not color:
         return value
     return f"\x1b[{_COLOR[category]}m{value}\x1b[0m"
+
+
+def _safe_text(value: object) -> str:
+    return _CONTROL_CHARACTERS.sub("\ufffd", str(value))
