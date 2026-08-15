@@ -31,8 +31,9 @@ acceptance criteria are met.
 ## Adding cases
 
 1. Create or extend a fixture file under `fixtures/synthetic/` in JSON or YAML.
-   YAML fixtures are parsed with the same strict loader the engine uses: no
-   aliases, merge keys, or duplicate keys.
+   YAML fixtures are parsed with the same strict loader the engine uses: merge
+   keys and duplicate keys are rejected, and aliases are allowed only up to the
+   engine's count limit.
 2. Add one manifest entry per operation with all required fields.
 3. Update `coverage-summary.json` totals.
 4. Run `uv run --locked pytest tests/corpus/` to verify all checks pass.
@@ -45,7 +46,7 @@ synthetic cases must keep `provenance` set to `null`.
 Pilot cases must keep `reviewStatus: "pending"`. Two-reviewer approval policy
 is not enforced until the full corpus stage.
 
-## Known limitations of the pilot test suite
+## Pilot test suite behavior
 
 The corpus test runs every fixture through the closure-only OpenAPI validator,
 normalizer, risk classifier, and agent-contract rule evaluator. It requires a
@@ -56,6 +57,7 @@ as the corpus grows.
 
 YAML fixtures are supported: the locked workspace provides the approved YAML
 parser (pyyaml), and the corpus test loader parses every fixture through
-`parse_repository_document`, the same strict document parser the engine uses.
-The current YAML cases mirror labeled JSON scenarios so that format-invariant
-engine behavior is asserted directly.
+`read_repository_document` with limits mirroring the engine's closure limits.
+Each YAML case mirrors a labeled JSON scenario: same-dialect pairs assert
+format-invariant engine behavior directly, and cross-dialect pairs assert the
+same expectations across both format and dialect.

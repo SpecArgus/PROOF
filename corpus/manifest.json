@@ -2566,7 +2566,7 @@
         "AGT-POL-002",
         "AGT-RESP-001"
       ],
-      "rationale": "YAML-format counterpart of syn-ctx-missing-identification in OAS 3.1.x: POST /reports has neither operationId nor summary/description, so the rule must fire identically when the document is parsed from YAML.",
+      "rationale": "YAML-format counterpart of syn-ctx-missing-identification translated to OAS 3.1.x: POST /reports has neither operationId nor summary/description, so the same expectations must hold across both the YAML format and the 3.1.x dialect.",
       "reviewStatus": "pending"
     },
     {
@@ -2628,7 +2628,7 @@
         "AGT-POL-002",
         "AGT-RESP-001"
       ],
-      "rationale": "YAML-format counterpart of syn-ctx-compliant-with-description in OAS 3.1.x: GET /status has both operationId and description, so the rule must not fire when the document is parsed from YAML.",
+      "rationale": "YAML-format counterpart of syn-ctx-compliant-with-description translated to OAS 3.1.x: GET /status has both operationId and description, so the same expectations must hold across both the YAML format and the 3.1.x dialect.",
       "reviewStatus": "pending"
     },
     {
@@ -2718,7 +2718,7 @@
         "AGT-POL-002",
         "AGT-RESP-001"
       ],
-      "rationale": "YAML-format counterpart of syn-param-missing-description in OAS 3.1.x: GET /items has a query parameter 'page' without a description, so the rule must emit the same single finding when the document is parsed from YAML.",
+      "rationale": "YAML-format counterpart of syn-param-missing-description translated to OAS 3.1.x: GET /items has a query parameter 'page' without a description, so the same expectations must hold across both the YAML format and the 3.1.x dialect.",
       "reviewStatus": "pending"
     },
     {
@@ -2780,7 +2780,7 @@
         "AGT-POL-002",
         "AGT-RESP-001"
       ],
-      "rationale": "YAML-format counterpart of syn-param-authorization-header-excluded in OAS 3.1.x: GET /catalog has only an Authorization header parameter, which the rule excludes, so no finding must be emitted when the document is parsed from YAML.",
+      "rationale": "YAML-format counterpart of syn-param-authorization-header-excluded translated to OAS 3.1.x: GET /catalog has only an Authorization header parameter, which the rule excludes, so the same expectations must hold across both the YAML format and the 3.1.x dialect.",
       "reviewStatus": "pending"
     },
     {
@@ -2829,7 +2829,7 @@
         "AGT-POL-002",
         "AGT-RESP-001"
       ],
-      "rationale": "YAML-format counterpart of syn-pol1-post-transfer-no-confirmation in OAS 3.0.x: POST /transfers is classified as financial_action via path and operationId tokens and declares no confirmation policy, so the rule must fire identically when the document is parsed from YAML.",
+      "rationale": "YAML-format counterpart of syn-pol1-post-transfer-no-confirmation translated to OAS 3.0.x: POST /transfers is classified as financial_action via path and operationId tokens and declares no confirmation policy, so the same expectations must hold across both the YAML format and the 3.0.x dialect.",
       "reviewStatus": "pending"
     },
     {
@@ -2909,7 +2909,7 @@
         "AGT-POL-002",
         "AGT-RESP-001"
       ],
-      "rationale": "YAML-format counterpart of syn-pol1-post-search-no-risk in OAS 3.0.x: POST /search carries no risk-classified tokens, so the rule must not fire even for a state-changing method when the document is parsed from YAML.",
+      "rationale": "YAML-format counterpart of syn-pol1-post-search-no-risk translated to OAS 3.0.x: POST /search carries no risk-classified tokens, so the same expectations must hold across both the YAML format and the 3.0.x dialect.",
       "reviewStatus": "pending"
     },
     {
@@ -3038,7 +3038,7 @@
         "AGT-POL-001",
         "AGT-RESP-001"
       ],
-      "rationale": "YAML-format counterpart of syn-pol2-get-secrets-no-security in OAS 3.1.x: GET /users/{userId}/secrets is classified as sensitive_data and overrides global security with security: [], so the rule must fire identically when the document is parsed from YAML.",
+      "rationale": "YAML-format counterpart of syn-pol2-get-secrets-no-security translated to OAS 3.1.x: GET /users/{userId}/secrets is classified as sensitive_data and overrides global security with security: [], so the same expectations must hold across both the YAML format and the 3.1.x dialect.",
       "reviewStatus": "pending"
     },
     {
@@ -3098,7 +3098,7 @@
         "AGT-POL-001",
         "AGT-POL-002"
       ],
-      "rationale": "YAML-format counterpart of syn-pol2-patch-roles-compliant in OAS 3.1.x: PATCH /admin/roles is classified as permission_change with effective inherited security and a complete x-agent-policy, so no finding must be emitted when the document is parsed from YAML.",
+      "rationale": "YAML-format counterpart of syn-pol2-patch-roles-compliant translated to OAS 3.1.x: PATCH /admin/roles is classified as permission_change with effective inherited security and a complete x-agent-policy, so the same expectations must hold across both the YAML format and the 3.1.x dialect.",
       "reviewStatus": "pending"
     },
     {
@@ -3147,7 +3147,7 @@
         "AGT-POL-001",
         "AGT-POL-002"
       ],
-      "rationale": "YAML-format counterpart of syn-resp-delete-no-error-schema in OAS 3.0.x: DELETE /tasks/{taskId} has a valid confirmation policy but no 4xx/5xx/default response with a JSON schema, so the rule must fire identically when the document is parsed from YAML.",
+      "rationale": "YAML-format counterpart of syn-resp-delete-no-error-schema translated to OAS 3.0.x: DELETE /tasks/{taskId} has a valid confirmation policy but no 4xx/5xx/default response with a JSON schema, so the same expectations must hold across both the YAML format and the 3.0.x dialect.",
       "reviewStatus": "pending"
     },
     {
@@ -3226,7 +3226,7 @@
         "AGT-POL-001",
         "AGT-POL-002"
       ],
-      "rationale": "YAML-format counterpart of syn-resp-delete-with-default-plusjson in OAS 3.0.x: DELETE /sessions/{sessionId} declares a default application/problem+json response with a schema, so the rule must not fire when the document is parsed from YAML.",
+      "rationale": "YAML-format counterpart of syn-resp-delete-with-default-plusjson translated to OAS 3.0.x: DELETE /sessions/{sessionId} declares a default application/problem+json response with a schema, so the same expectations must hold across both the YAML format and the 3.0.x dialect.",
       "reviewStatus": "pending"
     },
     {

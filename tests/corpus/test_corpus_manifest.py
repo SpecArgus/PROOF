@@ -7,13 +7,16 @@ from urllib.parse import urlsplit
 
 import pytest
 import rfc8785
+import yaml
 from jsonschema import Draft202012Validator, FormatChecker
 from proof_core import (
+    DocumentLimits,
+    InputLimits,
     OperationSet,
     ValidatorResult,
     build_input_closure,
     normalize_operations,
-    parse_repository_document,
+    read_repository_document,
     validate_openapi,
 )
 from proof_rulepack import RuleEvaluation, evaluate_agent_contract
@@ -84,11 +87,39 @@ def resolve_pointer(document: object, pointer: str) -> object:
     return current
 
 
+_ENGINE_LIMITS = InputLimits()
+_FIXTURE_DOCUMENT_LIMITS = DocumentLimits(
+    max_bytes=_ENGINE_LIMITS.max_entrypoint_bytes,
+    max_document_nesting=_ENGINE_LIMITS.max_document_nesting,
+    max_yaml_aliases=_ENGINE_LIMITS.max_yaml_aliases,
+)
+
+
 def load_fixture(fixture_rel: str) -> dict:
-    """Parse a JSON or YAML fixture with the strict parser the engine uses."""
-    closure = build_input_closure(FIXTURE_ROOT, fixture_rel)
-    resource = next(item for item in closure.resources if item.path == fixture_rel)
-    return parse_repository_document(resource).value
+    """Parse a JSON or YAML fixture with the engine's strict document parser.
+
+    The explicit limits mirror the engine's ``InputLimits`` defaults so the
+    corpus loader accepts exactly the documents the engine itself accepts.
+    """
+    return read_repository_document(
+        FIXTURE_ROOT,
+        fixture_rel,
+        limits=_FIXTURE_DOCUMENT_LIMITS,
+    ).value
+
+
+def parse_fixture_text(fixture_rel: str) -> dict:
+    """Parse a fixture permissively, without the engine's reference guards.
+
+    ``test_no_remote_refs`` needs a loader that does not itself reject remote
+    or absolute ``$ref`` targets, so its own assertions stay reachable as an
+    independent guard.
+    """
+    path = FIXTURE_ROOT / fixture_rel
+    text = path.read_text(encoding="utf-8")
+    if path.suffix in (".yaml", ".yml"):
+        return yaml.safe_load(text)
+    return json.loads(text)
 
 
 def manifest_validation_errors(manifest: dict) -> list:
@@ -257,7 +288,7 @@ def test_no_remote_refs() -> None:
         if case["fixture"] in seen_fixtures:
             continue
         seen_fixtures.add(case["fixture"])
-        document = load_fixture(case["fixture"])
+        document = parse_fixture_text(case["fixture"])
         for ref in iter_refs(document):
             assert isinstance(ref, str)
             target = ref.split("#", maxsplit=1)[0]
