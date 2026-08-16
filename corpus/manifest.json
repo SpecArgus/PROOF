@@ -12,7 +12,9 @@
       "apiPath": "/reports",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
+      "caseLabels": [
+        "positive"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -62,7 +64,9 @@
       "apiPath": "/status",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["negative"],
+      "caseLabels": [
+        "negative"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -93,7 +97,9 @@
       "apiPath": "/records",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
+      "caseLabels": [
+        "positive"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -138,7 +144,9 @@
       "apiPath": "/exports",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
+      "caseLabels": [
+        "positive"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -183,7 +191,10 @@
       "apiPath": "/notifications",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive", "boundary"],
+      "caseLabels": [
+        "positive",
+        "boundary"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -228,7 +239,10 @@
       "apiPath": "/categories",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive", "boundary"],
+      "caseLabels": [
+        "positive",
+        "boundary"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -273,7 +287,9 @@
       "apiPath": "/batches",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
+      "caseLabels": [
+        "positive"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -323,7 +339,10 @@
       "apiPath": "/jobs",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["negative", "boundary"],
+      "caseLabels": [
+        "negative",
+        "boundary"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -354,7 +373,9 @@
       "apiPath": "/metrics",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["negative"],
+      "caseLabels": [
+        "negative"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -385,7 +406,10 @@
       "apiPath": "/tags",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["negative", "boundary"],
+      "caseLabels": [
+        "negative",
+        "boundary"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -416,7 +440,10 @@
       "apiPath": "/version",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["negative", "boundary"],
+      "caseLabels": [
+        "negative",
+        "boundary"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -447,7 +474,9 @@
       "apiPath": "/items",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
+      "caseLabels": [
+        "positive"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -492,7 +521,10 @@
       "apiPath": "/catalog",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["negative", "false-positive"],
+      "caseLabels": [
+        "negative",
+        "false-positive"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -523,7 +555,9 @@
       "apiPath": "/users/{userId}",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
+      "caseLabels": [
+        "positive"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -568,7 +602,9 @@
       "apiPath": "/sessions/current",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
+      "caseLabels": [
+        "positive"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -613,7 +649,9 @@
       "apiPath": "/events",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
+      "caseLabels": [
+        "positive"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -658,7 +696,10 @@
       "apiPath": "/downloads",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["negative", "false-positive"],
+      "caseLabels": [
+        "negative",
+        "false-positive"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -689,7 +730,9 @@
       "apiPath": "/products",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
+      "caseLabels": [
+        "positive"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -734,7 +777,9 @@
       "apiPath": "/reports",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
+      "caseLabels": [
+        "positive"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -807,7 +852,10 @@
       "apiPath": "/uploads",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["negative", "false-positive"],
+      "caseLabels": [
+        "negative",
+        "false-positive"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -838,7 +886,9 @@
       "apiPath": "/devices",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["negative"],
+      "caseLabels": [
+        "negative"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -869,7 +919,9 @@
       "apiPath": "/organizations/{orgId}",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["negative"],
+      "caseLabels": [
+        "negative"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -900,7 +952,10 @@
       "apiPath": "/preferences",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["negative", "false-positive"],
+      "caseLabels": [
+        "negative",
+        "false-positive"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -931,8 +986,12 @@
       "apiPath": "/tasks/{taskId}",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
-      "expectedRisks": ["destructive"],
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [
+        "destructive"
+      ],
       "expectedNonRisks": [
         "external_side_effect",
         "financial_action",
@@ -944,7 +1003,9 @@
           "ruleId": "AGT-RESP-001",
           "severity": "medium",
           "locationPointer": "/paths/~1tasks~1{taskId}/delete/responses",
-          "riskCategories": ["destructive"],
+          "riskCategories": [
+            "destructive"
+          ],
           "evidence": [
             {
               "kind": "keyword",
@@ -980,8 +1041,13 @@
       "apiPath": "/sessions/{sessionId}",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["negative", "boundary"],
-      "expectedRisks": ["destructive"],
+      "caseLabels": [
+        "negative",
+        "boundary"
+      ],
+      "expectedRisks": [
+        "destructive"
+      ],
       "expectedNonRisks": [
         "external_side_effect",
         "financial_action",
@@ -1010,8 +1076,12 @@
       "apiPath": "/archive/{entryId}",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
-      "expectedRisks": ["destructive"],
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [
+        "destructive"
+      ],
       "expectedNonRisks": [
         "external_side_effect",
         "financial_action",
@@ -1023,7 +1093,9 @@
           "ruleId": "AGT-RESP-001",
           "severity": "medium",
           "locationPointer": "/paths/~1archive~1{entryId}/delete/responses",
-          "riskCategories": ["destructive"],
+          "riskCategories": [
+            "destructive"
+          ],
           "evidence": [
             {
               "kind": "method",
@@ -1054,7 +1126,9 @@
       "apiPath": "/runs",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
+      "caseLabels": [
+        "positive"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -1099,7 +1173,9 @@
       "apiPath": "/records/{recordId}",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
+      "caseLabels": [
+        "positive"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -1144,7 +1220,9 @@
       "apiPath": "/documents/{documentId}",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
+      "caseLabels": [
+        "positive"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -1189,8 +1267,12 @@
       "apiPath": "/payments",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
-      "expectedRisks": ["financial_action"],
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [
+        "financial_action"
+      ],
       "expectedNonRisks": [
         "destructive",
         "external_side_effect",
@@ -1202,7 +1284,9 @@
           "ruleId": "AGT-RESP-001",
           "severity": "medium",
           "locationPointer": "/paths/~1payments/post/responses",
-          "riskCategories": ["financial_action"],
+          "riskCategories": [
+            "financial_action"
+          ],
           "evidence": [
             {
               "kind": "keyword",
@@ -1243,7 +1327,9 @@
       "apiPath": "/subscriptions",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
+      "caseLabels": [
+        "positive"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -1288,7 +1374,10 @@
       "apiPath": "/configs/{configId}",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["negative", "boundary"],
+      "caseLabels": [
+        "negative",
+        "boundary"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -1319,7 +1408,10 @@
       "apiPath": "/builds",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["negative", "boundary"],
+      "caseLabels": [
+        "negative",
+        "boundary"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -1350,7 +1442,9 @@
       "apiPath": "/settings/{settingId}",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["negative"],
+      "caseLabels": [
+        "negative"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -1381,8 +1475,13 @@
       "apiPath": "/users/{userId}/credentials",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["negative", "false-positive"],
-      "expectedRisks": ["sensitive_data"],
+      "caseLabels": [
+        "negative",
+        "false-positive"
+      ],
+      "expectedRisks": [
+        "sensitive_data"
+      ],
       "expectedNonRisks": [
         "destructive",
         "external_side_effect",
@@ -1411,8 +1510,12 @@
       "apiPath": "/queue",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
-      "expectedRisks": ["destructive"],
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [
+        "destructive"
+      ],
       "expectedNonRisks": [
         "external_side_effect",
         "financial_action",
@@ -1424,7 +1527,9 @@
           "ruleId": "AGT-RESP-001",
           "severity": "medium",
           "locationPointer": "/paths/~1queue/get/responses",
-          "riskCategories": ["destructive"],
+          "riskCategories": [
+            "destructive"
+          ],
           "evidence": [
             {
               "kind": "extension",
@@ -1460,8 +1565,12 @@
       "apiPath": "/transfers",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
-      "expectedRisks": ["financial_action"],
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [
+        "financial_action"
+      ],
       "expectedNonRisks": [
         "destructive",
         "external_side_effect",
@@ -1473,7 +1582,9 @@
           "ruleId": "AGT-POL-001",
           "severity": "high",
           "locationPointer": "/paths/~1transfers/post",
-          "riskCategories": ["financial_action"],
+          "riskCategories": [
+            "financial_action"
+          ],
           "evidence": [
             {
               "kind": "keyword",
@@ -1509,7 +1620,10 @@
       "apiPath": "/search",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["negative", "false-positive"],
+      "caseLabels": [
+        "negative",
+        "false-positive"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -1540,8 +1654,12 @@
       "apiPath": "/cache",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
-      "expectedRisks": ["destructive"],
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [
+        "destructive"
+      ],
       "expectedNonRisks": [
         "external_side_effect",
         "financial_action",
@@ -1553,7 +1671,9 @@
           "ruleId": "AGT-POL-001",
           "severity": "high",
           "locationPointer": "/paths/~1cache/delete",
-          "riskCategories": ["destructive"],
+          "riskCategories": [
+            "destructive"
+          ],
           "evidence": [
             {
               "kind": "method",
@@ -1584,8 +1704,12 @@
       "apiPath": "/notifications",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
-      "expectedRisks": ["external_side_effect"],
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [
+        "external_side_effect"
+      ],
       "expectedNonRisks": [
         "destructive",
         "financial_action",
@@ -1597,7 +1721,9 @@
           "ruleId": "AGT-POL-001",
           "severity": "high",
           "locationPointer": "/paths/~1notifications/post",
-          "riskCategories": ["external_side_effect"],
+          "riskCategories": [
+            "external_side_effect"
+          ],
           "evidence": [
             {
               "kind": "path",
@@ -1628,8 +1754,12 @@
       "apiPath": "/permissions",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
-      "expectedRisks": ["permission_change"],
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [
+        "permission_change"
+      ],
       "expectedNonRisks": [
         "destructive",
         "external_side_effect",
@@ -1641,7 +1771,9 @@
           "ruleId": "AGT-POL-001",
           "severity": "high",
           "locationPointer": "/paths/~1permissions/post",
-          "riskCategories": ["permission_change"],
+          "riskCategories": [
+            "permission_change"
+          ],
           "evidence": [
             {
               "kind": "path",
@@ -1672,8 +1804,12 @@
       "apiPath": "/tasks/actions",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
-      "expectedRisks": ["destructive"],
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [
+        "destructive"
+      ],
       "expectedNonRisks": [
         "external_side_effect",
         "financial_action",
@@ -1685,7 +1821,9 @@
           "ruleId": "AGT-POL-001",
           "severity": "high",
           "locationPointer": "/paths/~1tasks~1actions/post",
-          "riskCategories": ["destructive"],
+          "riskCategories": [
+            "destructive"
+          ],
           "evidence": [
             {
               "kind": "keyword",
@@ -1716,8 +1854,12 @@
       "apiPath": "/batch/status",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
-      "expectedRisks": ["external_side_effect"],
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [
+        "external_side_effect"
+      ],
       "expectedNonRisks": [
         "destructive",
         "financial_action",
@@ -1729,7 +1871,9 @@
           "ruleId": "AGT-POL-001",
           "severity": "high",
           "locationPointer": "/paths/~1batch~1status/get",
-          "riskCategories": ["external_side_effect"],
+          "riskCategories": [
+            "external_side_effect"
+          ],
           "evidence": [
             {
               "kind": "extension",
@@ -1760,8 +1904,13 @@
       "apiPath": "/payments/{paymentId}",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
-      "expectedRisks": ["destructive", "financial_action"],
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [
+        "destructive",
+        "financial_action"
+      ],
       "expectedNonRisks": [
         "external_side_effect",
         "permission_change",
@@ -1772,7 +1921,10 @@
           "ruleId": "AGT-POL-001",
           "severity": "high",
           "locationPointer": "/paths/~1payments~1{paymentId}/delete",
-          "riskCategories": ["destructive", "financial_action"],
+          "riskCategories": [
+            "destructive",
+            "financial_action"
+          ],
           "evidence": [
             {
               "kind": "keyword",
@@ -1818,8 +1970,12 @@
       "apiPath": "/webhooks",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["negative"],
-      "expectedRisks": ["external_side_effect"],
+      "caseLabels": [
+        "negative"
+      ],
+      "expectedRisks": [
+        "external_side_effect"
+      ],
       "expectedNonRisks": [
         "destructive",
         "financial_action",
@@ -1848,8 +2004,12 @@
       "apiPath": "/invoices",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["negative"],
-      "expectedRisks": ["financial_action"],
+      "caseLabels": [
+        "negative"
+      ],
+      "expectedRisks": [
+        "financial_action"
+      ],
       "expectedNonRisks": [
         "destructive",
         "external_side_effect",
@@ -1878,8 +2038,12 @@
       "apiPath": "/grants",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
-      "expectedRisks": ["permission_change"],
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [
+        "permission_change"
+      ],
       "expectedNonRisks": [
         "destructive",
         "external_side_effect",
@@ -1891,7 +2055,9 @@
           "ruleId": "AGT-POL-001",
           "severity": "high",
           "locationPointer": "/paths/~1grants/post/x-agent-policy/confirmation",
-          "riskCategories": ["permission_change"],
+          "riskCategories": [
+            "permission_change"
+          ],
           "evidence": [
             {
               "kind": "keyword",
@@ -1927,8 +2093,12 @@
       "apiPath": "/purges",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
-      "expectedRisks": ["destructive"],
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [
+        "destructive"
+      ],
       "expectedNonRisks": [
         "external_side_effect",
         "financial_action",
@@ -1940,7 +2110,9 @@
           "ruleId": "AGT-POL-001",
           "severity": "high",
           "locationPointer": "/paths/~1purges/post/x-agent-policy/confirmation",
-          "riskCategories": ["destructive"],
+          "riskCategories": [
+            "destructive"
+          ],
           "evidence": [
             {
               "kind": "path",
@@ -1971,8 +2143,12 @@
       "apiPath": "/charges",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["negative"],
-      "expectedRisks": ["financial_action"],
+      "caseLabels": [
+        "negative"
+      ],
+      "expectedRisks": [
+        "financial_action"
+      ],
       "expectedNonRisks": [
         "destructive",
         "external_side_effect",
@@ -2001,7 +2177,10 @@
       "apiPath": "/transfers",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["negative", "false-positive"],
+      "caseLabels": [
+        "negative",
+        "false-positive"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -2032,8 +2211,12 @@
       "apiPath": "/users/{userId}/secrets",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
-      "expectedRisks": ["sensitive_data"],
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [
+        "sensitive_data"
+      ],
       "expectedNonRisks": [
         "destructive",
         "external_side_effect",
@@ -2045,7 +2228,9 @@
           "ruleId": "AGT-POL-002",
           "severity": "high",
           "locationPointer": "/paths/~1users~1{userId}~1secrets/get/security",
-          "riskCategories": ["sensitive_data"],
+          "riskCategories": [
+            "sensitive_data"
+          ],
           "evidence": [
             {
               "kind": "keyword",
@@ -2081,8 +2266,13 @@
       "apiPath": "/admin/roles",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["negative", "boundary"],
-      "expectedRisks": ["permission_change"],
+      "caseLabels": [
+        "negative",
+        "boundary"
+      ],
+      "expectedRisks": [
+        "permission_change"
+      ],
       "expectedNonRisks": [
         "destructive",
         "external_side_effect",
@@ -2111,8 +2301,12 @@
       "apiPath": "/roles",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
-      "expectedRisks": ["permission_change"],
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [
+        "permission_change"
+      ],
       "expectedNonRisks": [
         "destructive",
         "external_side_effect",
@@ -2124,7 +2318,9 @@
           "ruleId": "AGT-POL-002",
           "severity": "high",
           "locationPointer": "/paths/~1roles/post/x-agent-policy",
-          "riskCategories": ["permission_change"],
+          "riskCategories": [
+            "permission_change"
+          ],
           "evidence": [
             {
               "kind": "keyword",
@@ -2160,8 +2356,12 @@
       "apiPath": "/profiles",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
-      "expectedRisks": ["sensitive_data"],
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [
+        "sensitive_data"
+      ],
       "expectedNonRisks": [
         "destructive",
         "external_side_effect",
@@ -2173,7 +2373,9 @@
           "ruleId": "AGT-POL-002",
           "severity": "high",
           "locationPointer": "/paths/~1profiles/get/x-agent-policy/dataClassification",
-          "riskCategories": ["sensitive_data"],
+          "riskCategories": [
+            "sensitive_data"
+          ],
           "evidence": [
             {
               "kind": "keyword",
@@ -2209,8 +2411,12 @@
       "apiPath": "/credentials/{credentialId}",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
-      "expectedRisks": ["sensitive_data"],
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [
+        "sensitive_data"
+      ],
       "expectedNonRisks": [
         "destructive",
         "external_side_effect",
@@ -2222,7 +2428,9 @@
           "ruleId": "AGT-POL-002",
           "severity": "high",
           "locationPointer": "/paths/~1credentials~1{credentialId}/get/security",
-          "riskCategories": ["sensitive_data"],
+          "riskCategories": [
+            "sensitive_data"
+          ],
           "evidence": [
             {
               "kind": "keyword",
@@ -2263,8 +2471,12 @@
       "apiPath": "/tokens",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
-      "expectedRisks": ["sensitive_data"],
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [
+        "sensitive_data"
+      ],
       "expectedNonRisks": [
         "destructive",
         "external_side_effect",
@@ -2276,7 +2488,9 @@
           "ruleId": "AGT-POL-002",
           "severity": "high",
           "locationPointer": "/paths/~1tokens/get",
-          "riskCategories": ["sensitive_data"],
+          "riskCategories": [
+            "sensitive_data"
+          ],
           "evidence": [
             {
               "kind": "keyword",
@@ -2312,8 +2526,13 @@
       "apiPath": "/access/credentials",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["positive"],
-      "expectedRisks": ["permission_change", "sensitive_data"],
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [
+        "permission_change",
+        "sensitive_data"
+      ],
       "expectedNonRisks": [
         "destructive",
         "external_side_effect",
@@ -2324,7 +2543,10 @@
           "ruleId": "AGT-POL-002",
           "severity": "high",
           "locationPointer": "/paths/~1access~1credentials/post/x-agent-policy",
-          "riskCategories": ["permission_change", "sensitive_data"],
+          "riskCategories": [
+            "permission_change",
+            "sensitive_data"
+          ],
           "evidence": [
             {
               "kind": "path",
@@ -2360,8 +2582,12 @@
       "apiPath": "/credentials/{credentialId}",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["negative"],
-      "expectedRisks": ["sensitive_data"],
+      "caseLabels": [
+        "negative"
+      ],
+      "expectedRisks": [
+        "sensitive_data"
+      ],
       "expectedNonRisks": [
         "destructive",
         "external_side_effect",
@@ -2390,8 +2616,12 @@
       "apiPath": "/secrets/{secretId}",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["negative"],
-      "expectedRisks": ["sensitive_data"],
+      "caseLabels": [
+        "negative"
+      ],
+      "expectedRisks": [
+        "sensitive_data"
+      ],
       "expectedNonRisks": [
         "destructive",
         "external_side_effect",
@@ -2420,8 +2650,13 @@
       "apiPath": "/roles/{roleId}/secrets",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["negative"],
-      "expectedRisks": ["permission_change", "sensitive_data"],
+      "caseLabels": [
+        "negative"
+      ],
+      "expectedRisks": [
+        "permission_change",
+        "sensitive_data"
+      ],
       "expectedNonRisks": [
         "destructive",
         "external_side_effect",
@@ -2449,7 +2684,10 @@
       "apiPath": "/roles",
       "sourceType": "synthetic",
       "provenance": null,
-      "caseLabels": ["negative", "false-positive"],
+      "caseLabels": [
+        "negative",
+        "false-positive"
+      ],
       "expectedRisks": [],
       "expectedNonRisks": [
         "destructive",
@@ -2467,6 +2705,2037 @@
         "AGT-RESP-001"
       ],
       "rationale": "GET /roles: 'roles' is a permission_change token but stateChangingTokenCategories requires a state-changing method; GET is excluded so no classification occurs.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-yaml-ctx-no-opid-30",
+      "ruleId": "AGT-CTX-001",
+      "fixture": "synthetic/ctx-cases.yaml",
+      "dialect": "3.0.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1audit~1export/get",
+      "method": "get",
+      "apiPath": "/audit/export",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-CTX-001",
+          "severity": "medium",
+          "locationPointer": "/paths/~1audit~1export/get",
+          "riskCategories": [],
+          "evidence": [
+            {
+              "kind": "schema",
+              "pointer": "/paths/~1audit~1export/get",
+              "value": "operationId"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "GET /audit/export has no operationId; AGT-CTX-001 fires for the missing operationId requirement even though a summary is present.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-yaml-ctx-opid-no-summary-desc-30",
+      "ruleId": "AGT-CTX-001",
+      "fixture": "synthetic/ctx-cases.yaml",
+      "dialect": "3.0.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1audit~1config/get",
+      "method": "get",
+      "apiPath": "/audit/config",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-CTX-001",
+          "severity": "medium",
+          "locationPointer": "/paths/~1audit~1config/get",
+          "riskCategories": [],
+          "evidence": [
+            {
+              "kind": "schema",
+              "pointer": "/paths/~1audit~1config/get",
+              "value": "summary-or-description"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "GET /audit/config has operationId but neither summary nor description; AGT-CTX-001 fires for the missing summary-or-description requirement.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-yaml-ctx-compliant-30",
+      "ruleId": "AGT-CTX-001",
+      "fixture": "synthetic/ctx-cases.yaml",
+      "dialect": "3.0.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1audit~1events/get",
+      "method": "get",
+      "apiPath": "/audit/events",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": [
+        "negative"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "GET /audit/events has operationId, summary, and description; AGT-CTX-001 must not fire.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-yaml-param-query-no-desc-31",
+      "ruleId": "AGT-PARAM-001",
+      "fixture": "synthetic/param-cases.yaml",
+      "dialect": "3.1.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1sessions/get",
+      "method": "get",
+      "apiPath": "/sessions",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-PARAM-001",
+          "severity": "medium",
+          "locationPointer": "/paths/~1sessions/get/parameters/0",
+          "riskCategories": [],
+          "evidence": [
+            {
+              "kind": "schema",
+              "pointer": "/paths/~1sessions/get/parameters/0",
+              "value": "description"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "GET /sessions has a query parameter 'page' with no description; AGT-PARAM-001 must fire.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-yaml-param-accept-header-neg-31",
+      "ruleId": "AGT-PARAM-001",
+      "fixture": "synthetic/param-cases.yaml",
+      "dialect": "3.1.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1sessions/post",
+      "method": "post",
+      "apiPath": "/sessions",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": [
+        "negative",
+        "false-positive"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "POST /sessions has only an Accept header parameter, which is in the AGT-PARAM-001 exclusion list; no finding expected.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-yaml-param-path-with-desc-neg-31",
+      "ruleId": "AGT-PARAM-001",
+      "fixture": "synthetic/param-cases.yaml",
+      "dialect": "3.1.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1sessions~1{id}/get",
+      "method": "get",
+      "apiPath": "/sessions/{id}",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": [
+        "negative"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "GET /sessions/{id} has a path parameter 'id' with a description present; AGT-PARAM-001 must not fire.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-yaml-resp-post-no-error-30",
+      "ruleId": "AGT-RESP-001",
+      "fixture": "synthetic/resp-cases.yaml",
+      "dialect": "3.0.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1exports/post",
+      "method": "post",
+      "apiPath": "/exports",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-RESP-001",
+          "severity": "medium",
+          "locationPointer": "/paths/~1exports/post/responses",
+          "riskCategories": [],
+          "evidence": [
+            {
+              "kind": "method",
+              "pointer": "/paths/~1exports/post",
+              "value": "post"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002"
+      ],
+      "rationale": "POST /exports is state-changing with no risk tokens and no error response with JSON schema; AGT-RESP-001 must fire.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-yaml-resp-put-with-error-neg-30",
+      "ruleId": "AGT-RESP-001",
+      "fixture": "synthetic/resp-cases.yaml",
+      "dialect": "3.0.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1settings/put",
+      "method": "put",
+      "apiPath": "/settings",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": [
+        "negative"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "PUT /settings has a 400 response with application/json schema; the error response satisfies AGT-RESP-001 and no finding is expected.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-yaml-resp-post-snapshot-30",
+      "ruleId": "AGT-RESP-001",
+      "fixture": "synthetic/resp-cases.yaml",
+      "dialect": "3.0.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1snapshots/post",
+      "method": "post",
+      "apiPath": "/snapshots",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-RESP-001",
+          "severity": "medium",
+          "locationPointer": "/paths/~1snapshots/post/responses",
+          "riskCategories": [],
+          "evidence": [
+            {
+              "kind": "method",
+              "pointer": "/paths/~1snapshots/post",
+              "value": "post"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002"
+      ],
+      "rationale": "POST /snapshots is state-changing with no risk tokens and only a 201 success response; AGT-RESP-001 must fire.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-yaml-pol1-dispatch-31",
+      "ruleId": "AGT-POL-001",
+      "fixture": "synthetic/pol1-cases.yaml",
+      "dialect": "3.1.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1dispatch/post",
+      "method": "post",
+      "apiPath": "/dispatch",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [
+        "external_side_effect"
+      ],
+      "expectedNonRisks": [
+        "destructive",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-POL-001",
+          "severity": "high",
+          "locationPointer": "/paths/~1dispatch/post",
+          "riskCategories": [
+            "external_side_effect"
+          ],
+          "evidence": [
+            {
+              "kind": "keyword",
+              "pointer": "/paths/~1dispatch/post/operationId",
+              "value": "dispatch"
+            },
+            {
+              "kind": "path",
+              "pointer": "/paths/~1dispatch",
+              "value": "dispatch"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "POST /dispatch is classified as external_side_effect via path and operationId token 'dispatch', but has no x-agent-policy.confirmation; AGT-POL-001 must fire.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-yaml-pol1-webhooks-get-neg-31",
+      "ruleId": "AGT-POL-001",
+      "fixture": "synthetic/pol1-cases.yaml",
+      "dialect": "3.1.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1webhooks/get",
+      "method": "get",
+      "apiPath": "/webhooks",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": [
+        "negative",
+        "false-positive"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "GET /webhooks: 'webhook' appears in the path but external_side_effect vocabulary is only applied to state-changing methods; GET produces no CONFIRMATION_RISK so AGT-POL-001 must not fire.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-yaml-pol1-delete-account-31",
+      "ruleId": "AGT-POL-001",
+      "fixture": "synthetic/pol1-cases.yaml",
+      "dialect": "3.1.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1account/delete",
+      "method": "delete",
+      "apiPath": "/account",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [
+        "destructive"
+      ],
+      "expectedNonRisks": [
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-POL-001",
+          "severity": "high",
+          "locationPointer": "/paths/~1account/delete",
+          "riskCategories": [
+            "destructive"
+          ],
+          "evidence": [
+            {
+              "kind": "keyword",
+              "pointer": "/paths/~1account/delete/operationId",
+              "value": "delete"
+            },
+            {
+              "kind": "method",
+              "pointer": "/paths/~1account/delete",
+              "value": "delete"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "DELETE /account is classified as destructive via method category and operationId token 'delete', but has no x-agent-policy.confirmation; AGT-POL-001 must fire.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-yaml-pol2-user-secrets-30",
+      "ruleId": "AGT-POL-002",
+      "fixture": "synthetic/pol2-cases.yaml",
+      "dialect": "3.0.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1user~1secrets/get",
+      "method": "get",
+      "apiPath": "/user/secrets",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [
+        "sensitive_data"
+      ],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-POL-002",
+          "severity": "high",
+          "locationPointer": "/paths/~1user~1secrets/get",
+          "riskCategories": [
+            "sensitive_data"
+          ],
+          "evidence": [
+            {
+              "kind": "keyword",
+              "pointer": "/paths/~1user~1secrets/get/operationId",
+              "value": "secrets"
+            },
+            {
+              "kind": "path",
+              "pointer": "/paths/~1user~1secrets",
+              "value": "secrets"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-RESP-001"
+      ],
+      "rationale": "GET /user/secrets is classified as sensitive_data via path and operationId token 'secrets', with no security defined; AGT-POL-002 must fire.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-yaml-pol2-health-30",
+      "ruleId": "AGT-POL-002",
+      "fixture": "synthetic/pol2-cases.yaml",
+      "dialect": "3.0.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1service~1health/get",
+      "method": "get",
+      "apiPath": "/service/health",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [
+        "sensitive_data"
+      ],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-POL-002",
+          "severity": "high",
+          "locationPointer": "/paths/~1service~1health/get",
+          "riskCategories": [
+            "sensitive_data"
+          ],
+          "evidence": [
+            {
+              "kind": "keyword",
+              "pointer": "/paths/~1service~1health/get/operationId",
+              "value": "health"
+            },
+            {
+              "kind": "path",
+              "pointer": "/paths/~1service~1health",
+              "value": "health"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-RESP-001"
+      ],
+      "rationale": "GET /service/health is classified as sensitive_data because 'health' is in the sensitive_data vocabulary; AGT-POL-002 fires since no security is defined.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-yaml-pol2-dashboard-neg-30",
+      "ruleId": "AGT-POL-002",
+      "fixture": "synthetic/pol2-cases.yaml",
+      "dialect": "3.0.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1dashboard/get",
+      "method": "get",
+      "apiPath": "/dashboard",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": [
+        "negative"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "GET /dashboard contains no sensitive_data or permission_change tokens; AGT-POL-002 must not fire.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-ref-list-items-neg-31",
+      "ruleId": "AGT-CTX-001",
+      "fixture": "synthetic/ref-cases.yaml",
+      "dialect": "3.1.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1items/get",
+      "method": "get",
+      "apiPath": "/items",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": [
+        "negative"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "GET /items has operationId and summary, no parameters; all rules pass. Uses local $ref to schemas.yaml.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-ref-get-item-neg-31",
+      "ruleId": "AGT-PARAM-001",
+      "fixture": "synthetic/ref-cases.yaml",
+      "dialect": "3.1.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1items~1{id}/get",
+      "method": "get",
+      "apiPath": "/items/{id}",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": [
+        "negative"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "GET /items/{id} has operationId, summary, and a path parameter 'id' with description; AGT-PARAM-001 must not fire.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-ref-create-item-neg-31",
+      "ruleId": "AGT-RESP-001",
+      "fixture": "synthetic/ref-cases.yaml",
+      "dialect": "3.1.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1items~1batch/post",
+      "method": "post",
+      "apiPath": "/items/batch",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": [
+        "negative"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "POST /items/batch has a 400 response with JSON schema (via $ref to schemas.yaml); AGT-RESP-001 must not fire.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-ref-replace-item-param-31",
+      "ruleId": "AGT-PARAM-001",
+      "fixture": "synthetic/ref-cases.yaml",
+      "dialect": "3.1.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1items~1{id}/put",
+      "method": "put",
+      "apiPath": "/items/{id}",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-PARAM-001",
+          "severity": "medium",
+          "locationPointer": "/paths/~1items~1{id}/put/parameters/0",
+          "riskCategories": [],
+          "evidence": [
+            {
+              "kind": "schema",
+              "pointer": "/paths/~1items~1{id}/put/parameters/0",
+              "value": "description"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "PUT /items/{id} has a path parameter 'id' without description; AGT-PARAM-001 must fire. Uses local $ref to schemas.yaml.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-ref-delete-item-pol1-31",
+      "ruleId": "AGT-POL-001",
+      "fixture": "synthetic/ref-cases.yaml",
+      "dialect": "3.1.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1items~1{id}/delete",
+      "method": "delete",
+      "apiPath": "/items/{id}",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [
+        "destructive"
+      ],
+      "expectedNonRisks": [
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-POL-001",
+          "severity": "high",
+          "locationPointer": "/paths/~1items~1{id}/delete",
+          "riskCategories": [
+            "destructive"
+          ],
+          "evidence": [
+            {
+              "kind": "keyword",
+              "pointer": "/paths/~1items~1{id}/delete/operationId",
+              "value": "delete"
+            },
+            {
+              "kind": "method",
+              "pointer": "/paths/~1items~1{id}/delete",
+              "value": "delete"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "DELETE /items/{id} is classified as destructive and has no x-agent-policy.confirmation; AGT-POL-001 must fire. Uses local $ref to schemas.yaml.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-ref-list-tags-ctx-31",
+      "ruleId": "AGT-CTX-001",
+      "fixture": "synthetic/ref-cases.yaml",
+      "dialect": "3.1.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1items~1{id}~1tags/get",
+      "method": "get",
+      "apiPath": "/items/{id}/tags",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-CTX-001",
+          "severity": "medium",
+          "locationPointer": "/paths/~1items~1{id}~1tags/get",
+          "riskCategories": [],
+          "evidence": [
+            {
+              "kind": "schema",
+              "pointer": "/paths/~1items~1{id}~1tags/get",
+              "value": "summary-or-description"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "GET /items/{id}/tags has operationId but neither summary nor description; AGT-CTX-001 must fire.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "pub-petstore-list-pets-30",
+      "ruleId": "AGT-CTX-001",
+      "fixture": "public/oai-petstore.yaml",
+      "dialect": "3.0.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1pets/get",
+      "method": "get",
+      "apiPath": "/pets",
+      "sourceType": "public",
+      "provenance": {
+        "sourceUrl": "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/examples/v3.0/petstore.yaml",
+        "license": "Apache-2.0",
+        "sourceRef": "main"
+      },
+      "caseLabels": [
+        "negative"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "GET /pets (listPets) from OAI petstore: has operationId, summary, and all parameters described; no rule fires.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "pub-petstore-create-pets-30",
+      "ruleId": "AGT-RESP-001",
+      "fixture": "public/oai-petstore.yaml",
+      "dialect": "3.0.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1pets/post",
+      "method": "post",
+      "apiPath": "/pets",
+      "sourceType": "public",
+      "provenance": {
+        "sourceUrl": "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/examples/v3.0/petstore.yaml",
+        "license": "Apache-2.0",
+        "sourceRef": "main"
+      },
+      "caseLabels": [
+        "negative"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "POST /pets (createPets) from OAI petstore: state-changing but has a default error response with JSON schema; AGT-RESP-001 must not fire.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "pub-petstore-show-pet-30",
+      "ruleId": "AGT-PARAM-001",
+      "fixture": "public/oai-petstore.yaml",
+      "dialect": "3.0.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1pets~1{petId}/get",
+      "method": "get",
+      "apiPath": "/pets/{petId}",
+      "sourceType": "public",
+      "provenance": {
+        "sourceUrl": "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/examples/v3.0/petstore.yaml",
+        "license": "Apache-2.0",
+        "sourceRef": "main"
+      },
+      "caseLabels": [
+        "negative"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "GET /pets/{petId} (showPetById) from OAI petstore: path parameter 'petId' has a description; AGT-PARAM-001 must not fire.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "pub-petstore-exp-find-pets-30",
+      "ruleId": "AGT-CTX-001",
+      "fixture": "public/oai-petstore-expanded.yaml",
+      "dialect": "3.0.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1pets/get",
+      "method": "get",
+      "apiPath": "/pets",
+      "sourceType": "public",
+      "provenance": {
+        "sourceUrl": "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/examples/v3.0/petstore-expanded.yaml",
+        "license": "Apache-2.0",
+        "sourceRef": "main"
+      },
+      "caseLabels": [
+        "negative"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "GET /pets (findPets) from OAI petstore-expanded: has operationId and description; all parameters described; no rule fires.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "pub-petstore-exp-add-pet-30",
+      "ruleId": "AGT-RESP-001",
+      "fixture": "public/oai-petstore-expanded.yaml",
+      "dialect": "3.0.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1pets/post",
+      "method": "post",
+      "apiPath": "/pets",
+      "sourceType": "public",
+      "provenance": {
+        "sourceUrl": "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/examples/v3.0/petstore-expanded.yaml",
+        "license": "Apache-2.0",
+        "sourceRef": "main"
+      },
+      "caseLabels": [
+        "negative"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "POST /pets (addPet) from OAI petstore-expanded: has default error response with JSON schema; AGT-RESP-001 must not fire.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "pub-petstore-exp-find-pet-id-30",
+      "ruleId": "AGT-PARAM-001",
+      "fixture": "public/oai-petstore-expanded.yaml",
+      "dialect": "3.0.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1pets~1{id}/get",
+      "method": "get",
+      "apiPath": "/pets/{id}",
+      "sourceType": "public",
+      "provenance": {
+        "sourceUrl": "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/examples/v3.0/petstore-expanded.yaml",
+        "license": "Apache-2.0",
+        "sourceRef": "main"
+      },
+      "caseLabels": [
+        "negative"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "GET /pets/{id} from OAI petstore-expanded: path parameter 'id' has description; AGT-PARAM-001 must not fire.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "pub-petstore-exp-delete-pet-30",
+      "ruleId": "AGT-POL-001",
+      "fixture": "public/oai-petstore-expanded.yaml",
+      "dialect": "3.0.x",
+      "format": "yaml",
+      "operationPointer": "/paths/~1pets~1{id}/delete",
+      "method": "delete",
+      "apiPath": "/pets/{id}",
+      "sourceType": "public",
+      "provenance": {
+        "sourceUrl": "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/examples/v3.0/petstore-expanded.yaml",
+        "license": "Apache-2.0",
+        "sourceRef": "main"
+      },
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [
+        "destructive"
+      ],
+      "expectedNonRisks": [
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-POL-001",
+          "severity": "high",
+          "locationPointer": "/paths/~1pets~1{id}/delete",
+          "riskCategories": [
+            "destructive"
+          ],
+          "evidence": [
+            {
+              "kind": "keyword",
+              "pointer": "/paths/~1pets~1{id}/delete/operationId",
+              "value": "delete"
+            },
+            {
+              "kind": "method",
+              "pointer": "/paths/~1pets~1{id}/delete",
+              "value": "delete"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "DELETE /pets/{id} (deletePet) from OAI petstore-expanded: classified as destructive, no x-agent-policy.confirmation; AGT-POL-001 must fire.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "pub-github30-get-repo",
+      "ruleId": "AGT-CTX-001",
+      "fixture": "public/github-api-30-subset.json",
+      "dialect": "3.0.x",
+      "format": "json",
+      "operationPointer": "/paths/~1repos~1{owner}~1{repo}/get",
+      "method": "get",
+      "apiPath": "/repos/{owner}/{repo}",
+      "sourceType": "public",
+      "provenance": {
+        "sourceUrl": "https://raw.githubusercontent.com/github/rest-api-description/main/descriptions/api.github.com/api.github.com.json",
+        "license": "CC-BY-4.0",
+        "sourceRef": "main",
+        "modifications": "Extracted paths: /repos/{owner}/{repo} (GET only), /repos/{owner}/{repo}/hooks (POST only), /repos/{owner}/{repo}/actions/secrets (GET only), /markdown (POST only). Only the methods listed in this document's path items are retained from the upstream source. All other paths and methods are omitted. The components section contains the complete transitive internal $ref closure reachable from the retained operations and their path-item-level parameters. No inline schema content has been added or modified."
+      },
+      "caseLabels": [
+        "negative"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "GET /repos/{owner}/{repo} from GitHub REST API 3.0.x: well-documented operation with all parameters described; no rule fires.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "pub-github30-create-webhook",
+      "ruleId": "AGT-POL-001",
+      "fixture": "public/github-api-30-subset.json",
+      "dialect": "3.0.x",
+      "format": "json",
+      "operationPointer": "/paths/~1repos~1{owner}~1{repo}~1hooks/post",
+      "method": "post",
+      "apiPath": "/repos/{owner}/{repo}/hooks",
+      "sourceType": "public",
+      "provenance": {
+        "sourceUrl": "https://raw.githubusercontent.com/github/rest-api-description/main/descriptions/api.github.com/api.github.com.json",
+        "license": "CC-BY-4.0",
+        "sourceRef": "main",
+        "modifications": "Extracted paths: /repos/{owner}/{repo} (GET only), /repos/{owner}/{repo}/hooks (POST only), /repos/{owner}/{repo}/actions/secrets (GET only), /markdown (POST only). Only the methods listed in this document's path items are retained from the upstream source. All other paths and methods are omitted. The components section contains the complete transitive internal $ref closure reachable from the retained operations and their path-item-level parameters. No inline schema content has been added or modified."
+      },
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [
+        "external_side_effect"
+      ],
+      "expectedNonRisks": [
+        "destructive",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-POL-001",
+          "severity": "high",
+          "locationPointer": "/paths/~1repos~1{owner}~1{repo}~1hooks/post",
+          "riskCategories": [
+            "external_side_effect"
+          ],
+          "evidence": [
+            {
+              "kind": "keyword",
+              "pointer": "/paths/~1repos~1{owner}~1{repo}~1hooks/post/operationId",
+              "value": "webhook"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "POST /repos/{owner}/{repo}/hooks from GitHub REST API 3.0.x (operationId 'repos/create-webhook'): token 'webhook' classifies as external_side_effect; no x-agent-policy.confirmation; AGT-POL-001 fires.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "pub-github30-list-repo-secrets",
+      "ruleId": "AGT-POL-002",
+      "fixture": "public/github-api-30-subset.json",
+      "dialect": "3.0.x",
+      "format": "json",
+      "operationPointer": "/paths/~1repos~1{owner}~1{repo}~1actions~1secrets/get",
+      "method": "get",
+      "apiPath": "/repos/{owner}/{repo}/actions/secrets",
+      "sourceType": "public",
+      "provenance": {
+        "sourceUrl": "https://raw.githubusercontent.com/github/rest-api-description/main/descriptions/api.github.com/api.github.com.json",
+        "license": "CC-BY-4.0",
+        "sourceRef": "main",
+        "modifications": "Extracted paths: /repos/{owner}/{repo} (GET only), /repos/{owner}/{repo}/hooks (POST only), /repos/{owner}/{repo}/actions/secrets (GET only), /markdown (POST only). Only the methods listed in this document's path items are retained from the upstream source. All other paths and methods are omitted. The components section contains the complete transitive internal $ref closure reachable from the retained operations and their path-item-level parameters. No inline schema content has been added or modified."
+      },
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [
+        "sensitive_data"
+      ],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-POL-002",
+          "severity": "high",
+          "locationPointer": "/paths/~1repos~1{owner}~1{repo}~1actions~1secrets/get",
+          "riskCategories": [
+            "sensitive_data"
+          ],
+          "evidence": [
+            {
+              "kind": "keyword",
+              "pointer": "/paths/~1repos~1{owner}~1{repo}~1actions~1secrets/get/operationId",
+              "value": "secrets"
+            },
+            {
+              "kind": "path",
+              "pointer": "/paths/~1repos~1{owner}~1{repo}~1actions~1secrets",
+              "value": "secrets"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-RESP-001"
+      ],
+      "rationale": "GET /repos/{owner}/{repo}/actions/secrets from GitHub REST API 3.0.x (operationId 'actions/list-repo-secrets'): token 'secrets' classifies as sensitive_data; no security defined; AGT-POL-002 fires.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "pub-github30-render-markdown",
+      "ruleId": "AGT-RESP-001",
+      "fixture": "public/github-api-30-subset.json",
+      "dialect": "3.0.x",
+      "format": "json",
+      "operationPointer": "/paths/~1markdown/post",
+      "method": "post",
+      "apiPath": "/markdown",
+      "sourceType": "public",
+      "provenance": {
+        "sourceUrl": "https://raw.githubusercontent.com/github/rest-api-description/main/descriptions/api.github.com/api.github.com.json",
+        "license": "CC-BY-4.0",
+        "sourceRef": "main",
+        "modifications": "Extracted paths: /repos/{owner}/{repo} (GET only), /repos/{owner}/{repo}/hooks (POST only), /repos/{owner}/{repo}/actions/secrets (GET only), /markdown (POST only). Only the methods listed in this document's path items are retained from the upstream source. All other paths and methods are omitted. The components section contains the complete transitive internal $ref closure reachable from the retained operations and their path-item-level parameters. No inline schema content has been added or modified."
+      },
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-RESP-001",
+          "severity": "medium",
+          "locationPointer": "/paths/~1markdown/post/responses",
+          "riskCategories": [],
+          "evidence": [
+            {
+              "kind": "method",
+              "pointer": "/paths/~1markdown/post",
+              "value": "post"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002"
+      ],
+      "rationale": "POST /markdown from GitHub REST API 3.0.x (operationId 'markdown/render'): state-changing with no risk tokens and only 200/304 responses (no error JSON); AGT-RESP-001 fires.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "pub-github31-get-repo",
+      "ruleId": "AGT-CTX-001",
+      "fixture": "public/github-api-31-subset.json",
+      "dialect": "3.1.x",
+      "format": "json",
+      "operationPointer": "/paths/~1repos~1{owner}~1{repo}/get",
+      "method": "get",
+      "apiPath": "/repos/{owner}/{repo}",
+      "sourceType": "public",
+      "provenance": {
+        "sourceUrl": "https://raw.githubusercontent.com/github/rest-api-description/main/descriptions-next/api.github.com/api.github.com.json",
+        "license": "CC-BY-4.0",
+        "sourceRef": "main",
+        "modifications": "Extracted paths: /repos/{owner}/{repo} (GET and DELETE only), /orgs/{org}/actions/secrets (GET only), /enterprises/{enterprise}/actions/runner-groups (POST only). Only the methods listed in this document's path items are retained from the upstream source. All other paths and methods are omitted. The components section contains the complete transitive internal $ref closure reachable from the retained operations and their path-item-level parameters. No inline schema content has been added or modified."
+      },
+      "caseLabels": [
+        "negative"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "GET /repos/{owner}/{repo} from GitHub REST API 3.1.x: well-documented operation with all parameters described; no rule fires.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "pub-github31-delete-repo",
+      "ruleId": "AGT-POL-001",
+      "fixture": "public/github-api-31-subset.json",
+      "dialect": "3.1.x",
+      "format": "json",
+      "operationPointer": "/paths/~1repos~1{owner}~1{repo}/delete",
+      "method": "delete",
+      "apiPath": "/repos/{owner}/{repo}",
+      "sourceType": "public",
+      "provenance": {
+        "sourceUrl": "https://raw.githubusercontent.com/github/rest-api-description/main/descriptions-next/api.github.com/api.github.com.json",
+        "license": "CC-BY-4.0",
+        "sourceRef": "main",
+        "modifications": "Extracted paths: /repos/{owner}/{repo} (GET and DELETE only), /orgs/{org}/actions/secrets (GET only), /enterprises/{enterprise}/actions/runner-groups (POST only). Only the methods listed in this document's path items are retained from the upstream source. All other paths and methods are omitted. The components section contains the complete transitive internal $ref closure reachable from the retained operations and their path-item-level parameters. No inline schema content has been added or modified."
+      },
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [
+        "destructive"
+      ],
+      "expectedNonRisks": [
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-POL-001",
+          "severity": "high",
+          "locationPointer": "/paths/~1repos~1{owner}~1{repo}/delete",
+          "riskCategories": [
+            "destructive"
+          ],
+          "evidence": [
+            {
+              "kind": "keyword",
+              "pointer": "/paths/~1repos~1{owner}~1{repo}/delete/operationId",
+              "value": "delete"
+            },
+            {
+              "kind": "method",
+              "pointer": "/paths/~1repos~1{owner}~1{repo}/delete",
+              "value": "delete"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "DELETE /repos/{owner}/{repo} from GitHub REST API 3.1.x (operationId 'repos/delete'): classified as destructive via method and operationId token 'delete'; no x-agent-policy.confirmation; AGT-POL-001 fires.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "pub-github31-list-org-secrets",
+      "ruleId": "AGT-POL-002",
+      "fixture": "public/github-api-31-subset.json",
+      "dialect": "3.1.x",
+      "format": "json",
+      "operationPointer": "/paths/~1orgs~1{org}~1actions~1secrets/get",
+      "method": "get",
+      "apiPath": "/orgs/{org}/actions/secrets",
+      "sourceType": "public",
+      "provenance": {
+        "sourceUrl": "https://raw.githubusercontent.com/github/rest-api-description/main/descriptions-next/api.github.com/api.github.com.json",
+        "license": "CC-BY-4.0",
+        "sourceRef": "main",
+        "modifications": "Extracted paths: /repos/{owner}/{repo} (GET and DELETE only), /orgs/{org}/actions/secrets (GET only), /enterprises/{enterprise}/actions/runner-groups (POST only). Only the methods listed in this document's path items are retained from the upstream source. All other paths and methods are omitted. The components section contains the complete transitive internal $ref closure reachable from the retained operations and their path-item-level parameters. No inline schema content has been added or modified."
+      },
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [
+        "sensitive_data"
+      ],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-POL-002",
+          "severity": "high",
+          "locationPointer": "/paths/~1orgs~1{org}~1actions~1secrets/get",
+          "riskCategories": [
+            "sensitive_data"
+          ],
+          "evidence": [
+            {
+              "kind": "keyword",
+              "pointer": "/paths/~1orgs~1{org}~1actions~1secrets/get/operationId",
+              "value": "secrets"
+            },
+            {
+              "kind": "path",
+              "pointer": "/paths/~1orgs~1{org}~1actions~1secrets",
+              "value": "secrets"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-RESP-001"
+      ],
+      "rationale": "GET /orgs/{org}/actions/secrets from GitHub REST API 3.1.x (operationId 'actions/list-org-secrets'): token 'secrets' classifies as sensitive_data; no security defined; AGT-POL-002 fires.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "pub-github31-create-runner-group",
+      "ruleId": "AGT-RESP-001",
+      "fixture": "public/github-api-31-subset.json",
+      "dialect": "3.1.x",
+      "format": "json",
+      "operationPointer": "/paths/~1enterprises~1{enterprise}~1actions~1runner-groups/post",
+      "method": "post",
+      "apiPath": "/enterprises/{enterprise}/actions/runner-groups",
+      "sourceType": "public",
+      "provenance": {
+        "sourceUrl": "https://raw.githubusercontent.com/github/rest-api-description/main/descriptions-next/api.github.com/api.github.com.json",
+        "license": "CC-BY-4.0",
+        "sourceRef": "main",
+        "modifications": "Extracted paths: /repos/{owner}/{repo} (GET and DELETE only), /orgs/{org}/actions/secrets (GET only), /enterprises/{enterprise}/actions/runner-groups (POST only). Only the methods listed in this document's path items are retained from the upstream source. All other paths and methods are omitted. The components section contains the complete transitive internal $ref closure reachable from the retained operations and their path-item-level parameters. No inline schema content has been added or modified."
+      },
+      "caseLabels": [
+        "positive"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-RESP-001",
+          "severity": "medium",
+          "locationPointer": "/paths/~1enterprises~1{enterprise}~1actions~1runner-groups/post/responses",
+          "riskCategories": [],
+          "evidence": [
+            {
+              "kind": "method",
+              "pointer": "/paths/~1enterprises~1{enterprise}~1actions~1runner-groups/post",
+              "value": "post"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002"
+      ],
+      "rationale": "POST /enterprises/{enterprise}/actions/runner-groups from GitHub REST API 3.1.x: state-changing with no risk tokens and only a 201 response (no error JSON); AGT-RESP-001 fires.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-ctx-boundary-opid-no-summary-30",
+      "ruleId": "AGT-CTX-001",
+      "fixture": "synthetic/ctx-boundary.json",
+      "dialect": "3.0.x",
+      "format": "json",
+      "operationPointer": "/paths/~1export/post",
+      "method": "post",
+      "apiPath": "/export",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": [
+        "positive",
+        "boundary"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-CTX-001",
+          "severity": "medium",
+          "locationPointer": "/paths/~1export/post",
+          "riskCategories": [],
+          "evidence": [
+            {
+              "kind": "schema",
+              "pointer": "/paths/~1export/post",
+              "value": "summary-or-description"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "POST /export has operationId but no summary or description; AGT-CTX-001 fires for missing summary-or-description. Boundary: state-changing op with error JSON does not trigger AGT-RESP-001.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-ctx-boundary-compliant-status-30",
+      "ruleId": "AGT-CTX-001",
+      "fixture": "synthetic/ctx-boundary.json",
+      "dialect": "3.0.x",
+      "format": "json",
+      "operationPointer": "/paths/~1status/get",
+      "method": "get",
+      "apiPath": "/status",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": [
+        "negative"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "GET /status has operationId and summary; AGT-CTX-001 must not fire.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-ctx-boundary-no-opid-with-summary-30",
+      "ruleId": "AGT-CTX-001",
+      "fixture": "synthetic/ctx-boundary.json",
+      "dialect": "3.0.x",
+      "format": "json",
+      "operationPointer": "/paths/~1config/patch",
+      "method": "patch",
+      "apiPath": "/config",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": [
+        "positive",
+        "boundary"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-CTX-001",
+          "severity": "medium",
+          "locationPointer": "/paths/~1config/patch",
+          "riskCategories": [],
+          "evidence": [
+            {
+              "kind": "schema",
+              "pointer": "/paths/~1config/patch",
+              "value": "operationId"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "PATCH /config has no operationId; AGT-CTX-001 fires even though a summary is present. Boundary: operationId is independently required.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-param-boundary-query-no-desc-31",
+      "ruleId": "AGT-PARAM-001",
+      "fixture": "synthetic/param-boundary.json",
+      "dialect": "3.1.x",
+      "format": "json",
+      "operationPointer": "/paths/~1resources/get",
+      "method": "get",
+      "apiPath": "/resources",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": [
+        "positive",
+        "boundary"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-PARAM-001",
+          "severity": "medium",
+          "locationPointer": "/paths/~1resources/get/parameters/0",
+          "riskCategories": [],
+          "evidence": [
+            {
+              "kind": "schema",
+              "pointer": "/paths/~1resources/get/parameters/0",
+              "value": "description"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "GET /resources has a query parameter 'per_page' with no description; AGT-PARAM-001 fires.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-param-boundary-auth-path-desc-neg-31",
+      "ruleId": "AGT-PARAM-001",
+      "fixture": "synthetic/param-boundary.json",
+      "dialect": "3.1.x",
+      "format": "json",
+      "operationPointer": "/paths/~1resources~1{id}/get",
+      "method": "get",
+      "apiPath": "/resources/{id}",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": [
+        "negative",
+        "boundary"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "GET /resources/{id}: path param 'id' has description; Authorization header is in the exclusion list. AGT-PARAM-001 must not fire.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-param-boundary-custom-header-no-desc-31",
+      "ruleId": "AGT-PARAM-001",
+      "fixture": "synthetic/param-boundary.json",
+      "dialect": "3.1.x",
+      "format": "json",
+      "operationPointer": "/paths/~1resources/post",
+      "method": "post",
+      "apiPath": "/resources",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": [
+        "positive",
+        "boundary"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-PARAM-001",
+          "severity": "medium",
+          "locationPointer": "/paths/~1resources/post/parameters/0",
+          "riskCategories": [],
+          "evidence": [
+            {
+              "kind": "schema",
+              "pointer": "/paths/~1resources/post/parameters/0",
+              "value": "description"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "POST /resources has a custom header 'X-Idempotency-Key' with no description; X-Idempotency-Key is not in the AGT-PARAM-001 exclusion list so the rule fires. Boundary: only 'accept', 'authorization', 'content-type' are excluded.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-param-boundary-delete-with-policy-neg-31",
+      "ruleId": "AGT-PARAM-001",
+      "fixture": "synthetic/param-boundary.json",
+      "dialect": "3.1.x",
+      "format": "json",
+      "operationPointer": "/paths/~1resources~1{id}/delete",
+      "method": "delete",
+      "apiPath": "/resources/{id}",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": [
+        "negative",
+        "boundary"
+      ],
+      "expectedRisks": [
+        "destructive"
+      ],
+      "expectedNonRisks": [
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "DELETE /resources/{id}: has x-agent-policy.confirmation (AGT-POL-001 compliant), path param 'id' has description, 404 error JSON present. Boundary: destructive classification does not cause a finding when all rules are satisfied.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-resp-pol-boundary-text-error-resp-30",
+      "ruleId": "AGT-RESP-001",
+      "fixture": "synthetic/resp-pol-boundary.json",
+      "dialect": "3.0.x",
+      "format": "json",
+      "operationPointer": "/paths/~1cache~1{key}/put",
+      "method": "put",
+      "apiPath": "/cache/{key}",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": [
+        "positive",
+        "boundary"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-RESP-001",
+          "severity": "medium",
+          "locationPointer": "/paths/~1cache~1{key}/put/responses",
+          "riskCategories": [],
+          "evidence": [
+            {
+              "kind": "method",
+              "pointer": "/paths/~1cache~1{key}/put",
+              "value": "put"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002"
+      ],
+      "rationale": "PUT /cache/{key}: has a 400 error response but with text/plain content only, not application/json; the error response does not satisfy AGT-RESP-001. Boundary: media type must be application/json.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-resp-pol-boundary-delete-pol1-30",
+      "ruleId": "AGT-POL-001",
+      "fixture": "synthetic/resp-pol-boundary.json",
+      "dialect": "3.0.x",
+      "format": "json",
+      "operationPointer": "/paths/~1cache~1{key}/delete",
+      "method": "delete",
+      "apiPath": "/cache/{key}",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": [
+        "positive",
+        "boundary"
+      ],
+      "expectedRisks": [
+        "destructive"
+      ],
+      "expectedNonRisks": [
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [
+        {
+          "ruleId": "AGT-POL-001",
+          "severity": "high",
+          "locationPointer": "/paths/~1cache~1{key}/delete",
+          "riskCategories": [
+            "destructive"
+          ],
+          "evidence": [
+            {
+              "kind": "keyword",
+              "pointer": "/paths/~1cache~1{key}/delete/operationId",
+              "value": "delete"
+            },
+            {
+              "kind": "method",
+              "pointer": "/paths/~1cache~1{key}/delete",
+              "value": "delete"
+            }
+          ],
+          "reviewers": []
+        }
+      ],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "DELETE /cache/{key} (deleteCacheEntry): classified as destructive; 404 error JSON satisfies AGT-RESP-001 but no x-agent-policy.confirmation; AGT-POL-001 fires. Boundary: error JSON presence does not suppress POL-001.",
+      "reviewStatus": "pending"
+    },
+    {
+      "caseId": "syn-resp-pol-boundary-get-roles-neg-30",
+      "ruleId": "AGT-POL-002",
+      "fixture": "synthetic/resp-pol-boundary.json",
+      "dialect": "3.0.x",
+      "format": "json",
+      "operationPointer": "/paths/~1roles/get",
+      "method": "get",
+      "apiPath": "/roles",
+      "sourceType": "synthetic",
+      "provenance": null,
+      "caseLabels": [
+        "negative",
+        "boundary"
+      ],
+      "expectedRisks": [],
+      "expectedNonRisks": [
+        "destructive",
+        "external_side_effect",
+        "financial_action",
+        "permission_change",
+        "sensitive_data"
+      ],
+      "expectedFindings": [],
+      "expectedNonFindings": [
+        "AGT-CTX-001",
+        "AGT-PARAM-001",
+        "AGT-POL-001",
+        "AGT-POL-002",
+        "AGT-RESP-001"
+      ],
+      "rationale": "GET /roles: 'roles' appears in path but permission_change vocabulary is only applied to state-changing methods; GET produces no risks and AGT-POL-002 must not fire. Boundary: GET exemption from permission_change classification.",
       "reviewStatus": "pending"
     }
   ]

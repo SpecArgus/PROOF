@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 import json
+import urllib.parse
 from copy import deepcopy
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from urllib.parse import urlsplit
 
 import pytest
 import rfc8785
+import yaml
 from jsonschema import Draft202012Validator, FormatChecker
 from proof_core import (
     OperationSet,
@@ -84,14 +86,10 @@ def resolve_pointer(document: object, pointer: str) -> object:
 
 
 def load_fixture(fixture_rel: str) -> dict:
-    """Load a JSON fixture. Fail clearly if a YAML fixture is referenced."""
     path = FIXTURE_ROOT / fixture_rel
     if path.suffix in (".yaml", ".yml"):
-        pytest.fail(
-            f"YAML fixture '{fixture_rel}' cannot be loaded: no approved YAML parser "
-            "is available in the current lockfile. Convert the fixture to JSON or add "
-            "an approved YAML parser dependency before introducing YAML corpus cases."
-        )
+        import yaml as _yaml
+        return _yaml.safe_load(path.read_text(encoding="utf-8"))
     return load_json(path)
 
 
@@ -206,17 +204,6 @@ def test_case_ids_are_unique() -> None:
     assert len(ids) == len(set(ids))
 
 
-def test_no_yaml_cases_in_pilot() -> None:
-    yaml_cases = [c for c in CASES if c.get("format") in ("yaml", "yml")]
-    if yaml_cases:
-        ids = ", ".join(c["caseId"] for c in yaml_cases)
-        pytest.fail(
-            f"YAML fixtures are not supported in this pilot ({ids}). "
-            "Add an approved YAML parser dependency before introducing YAML cases. "
-            "See corpus/README.md for details."
-        )
-
-
 @pytest.mark.parametrize("case", CASES, ids=CASE_IDS)
 def test_fixture_path_and_operation_pointer_resolve(case: dict) -> None:
     expected_pointer = (
@@ -258,33 +245,224 @@ def test_format_and_dialect_consistency(case: dict) -> None:
     )
 
 
-def test_no_remote_refs() -> None:
-    def iter_refs(value: object):
-        if isinstance(value, dict):
-            for k, v in value.items():
-                if k == "$ref":
-                    yield v
-                yield from iter_refs(v)
-        elif isinstance(value, list):
-            for item in value:
-                yield from iter_refs(item)
+_SUPPORTED_REF_EXTENSIONS = frozenset({".json", ".yaml", ".yml"})
+_CORPUS_DEVICE_NAMES = frozenset({
+    "COM0", "COM1", "COM2", "COM3", "COM4", "COM5",
+    "COM6", "COM7", "COM8", "COM9",
+    "LPT0", "LPT1", "LPT2", "LPT3", "LPT4", "LPT5",
+    "LPT6", "LPT7", "LPT8", "LPT9",
+    "NUL", "PRN", "CON", "AUX", "CLOCK$",
+})
 
-    seen_fixtures: set[str] = set()
-    for case in CASES:
-        if case["fixture"] in seen_fixtures:
+
+def _iter_all_refs(value: object):
+    if isinstance(value, dict):
+        for k, v in value.items():
+            if k == "$ref" and isinstance(v, str):
+                yield v
+            yield from _iter_all_refs(v)
+    elif isinstance(value, list):
+        for item in value:
+            yield from _iter_all_refs(item)
+
+
+def _validate_and_resolve_ref(
+    ref: str, referring_file: Path
+) -> tuple[str | None, Path | None]:
+    """
+    Validate a corpus $ref.
+    Returns (error_message, None) if invalid.
+    Returns (None, None) if valid internal ref.
+    Returns (None, resolved_path) if valid local file ref.
+    """
+    # -- Internal refs ---------------------------------------------------------
+    if ref.startswith("#"):
+        fragment = ref[1:]
+        if not fragment.startswith("/"):
+            return (f"internal ref must be #/... form, got {ref!r}", None)
+        if "%" in fragment:
+            return (f"percent-encoded characters in fragment: {ref!r}", None)
+        doc = load_fixture(referring_file.relative_to(FIXTURE_ROOT).as_posix())
+        try:
+            resolve_pointer(doc, fragment)
+        except Exception:
+            return (f"fragment {fragment!r} does not resolve in document", None)
+        return (None, None)
+
+    # -- Local file refs -------------------------------------------------------
+    parsed = urlsplit(ref)
+    if parsed.scheme:
+        return (f"scheme {parsed.scheme!r} not allowed: {ref!r}", None)
+    if parsed.netloc:
+        return (f"authority component not allowed: {ref!r}", None)
+    if parsed.query:
+        return (f"query component not allowed: {ref!r}", None)
+
+    raw_path = parsed.path
+    if not raw_path:
+        return (f"empty path: {ref!r}", None)
+    if raw_path.startswith("/"):
+        return (f"absolute path not allowed: {ref!r}", None)
+    if "\\" in raw_path or "%5c" in raw_path.lower():
+        return (f"backslash in path: {ref!r}", None)
+
+    decoded_path = urllib.parse.unquote(raw_path)
+    if "\\" in decoded_path:
+        return (f"decoded backslash in path: {ref!r}", None)
+
+    # Validate every path segment
+    for segment in PurePosixPath(decoded_path).parts:
+        if segment == "..":
+            return (f"path traversal (..) not allowed: {ref!r}", None)
+        if ":" in segment:
+            return (f"colon in path segment {segment!r}: {ref!r}", None)
+        seg_stem = Path(segment).stem.upper()
+        if seg_stem in _CORPUS_DEVICE_NAMES:
+            return (
+                f"Windows device name in segment {segment!r}: {ref!r}", None
+            )
+
+    ext = PurePosixPath(decoded_path).suffix.lower()
+    if ext not in _SUPPORTED_REF_EXTENSIONS:
+        return (f"unsupported extension {ext!r}: {ref!r}", None)
+
+    target = (referring_file.parent / decoded_path).resolve()
+    if not target.is_relative_to(FIXTURE_ROOT):
+        return (f"ref escapes FIXTURE_ROOT: {ref!r}", None)
+    if not target.is_file():
+        return (
+            f"ref target does not exist: "
+            f"{target.relative_to(FIXTURE_ROOT).as_posix()}: {ref!r}",
+            None,
+        )
+
+    # Fragment validation (only if # explicitly present)
+    if "#" in ref:
+        fragment = parsed.fragment
+        if not fragment:
+            return (f"empty fragment (#) not allowed: {ref!r}", None)
+        if not fragment.startswith("/"):
+            return (f"fragment must be /... form: {ref!r}", None)
+        if "%" in fragment:
+            return (f"percent-encoded characters in fragment: {ref!r}", None)
+        target_rel = target.relative_to(FIXTURE_ROOT).as_posix()
+        doc = load_fixture(target_rel)
+        try:
+            resolve_pointer(doc, fragment)
+        except Exception:
+            return (
+                f"fragment {fragment!r} does not resolve in "
+                f"{target_rel}: {ref!r}",
+                None,
+            )
+
+    return (None, target)
+
+
+def test_no_unsafe_refs() -> None:
+    """Walk the full fixture resource closure and validate every $ref."""
+    entrypoint_files = [FIXTURE_ROOT / rel for rel in FIXTURE_ENTRYPOINTS]
+    visited: set[Path] = set()
+    queue: list[Path] = list(entrypoint_files)
+    errors: list[str] = []
+
+    while queue:
+        current = queue.pop(0)
+        canonical = current.resolve()
+        if canonical in visited:
             continue
-        seen_fixtures.add(case["fixture"])
-        document = load_fixture(case["fixture"])
-        for ref in iter_refs(document):
-            assert isinstance(ref, str)
-            target = ref.split("#", maxsplit=1)[0]
-            parsed = urlsplit(target)
-            assert not parsed.scheme and not parsed.netloc, (
-                f"Remote $ref {ref!r} found in {case['fixture']}"
+        visited.add(canonical)
+
+        try:
+            data = load_fixture(current.relative_to(FIXTURE_ROOT).as_posix())
+        except Exception as exc:
+            errors.append(
+                f"{current.relative_to(FIXTURE_ROOT).as_posix()}: load error: {exc}"
             )
-            assert not target.startswith(("/", "\\")), (
-                f"Absolute $ref {ref!r} found in {case['fixture']}"
+            continue
+
+        for ref in _iter_all_refs(data):
+            error, local_target = _validate_and_resolve_ref(ref, current)
+            if error:
+                errors.append(
+                    f"{current.relative_to(FIXTURE_ROOT).as_posix()}: {error}"
+                )
+            elif local_target is not None:
+                if local_target.resolve() not in visited:
+                    queue.append(local_target)
+
+    assert not errors, "\n".join(errors)
+
+
+class _CorpusStrictLoader(yaml.SafeLoader):
+    """
+    SafeLoader variant that rejects duplicate keys and merge keys (<<:).
+    Does NOT verify JSON-compatible scalars or alias limits — those are
+    production concerns, not corpus authoring constraints.
+    """
+
+    def construct_mapping(self, node: yaml.MappingNode, deep: bool = False) -> dict:
+        if not isinstance(node, yaml.MappingNode):
+            raise yaml.constructor.ConstructorError(
+                None, None,
+                f"expected a mapping node, got {node.id}",
+                node.start_mark,
             )
+        seen_keys: set = set()
+        for key_node, _ in node.value:
+            key = self.construct_object(key_node, deep=False)
+            if key == "<<":
+                raise yaml.constructor.ConstructorError(
+                    None, None,
+                    "YAML merge keys (<<:) are not allowed in corpus fixtures",
+                    key_node.start_mark,
+                )
+            if key in seen_keys:
+                raise yaml.constructor.ConstructorError(
+                    None, None,
+                    f"duplicate key {key!r}",
+                    key_node.start_mark,
+                )
+            seen_keys.add(key)
+        return super().construct_mapping(node, deep=deep)
+
+
+def test_yaml_fixtures_strict_contract() -> None:
+    """All YAML fixtures must pass the corpus YAML invariants."""
+    yaml_files = sorted(
+        path
+        for path in FIXTURE_ROOT.rglob("*")
+        if path.is_file() and path.suffix.lower() in {".yaml", ".yml"}
+    )
+    if not yaml_files:
+        return  # nothing to check yet
+    errors: list[str] = []
+    for path in yaml_files:
+        rel = path.relative_to(FIXTURE_ROOT).as_posix()
+        text = path.read_text(encoding="utf-8")
+        try:
+            docs = list(yaml.load_all(text, Loader=_CorpusStrictLoader))
+        except yaml.YAMLError as exc:
+            errors.append(f"{rel}: YAML parse error: {exc}")
+            continue
+        if len(docs) != 1:
+            errors.append(
+                f"{rel}: must contain exactly 1 YAML document, got {len(docs)}"
+            )
+            continue
+        doc = docs[0]
+        if not isinstance(doc, dict):
+            errors.append(f"{rel}: top-level document must be a mapping")
+            continue
+        # OAS entrypoint contract (only required for files that are
+        # manifest entrypoints; shared resource files are exempt).
+        if rel in FIXTURE_ENTRYPOINTS:
+            for required_key in ("openapi", "info", "paths"):
+                if required_key not in doc:
+                    errors.append(
+                        f"{rel}: missing required OAS key {required_key!r}"
+                    )
+    assert not errors, "\n".join(errors)
 
 
 def test_local_ref_resources_are_not_independent_entrypoints(tmp_path: Path) -> None:

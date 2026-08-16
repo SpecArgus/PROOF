@@ -1,0 +1,119 @@
+openapi: "3.1.0"
+info:
+  title: Local-ref corpus cases (YAML)
+  version: 1.0.0
+paths:
+  /items:
+    get:
+      operationId: listItems
+      summary: List all items
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "schemas.yaml#/Item"
+  /items/{id}:
+    get:
+      operationId: getItem
+      summary: Get an item by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The item identifier.
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "schemas.yaml#/Item"
+    put:
+      operationId: replaceItem
+      summary: Replace an item
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "schemas.yaml#/Item"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas.yaml#/Error"
+    delete:
+      operationId: deleteItem
+      summary: Delete an item
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The item identifier.
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: No content
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas.yaml#/Error"
+  /items/{id}/tags:
+    get:
+      operationId: listItemTags
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The item identifier.
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /items/batch:
+    post:
+      operationId: createItem
+      summary: Create a new item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "schemas.yaml#/Item"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "schemas.yaml#/Item"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas.yaml#/Error"

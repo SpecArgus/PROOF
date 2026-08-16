@@ -1,0 +1,25 @@
+openapi: "3.0.3"
+info:
+  title: AGT-CTX-001 corpus cases (YAML)
+  version: 1.0.0
+paths:
+  /audit/events:
+    get:
+      operationId: listAuditEvents
+      summary: List audit events
+      description: Returns recent audit events for the authenticated tenant.
+      responses:
+        "200":
+          description: OK
+  /audit/export:
+    get:
+      summary: Export audit log
+      responses:
+        "200":
+          description: OK
+  /audit/config:
+    get:
+      operationId: getAuditConfig
+      responses:
+        "200":
+          description: OK

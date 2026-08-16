@@ -1,0 +1,60 @@
+openapi: "3.1.0"
+info:
+  title: AGT-PARAM-001 corpus cases (YAML)
+  version: 1.0.0
+paths:
+  /sessions:
+    get:
+      operationId: listSessions
+      summary: List active sessions
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+    post:
+      operationId: createSession
+      summary: Create a session
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /sessions/{id}:
+    get:
+      operationId: getSession
+      summary: Retrieve a session by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique session identifier.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK

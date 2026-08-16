@@ -1,0 +1,35 @@
+openapi: "3.0.3"
+info:
+  title: AGT-RESP-001 corpus cases (YAML)
+  version: 1.0.0
+paths:
+  /exports:
+    post:
+      operationId: createExport
+      summary: Create a data export
+      responses:
+        "201":
+          description: Export started
+  /settings:
+    put:
+      operationId: updateSettings
+      summary: Update application settings
+      responses:
+        "200":
+          description: Settings updated
+        "400":
+          description: Invalid settings
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /snapshots:
+    post:
+      operationId: takeSnapshot
+      summary: Create a system snapshot
+      responses:
+        "201":
+          description: Snapshot created

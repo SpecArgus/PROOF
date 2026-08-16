@@ -1,0 +1,44 @@
+openapi: "3.1.0"
+info:
+  title: AGT-POL-001 corpus cases (YAML)
+  version: 1.0.0
+paths:
+  /dispatch:
+    post:
+      operationId: dispatchEvent
+      summary: Dispatch an event
+      responses:
+        "202":
+          description: Accepted
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /webhooks:
+    get:
+      operationId: listWebhooks
+      summary: List configured webhooks
+      responses:
+        "200":
+          description: OK
+  /account:
+    delete:
+      operationId: deleteAccount
+      summary: Delete the account
+      responses:
+        "204":
+          description: Account deleted
+        "404":
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
