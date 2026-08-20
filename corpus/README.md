@@ -18,6 +18,7 @@ corpus/
   manifest.json           Labeled cases; validates against manifest.schema.json
   manifest.schema.json    JSON Schema (Draft 2020-12) for the manifest
   coverage-summary.json   Aggregate coverage counts
+  MAINTENANCE.md          Review, labeling, licensing, and maintenance conventions
   fixtures/
     synthetic/            Hand-authored OAS documents with known outcomes
 ```
@@ -44,7 +45,9 @@ cases must provide a source URL, license, and immutable source reference;
 synthetic cases must keep `provenance` set to `null`.
 
 Pilot cases must keep `reviewStatus: "pending"`. Two-reviewer approval policy
-is not enforced until the full corpus stage.
+is not enforced until the full corpus stage. The recording format and the
+label-change, false-positive-regression, and licensing conventions are
+defined in [MAINTENANCE.md](MAINTENANCE.md).
 
 ## Pilot test suite behavior
 
