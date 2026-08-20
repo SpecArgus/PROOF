@@ -1,0 +1,56 @@
+openapi: 3.1.1
+info:
+  title: AGT-RESP-001 corpus cases (OAS 3.1.x, YAML)
+  version: 1.0.0
+paths:
+  "/tasks/{taskId}":
+    delete:
+      operationId: deleteTask
+      summary: Delete a task permanently
+      x-agent-policy:
+        confirmation:
+          mode: required
+          reason: Deletion is permanent and cannot be undone.
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          description: Stable task identifier.
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Task deleted
+  "/sessions/{sessionId}":
+    delete:
+      operationId: deleteExpiredSession
+      summary: Delete an expired session
+      x-agent-policy:
+        confirmation:
+          mode: required
+          reason: Session deletion is irreversible.
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          description: Expired session identifier.
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Deleted
+        default:
+          description: Problem
+          content:
+            application/problem+json:
+              schema:
+                type: object
+                required:
+                  - type
+                  - title
+                properties:
+                  type:
+                    type: string
+                    format: uri
+                  title:
+                    type: string

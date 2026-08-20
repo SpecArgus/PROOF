@@ -1,34 +1,33 @@
 {
-  "generated": "2026-08-09",
-  "totalCases": 61,
+  "generated": "2026-08-15",
+  "totalCases": 81,
   "byRule": {
-    "AGT-CTX-001":   {"total": 11, "positive": 6, "negative": 5},
-    "AGT-PARAM-001": {"total": 12, "positive": 6, "negative": 6},
-    "AGT-RESP-001":  {"total": 13, "positive": 8, "negative": 5},
-    "AGT-POL-001":   {"total": 14, "positive": 9, "negative": 5},
-    "AGT-POL-002":   {"total": 11, "positive": 6, "negative": 5}
+    "AGT-CTX-001":   {"total": 15, "positive": 8,  "negative": 7},
+    "AGT-PARAM-001": {"total": 16, "positive": 8,  "negative": 8},
+    "AGT-RESP-001":  {"total": 17, "positive": 10, "negative": 7},
+    "AGT-POL-001":   {"total": 18, "positive": 11, "negative": 7},
+    "AGT-POL-002":   {"total": 15, "positive": 8,  "negative": 7}
   },
   "byDialect": {
-    "3.0.x": 33,
-    "3.1.x": 28
+    "3.0.x": 43,
+    "3.1.x": 38
   },
   "byFormat": {
     "json": 61,
-    "yaml": 0
+    "yaml": 20
   },
   "bySourceType": {
-    "synthetic": 61,
+    "synthetic": 81,
     "public": 0
   },
   "byRisk": {
-    "destructive":          {"total": 61, "positive": 8,  "negative": 53},
-    "external_side_effect": {"total": 61, "positive": 3,  "negative": 58},
-    "financial_action":     {"total": 61, "positive": 5,  "negative": 56},
-    "permission_change":    {"total": 61, "positive": 6,  "negative": 55},
-    "sensitive_data":       {"total": 61, "positive": 9,  "negative": 52}
+    "destructive":          {"total": 81, "positive": 12, "negative": 69},
+    "external_side_effect": {"total": 81, "positive": 3,  "negative": 78},
+    "financial_action":     {"total": 81, "positive": 7,  "negative": 74},
+    "permission_change":    {"total": 81, "positive": 8,  "negative": 73},
+    "sensitive_data":       {"total": 81, "positive": 11, "negative": 70}
   },
   "notes": [
-    "YAML format coverage deferred: no approved YAML parser dependency in current lockfile.",
     "Public-source cases deferred to full-corpus expansion stage."
   ]
 }
