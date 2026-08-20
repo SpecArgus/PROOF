@@ -3,8 +3,11 @@
 from __future__ import annotations
 
 import argparse
+import os
 import re
+import stat
 import sys
+import tempfile
 from collections.abc import Sequence
 from dataclasses import dataclass
 from datetime import UTC, datetime
@@ -25,6 +28,8 @@ from proof_core import (
     match_specifications,
 )
 from proof_rulepack import RulePackIdentity
+
+from proof_cli.reporters import ReportFormat, render_report
 
 EXIT_OK = 0
 EXIT_BLOCKED = 1
@@ -106,7 +111,22 @@ def _parser() -> argparse.ArgumentParser:
     scan.add_argument(
         "--output",
         metavar="PATH",
-        help="write canonical result JSON to PATH instead of standard output",
+        help=(
+            "atomically write the selected report to regular file PATH "
+            "instead of standard output"
+        ),
+    )
+    scan.add_argument(
+        "--format",
+        choices=("json", "console"),
+        default="json",
+        help="report format (default: json, preserving result-v1 canonical bytes)",
+    )
+    scan.add_argument(
+        "--color",
+        choices=("auto", "always", "never"),
+        default="auto",
+        help="console color mode; presentation-only (default: auto)",
     )
     scan.add_argument(
         "--fail-on",
@@ -148,12 +168,15 @@ def main(
     output = stdout if stdout is not None else sys.stdout.buffer
     errors = stderr if stderr is not None else sys.stderr
     if arguments.command == "scan":
-        return _scan(arguments, output, errors)
+        color = _console_color_enabled(arguments, injected_stdout=stdout)
+        return _scan(arguments, output, errors, color=color)
     parser.error("a command is required")
     return EXIT_INPUT_ERROR
 
 
-def _scan(arguments: argparse.Namespace, stdout: BinaryIO, stderr: TextIO) -> int:
+def _scan(
+    arguments: argparse.Namespace, stdout: BinaryIO, stderr: TextIO, *, color: bool
+) -> int:
     evaluation_time = arguments.evaluation_time or _invocation_time()
     if not _valid_evaluation_time(evaluation_time):
         return _usage_failure(
@@ -171,7 +194,7 @@ def _scan(arguments: argparse.Namespace, stdout: BinaryIO, stderr: TextIO) -> in
             output_path=arguments.output,
             resource_paths=(),
         )
-    except (OSError, ValueError):
+    except OSError, ValueError:
         stderr.write("PROOF could not safely select the normalized output path.\n")
         return EXIT_INTERNAL_ERROR
 
@@ -194,7 +217,9 @@ def _scan(arguments: argparse.Namespace, stdout: BinaryIO, stderr: TextIO) -> in
             evaluation_time=evaluation_time,
             error=error,
         )
-        return _finish(run, arguments.output, stdout, stderr)
+        return _finish(
+            run, arguments.output, arguments.format, stdout, stderr, color=color
+        )
 
     try:
         entrypoints = match_specifications(root, configuration)
@@ -203,7 +228,9 @@ def _scan(arguments: argparse.Namespace, stdout: BinaryIO, stderr: TextIO) -> in
             evaluation_time=evaluation_time,
             error=error,
         )
-        return _finish(run, arguments.output, stdout, stderr)
+        return _finish(
+            run, arguments.output, arguments.format, stdout, stderr, color=color
+        )
 
     try:
         closure = build_input_closure(root, entrypoints)
@@ -213,7 +240,9 @@ def _scan(arguments: argparse.Namespace, stdout: BinaryIO, stderr: TextIO) -> in
             error=error,
             configuration=configuration,
         )
-        return _finish(run, arguments.output, stdout, stderr)
+        return _finish(
+            run, arguments.output, arguments.format, stdout, stderr, color=color
+        )
 
     try:
         _reject_input_output_alias(
@@ -227,10 +256,10 @@ def _scan(arguments: argparse.Namespace, stdout: BinaryIO, stderr: TextIO) -> in
             configuration=configuration,
             closure=closure,
         )
-    except (OSError, RunAssemblyError, ValueError):
+    except OSError, RunAssemblyError, ValueError:
         stderr.write("PROOF failed internally before producing a normalized result.\n")
         return EXIT_INTERNAL_ERROR
-    return _finish(run, arguments.output, stdout, stderr)
+    return _finish(run, arguments.output, arguments.format, stdout, stderr, color=color)
 
 
 def _rule_pack_override(arguments: argparse.Namespace) -> RulePackIdentity | None:
@@ -278,28 +307,127 @@ def _reject_input_output_alias(
         repository.joinpath(*path.split("/")).resolve(strict=False)
         for path in (config_path, *resource_paths)
     }
-    if output in protected:
+    if any(_paths_alias(output, path) for path in protected):
         raise ValueError("output path aliases an analysis input")
+
+
+def _paths_alias(left: Path, right: Path) -> bool:
+    try:
+        return os.path.samefile(left, right)
+    except FileNotFoundError:
+        return os.path.normcase(os.path.abspath(left)) == os.path.normcase(
+            os.path.abspath(right)
+        )
 
 
 def _finish(
     run: NormalizedRun,
     output_path: str | None,
+    report_format: ReportFormat,
     stdout: BinaryIO,
     stderr: TextIO,
+    *,
+    color: bool,
 ) -> int:
-    payload = run.canonical_bytes() + b"\n"
     try:
+        payload = render_report(run, report_format, color=color)
         if output_path is None:
             stdout.write(payload)
             stdout.flush()
         else:
-            with Path(output_path).open("wb") as output:
-                output.write(payload)
-    except OSError:
+            _write_atomically(Path(output_path), payload)
+    except Exception:
         stderr.write("PROOF could not write the normalized result.\n")
         return EXIT_INTERNAL_ERROR
     return _exit_code(run)
+
+
+def _write_atomically(output_path: Path, payload: bytes) -> None:
+    """Atomically replace a regular output after fully writing its temporary."""
+
+    temporary: Path | None = None
+    try:
+        mode = _output_file_mode(output_path)
+        with tempfile.NamedTemporaryFile(
+            mode="wb",
+            dir=output_path.parent,
+            prefix=f".{output_path.name}.",
+            delete=False,
+        ) as output:
+            temporary = Path(output.name)
+            output.write(payload)
+            output.flush()
+            os.fsync(output.fileno())
+        os.chmod(temporary, mode)
+        os.replace(temporary, output_path)
+        temporary = None
+    finally:
+        if temporary is not None:
+            try:
+                temporary.unlink(missing_ok=True)
+            except OSError:
+                pass
+
+
+def _output_file_mode(output_path: Path) -> int:
+    try:
+        metadata = output_path.lstat()
+    except FileNotFoundError:
+        current_umask = os.umask(0)
+        os.umask(current_umask)
+        return 0o666 & ~current_umask
+    if not stat.S_ISREG(metadata.st_mode):
+        raise OSError("output target must be a regular file")
+    return stat.S_IMODE(metadata.st_mode)
+
+
+def _console_color_enabled(
+    arguments: argparse.Namespace, *, injected_stdout: BinaryIO | None
+) -> bool:
+    if arguments.format != "console" or arguments.color == "never":
+        return False
+    if arguments.color == "always":
+        if arguments.output is None and injected_stdout is None and sys.stdout.isatty():
+            return _enable_windows_virtual_terminal()
+        return True
+    if (
+        arguments.output is not None
+        or injected_stdout is not None
+        or not sys.stdout.isatty()
+        or "NO_COLOR" in os.environ
+        or os.environ.get("TERM", "").lower() == "dumb"
+    ):
+        return False
+    return _enable_windows_virtual_terminal()
+
+
+def _enable_windows_virtual_terminal() -> bool:
+    if os.name != "nt":
+        return True
+    try:
+        import ctypes
+        from ctypes import wintypes
+
+        kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+        kernel32.GetStdHandle.argtypes = [wintypes.DWORD]
+        kernel32.GetStdHandle.restype = wintypes.HANDLE
+        kernel32.GetConsoleMode.argtypes = [
+            wintypes.HANDLE,
+            ctypes.POINTER(wintypes.DWORD),
+        ]
+        kernel32.GetConsoleMode.restype = wintypes.BOOL
+        kernel32.SetConsoleMode.argtypes = [wintypes.HANDLE, wintypes.DWORD]
+        kernel32.SetConsoleMode.restype = wintypes.BOOL
+        handle = kernel32.GetStdHandle(0xFFFFFFF5)
+        mode = wintypes.DWORD()
+        invalid_handle = ctypes.c_void_p(-1).value
+        if handle in (None, invalid_handle) or not kernel32.GetConsoleMode(
+            handle, ctypes.byref(mode)
+        ):
+            return False
+        return bool(kernel32.SetConsoleMode(handle, mode.value | 0x0004))
+    except AttributeError, OSError, ValueError:
+        return False
 
 
 def _exit_code(run: NormalizedRun) -> int:

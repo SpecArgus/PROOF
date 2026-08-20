@@ -19,6 +19,8 @@ The format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0
 - Add the non-interactive `specargus proof scan` command with
   repository-confined JSON and YAML analysis, canonical result output, and
   stable exit codes 0 through 3.
+- Add presentation-only console and stable JSON reporters for
+  `specargus proof scan`, including atomic selected-report file output.
 
 ### Changed
 
