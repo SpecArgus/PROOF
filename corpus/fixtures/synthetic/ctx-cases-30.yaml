@@ -1,0 +1,26 @@
+openapi: 3.0.3
+info:
+  title: AGT-CTX-001 corpus cases (OAS 3.0.x, YAML)
+  version: 1.0.0
+paths:
+  /reports:
+    post:
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /status:
+    get:
+      operationId: getStatus
+      description: Returns the current service status and version.
+      responses:
+        "200":
+          description: OK
