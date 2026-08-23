@@ -18,22 +18,34 @@ corpus/
   manifest.json           Labeled cases; validates against manifest.schema.json
   manifest.schema.json    JSON Schema (Draft 2020-12) for the manifest
   coverage-summary.json   Aggregate coverage counts
+  SOURCES.md              Upstream provenance for public-source fixtures
   fixtures/
-    synthetic/            Hand-authored OAS documents with known outcomes
+    synthetic/            Hand-authored OAS documents (JSON and YAML)
+    public/               Extracted subsets of public APIs (JSON and YAML)
 ```
 
-## Pilot status
+## Current status
 
-This directory contains 81 labeled synthetic operations (61 JSON, 20 YAML).
-Issue #11 remains open until at least 100 operations are labeled and the full
-acceptance criteria are met.
+113 labeled operations across 5 P0 rules. The quantitative and format/source
+coverage expansion tracked by Issue #11 is satisfied by this corpus state.
+Issue #11 remains open pending its remaining acceptance criteria.
+
+| Rule | Total | Positive | Negative |
+|------|-------|----------|----------|
+| AGT-CTX-001 | 24 | 11 | 13 |
+| AGT-PARAM-001 | 24 | 11 | 13 |
+| AGT-RESP-001 | 23 | 13 | 10 |
+| AGT-POL-001 | 23 | 16 | 7 |
+| AGT-POL-002 | 19 | 11 | 8 |
+
+Coverage spans OAS 3.0.x (61 cases) and 3.1.x (52 cases), JSON (79) and YAML
+(34) formats, and synthetic (98) and public (15) sources. See
+`coverage-summary.json` for full breakdown.
 
 ## Adding cases
 
-1. Create or extend a fixture file under `fixtures/synthetic/` in JSON or YAML.
-   YAML fixtures are parsed with the same strict loader the engine uses: merge
-   keys and duplicate keys are rejected, and aliases are allowed only up to the
-   engine's count limit.
+1. Create or extend a fixture file under `fixtures/synthetic/` or `fixtures/public/`.
+   Both JSON and YAML formats are supported; YAML files are loaded with `pyyaml`.
 2. Add one manifest entry per operation with all required fields.
 3. Update `coverage-summary.json` totals.
 4. Run `uv run --locked pytest tests/corpus/` to verify all checks pass.
@@ -43,10 +55,26 @@ from the manifest and requires the summary to match exactly. Public-source
 cases must provide a source URL, license, and immutable source reference;
 synthetic cases must keep `provenance` set to `null`.
 
-Pilot cases must keep `reviewStatus: "pending"`. Two-reviewer approval policy
-is not enforced until the full corpus stage.
+Cases must keep `reviewStatus: "pending"`. Two-reviewer approval policy
+is not enforced until a formal review stage is initiated.
 
-## Pilot test suite behavior
+### Local `$ref` rules for corpus fixtures
+
+Corpus fixture files may reference other fixture files via relative `$ref` values.
+These refs must comply with the following stricter-than-production rules:
+
+- No `..` path traversal in any segment.
+- No Windows device names (NUL, CON, PRN, AUX, COM0–COM9, LPT0–LPT9) as
+  any segment stem.
+- Target file extension must be `.json`, `.yaml`, or `.yml`.
+- The resolved target must remain inside `corpus/fixtures/`.
+- Fragments (e.g., `schemas.yaml#/MySchema`) must resolve within the target file.
+
+Shared schema definitions for the `ref-cases.yaml` fixture live in
+`fixtures/synthetic/schemas.yaml`. That file is not an OAS document; it contains
+raw schema objects referenced by name (e.g., `$ref: "schemas.yaml#/Item"`).
+
+## Test suite behavior
 
 The corpus test runs every fixture through the closure-only OpenAPI validator,
 normalizer, risk classifier, and agent-contract rule evaluator. It requires a
@@ -58,6 +86,6 @@ as the corpus grows.
 YAML fixtures are supported: the locked workspace provides the approved YAML
 parser (pyyaml), and the corpus test loader parses every fixture through
 `read_repository_document` with limits mirroring the engine's closure limits.
-Each YAML case mirrors a labeled JSON scenario: same-dialect pairs assert
-format-invariant engine behavior directly, and cross-dialect pairs assert the
-same expectations across both format and dialect.
+The `test_no_unsafe_refs` test validates all `$ref` values using a permissive
+secondary loader so the safety assertions remain independent of the engine's own
+reference guards.

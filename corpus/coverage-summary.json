@@ -1,33 +1,36 @@
 {
-  "generated": "2026-08-15",
-  "totalCases": 81,
+  "generated": "2026-08-23",
+  "totalCases": 113,
   "byRule": {
-    "AGT-CTX-001":   {"total": 15, "positive": 8,  "negative": 7},
-    "AGT-PARAM-001": {"total": 16, "positive": 8,  "negative": 8},
-    "AGT-RESP-001":  {"total": 17, "positive": 10, "negative": 7},
-    "AGT-POL-001":   {"total": 18, "positive": 11, "negative": 7},
-    "AGT-POL-002":   {"total": 15, "positive": 8,  "negative": 7}
+    "AGT-CTX-001":   {"total": 24, "positive": 11, "negative": 13},
+    "AGT-PARAM-001": {"total": 24, "positive": 11, "negative": 13},
+    "AGT-RESP-001":  {"total": 23, "positive": 13, "negative": 10},
+    "AGT-POL-001":   {"total": 23, "positive": 16, "negative":  7},
+    "AGT-POL-002":   {"total": 19, "positive": 11, "negative":  8}
   },
   "byDialect": {
-    "3.0.x": 43,
-    "3.1.x": 38
+    "3.0.x": 61,
+    "3.1.x": 52
   },
   "byFormat": {
-    "json": 61,
-    "yaml": 20
+    "json": 79,
+    "yaml": 34
   },
   "bySourceType": {
-    "synthetic": 81,
-    "public": 0
+    "synthetic": 98,
+    "public":    15
   },
   "byRisk": {
-    "destructive":          {"total": 81, "positive": 12, "negative": 69},
-    "external_side_effect": {"total": 81, "positive": 3,  "negative": 78},
-    "financial_action":     {"total": 81, "positive": 7,  "negative": 74},
-    "permission_change":    {"total": 81, "positive": 8,  "negative": 73},
-    "sensitive_data":       {"total": 81, "positive": 11, "negative": 70}
+    "destructive":          {"total": 113, "positive": 17, "negative":  96},
+    "external_side_effect": {"total": 113, "positive":  4, "negative": 109},
+    "financial_action":     {"total": 113, "positive":  7, "negative": 106},
+    "permission_change":    {"total": 113, "positive":  8, "negative": 105},
+    "sensitive_data":       {"total": 113, "positive": 14, "negative":  99}
   },
   "notes": [
-    "Public-source cases deferred to full-corpus expansion stage."
+    "Batch 2 final: 113 cases (61 baseline + 20 from PR #74 + 32 from this branch).",
+    "New formats: YAML (34 cases total: 20 PR#74 synthetic + 1 pol2 + 7 OAI petstore + 6 local-ref).",
+    "New sources: public (15 cases from OAI petstore and GitHub REST API).",
+    "Local $ref coverage: 6 cases in synthetic/ref-cases.yaml reference synthetic/schemas.yaml."
   ]
 }
