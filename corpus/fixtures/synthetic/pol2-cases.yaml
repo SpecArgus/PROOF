@@ -1,0 +1,12 @@
+openapi: "3.0.3"
+info:
+  title: AGT-POL-002 corpus cases (YAML)
+  version: 1.0.0
+paths:
+  /user/secrets:
+    get:
+      operationId: listSecrets
+      summary: List user secrets
+      responses:
+        "200":
+          description: OK

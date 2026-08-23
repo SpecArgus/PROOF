@@ -294,6 +294,7 @@ source = { virtual = "." }
 dev = [
     { name = "jsonschema", extra = ["format"] },
     { name = "pytest" },
+    { name = "pyyaml" },
     { name = "rfc8785" },
     { name = "ruff" },
 ]
@@ -304,25 +305,9 @@ dev = [
 dev = [
     { name = "jsonschema", extras = ["format"], specifier = "==4.26.0" },
     { name = "pytest", specifier = "==9.1.1" },
+    { name = "pyyaml", specifier = "==6.0.3" },
     { name = "rfc8785", specifier = "==0.1.4" },
     { name = "ruff", specifier = "==0.15.22" },
-]
-
-[[package]]
-name = "specargus-proof"
-version = "0.1.0"
-source = { editable = "packages/cli" }
-dependencies = [
-    { name = "proof-core" },
-    { name = "proof-rulepack" },
-    { name = "proof-validator-worker" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "proof-core", editable = "packages/core" },
-    { name = "proof-rulepack", editable = "packages/rulepack" },
-    { name = "proof-validator-worker", editable = "packages/validator-worker" },
 ]
 
 [[package]]
@@ -579,6 +564,23 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/94/e7/b2c673351809dca68a0e064b6af791aa332cf192da575fd474ed7d6f16a2/six-1.17.0.tar.gz", hash = "sha256:ff70335d468e7eb6ec65b95b99d3a2836546063f63acc5171de367e834932a81", size = 34031, upload-time = "2024-12-04T17:35:28.174Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/b7/ce/149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e/six-1.17.0-py2.py3-none-any.whl", hash = "sha256:4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274", size = 11050, upload-time = "2024-12-04T17:35:26.475Z" },
+]
+
+[[package]]
+name = "specargus-proof"
+version = "0.1.0"
+source = { editable = "packages/cli" }
+dependencies = [
+    { name = "proof-core" },
+    { name = "proof-rulepack" },
+    { name = "proof-validator-worker" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "proof-core", editable = "packages/core" },
+    { name = "proof-rulepack", editable = "packages/rulepack" },
+    { name = "proof-validator-worker", editable = "packages/validator-worker" },
 ]
 
 [[package]]
